@@ -20,7 +20,7 @@ class Program
             .Build();
 
         var employeeController = host.Services.GetRequiredService<EmployeeController>();
-        await employeeController.CreateNewEmployee(EmployeeType.OutsideSales);
+        await employeeController.CreateRandomNewEmployee(EmployeeType.OutsideSales);
     }
 
 }

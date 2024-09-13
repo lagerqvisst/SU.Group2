@@ -17,7 +17,7 @@ namespace SU.Backend.Controllers
             _employeeService = employeeService;
         }
 
-        public async Task CreateNewEmployee(EmployeeType Role)
+        public async Task CreateRandomNewEmployee(EmployeeType Role)
         {
             var result = await _employeeService.GenerateRandomEmployee(Role);
 
