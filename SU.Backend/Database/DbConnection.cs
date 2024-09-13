@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System.IO;
 
 namespace SU.Backend.Database
 {
@@ -8,22 +7,17 @@ namespace SU.Backend.Database
     {
         private readonly IConfiguration _configuration;
 
-        public DbConnection(DbContextOptions<DbConnection> options) : base(options)
+        public DbConnection(DbContextOptions<DbConnection> options, IConfiguration configuration) : base(options)
         {
+            _configuration = configuration;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                // Hämtar konfigurationen från appsettings.json
-                var configuration = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                    .Build();
-
-                // Här kan vi byta ut "DefaultConnection" mot en annan anslutningssträng om vi vill utifall att vi får en annan databas
-                var connectionString = configuration.GetConnectionString("DefaultConnection");
+                // Hämta anslutningssträng från appsettings.json, exponerar inte känslig info här.
+                var connectionString = _configuration.GetConnectionString("DefaultConnection");
 
                 optionsBuilder.UseSqlServer(connectionString);
             }
@@ -33,7 +27,6 @@ namespace SU.Backend.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
             base.OnModelCreating(modelBuilder);
         }
     }
