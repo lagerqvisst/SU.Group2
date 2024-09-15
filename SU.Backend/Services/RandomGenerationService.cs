@@ -45,7 +45,6 @@ namespace SU.Backend.Services
                     if (apiResult != null && apiResult.Results.Count > 0)
                     {
                         var firstResult = apiResult.Results[0];
-                        _logger.LogInformation("FirstName: {FirstName}, LastName: {LastName}", firstResult.Name.First, firstResult.Name.Last);
                     }
 
                     return (true, apiResult);

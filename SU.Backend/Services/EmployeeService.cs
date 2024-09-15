@@ -1,11 +1,10 @@
-﻿using SU.Backend.Helper;
+﻿using SU.Backend.Database;
+using SU.Backend.Helper;
 using SU.Backend.Models;
 using SU.Backend.Models.Enums;
 using SU.Backend.Services.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace SU.Backend.Services
@@ -13,11 +12,14 @@ namespace SU.Backend.Services
     public class EmployeeService : IEmployeeService
     {
         private readonly IRandomGenerationService _randomInfoGenerationService;
+        private readonly UnitOfWork _unitOfWork; // Lägg till UnitOfWork
 
-        public EmployeeService(IRandomGenerationService randomInfoGenerationService)
+        public EmployeeService(IRandomGenerationService randomInfoGenerationService, UnitOfWork unitOfWork)
         {
             _randomInfoGenerationService = randomInfoGenerationService;
+            _unitOfWork = unitOfWork; // Injicera UnitOfWork
         }
+
         public async Task<(bool Success, string Message, Employee Employee)> GenerateRandomEmployee(EmployeeType Role)
         {
             try
@@ -28,19 +30,26 @@ namespace SU.Backend.Services
                 {
                     var info = randomUser.Results[0];
 
+
                     Employee employee = new Employee
                     {
                         FirstName = info.Name.First,
                         LastName = info.Name.Last,
                         Email = info.Email,
                         Role = Role,
+                        Username = info.Login.Username,
+                        Password = info.Login.Password,
+                        Manager = await GetManagerForRole(Role),
                         BaseSalary = Employee.GetSalaryForEmployeeType(Role),
-                        //TODO: Update AgentNumberGenerator method with service to check if agent number is already in use.
-                        AgentNumber = Role.Equals(EmployeeType.OutsideSales) ? AgentNumberGenerator.GenerateFourDigitCode() : null
-                        //TODO: Service to check for who should be assigned manager depending on role. Needs DB implementation.
+                        AgentNumber = (Role == EmployeeType.OutsideSales || Role == EmployeeType.InsideSales) ? AgentNumberGenerator.GenerateFourDigitCode() : null
+                        
                     };
 
-                    return (true, "Successfully generated new employee", employee);
+                    // Spara den nya anställda i databasen via UnitOfWork
+                    _unitOfWork.Employees.Add(employee);
+                    _unitOfWork.SaveChanges(); // Spara ändringar till databasen
+
+                    return (true, "Successfully generated and saved new employee", employee);
                 }
                 else
                 {
@@ -50,6 +59,27 @@ namespace SU.Backend.Services
             catch (Exception ex)
             {
                 return (false, "An error occurred: " + ex.Message, null);
+            }
+        }
+
+        private async Task<Employee?> GetManagerForRole(EmployeeType role)
+        {
+            switch (role)
+            {
+                case EmployeeType.OutsideSales:
+                case EmployeeType.InsideSales:
+                case EmployeeType.SalesAssistant:
+                    return await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.SalesManager);
+
+                case EmployeeType.FinancialAssistant:
+                    return await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.FinancialManager);
+
+                case EmployeeType.SalesManager:
+                case EmployeeType.FinancialManager:
+                    return await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.CEO);
+
+                default:
+                    return null;
             }
         }
     }

@@ -15,6 +15,8 @@ namespace SU.Backend.Configuration
 
             //DB Service 
             services.AddDbContext<DbConnection>();
+            services.AddScoped<UnitOfWork>();
+
 
             //Test Service
             services.AddScoped<IDbConnectionTestService, DbConnectionTestService>();

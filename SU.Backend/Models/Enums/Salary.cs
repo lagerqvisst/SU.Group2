@@ -12,6 +12,7 @@ namespace SU.Backend.Models.Enums
         Seller = 24000,
         FinancialAssistant = 32000,
         FinancialManager = 45000,
+        SalesManager = 50000,
         CEO = 100000
     }
 }

@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Models
 {
-    public class Employee
+    public class Employee 
     {
         
-        public int EmployeeNr { get; set; }
+        public int EmployeeId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -18,6 +18,10 @@ namespace SU.Backend.Models
         public int BaseSalary { get; set; }
         public Employee? Manager { get; set; }
         public string? AgentNumber { get; set; }
+
+        public string Username { get; set; }
+
+        public string Password { get; set; }
 
         public Employee()
         {
@@ -30,6 +34,7 @@ namespace SU.Backend.Models
                 EmployeeType.OutsideSales => (int)Salary.Seller,
                 EmployeeType.InsideSales => (int)Salary.Seller,
                 EmployeeType.SalesAssistant => (int)Salary.SalesAssistant,
+                EmployeeType.SalesManager => (int)Salary.SalesManager,
                 EmployeeType.FinancialAssistant => (int)Salary.FinancialAssistant,
                 EmployeeType.FinancialManager => (int)Salary.FinancialManager,
                 EmployeeType.CEO => (int)Salary.CEO,
@@ -40,7 +45,7 @@ namespace SU.Backend.Models
 
         public override string ToString()
         {
-            return $"EmployeeNr: {EmployeeNr}\n" +
+            return $"EmployeeNr: {EmployeeId}\n" +
                    $"FirstName: {FirstName}\n" +
                    $"LastName: {LastName}\n" +
                    $"Email: {Email}\n" +
