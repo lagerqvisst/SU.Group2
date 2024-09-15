@@ -49,5 +49,15 @@ namespace SU.Backend.Helper
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
         }
+
+        public static string GenerateEmployeeUsername(Name name)
+        {
+            //make user name from first 2 letters of first name and last name
+
+            string username = name.First.Substring(0, 2) + name.Last.Substring(0,2);
+
+            return username.ToLower();
+
+        }
     }
 }

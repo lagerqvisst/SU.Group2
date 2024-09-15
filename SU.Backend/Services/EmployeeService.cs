@@ -36,7 +36,7 @@ namespace SU.Backend.Services
                         FirstName = info.Name.First,
                         LastName = info.Name.Last,
                         Email = info.Email,
-                        Username = info.Login.Username,
+                        Username = EmployeeHelper.GenerateEmployeeUsername(info.Name),
                         Password = info.Login.Password,
                         Manager = await GetManagerForRole(Role),
                         BaseSalary = EmployeeHelper.GetSalaryForEmployeeType(Role),
