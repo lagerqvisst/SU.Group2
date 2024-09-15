@@ -1,5 +1,6 @@
 ﻿using SU.Backend.Database.Repositories;
 using SU.Backend.Models;
+using SU.Backend.Models.Employee;
 
 namespace SU.Backend.Database
 {

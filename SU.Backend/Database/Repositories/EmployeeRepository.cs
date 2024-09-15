@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SU.Backend.Models;
+using SU.Backend.Models.Employee;
 using SU.Backend.Models.Enums;
 using System;
 using System.Collections.Generic;
@@ -24,8 +24,14 @@ namespace SU.Backend.Database.Repositories
         public async Task<Employee?> GetEmployeeByRole(EmployeeType role)
         {
             return await _context.Employees
-                .Where(e => e.Role == role)
-                .FirstOrDefaultAsync();
+                .Include(e => e.RoleAssignments) // Inkludera rolltilldelningar
+                .Where(e => e.RoleAssignments.Any(ra => ra.Role == role && ra.Percentage > 0)) // Kontrollera att anställda har den angivna rollen
+                .FirstOrDefaultAsync(); // Hämta den första matchande anställda
         }
+
+
+
+
+
     }
 }

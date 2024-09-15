@@ -1,4 +1,4 @@
-﻿using SU.Backend.Models;
+﻿using SU.Backend.Models.Employee;
 using SU.Backend.Models.Enums;
 using System;
 using System.Collections.Generic;

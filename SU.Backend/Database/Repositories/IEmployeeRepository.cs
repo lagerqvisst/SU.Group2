@@ -1,10 +1,10 @@
 ﻿using SU.Backend.Models.Enums;
-using SU.Backend.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SU.Backend.Models.Employee;
 
 namespace SU.Backend.Database.Repositories
 {

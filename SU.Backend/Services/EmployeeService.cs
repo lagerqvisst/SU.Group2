@@ -1,6 +1,6 @@
 ﻿using SU.Backend.Database;
 using SU.Backend.Helper;
-using SU.Backend.Models;
+using SU.Backend.Models.Employee;
 using SU.Backend.Models.Enums;
 using SU.Backend.Services.Interfaces;
 using System;
@@ -36,14 +36,23 @@ namespace SU.Backend.Services
                         FirstName = info.Name.First,
                         LastName = info.Name.Last,
                         Email = info.Email,
-                        Role = Role,
                         Username = info.Login.Username,
                         Password = info.Login.Password,
                         Manager = await GetManagerForRole(Role),
-                        BaseSalary = Employee.GetSalaryForEmployeeType(Role),
-                        AgentNumber = (Role == EmployeeType.OutsideSales || Role == EmployeeType.InsideSales) ? AgentNumberGenerator.GenerateFourDigitCode() : null
+                        BaseSalary = EmployeeHelper.GetSalaryForEmployeeType(Role),
+                        AgentNumber = (Role == EmployeeType.OutsideSales || Role == EmployeeType.InsideSales) ? EmployeeHelper.GenerateFourDigitCode() : null,
                         
                     };
+
+                    var roleAssignment = new EmployeeRoleAssignment
+                    {
+                        Employee = employee,
+                        Role = Role,
+                        Percentage = 100
+                    };
+
+                    employee.RoleAssignments.Add(roleAssignment);
+
 
                     // Spara den nya anställda i databasen via UnitOfWork
                     _unitOfWork.Employees.Add(employee);
@@ -62,6 +71,7 @@ namespace SU.Backend.Services
             }
         }
 
+        //Auto assign manager based on role
         private async Task<Employee?> GetManagerForRole(EmployeeType role)
         {
             switch (role)

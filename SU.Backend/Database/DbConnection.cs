@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
-using SU.Backend.Models;
+using SU.Backend.Models.Employee;
 using SU.Backend.Models.Enums;
 
 namespace SU.Backend.Database
@@ -17,6 +17,7 @@ namespace SU.Backend.Database
 
         // DbSets
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<EmployeeRoleAssignment> EmployeeRoleAssignments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -40,9 +41,18 @@ namespace SU.Backend.Database
                 v => (EmployeeType)Enum.Parse(typeof(EmployeeType), v) // Konvertera sträng till enum när du läser från databasen
             );
 
-            modelBuilder.Entity<Employee>()
-                .Property(e => e.Role)
+            // Ställ in konverteraren för EmployeeRoleAssignment entiteten
+            modelBuilder.Entity<EmployeeRoleAssignment>()
+                .Property(er => er.Role)
                 .HasConversion(employeeTypeConverter);
+
+            modelBuilder.Entity<EmployeeRoleAssignment>()
+                   .HasKey(er => er.EmployeeRoleAssignmentId);
+
+            modelBuilder.Entity<EmployeeRoleAssignment>()
+                .HasOne<Employee>(er => er.Employee) // Navigeringsegenskap
+                .WithMany(e => e.RoleAssignments)   // Navigeringsegenskap i Employee, En Employee kan ha flera EmployeeRoleAssignments
+                .HasForeignKey(er => er.EmployeeId); // FK
         }
     }
 }
