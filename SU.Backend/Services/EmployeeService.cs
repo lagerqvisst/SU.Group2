@@ -24,7 +24,7 @@ namespace SU.Backend.Services
         {
             try
             {
-                var (success, randomUser) = await _randomInfoGenerationService.GenerateRandomCustomer();
+                var (success, randomUser) = await _randomInfoGenerationService.GenerateSingleRandomUser();
 
                 if (success)
                 {

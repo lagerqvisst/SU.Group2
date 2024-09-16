@@ -8,11 +8,13 @@ namespace SU.Backend.Database
     {
         private readonly DbConnection _context;
         public EmployeeRepository Employees { get; }
+        public PrivateCustomerRepository PrivateCustomers { get; }
 
         public UnitOfWork(DbConnection context)
         {
             _context = context;
             Employees = new EmployeeRepository(_context);
+            PrivateCustomers = new PrivateCustomerRepository(_context);
         }
 
         public void SaveChanges()

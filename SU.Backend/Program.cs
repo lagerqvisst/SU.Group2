@@ -19,8 +19,15 @@ class Program
             })
             .Build();
 
-        var employeeController = host.Services.GetRequiredService<EmployeeController>();
-        await employeeController.CreateRandomNewEmployee(EmployeeType.InsideSales);
+
+        ///Test EmplyeeController
+        //var employeeController = host.Services.GetRequiredService<EmployeeController>();
+        //await employeeController.CreateRandomNewEmployee(EmployeeType.FinancialManager);
+
+        ///Test PrivateCustomerController
+        var privateCustomerController = host.Services.GetRequiredService<PrivateCustomerController>();
+        await privateCustomerController.GenerateRandomPrivateCustomer();
+
     }
 
 }

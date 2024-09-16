@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
+using SU.Backend.Models.Customers;
 using SU.Backend.Models.Employee;
 using SU.Backend.Models.Enums;
 
@@ -18,6 +19,7 @@ namespace SU.Backend.Database
         // DbSets
         public DbSet<Employee> Employees { get; set; }
         public DbSet<EmployeeRoleAssignment> EmployeeRoleAssignments { get; set; }
+        public DbSet<PrivateCustomer> PrivateCustomer { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
