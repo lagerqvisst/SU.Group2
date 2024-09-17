@@ -28,3 +28,9 @@ The solution follows a **multi-layered architecture**, separating concerns betwe
 - **Backend**: .NET 6.0, Entity Framework Core
 - **Frontend**: WPF, MVVM
 - **Database**: SQL (School DB)
+
+
+## Example of Backend Process 
+### Login Flow 
+- Starts by employee _(user)_ inputs their credentials in the front-end _(WPF)_
+![image](https://github.com/user-attachments/assets/f7aa07a0-7d91-4510-94c6-ba3b0f963b10)
