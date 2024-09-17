@@ -30,7 +30,30 @@ The solution follows a **multi-layered architecture**, separating concerns betwe
 - **Database**: SQL (School DB)
 
 
-## Example of Backend Process 
-### Login Flow 
-- Starts by employee _(user)_ inputs their credentials in the front-end _(WPF)_
+## Backend Process Overview
+
+### Login Flow
+
+1. **Employee Input (Front-end - WPF)**
+   - The process starts when the employee (user) inputs their **username** and **password** into the front-end WPF application.
+
+2. **Controller Handling**
+   - The **Controller** manages communication with the front-end, specifically collecting user input for login.
+   - The Controller contains an instance of the `LoginService`, which handles the business logic for authentication.
+
+3. **LoginService Logic**
+   - The **LoginService** uses an instance of the`UnitOfWork` class to manage database transactions.
+   - **UnitOfWork** includes a DB context and repositories that represent tables in the database.
+
+4. **Repository Access**
+   - The **LoginService** requests the `EmployeeRepository` from the **UnitOfWork**.
+   - The **EmployeeRepository** includes both generic and specific methods, with specific methods used to verify if a user exists with the provided credentials.
+
+5. **Authentication Response**
+   - The **LoginService** either returns a valid user or `null` depending on the credentials provided.
+   - It then returns a response including a boolean value, a response message, and the user object if the credentials are correct.
+
+6. **Controller Response**
+   - The **Controller** takes the response from **LoginService** and provides an appropriate message to the front-end.
+
 ![image](https://github.com/user-attachments/assets/f7aa07a0-7d91-4510-94c6-ba3b0f963b10)
