@@ -48,6 +48,7 @@ The solution follows a **multi-layered architecture**, separating concerns betwe
 4. **Repository Access**
    - The **LoginService** requests the `EmployeeRepository` from the **UnitOfWork**.
    - The **EmployeeRepository** includes both generic and specific methods, with specific methods used to verify if a user exists with the provided credentials.
+   - In this case it uses `GetEmployeeByUserCredentials` which is a specific method created in the EmployeeRepository
 
 5. **Authentication Response**
    - The **LoginService** either returns a valid user or `null` depending on the credentials provided.
