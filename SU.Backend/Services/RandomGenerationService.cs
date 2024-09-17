@@ -25,7 +25,9 @@ namespace SU.Backend.Services
             _logger = logger;
         }
 
-        public async Task<(bool Success, RandomUserApiResponse RandomUserInfo)> GenerateRandomCustomer()
+
+
+        public async Task<(bool Success, RandomUserApiResponse RandomUserInfo)> GenerateSingleRandomUser()
         {
             try
             {
@@ -68,6 +70,62 @@ namespace SU.Backend.Services
                     return (false, null);
                 }
         }
+
+        /// <summary>
+        /// If we want to have multiple random users, for eg. to quickly seed DB with test data. 
+        /// </summary>
+        public async Task<(bool Success, List<RandomUserApiResponse> RandomUserInfo)> GenerateMultipleRandomUsers(int numberOfUsers = 10)
+        {
+            try
+            {
+                _logger.LogInformation("Sending request to API to generate {NumberOfUsers} random users with token: {ApiToken}", numberOfUsers, _apiToken);
+                var response = await _httpClient.GetAsync($"https://randomuser.me/api/?results={numberOfUsers}&apiKey={_apiToken}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    _logger.LogInformation("Received successful response from API.");
+                    var json = await response.Content.ReadAsStringAsync();
+                    _logger.LogDebug("Response content: {JsonContent}", json);
+
+                    var apiResult = JsonSerializer.Deserialize<RandomUserApiResponse>(json, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+
+                    if (apiResult != null && apiResult.Results.Count > 0)
+                    {
+                        // Mappa om Result-objekten till RandomUserApiResponse
+                        var randomUsers = apiResult.Results.Select(r => new RandomUserApiResponse
+                        {
+                            // Fyll i egenskaper från r till en ny instans av RandomUserApiResponse
+                        }).ToList();
+
+                        _logger.LogInformation("Successfully parsed {Count} random users.", randomUsers.Count);
+                        return (true, randomUsers); // Returnerar mappade användare i listan
+                    }
+
+                    _logger.LogWarning("No users were found in the API response.");
+                    return (false, null);
+                }
+                else
+                {
+                    _logger.LogWarning("API request failed with status code: {StatusCode}", response.StatusCode);
+                    return (false, null);
+                }
+            }
+            catch (JsonException jsonEx)
+            {
+                _logger.LogError(jsonEx, "JSON deserialization error occurred while generating random users.");
+                return (false, null);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while generating random users.");
+                return (false, null);
+            }
+        }
+
+
 
 
     }

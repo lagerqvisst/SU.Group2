@@ -25,8 +25,12 @@ class Program
         //await employeeController.CreateRandomNewEmployee(EmployeeType.FinancialManager);
 
         ///Test PrivateCustomerController
-        var privateCustomerController = host.Services.GetRequiredService<PrivateCustomerController>();
-        await privateCustomerController.GenerateRandomPrivateCustomer();
+        //var privateCustomerController = host.Services.GetRequiredService<PrivateCustomerController>();
+        //await privateCustomerController.GenerateRandomPrivateCustomer();
+
+        ///Test LoginController
+        var loginController = host.Services.GetRequiredService<LoginController>();
+        await loginController.Authentication("cene", "zigzag");
 
     }
 

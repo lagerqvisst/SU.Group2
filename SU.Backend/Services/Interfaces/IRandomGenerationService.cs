@@ -11,6 +11,7 @@ namespace SU.Backend.Services.Interfaces
 {
     public interface IRandomGenerationService
     {
-        Task<(bool Success, RandomUserApiResponse RandomUserInfo)> GenerateRandomCustomer();
+        Task<(bool Success, RandomUserApiResponse RandomUserInfo)> GenerateSingleRandomUser();
+        Task<(bool Success, List<RandomUserApiResponse> RandomUserInfo)> GenerateMultipleRandomUsers(int numberOfUsers = 10);
     }
 }

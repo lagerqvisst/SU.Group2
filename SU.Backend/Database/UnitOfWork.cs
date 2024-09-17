@@ -15,6 +15,7 @@ namespace SU.Backend.Database
             _context = context;
             Employees = new EmployeeRepository(_context);
             PrivateCustomers = new PrivateCustomerRepository(_context);
+
         }
 
         public void SaveChanges()

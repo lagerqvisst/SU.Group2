@@ -1,4 +1,5 @@
-﻿using SU.Backend.Models.Enums;
+﻿using Microsoft.Extensions.Logging;
+using SU.Backend.Models.Enums;
 using SU.Backend.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,23 +12,26 @@ namespace SU.Backend.Controllers
     public class EmployeeController
     {
         private readonly IEmployeeService _employeeService;
+        private readonly ILogger<EmployeeController> _logger;
 
-        public EmployeeController(IEmployeeService employeeService)
+        public EmployeeController(IEmployeeService employeeService, ILogger<EmployeeController> logger)
         {
             _employeeService = employeeService;
+            _logger = logger;
         }
 
         public async Task CreateRandomNewEmployee(EmployeeType Role)
         {
+            _logger.LogInformation($"Controller activated to create new random {Role.ToString()}...");
             var result = await _employeeService.GenerateRandomEmployee(Role);
 
             if (result.Success)
             {
-                Console.WriteLine($"Employee created successfully:\n{result.Employee}");
+                _logger.LogInformation($"Employee created successfully:\n{result.Employee}");
             }
             else
             {
-                Console.WriteLine($"Error creating employee: {result.Message}");
+                _logger.LogWarning($"Error creating employee: {result.Message}");
             }
 
         }

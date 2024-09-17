@@ -1,4 +1,5 @@
-﻿using SU.Backend.Models.Customers;
+﻿using Microsoft.Extensions.Logging;
+using SU.Backend.Models.Customers;
 using SU.Backend.Services;
 using SU.Backend.Services.Interfaces;
 using System;
@@ -13,23 +14,26 @@ namespace SU.Backend.Controllers
     public class PrivateCustomerController
     {
         private readonly IPrivateCustomerService _privateCustomerService;
+        private readonly ILogger<PrivateCustomerController> _logger;
 
-        public PrivateCustomerController(IPrivateCustomerService privateCustomerService)
+        public PrivateCustomerController(IPrivateCustomerService privateCustomerService, ILogger<PrivateCustomerController> logger)
         {
             _privateCustomerService = privateCustomerService;
+            _logger = logger;
         }
 
         public async Task GenerateRandomPrivateCustomer()
         {
+            _logger.LogInformation("Controller activated to create new random private customer...");
             var result = await _privateCustomerService.GenerateRandomPrivateCustomer();
 
             if (result.Success)
             {
-                Console.WriteLine($"Private customer created successfully:\n{result.Customer}");
+                _logger.LogInformation($"Customer created successfully:\n{result.Customer}");
             }
             else
             {
-                Console.WriteLine($"Error creating customer: {result.Message}");
+                _logger.LogWarning($"Error creating customer: {result.Message}");
             }
         }
     }

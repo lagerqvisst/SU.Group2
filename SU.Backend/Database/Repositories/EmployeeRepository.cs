@@ -29,9 +29,11 @@ namespace SU.Backend.Database.Repositories
                 .FirstOrDefaultAsync(); // Hämta den första matchande anställda
         }
 
-
-
-
-
+        public async Task<Employee?> GetEmployeeByUserCredentials(string Username, string Password)
+        {
+            return await _context.Employees
+                .Where(e => e.Username == Username && e.Password == Password)
+                .FirstOrDefaultAsync();
+        }
     }
 }
