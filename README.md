@@ -30,7 +30,7 @@ The solution follows a **multi-layered architecture**, separating concerns betwe
 - **Database**: SQL (School DB)
 
 
-## Backend Process Overview
+## Example: Backend Process Overview
 
 ### Login Flow
 
