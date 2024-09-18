@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SU.Frontend.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,11 +19,15 @@ namespace SU.Frontend.Views
     /// <summary>
     /// Interaction logic for LoginWindow.xaml
     /// </summary>
+    
     public partial class LoginWindow : Window
     {
-        public LoginWindow()
+        public LoginWindow(LoginViewModel loginViewModel)
         {
             InitializeComponent();
+            DataContext = loginViewModel;
+            Debug.WriteLine($"LoginWindow created with DataContext {DataContext}");
         }
     }
+
 }

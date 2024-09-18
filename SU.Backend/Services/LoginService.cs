@@ -33,12 +33,12 @@ namespace SU.Backend.Services
                 if (user != null)
                 {
                     _logger.LogInformation("Login successful");
-                    return (true, "Login successful", user);
+                    return (true, "Login successful! Welcome back.", user);
                 }
                 else
                 {
                     _logger.LogWarning("Login failed");
-                    return (false, "Login failed", null);
+                    return (false, "Login failed: No user found with the provided username and password.", null);
                 }
             }
             catch (Exception e)

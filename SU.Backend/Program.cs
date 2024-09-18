@@ -21,16 +21,16 @@ class Program
 
 
         ///Test EmplyeeController
-        //var employeeController = host.Services.GetRequiredService<EmployeeController>();
-        //await employeeController.CreateRandomNewEmployee(EmployeeType.FinancialManager);
+        var employeeController = host.Services.GetRequiredService<EmployeeController>();
+        await employeeController.CreateRandomNewEmployee(EmployeeType.InsideSales);
 
         ///Test PrivateCustomerController
         //var privateCustomerController = host.Services.GetRequiredService<PrivateCustomerController>();
         //await privateCustomerController.GenerateRandomPrivateCustomer();
 
         ///Test LoginController
-        var loginController = host.Services.GetRequiredService<LoginController>();
-        await loginController.Authentication("cene", "zigzag");
+        //var loginController = host.Services.GetRequiredService<LoginController>();
+        //await loginController.Authentication("cene", "zigzag");
 
     }
 

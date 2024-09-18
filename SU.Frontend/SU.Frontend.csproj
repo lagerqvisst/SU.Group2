@@ -8,4 +8,12 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SU.Backend\SU.Backend.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UserControls\" />
+  </ItemGroup>
+
 </Project>
