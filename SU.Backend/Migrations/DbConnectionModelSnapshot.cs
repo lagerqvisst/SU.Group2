@@ -10,7 +10,7 @@ using SU.Backend.Database;
 
 namespace SU.Backend.Migrations
 {
-    [DbContext(typeof(DbConnection))]
+    [DbContext(typeof(Context))]
     partial class DbConnectionModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

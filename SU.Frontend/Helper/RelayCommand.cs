@@ -12,6 +12,12 @@ namespace SU.Frontend.Helper
         private readonly Action _execute;
         private readonly Func<bool> _canExecute;
 
+        // Konstruktor som bara tar emot 'Action'
+        public RelayCommand(Action execute) : this(execute, () => true) // anropa huvudkonstruktorn med true som standard
+        {
+        }
+
+        // Huvudkonstruktor som tar emot både 'Action' och 'canExecute'
         public RelayCommand(Action execute, Func<bool> canExecute)
         {
             _execute = execute ?? throw new ArgumentNullException(nameof(execute));
@@ -28,6 +34,7 @@ namespace SU.Frontend.Helper
             remove => CommandManager.RequerySuggested -= value;
         }
     }
+
 
 
 }

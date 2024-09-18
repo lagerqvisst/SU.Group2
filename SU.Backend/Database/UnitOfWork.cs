@@ -6,11 +6,11 @@ namespace SU.Backend.Database
 {
     public class UnitOfWork : IDisposable
     {
-        private readonly DbConnection _context;
+        private readonly Context _context;
         public EmployeeRepository Employees { get; }
         public PrivateCustomerRepository PrivateCustomers { get; }
 
-        public UnitOfWork(DbConnection context)
+        public UnitOfWork(Context context)
         {
             _context = context;
             Employees = new EmployeeRepository(_context);

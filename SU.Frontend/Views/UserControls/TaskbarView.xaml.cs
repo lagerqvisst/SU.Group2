@@ -1,7 +1,6 @@
-﻿using SU.Frontend.ViewModels;
+﻿using SU.Frontend.ViewModels.UserControls;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,24 +11,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SU.Frontend.Views
+namespace SU.Frontend.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for LoginWindow.xaml
+    /// Interaction logic for TaskbarView.xaml
     /// </summary>
-    
-    public partial class LoginWindow : Window
+    public partial class TaskbarView : UserControl
     {
-        public LoginWindow(LoginViewModel loginViewModel)
+        public TaskbarView()
         {
             InitializeComponent();
-            DataContext = loginViewModel;
-
-
+            DataContext = new TaskbarViewModel();
 
         }
     }
-
 }

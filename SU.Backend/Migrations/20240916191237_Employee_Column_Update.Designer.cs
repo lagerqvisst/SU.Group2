@@ -11,7 +11,7 @@ using SU.Backend.Database;
 
 namespace SU.Backend.Migrations
 {
-    [DbContext(typeof(DbConnection))]
+    [DbContext(typeof(Context))]
     [Migration("20240916191237_Employee_Column_Update")]
     partial class Employee_Column_Update
     {

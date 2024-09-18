@@ -8,9 +8,9 @@ namespace SU.Backend.Database.Repositories
 {
     public abstract class Repository<TEntity> where TEntity : class
     {
-        public readonly DbConnection _context;
+        public readonly Context _context;
 
-        protected Repository(DbConnection context)
+        protected Repository(Context context)
         {
             _context = context;
         }

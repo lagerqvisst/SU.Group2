@@ -14,7 +14,7 @@ namespace SU.Backend.Configuration
             // Registrera tjänster och deras beroenden här
 
             //DB Service 
-            services.AddDbContext<DbConnection>();
+            services.AddDbContext<Context>();
             services.AddScoped<UnitOfWork>();
 
 

@@ -8,9 +8,9 @@ namespace SU.Backend.Services
     public class DbConnectionTestService : IDbConnectionTestService
     {
         private readonly ILogger<DbConnectionTestService> _logger;
-        private readonly DbConnection _dbConnection;
+        private readonly Context _dbConnection;
 
-        public DbConnectionTestService(ILogger<DbConnectionTestService> logger, DbConnection dbConnection)
+        public DbConnectionTestService(ILogger<DbConnectionTestService> logger, Context dbConnection)
         {
             _logger = logger;
             _dbConnection = dbConnection;

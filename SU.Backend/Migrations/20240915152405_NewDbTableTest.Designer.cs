@@ -11,7 +11,7 @@ using SU.Backend.Database;
 
 namespace SU.Backend.Migrations
 {
-    [DbContext(typeof(DbConnection))]
+    [DbContext(typeof(Context))]
     [Migration("20240915152405_NewDbTableTest")]
     partial class NewDbTableTest
     {

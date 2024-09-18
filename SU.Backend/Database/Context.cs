@@ -7,11 +7,11 @@ using SU.Backend.Models.Enums;
 
 namespace SU.Backend.Database
 {
-    public class DbConnection : DbContext
+    public class Context : DbContext
     {
         private readonly IConfiguration _configuration;
 
-        public DbConnection(DbContextOptions<DbConnection> options, IConfiguration configuration) : base(options)
+        public Context(DbContextOptions<Context> options, IConfiguration configuration) : base(options)
         {
             _configuration = configuration;
         }

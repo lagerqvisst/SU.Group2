@@ -9,7 +9,7 @@ namespace SU.Backend.Database.Repositories
 {
     public class PrivateCustomerRepository : Repository<PrivateCustomer>
     {
-        public PrivateCustomerRepository(DbConnection context) : base(context)
+        public PrivateCustomerRepository(Context context) : base(context)
         {
         }
     }
