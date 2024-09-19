@@ -10,5 +10,6 @@ namespace SU.Frontend.Helper.User
     public class LoggedInUserService : ILoggedInUserService
     {
         public Employee LoggedInEmployee { get; set; }
+
     }
 }

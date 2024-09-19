@@ -92,8 +92,9 @@ namespace SU.Frontend.ViewModels
                 var result = await _loginController.Authentication(UserName, Password);
                 if (result.Success)
                 {
+                    //Vi kan använda denna användare i olika views utan att behöva skicka den vidare.
                     _loggedInUserService.LoggedInEmployee = result.Employee;
-                    //Använda för att mata in först vyn och sen objektet. 
+                    //TODO: Antingen göra overload så att vi kan skicka med ett objekt eller bara en vy. För vi kan kalla på loggeduser i nästa vy utan att passera den.
                     //_navigationService.NavigateTo("NEXT VIEW", "OBJECT");
                 }
                 MessageBox.Show($"{result.Message}");
