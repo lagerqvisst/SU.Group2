@@ -15,7 +15,7 @@ class Program
         var host = Host.CreateDefaultBuilder(args)
             .ConfigureServices((context, services) =>
             {
-                services.AddApplicationServices();
+                services.AddBackendServices();
             })
             .Build();
 

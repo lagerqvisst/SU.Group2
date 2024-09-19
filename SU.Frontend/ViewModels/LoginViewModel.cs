@@ -23,7 +23,7 @@ namespace SU.Frontend.ViewModels
             LoginCommand = new RelayCommand(OnLogin, CanLogin);
             _userName = string.Empty;
             _password = string.Empty;
-            ButtonContent = "Login";
+            ButtonContent = "Logga in";
         }
 
         private string _userName;
@@ -59,7 +59,7 @@ namespace SU.Frontend.ViewModels
                 _isLoading = value;
                 OnPropertyChanged();
                 // Update ButtonContent based on loading state
-                ButtonContent = _isLoading ? "Loading..." : "Login";
+                ButtonContent = _isLoading ? "Laddar..." : "Logga in";
             }
         }
 
@@ -100,7 +100,7 @@ namespace SU.Frontend.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred during login: {ex.Message}");
+                MessageBox.Show($"Ett oväntat fel inträffade: {ex.Message}");
             }
             finally
             {

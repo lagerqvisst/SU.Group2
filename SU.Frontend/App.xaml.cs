@@ -22,17 +22,9 @@ namespace SU.Frontend
                 .ConfigureServices((context, services) =>
                 {
                     // Registrera din backend DI-konfiguration
-                    services.AddApplicationServices();
+                    services.AddBackendServices();
+                    services.AddFrontendServices();
 
-                    // Registrera både LoginWindow och LoginViewModel
-                    services.AddTransient<TaskbarViewModel>();
-                    services.AddTransient<TaskbarView>();
-                    services.AddTransient<LoginViewModel>();
-                    services.AddTransient<LoginWindow>();
-
-                    //Frontend services
-                    services.AddScoped<INavigationService, NavigationService>(); 
-                    services.AddSingleton<ILoggedInUserService, LoggedInUserService>();
 
                 })
                 .Build();

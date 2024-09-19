@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:SU.Frontend.Views.UserControls">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="_File">
+            <MenuItem Header="_Fil">
                 <MenuItem Header="Stäng av" Command="{Binding ShutDownCommand}"/>
             </MenuItem>
         </Menu>

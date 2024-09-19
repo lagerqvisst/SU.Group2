@@ -7,9 +7,9 @@ using Microsoft.Extensions.Logging;
 
 namespace SU.Backend.Configuration
 {
-    public static class DIConfiguration
+    public static class ConfigBackend
     {
-        public static void AddApplicationServices(this IServiceCollection services)
+        public static void AddBackendServices(this IServiceCollection services)
         {
             // Registrera tjänster och deras beroenden här
 
