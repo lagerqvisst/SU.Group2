@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SU.Backend.Models.Enums.Insurrance
+namespace SU.Backend.Models.Enums.Insurance
 {
-    internal class InsurranceStatus
+    public enum InsuranceStatus
     {
+        Requested, // Förfrågan
+        Active,    // Aktiv / Signerad
+        Terminated // Avslutad
     }
 }
+

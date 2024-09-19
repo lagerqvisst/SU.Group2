@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SU.Backend.Models.Enums
+namespace SU.Backend.Models.Enums.Insurrance
 {
-    internal class PrivateInsurranceType
+    public enum PrivateInsuranceType
     {
+        ChildAccidentAndHealthInsurance, // Sjuk- och olycksfallsförsäkring för barn (t.o.m. 17 års ålder)
+        AdultAccidentAndHealthInsurance, // Sjuk- och olycksfallsförsäkring för vuxen
+        AdultLifeInsurance // Livförsäkring för vuxen
     }
 }
+

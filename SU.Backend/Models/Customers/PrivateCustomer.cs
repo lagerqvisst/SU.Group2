@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SU.Backend.Models.Insurrance;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,5 +17,8 @@ namespace SU.Backend.Models.Customers
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
 
+        // Navigational property for related PrivateInsurance
+        public ICollection<PrivateInsurance> PrivateInsurances { get; set; } = new List<PrivateInsurance>();
     }
+
 }

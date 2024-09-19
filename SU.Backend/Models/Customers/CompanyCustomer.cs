@@ -6,7 +6,22 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Models.Customers
 {
-    internal class CompanyCustomer
+    public class CompanyCustomer
     {
+        public int CompanyCustomerId { get; set; } //Organisationsnummer (PK)
+
+        public string CompanyName { get; set; } //Företagsnamn
+            
+        public string ContactPerson { get; set; } //Kontaktperson
+
+        public string ContactPersonPhonenumber { get; set; } //Kontaktperson telefonnummer
+
+        public string CompanyAdress { get; set; } //Företagsadress
+
+        public string CompanyPhoneNumber { get; set; } //Företagstelefonnummer
+
+        public string CompanyLandlineNumber { get; set; } //Företagsväxelnummer
+
+        public string CompanyEmailAdress { get; set; } //Företagets e-postadress
     }
 }

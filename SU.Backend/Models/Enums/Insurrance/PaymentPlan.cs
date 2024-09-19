@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Models.Enums.Insurrance
 {
-    internal class PaymentPlan
+    public enum PaymentPlan
     {
+        Annual,   // Helår
+        SemiAnnual,  // Halvår
+        Quarterly, // Kvartal
+        Monthly   // Månad
     }
 }
