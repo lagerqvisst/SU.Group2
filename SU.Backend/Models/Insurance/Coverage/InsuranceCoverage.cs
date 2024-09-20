@@ -12,6 +12,7 @@ namespace SU.Backend.Models.Insurance.Coverage
         public int InsuranceCoverageId { get; set; } // PK
 
         // Navigational properties till specifika försäkringsklasser
+
         public LiabilityCoverage? LiabilityCoverage { get; set; } // Om den är ansvarsförsäkring
         public PrivateCoverage? PrivateCoverage { get; set; } // Om den är privatförsäkring
         public PropertyAndInventoryCoverage? PropertyAndInventoryCoverage { get; set; } // Om den är fastighetsförsäkring

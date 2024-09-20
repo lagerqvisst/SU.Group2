@@ -33,6 +33,7 @@ namespace SU.Backend.Configuration
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IPrivateCustomerService, PrivateCustomerService>();
             services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IInsuranceService, InsuranceService>();
 
             // Loggning
             services.AddLogging(configure => configure.AddConsole());

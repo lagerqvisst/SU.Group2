@@ -1,6 +1,7 @@
 ﻿using SU.Backend.Models.Enums.Insurance;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,6 @@ namespace SU.Backend.Models.Insurance.Coverage
         public decimal CoverageAmount { get; set; } // Grundbelopp
         public decimal MonthlyPremium { get; set; } // Månadspremie
         public DateTime StartDate { get; set; } // Datum när alternativet börjar gälla
-        public InsuranceType InsuranceType { get; set; } 
+        public InsuranceType InsuranceType { get; set; }
     }
 }

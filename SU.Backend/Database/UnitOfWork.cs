@@ -9,12 +9,15 @@ namespace SU.Backend.Database
         private readonly Context _context;
         public EmployeeRepository Employees { get; }
         public PrivateCustomerRepository PrivateCustomers { get; }
+        public PrivateCoverageOptionRepository PrivateCoverageOptions { get; }
+
 
         public UnitOfWork(Context context)
         {
             _context = context;
             Employees = new EmployeeRepository(_context);
             PrivateCustomers = new PrivateCustomerRepository(_context);
+            PrivateCoverageOptions = new PrivateCoverageOptionRepository(_context);
 
         }
 

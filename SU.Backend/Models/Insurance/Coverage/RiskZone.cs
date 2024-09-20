@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SU.Backend.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,9 +10,8 @@ namespace SU.Backend.Models.Insurance.Coverage
     public class RizkZone
     {
         public int RiskZoneId { get; set; } // PK
+        public RiskZoneLevel RiskZoneLevel { get; set; } // Riskzon
         public double ZoneFactor { get; set; } // Zonfaktor
 
-        // Navigation property
-        public VehicleInsuranceCoverage VehicleInsuranceCoverage { get; set; } // Navigation till VehicleInsuranceCoverage
     }
 }

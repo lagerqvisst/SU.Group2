@@ -4,9 +4,9 @@ using SU.Backend.Models.Customers;
 using SU.Backend.Models.Employee;
 using SU.Backend.Models.Insurance;
 using SU.Backend.Models.Enums;
-using SU.Backend.Helper;
 using SU.Backend.Models.Insurance.Coverage;
 using System.ComponentModel;
+using SU.Backend.Database.Utility;
 
 namespace SU.Backend.Database
 {
@@ -29,6 +29,9 @@ namespace SU.Backend.Database
         public DbSet<InsuranceCoverage> InsuranceCoverages { get; set; }
         public DbSet<InsuranceAddon> InsuranceAddons { get; set; }
         public DbSet<InsuranceAddonType> InsuranceAddonTypes { get; set; }
+        public DbSet<PrivateCoverageOption> PrivateCoverageOption { get; set; }
+
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -48,6 +51,8 @@ namespace SU.Backend.Database
             // Använda den generiska konverteraren för enums & decimalvärden.
             modelBuilder.ConfigureEnumsAsStrings();
             modelBuilder.ConfigureDecimals();
+            modelBuilder.SeedRiskZones();
+            modelBuilder.SeedPrivateCoverageOptions();
 
             // Definiera relationer
             modelBuilder.Entity<Insurance>()
@@ -133,21 +138,23 @@ namespace SU.Backend.Database
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<PrivateCoverage>()
-                .HasOne(pc => pc.PrivateCoverageOption)
-                .WithOne()
-                .HasForeignKey<PrivateCoverageOption>(pc => pc.PrivateCoverageOptionId)
+                .HasOne(pc => pc.PrivateCoverageOption) // En PrivateCoverage har en PrivateCoverageOption
+                .WithOne() // En PrivateCoverageOption kan existera utan att vara kopplad
+                .HasForeignKey<PrivateCoverage>(pco => pco.PrivateCoverageOptionId)
+                .OnDelete(DeleteBehavior.Restrict); // Ta bort om den inte ska radera relaterade objekt
+
+            modelBuilder.Entity<VehicleInsuranceCoverage>()
+                .HasOne(vic => vic.RiskZone) // En VehicleInsuranceCoverage har en RiskZone
+                .WithOne() // En RiskZone är kopplad till en VehicleInsuranceCoverage
+                .HasForeignKey<VehicleInsuranceCoverage>(vic => vic.RiskZoneId)
                 .OnDelete(DeleteBehavior.Restrict);
+
 
             modelBuilder.Entity<PrivateCoverageOption>()
                 .HasKey(pco => pco.PrivateCoverageOptionId); // Definiera primärnyckeln
 
             // Definiera relationer för VehicleInsuranceCoverage och RiskZone
             // Gjorde en egen tabell för Riskzone då en enum inte tillåter decimaler. 
-            modelBuilder.Entity<VehicleInsuranceCoverage>()
-                .HasOne(vic => vic.RiskZone) // En VehicleInsuranceCoverage har en RiskZone
-                .WithOne() // En RiskZone är kopplad till en VehicleInsuranceCoverage
-                .HasForeignKey<VehicleInsuranceCoverage>(vic => vic.RiskZoneId)
-                .OnDelete(DeleteBehavior.Restrict);
 
 
             modelBuilder.Entity<RizkZone>()

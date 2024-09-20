@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Services.Interfaces
 {
-    public interface IDatabaseTestService
+    public interface IInsuranceService
     {
-        Task<(bool Success, string Message)> TestDbConnection();
-
-        Task<(bool Success, string Message)> RecreateDb();
+        Task<(bool Success, string Message)> SeedPrivateInsuranceOptions();
     }
 }

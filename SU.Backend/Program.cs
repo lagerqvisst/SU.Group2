@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SU.Backend.Configuration;
@@ -20,6 +21,11 @@ class Program
             })
             .Build();
 
+        var dbservice = host.Services.GetRequiredService<IDatabaseTestService>();
+
+        var (success, message) = await dbservice.RecreateDb();
+
+        Console.WriteLine(message);
 
         ///Test EmplyeeController
         //var employeeController = host.Services.GetRequiredService<EmployeeController>();
