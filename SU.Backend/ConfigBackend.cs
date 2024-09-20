@@ -19,7 +19,7 @@ namespace SU.Backend.Configuration
 
 
             //Test Service
-            services.AddScoped<IDbConnectionTestService, DbConnectionTestService>();
+            services.AddScoped<IDatabaseTestService, DatabaseTestServices>();
 
             //API Service
             services.AddHttpClient<IRandomGenerationService, RandomGenerationService>();

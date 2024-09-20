@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SU.Backend.Database;
 
@@ -11,9 +12,10 @@ using SU.Backend.Database;
 namespace SU.Backend.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class DbConnectionModelSnapshot : ModelSnapshot
+    [Migration("20240920112055_3rdIterationInsurance")]
+    partial class _3rdIterationInsurance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -300,6 +302,9 @@ namespace SU.Backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RiskZoneId"), 1L, 1);
 
+                    b.Property<int>("VehicleCoverageId")
+                        .HasColumnType("int");
+
                     b.Property<int>("VehicleInsuranceCoverageId")
                         .HasColumnType("int");
 
@@ -338,8 +343,7 @@ namespace SU.Backend.Migrations
                     b.HasIndex("InsuranceCoverageId")
                         .IsUnique();
 
-                    b.HasIndex("RiskZoneId")
-                        .IsUnique();
+                    b.HasIndex("RiskZoneId");
 
                     b.ToTable("VehicleInsuranceCoverage");
                 });
@@ -382,8 +386,7 @@ namespace SU.Backend.Migrations
 
                     b.HasKey("InsuranceId");
 
-                    b.HasIndex("InsuranceCoverageId")
-                        .IsUnique();
+                    b.HasIndex("InsuranceCoverageId");
 
                     b.HasIndex("InsurancePolicyHolderId");
 
@@ -572,8 +575,8 @@ namespace SU.Backend.Migrations
                         .IsRequired();
 
                     b.HasOne("SU.Backend.Models.Insurance.Coverage.RizkZone", "RiskZone")
-                        .WithOne()
-                        .HasForeignKey("SU.Backend.Models.Insurance.Coverage.VehicleInsuranceCoverage", "RiskZoneId")
+                        .WithMany()
+                        .HasForeignKey("RiskZoneId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -585,8 +588,8 @@ namespace SU.Backend.Migrations
             modelBuilder.Entity("SU.Backend.Models.Insurance.Insurance", b =>
                 {
                     b.HasOne("SU.Backend.Models.Insurance.Coverage.InsuranceCoverage", "InsuranceCoverage")
-                        .WithOne()
-                        .HasForeignKey("SU.Backend.Models.Insurance.Insurance", "InsuranceCoverageId")
+                        .WithMany()
+                        .HasForeignKey("InsuranceCoverageId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SU.Backend.Models.Insurrance
+namespace SU.Backend.Models.Insurance
 {
     public class InsurancePolicyHolder
     {
-        public int InsurancePolicyHolderNr { get; set; } // PK
+        public int InsurancePolicyHolderId { get; set; } // PK
 
         // Nullable foreign keys
 

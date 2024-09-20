@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SU.Backend.Models.Insurance;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,5 +24,9 @@ namespace SU.Backend.Models.Customers
         public string CompanyLandlineNumber { get; set; } //Företagsväxelnummer
 
         public string CompanyEmailAdress { get; set; } //Företagets e-postadress
+
+        // Navigational property for related InsurancePolicyHolder
+        public ICollection<InsurancePolicyHolder> InsurancePolicyHolders { get; set; } = new List<InsurancePolicyHolder>();
     }
 }
+

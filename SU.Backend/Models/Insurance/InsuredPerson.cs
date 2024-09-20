@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SU.Backend.Models.Insurrance
+namespace SU.Backend.Models.Insurance
 {
     public class InsuredPerson
     {
@@ -17,10 +17,10 @@ namespace SU.Backend.Models.Insurrance
         public string PersonalNumber { get; set; } // Personnummer
 
         // Foreign key for the related policyholder
-        public int InsurancePolicyHolderNr { get; set; } // FK
+        public int? InsurancePolicyHolderId { get; set; } // FK
 
         // Navigation property to the policyholder
-        public InsurancePolicyHolder InsurancePolicyHolder { get; set; }
+        public InsurancePolicyHolder? InsurancePolicyHolder { get; set; }
     }
 
 }

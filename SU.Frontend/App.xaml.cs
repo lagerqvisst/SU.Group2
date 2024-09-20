@@ -22,8 +22,8 @@ namespace SU.Frontend
                 .ConfigureServices((context, services) =>
                 {
                     // Registrera din backend DI-konfiguration
-                    services.AddBackendServices();
-                    services.AddFrontendServices();
+                    //services.AddBackendServices();
+                    //services.AddFrontendServices();
 
 
                 })

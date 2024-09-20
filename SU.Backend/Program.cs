@@ -12,6 +12,7 @@ class Program
 {
     static async Task Main(string[] args)
     {
+
         var host = Host.CreateDefaultBuilder(args)
             .ConfigureServices((context, services) =>
             {
@@ -21,8 +22,8 @@ class Program
 
 
         ///Test EmplyeeController
-        var employeeController = host.Services.GetRequiredService<EmployeeController>();
-        await employeeController.CreateRandomNewEmployee(EmployeeType.InsideSales);
+        //var employeeController = host.Services.GetRequiredService<EmployeeController>();
+        //await employeeController.CreateRandomNewEmployee(EmployeeType.InsideSales);
 
         ///Test PrivateCustomerController
         //var privateCustomerController = host.Services.GetRequiredService<PrivateCustomerController>();
