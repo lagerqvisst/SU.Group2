@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SU.Backend.Database.Repositories
+namespace SU.Backend.Database.Interfaces
 {
-    public interface IPrivateCoverageOptionRepository
+    public interface ICompanyCustomerRepository
     {
     }
 }

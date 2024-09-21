@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SU.Backend.Models.Insurance.Coverage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,10 +18,13 @@ namespace SU.Backend.Models.Insurance
         public string PersonalNumber { get; set; } // Personnummer
 
         // Foreign key for the related policyholder
+        public int PrivateCoverageId { get; set; } // FK
         public int? InsurancePolicyHolderId { get; set; } // FK
 
         // Navigation property to the policyholder
         public InsurancePolicyHolder? InsurancePolicyHolder { get; set; }
+        public PrivateCoverage PrivateCoverage { get; set; }
+
     }
 
 }

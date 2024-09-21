@@ -60,5 +60,33 @@ namespace SU.Backend.Services
 
             }
         }
+
+        public async Task<(bool Success, string Message, PrivateCustomer Customer)> GetPrivateCustomerById(PrivateCustomer privateCustomer)
+        {
+            try
+            {
+                var customer = await _unitOfWork.PrivateCustomers.GetPrivateCustomerById(privateCustomer);
+                return (true, "Successfully retrieved customer", customer);
+            }
+            catch (Exception ex)
+            {
+                return (false, "An error occurred: " + ex.Message, null);
+            }
+        }
+
+        public async Task<(bool Success, string Message, List<PrivateCustomer>)> GetPrivateCustomers()
+        {
+            try
+            {
+                var customers = await _unitOfWork.PrivateCustomers.GetPrivateCustomers();
+                return (true, "Successfully retrieved customers", customers);
+
+            }
+            catch (Exception ex)
+            {
+
+                return (false, "An error occurred: " + ex.Message, null);
+            }
+        }
     }
 }

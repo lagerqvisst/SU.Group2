@@ -9,6 +9,17 @@ using System;
 
 namespace SU.Backend.Database.Utility
 {
+    /// <summary>
+    /// This class contains extension methods for the ModelBuilder class.
+    /// They are called upon in the context when we are configuring the database.
+    /// To limit the amount of code and increase readability in the context class we use this static class.
+    /// </summary>
+    /// 
+
+    // This class checks for all entities that contains enums.
+    // If the entity contains an enum, it will convert the enum to a string.
+    // This is done to make the database more readable.
+    // Instead of the database column showing the enum value, it will show the string value.
     public static class ModelBuilderExtensions
     {
         public static void ConfigureEnumsAsStrings(this ModelBuilder modelBuilder)
@@ -30,6 +41,10 @@ namespace SU.Backend.Database.Utility
             }
         }
 
+        // This class checks for all entities that contains decimal values.
+        // It is needed because the default value for decimal is decimal(18,2).
+        // This needs to be explicitly set for each decimal value in the database.
+        // To reduce amount of code in context class and increase readability, we use this class.
         public static void ConfigureDecimals(this ModelBuilder modelBuilder)
         {
             var decimalTypes = new[]
@@ -52,6 +67,9 @@ namespace SU.Backend.Database.Utility
             }
         }
 
+        // This class seeds the database with the different risk zones.
+        // The data is hardcoded and will be added to the database when the database is created.
+        // The related data is found from the business doucmentation (Bilaga 2).
         public static void SeedRiskZones(this ModelBuilder modelBuilder)
         {
             // Seed för RizkZone
@@ -63,10 +81,13 @@ namespace SU.Backend.Database.Utility
             );
         }
 
+        // This class seeds the database with the different private coverage options.
+        // The data is hardcoded and will be added to the database when the database is created.
+        // The related data is found from the business doucmentation (Bilaga 2).
         public static void SeedPrivateCoverageOptions(this ModelBuilder modelBuilder)
         {
             //Child Accident and Health Insurance
-            #region
+            #region Seed for PrivateCoverageOption
             modelBuilder.Entity<PrivateCoverageOption>().HasData(
                 new PrivateCoverageOption
                 {
@@ -242,10 +263,14 @@ namespace SU.Backend.Database.Utility
             #endregion
         }
 
+        // This class seeds the database with the different insurance addon types.
+        // The data is hardcoded and will be added to the database when the database is created.
+        // The related data is found from the business doucmentation (Bilaga 2).
         public static void SeedIsuranceAddonTypes(this ModelBuilder modelBuilder)
         {
             //Seed for InsuranceAddonTypes
 
+            #region Seed for SicknessAccident
             modelBuilder.Entity<InsuranceAddonType>().HasData(
                 new InsuranceAddonType { InsuranceAddonTypeId = 1, CoverageAmount = 100_000m, Description = AddonType.SicknessAccident, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.SicknessAccident, 100_00m) },
                 new InsuranceAddonType { InsuranceAddonTypeId = 2, CoverageAmount = 200_000m, Description = AddonType.SicknessAccident, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.SicknessAccident, 200_00m) },
@@ -265,6 +290,7 @@ namespace SU.Backend.Database.Utility
                 new InsuranceAddonType { InsuranceAddonTypeId = 15, CoverageAmount = 3500, Description = AddonType.LongTermSickness, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.LongTermSickness, 3500) },
                 new InsuranceAddonType { InsuranceAddonTypeId = 16, CoverageAmount = 4000, Description = AddonType.LongTermSickness, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.LongTermSickness, 4000) }
                 );
+            #endregion
         }
     }
 }

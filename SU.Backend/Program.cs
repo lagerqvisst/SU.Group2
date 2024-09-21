@@ -21,11 +21,6 @@ class Program
             })
             .Build();
 
-        var dbservice = host.Services.GetRequiredService<IDatabaseTestService>();
-
-        var (success, message) = await dbservice.RecreateDb();
-
-        Console.WriteLine(message);
 
         ///Test EmplyeeController
         //var employeeController = host.Services.GetRequiredService<EmployeeController>();
@@ -38,6 +33,13 @@ class Program
         ///Test LoginController
         //var loginController = host.Services.GetRequiredService<LoginController>();
         //await loginController.Authentication("cene", "zigzag");
+
+        ///Test InsuranceService
+        var insuranceService = host.Services.GetRequiredService<IInsuranceService>();
+
+
+        await insuranceService.CreateInsuredPerson("Alex","1980-10-02");
+
 
     }
 

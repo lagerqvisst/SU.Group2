@@ -9,7 +9,13 @@ namespace SU.Backend.Database
         private readonly Context _context;
         public EmployeeRepository Employees { get; }
         public PrivateCustomerRepository PrivateCustomers { get; }
+        public CompanyCustomerRepository CompanyCustomers { get; }
         public PrivateCoverageOptionRepository PrivateCoverageOptions { get; }
+        public InsurancePolicyHolderRepository InsurancePolicyHolders { get; }
+        public InsuredPersonRepository InsuredPersons { get; }
+        public PrivateCoverageRepository PrivateCoverages { get; }
+        public InsuranceCoverageRepository InsuranceCoverages { get; }
+
 
 
         public UnitOfWork(Context context)
@@ -18,6 +24,10 @@ namespace SU.Backend.Database
             Employees = new EmployeeRepository(_context);
             PrivateCustomers = new PrivateCustomerRepository(_context);
             PrivateCoverageOptions = new PrivateCoverageOptionRepository(_context);
+            InsurancePolicyHolders = new InsurancePolicyHolderRepository(_context);
+            InsuredPersons = new InsuredPersonRepository(_context);
+            PrivateCoverages = new PrivateCoverageRepository(_context);
+            InsuranceCoverages = new InsuranceCoverageRepository(_context);
 
         }
 

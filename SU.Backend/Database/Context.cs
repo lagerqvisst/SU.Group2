@@ -31,6 +31,10 @@ namespace SU.Backend.Database
         public DbSet<InsuranceAddonType> InsuranceAddonTypes { get; set; }
         public DbSet<PrivateCoverageOption> PrivateCoverageOption { get; set; }
 
+        public DbSet<PrivateCoverage> PrivateCoverages { get; set; }
+
+
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -62,28 +66,16 @@ namespace SU.Backend.Database
                 .HasForeignKey(pi => pi.InsurancePolicyHolderId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //En försäkringstagare kan vara antingen privatperson eller företag.
+            // En försäkringstagare kan vara antingen privatperson eller företag.
             modelBuilder.Entity<InsurancePolicyHolder>()
                 .HasOne(ip => ip.PrivateCustomer)
-                .WithMany(pc => pc.InsurancePolicyHolders)
-                .HasForeignKey(ip => ip.PrivateCustomerId);
-
-            modelBuilder.Entity<InsurancePolicyHolder>()
-                .HasOne(ip => ip.CompanyCustomer)
-                .WithMany(cc => cc.InsurancePolicyHolders)
-                .HasForeignKey(ip => ip.CompanyCustomerId);
-
-            //En privat person kan inneha flera försäkringar (dvs. vara många försäkringstagare)
-            modelBuilder.Entity<PrivateCustomer>()
-                .HasMany(pc => pc.InsurancePolicyHolders)
-                .WithOne(ip => ip.PrivateCustomer)
+                .WithMany() // Ingen navigationsproperty i PrivateCustomer
                 .HasForeignKey(ip => ip.PrivateCustomerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //Samma som privatperson, en företagskund kan ha flera försäkringar (dvs. vara många försäkringstagare)
-            modelBuilder.Entity<CompanyCustomer>()
-                .HasMany(cc => cc.InsurancePolicyHolders)
-                .WithOne(ip => ip.CompanyCustomer)
+            modelBuilder.Entity<InsurancePolicyHolder>()
+                .HasOne(ip => ip.CompanyCustomer)
+                .WithMany() // Ingen navigationsproperty i CompanyCustomer
                 .HasForeignKey(ip => ip.CompanyCustomerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -112,6 +104,11 @@ namespace SU.Backend.Database
                 .WithMany() // Anta att det inte finns en navigationsproperty på InsuranceAddonType
                 .HasForeignKey(ia => ia.InsuranceAddonTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<InsuranceCoverage>()
+                .HasOne(i => i.Insurance)
+                .WithOne(i => i.InsuranceCoverage)
+                .HasForeignKey<InsuranceCoverage>(i => i.InsuranceId);
 
             //Insurance Coverage. Har frivilligt deltagande till de olika försäkringstyperna.
             modelBuilder.Entity<InsuranceCoverage>()
@@ -143,6 +140,12 @@ namespace SU.Backend.Database
                 .WithOne() // En PrivateCoverageOption kan existera utan att vara kopplad
                 .HasForeignKey<PrivateCoverage>(pco => pco.PrivateCoverageOptionId)
                 .OnDelete(DeleteBehavior.Restrict); // Ta bort om den inte ska radera relaterade objekt
+
+            modelBuilder.Entity<InsuredPerson>()
+                .HasOne(ep => ep.PrivateCoverage)
+                .WithOne(pc => pc.InsuredPerson)
+                .HasForeignKey<PrivateCoverage>(pc => pc.InsuredPersonId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<VehicleInsuranceCoverage>()
                 .HasOne(vic => vic.RiskZone) // En VehicleInsuranceCoverage har en RiskZone

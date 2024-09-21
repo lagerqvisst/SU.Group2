@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using SU.Backend.Models.Employee;
 
-namespace SU.Backend.Database.Repositories
+namespace SU.Backend.Database.Interfaces
 {
-    public interface IEmployeeRepository 
+    public interface IEmployeeRepository
     {
         Task<bool> IsAgentNumberUnique(string agentNumber);
 

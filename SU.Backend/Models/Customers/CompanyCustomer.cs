@@ -25,8 +25,6 @@ namespace SU.Backend.Models.Customers
 
         public string CompanyEmailAdress { get; set; } //Företagets e-postadress
 
-        // Navigational property for related InsurancePolicyHolder
-        public ICollection<InsurancePolicyHolder> InsurancePolicyHolders { get; set; } = new List<InsurancePolicyHolder>();
     }
 }
 

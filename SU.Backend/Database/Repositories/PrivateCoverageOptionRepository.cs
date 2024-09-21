@@ -1,4 +1,5 @@
-﻿using SU.Backend.Models.Insurance.Coverage;
+﻿using SU.Backend.Database.Interfaces;
+using SU.Backend.Models.Insurance.Coverage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,11 @@ namespace SU.Backend.Database.Repositories
     {
         public PrivateCoverageOptionRepository(Context context) : base(context)
         {
+        }
+
+        public async Task<List<PrivateCoverageOption>> GetPrivateCoverageOptions()
+        {
+            return _context.PrivateCoverageOption.ToList();
         }
     }
 }
