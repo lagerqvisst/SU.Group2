@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SU.Backend.Database;
 
@@ -11,9 +12,10 @@ using SU.Backend.Database;
 namespace SU.Backend.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240921170607_SeedForInsuranceAddonTypes")]
+    partial class SeedForInsuranceAddonTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -632,112 +634,112 @@ namespace SU.Backend.Migrations
                         new
                         {
                             InsuranceAddonTypeId = 1,
-                            BaseExtraPremium = 3.0000m,
-                            CoverageAmount = 100000m,
+                            BaseExtraPremium = 0m,
+                            CoverageAmount = 10000m,
                             Description = "SicknessAccident"
                         },
                         new
                         {
                             InsuranceAddonTypeId = 2,
-                            BaseExtraPremium = 6.0000m,
-                            CoverageAmount = 200000m,
+                            BaseExtraPremium = 0m,
+                            CoverageAmount = 20000m,
                             Description = "SicknessAccident"
                         },
                         new
                         {
                             InsuranceAddonTypeId = 3,
-                            BaseExtraPremium = 9.0000m,
-                            CoverageAmount = 300000m,
+                            BaseExtraPremium = 0m,
+                            CoverageAmount = 30000m,
                             Description = "SicknessAccident"
                         },
                         new
                         {
                             InsuranceAddonTypeId = 4,
-                            BaseExtraPremium = 12.0000m,
-                            CoverageAmount = 400000m,
+                            BaseExtraPremium = 0m,
+                            CoverageAmount = 40000m,
                             Description = "SicknessAccident"
                         },
                         new
                         {
                             InsuranceAddonTypeId = 5,
-                            BaseExtraPremium = 15.0000m,
-                            CoverageAmount = 500000m,
+                            BaseExtraPremium = 0m,
+                            CoverageAmount = 50000m,
                             Description = "SicknessAccident"
                         },
                         new
                         {
                             InsuranceAddonTypeId = 6,
-                            BaseExtraPremium = 18.0000m,
-                            CoverageAmount = 600000m,
+                            BaseExtraPremium = 0m,
+                            CoverageAmount = 60000m,
                             Description = "SicknessAccident"
                         },
                         new
                         {
                             InsuranceAddonTypeId = 7,
-                            BaseExtraPremium = 21.0000m,
-                            CoverageAmount = 700000m,
+                            BaseExtraPremium = 0m,
+                            CoverageAmount = 70000m,
                             Description = "SicknessAccident"
                         },
                         new
                         {
                             InsuranceAddonTypeId = 8,
-                            BaseExtraPremium = 24.0000m,
-                            CoverageAmount = 800000m,
+                            BaseExtraPremium = 0m,
+                            CoverageAmount = 80000m,
                             Description = "SicknessAccident"
                         },
                         new
                         {
                             InsuranceAddonTypeId = 9,
-                            BaseExtraPremium = 0.2500m,
+                            BaseExtraPremium = 0m,
                             CoverageAmount = 500m,
                             Description = "LongTermSickness"
                         },
                         new
                         {
                             InsuranceAddonTypeId = 10,
-                            BaseExtraPremium = 0.5000m,
+                            BaseExtraPremium = 0m,
                             CoverageAmount = 1000m,
                             Description = "LongTermSickness"
                         },
                         new
                         {
                             InsuranceAddonTypeId = 11,
-                            BaseExtraPremium = 0.7500m,
+                            BaseExtraPremium = 0m,
                             CoverageAmount = 1500m,
                             Description = "LongTermSickness"
                         },
                         new
                         {
                             InsuranceAddonTypeId = 12,
-                            BaseExtraPremium = 1.0000m,
+                            BaseExtraPremium = 0m,
                             CoverageAmount = 2000m,
                             Description = "LongTermSickness"
                         },
                         new
                         {
                             InsuranceAddonTypeId = 13,
-                            BaseExtraPremium = 1.2500m,
+                            BaseExtraPremium = 0m,
                             CoverageAmount = 2500m,
                             Description = "LongTermSickness"
                         },
                         new
                         {
                             InsuranceAddonTypeId = 14,
-                            BaseExtraPremium = 1.5000m,
+                            BaseExtraPremium = 0m,
                             CoverageAmount = 3000m,
                             Description = "LongTermSickness"
                         },
                         new
                         {
                             InsuranceAddonTypeId = 15,
-                            BaseExtraPremium = 1.7500m,
+                            BaseExtraPremium = 0m,
                             CoverageAmount = 3500m,
                             Description = "LongTermSickness"
                         },
                         new
                         {
                             InsuranceAddonTypeId = 16,
-                            BaseExtraPremium = 2.0000m,
+                            BaseExtraPremium = 0m,
                             CoverageAmount = 4000m,
                             Description = "LongTermSickness"
                         });

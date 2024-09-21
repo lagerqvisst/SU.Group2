@@ -53,6 +53,7 @@ namespace SU.Backend.Database
             modelBuilder.ConfigureDecimals();
             modelBuilder.SeedRiskZones();
             modelBuilder.SeedPrivateCoverageOptions();
+            modelBuilder.SeedIsuranceAddonTypes();
 
             // Definiera relationer
             modelBuilder.Entity<Insurance>()
