@@ -10,5 +10,7 @@ namespace SU.Backend.Services.Interfaces
     public interface IProspectService
     {
         Task<(bool Success, string Message, List<Prospect> prospects)> IdentifyProspects();
+
+        Task<(bool Success, string Message)> TestAssignSellerToProspect();
     }
 }

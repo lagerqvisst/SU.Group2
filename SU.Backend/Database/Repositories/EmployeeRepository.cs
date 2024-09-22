@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SU.Backend.Database.Interfaces;
-using SU.Backend.Models.Employee;
+using SU.Backend.Models.Employees;
 using SU.Backend.Models.Enums;
 using System;
 using System.Collections.Generic;

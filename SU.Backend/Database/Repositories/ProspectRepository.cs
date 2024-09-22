@@ -18,7 +18,11 @@ namespace SU.Backend.Database.Repositories
         public async Task<List<Prospect>> GetAllProspects()
         {
 
-            throw new NotImplementedException();
+            return await _context.Prospects
+                .Include(p => p.PrivateCustomer)
+                .Include(p => p.CompanyCustomer)
+                .Include(e => e.Employee)
+                .ToListAsync();
         }
 
         public async Task<bool> ProspectExists(int? privateCustomerId, int? companyCustomerId)

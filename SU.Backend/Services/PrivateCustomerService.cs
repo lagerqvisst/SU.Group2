@@ -1,7 +1,7 @@
 ﻿using SU.Backend.Database;
 using SU.Backend.Helper;
 using SU.Backend.Models.Customers;
-using SU.Backend.Models.Employee;
+using SU.Backend.Models.Employees;
 using SU.Backend.Services.Interfaces;
 using System;
 using System.Collections.Generic;

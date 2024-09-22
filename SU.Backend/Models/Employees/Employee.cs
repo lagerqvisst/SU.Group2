@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SU.Backend.Models.Insurance;
 
-namespace SU.Backend.Models.Employee
+namespace SU.Backend.Models.Employees
 {
     public class Employee
     {

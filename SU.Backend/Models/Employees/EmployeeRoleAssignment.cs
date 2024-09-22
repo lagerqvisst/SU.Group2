@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SU.Backend.Models.Employee
+namespace SU.Backend.Models.Employees
 {
     public class EmployeeRoleAssignment
     {

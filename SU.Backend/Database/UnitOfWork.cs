@@ -1,6 +1,6 @@
 ﻿using SU.Backend.Database.Repositories;
 using SU.Backend.Models;
-using SU.Backend.Models.Employee;
+using SU.Backend.Models.Employees;
 using SU.Backend.Models.Insurance;
 
 namespace SU.Backend.Database
@@ -38,6 +38,7 @@ namespace SU.Backend.Database
             Insurances = new InsuranceRepository(_context);
             InsuranceAddonTypes = new InsuranceAddonTypeRepository(_context);
             Prospects = new ProspectRepository(_context);
+            CompanyCustomers = new CompanyCustomerRepository(_context);
 
         }
 

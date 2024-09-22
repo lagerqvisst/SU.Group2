@@ -11,5 +11,7 @@ namespace SU.Backend.Services.Interfaces
         Task<(bool Success, string Message)> TestDbConnection();
 
         Task<(bool Success, string Message)> RecreateDb();
+
+        Task<(bool Success, string Message)> SeedEmployeeOrganisation();
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SU.Backend.Database;
 
@@ -11,9 +12,10 @@ using SU.Backend.Database;
 namespace SU.Backend.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240922173741_AttemptToAdd_SellerRelationTo_Prospect_2")]
+    partial class AttemptToAdd_SellerRelationTo_Prospect_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,7 +62,7 @@ namespace SU.Backend.Migrations
 
                     b.HasKey("CompanyCustomerId");
 
-                    b.ToTable("CompanyCustomers");
+                    b.ToTable("CompanyCustomer");
                 });
 
             modelBuilder.Entity("SU.Backend.Models.Customers.PrivateCustomer", b =>
@@ -811,10 +813,6 @@ namespace SU.Backend.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ProspectStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProspectType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

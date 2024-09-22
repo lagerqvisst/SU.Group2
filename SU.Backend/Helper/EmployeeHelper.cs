@@ -59,5 +59,30 @@ namespace SU.Backend.Helper
             return username.ToLower();
 
         }
+
+        public static string GenerateEmployeeEmail(string Firstname, string Lastname)
+        {
+            return Firstname.ToLower() + "." + Lastname.ToLower() + "@toppinsurance.se";
+        }
+
+        public static string GenerateEmployeePassword(string firstName, string lastName)
+        {
+            // Ta de första två bokstäverna från förnamn och efternamn
+            string part1 = firstName.Substring(0, Math.Min(2, firstName.Length)).ToLower();
+            string part2 = lastName.Substring(0, Math.Min(2, lastName.Length)).ToLower();
+
+            // Generera ett slumpmässigt fyrsiffrigt nummer
+            string randomNumber = Random.Next(1000, 9999).ToString();
+
+            // Kombinera förnamnsdel, efternamnsdel och slumpmässigt nummer
+            string password = $"{part1}{part2}{randomNumber}";
+
+            // Lägg till en stor bokstav från efternamnet
+            password += char.ToUpper(lastName[0]);
+
+            return password;
+        }
+
+
     }
 }

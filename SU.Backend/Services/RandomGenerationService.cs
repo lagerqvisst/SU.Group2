@@ -25,40 +25,40 @@ namespace SU.Backend.Services
             _logger = logger;
         }
 
-
-
         public async Task<(bool Success, RandomUserApiResponse RandomUserInfo)> GenerateSingleRandomUser()
         {
-            try
+            //Lite problem ibland när man anropar API:et, så vi gör ett antal försök
+            const int maxRetries = 3; // Max antal försök
+            int retryCount = 0;
+
+            while (retryCount < maxRetries)
             {
-                _logger.LogInformation("Sending request to API with token: {ApiToken}", _apiToken);
-                var response = await _httpClient.GetAsync($"https://randomuser.me/api/?apiKey={_apiToken}");
-
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    _logger.LogInformation("Received successful response from API.");
-                    var json = await response.Content.ReadAsStringAsync();
-                    _logger.LogDebug("Response content: {JsonContent}", json);
+                    _logger.LogInformation("Sending request to API with token: {ApiToken}", _apiToken);
+                    var response = await _httpClient.GetAsync($"https://randomuser.me/api/?apiKey={_apiToken}");
 
-                    var apiResult = JsonSerializer.Deserialize<RandomUserApiResponse>(json, new JsonSerializerOptions
+                    if (response.IsSuccessStatusCode)
                     {
-                        PropertyNameCaseInsensitive = true
-                    });
+                        _logger.LogInformation("Received successful response from API.");
+                        var json = await response.Content.ReadAsStringAsync();
+                        _logger.LogDebug("Response content: {JsonContent}", json);
 
-                    if (apiResult != null && apiResult.Results.Count > 0)
-                    {
-                        var firstResult = apiResult.Results[0];
+                        var apiResult = JsonSerializer.Deserialize<RandomUserApiResponse>(json, new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        });
+
+                        if (apiResult != null && apiResult.Results.Count > 0)
+                        {
+                            return (true, apiResult);
+                        }
                     }
-
-                    return (true, apiResult);
+                    else
+                    {
+                        _logger.LogWarning("API request failed with status code: {StatusCode}", response.StatusCode);
+                    }
                 }
-
-                else
-                {
-                    _logger.LogWarning("API request failed with status code: {StatusCode}", response.StatusCode);
-                    return (false, null);
-                }
-            }
                 catch (JsonException jsonEx)
                 {
                     _logger.LogError(jsonEx, "JSON deserialization error occurred while generating a random customer.");
@@ -69,7 +69,16 @@ namespace SU.Backend.Services
                     _logger.LogError(ex, "An error occurred while generating a random customer.");
                     return (false, null);
                 }
+
+                retryCount++;
+                _logger.LogInformation("Retrying... Attempt {Attempt}/{MaxAttempts}", retryCount, maxRetries);
+                await Task.Delay(1000); // Vänta en sekund innan nästa försök
+            }
+
+            _logger.LogError("Max retries reached. Failed to generate a random customer.");
+            return (false, null);
         }
+
 
         /// <summary>
         /// If we want to have multiple random users, for eg. to quickly seed DB with test data. 

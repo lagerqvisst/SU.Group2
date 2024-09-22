@@ -1,5 +1,5 @@
 ﻿using SU.Backend.Models.Customers;
-using SU.Backend.Models.Employee;
+using SU.Backend.Models.Employees;
 using SU.Backend.Models.Enums.Insurance;
 using SU.Backend.Models.Insurance.Coverage;
 using System;

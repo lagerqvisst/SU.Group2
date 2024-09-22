@@ -1,4 +1,5 @@
-﻿using SU.Backend.Database.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SU.Backend.Database.Interfaces;
 using SU.Backend.Models.Customers;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,14 @@ namespace SU.Backend.Database.Repositories
     {
         public CompanyCustomerRepository(Context context) : base(context)
         {
+        }
+
+        public async Task<List<CompanyCustomer>> GetProspectDataForCompanyCustomers()
+        {
+            return await _context.CompanyCustomers
+                .Where(x => x.InsurancePolicyHolders.Count > 0 && x.InsurancePolicyHolders.Count < 2)
+                .ToListAsync();
+
         }
     }
 }

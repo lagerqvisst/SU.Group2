@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using SU.Backend.Models.Employee;
+using SU.Backend.Models.Employees;
 using SU.Backend.Services;
 using SU.Backend.Services.Interfaces;
 using System;

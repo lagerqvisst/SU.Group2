@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using SU.Backend.Models.Customers;
-using SU.Backend.Models.Employee;
+using SU.Backend.Models.Employees;
 using SU.Backend.Models.Insurance;
 using SU.Backend.Models.Enums;
 using SU.Backend.Models.Insurance.Coverage;
@@ -31,10 +31,10 @@ namespace SU.Backend.Database
         public DbSet<InsuranceAddon> InsuranceAddons { get; set; }
         public DbSet<InsuranceAddonType> InsuranceAddonTypes { get; set; }
         public DbSet<PrivateCoverageOption> PrivateCoverageOption { get; set; }
-
         public DbSet<PrivateCoverage> PrivateCoverages { get; set; }
-
         public DbSet<Prospect> Prospects { get; set; }
+
+        public DbSet<CompanyCustomer> CompanyCustomers { get; set; }
 
 
 
@@ -185,6 +185,13 @@ namespace SU.Backend.Database
                 .HasOne(p => p.CompanyCustomer)
                 .WithMany()
                 .HasForeignKey(p => p.CompanyCustomerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            //En säljare kan bli assignad flera prospects
+            modelBuilder.Entity<Prospect>()
+                .HasOne(p => p.Employee)
+                .WithMany()
+                .HasForeignKey(p => p.EmployeeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
         }

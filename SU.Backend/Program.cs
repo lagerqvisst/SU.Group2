@@ -22,9 +22,15 @@ class Program
             .Build();
 
 
+
+        ///Test DatabaseTestService
+        var databaseTestService = host.Services.GetRequiredService<IDatabaseTestService>();
+        //await databaseTestService.SeedEmployeeOrganisation();
+
         ///Test EmplyeeController
-        //var employeeController = host.Services.GetRequiredService<EmployeeController>();
-        //await employeeController.CreateRandomNewEmployee(EmployeeType.InsideSales);
+        var employeeController = host.Services.GetRequiredService<EmployeeController>();
+        await employeeController.CreateRandomNewEmployee(EmployeeType.OutsideSales);
+        await employeeController.CreateRandomNewEmployee(EmployeeType.InsideSales);
 
         ///Test PrivateCustomerController
         var privateCustomerController = host.Services.GetRequiredService<PrivateCustomerController>();
@@ -40,9 +46,9 @@ class Program
         //await insuranceService.RemoveAllInsurances(); 
 
         var prospectService = host.Services.GetRequiredService<IProspectService>();
-        await prospectService.IdentifyProspects();
+        //await prospectService.IdentifyProspects();
+        //await prospectService.TestAssignSellerToProspect();
 
-
-     }
+    }
 
 }

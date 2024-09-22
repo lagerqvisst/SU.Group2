@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using SU.Backend.Database;
 using SU.Backend.Helper;
-using SU.Backend.Models.Employee;
+using SU.Backend.Models.Employees;
 using SU.Backend.Models.Enums;
 using SU.Backend.Services.Interfaces;
 using System;
@@ -84,7 +84,7 @@ namespace SU.Backend.Services
         }
 
         //Auto assign manager based on role
-        private async Task<Employee?> GetManagerForRole(EmployeeType role)
+        public async Task<Employee?> GetManagerForRole(EmployeeType role)
         {
             switch (role)
             {
@@ -94,7 +94,7 @@ namespace SU.Backend.Services
                     return await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.SalesManager);
 
                 case EmployeeType.FinancialAssistant:
-                    return await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.FinancialManager);
+                    return await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.CEO);
 
                 case EmployeeType.SalesManager:
                 case EmployeeType.FinancialManager:
