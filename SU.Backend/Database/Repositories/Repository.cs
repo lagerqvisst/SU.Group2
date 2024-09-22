@@ -20,6 +20,11 @@ namespace SU.Backend.Database.Repositories
             _context.Set<TEntity>().Add(entity);
         }
 
+        public void AddRange(IEnumerable<TEntity> entities)
+        {
+            _context.Set<TEntity>().AddRange(entities);
+        }
+
         public void Update(TEntity entity)
         {
             _context.Set<TEntity>().Update(entity);
@@ -39,6 +44,11 @@ namespace SU.Backend.Database.Repositories
         public async Task AddAsync(TEntity entity)
         {
             await _context.Set<TEntity>().AddAsync(entity);
+        }
+
+        public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+        {
+            await _context.Set<TEntity>().AddRangeAsync(entities);
         }
 
         public async Task UpdateAsync(TEntity entity)

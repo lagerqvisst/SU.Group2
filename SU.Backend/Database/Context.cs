@@ -7,6 +7,7 @@ using SU.Backend.Models.Enums;
 using SU.Backend.Models.Insurance.Coverage;
 using System.ComponentModel;
 using SU.Backend.Database.Utility;
+using SU.Backend.Models.Insurance.Prospects;
 
 namespace SU.Backend.Database
 {
@@ -32,6 +33,8 @@ namespace SU.Backend.Database
         public DbSet<PrivateCoverageOption> PrivateCoverageOption { get; set; }
 
         public DbSet<PrivateCoverage> PrivateCoverages { get; set; }
+
+        public DbSet<Prospect> Prospects { get; set; }
 
 
 
@@ -73,6 +76,17 @@ namespace SU.Backend.Database
                 .HasForeignKey<InsuranceCoverage>(ic => ic.InsuranceId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<PrivateCustomer>()
+                .HasMany(pc => pc.InsurancePolicyHolders) // A PrivateCustomer can have many InsurancePolicyHolders
+                .WithOne(iph => iph.PrivateCustomer) // Each InsurancePolicyHolder has one PrivateCustomer
+                .HasForeignKey(iph => iph.PrivateCustomerId) // Foreign key in InsurancePolicyHolder
+                .OnDelete(DeleteBehavior.Cascade); // Optional: specify delete behavior */
+
+            modelBuilder.Entity<CompanyCustomer>()
+                .HasMany(cc => cc.InsurancePolicyHolders)
+                .WithOne(iph => iph.CompanyCustomer)
+                .HasForeignKey(iph => iph.CompanyCustomerId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             //En försäkring kan ha tillägg, just nu enbart relevant för privatförsäkringar enligt bilagan.
             //Men implementationen stödjer fler tillägg för framtiden. 
@@ -82,18 +96,7 @@ namespace SU.Backend.Database
                 .HasForeignKey(ia => ia.InsuranceId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // En försäkringstagare kan vara antingen privatperson eller företag.
-            modelBuilder.Entity<InsurancePolicyHolder>()
-                .HasOne(ip => ip.PrivateCustomer)
-                .WithMany() // Ingen navigationsproperty i PrivateCustomer
-                .HasForeignKey(ip => ip.PrivateCustomerId)
-                .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<InsurancePolicyHolder>()
-                .HasOne(ip => ip.CompanyCustomer)
-                .WithMany() // Ingen navigationsproperty i CompanyCustomer
-                .HasForeignKey(ip => ip.CompanyCustomerId)
-                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<InsurancePolicyHolder>()
                 .HasOne(ip => ip.Insurance)
@@ -170,7 +173,20 @@ namespace SU.Backend.Database
 
 
             modelBuilder.Entity<RizkZone>()
-                .HasKey(rz => rz.RiskZoneId); // Definiera primärnyckeln
+                .HasKey(rz => rz.RiskZoneId); // Definiera primärnyckeln (onödigt?)
+
+            modelBuilder.Entity<Prospect>()
+                .HasOne(p => p.PrivateCustomer)
+                .WithMany()
+                .HasForeignKey(p => p.PrivateCustomerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Prospect>()
+                .HasOne(p => p.CompanyCustomer)
+                .WithMany()
+                .HasForeignKey(p => p.CompanyCustomerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }

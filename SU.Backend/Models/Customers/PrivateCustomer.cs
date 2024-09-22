@@ -17,6 +17,8 @@ namespace SU.Backend.Models.Customers
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
 
+        public ICollection<InsurancePolicyHolder> InsurancePolicyHolders { get; set; }
+
     }
 
 }

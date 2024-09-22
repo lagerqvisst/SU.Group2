@@ -25,6 +25,9 @@ namespace SU.Backend.Models.Customers
 
         public string CompanyEmailAdress { get; set; } //Företagets e-postadress
 
+        public ICollection<InsurancePolicyHolder> InsurancePolicyHolders { get; set; }
+
+
     }
 }
 

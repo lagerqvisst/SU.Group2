@@ -5,6 +5,7 @@ using SU.Backend.Database.Interfaces;
 using SU.Backend.Database.Repositories;
 using SU.Backend.Models.Customers;
 using SU.Backend.Models.Enums.Insurance;
+using SU.Backend.Models.Enums.Insurance.Addons;
 using SU.Backend.Models.Insurance;
 using SU.Backend.Models.Insurance.Coverage;
 using SU.Backend.Services.Interfaces;
@@ -47,7 +48,7 @@ namespace SU.Backend.Services
                 };
 
                 // Hämta PrivateCustomer för InsurancePolicyHolder
-                var privateCustomer = _unitOfWork.PrivateCustomers.GetPrivateCustomers().Result.First();
+                var privateCustomer = _unitOfWork.PrivateCustomers.GetPrivateCustomers().Result.Last();
                 if (privateCustomer == null)
                 {
                     return (false, "No private customer found.");
@@ -70,6 +71,22 @@ namespace SU.Backend.Services
                 {
                     return (false, "No private coverage option found for the input.");
                 }
+
+                 _logger.LogInformation("Adding addon");
+                var addon = await _unitOfWork.InsuranceAddonTypes.GetSpecificAddonType(AddonType.SicknessAccident, 100_000m);
+                if (addon == null)
+                {
+                    return (false, "No addon found for the input.");
+                }
+                _logger.LogInformation("Addon found");
+
+                insurance.InsuranceAddons.Add(new InsuranceAddon
+                {
+                    InsuranceAddonType = addon
+                });
+
+                _logger.LogInformation($"Added Extra Premium to Monthly Premium");
+                privateCoverageOption.MonthlyPremium += addon.BaseExtraPremium;
 
                 // Skapa PrivateCoverage
                 var privateCoverage = new PrivateCoverage
@@ -106,8 +123,6 @@ namespace SU.Backend.Services
         }
 
 
-
-
         public async Task<(bool Success, string Message)> RemoveAllInsurances()
         {
             try
@@ -127,6 +142,7 @@ namespace SU.Backend.Services
                 {
 
                     await _unitOfWork.Insurances.RemoveAsync(insurance);
+                    //Workaround until we fix Cascade Delete problem...
                     await _unitOfWork.InsurancePolicyHolders.RemoveAsync(insurance.InsurancePolicyHolder);
                     await _unitOfWork.InsuredPersons.RemoveAsync(insurance.InsuranceCoverage.PrivateCoverage.InsuredPerson);
                 }

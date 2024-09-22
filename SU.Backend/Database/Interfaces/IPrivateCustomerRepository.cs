@@ -11,5 +11,7 @@ namespace SU.Backend.Database.Interfaces
     {
         Task<PrivateCustomer> GetPrivateCustomerById(PrivateCustomer privateCustomer);
         Task<List<PrivateCustomer>> GetPrivateCustomers();
+
+       Task<List<PrivateCustomer>> GetProspectDataForPrivateCustomers(); 
     }
 }

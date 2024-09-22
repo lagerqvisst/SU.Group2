@@ -25,6 +25,14 @@ namespace SU.Backend.Database.Repositories
         {
             return _context.PrivateCustomers.ToList();
         }
+
+        public async Task<List<PrivateCustomer>> GetProspectDataForPrivateCustomers()
+        {
+            return await _context.PrivateCustomers
+                .Where(x => x.InsurancePolicyHolders.Count > 0 && x.InsurancePolicyHolders.Count < 2)
+                .ToListAsync();
+        }
+
     }
 
 }

@@ -10,5 +10,6 @@ namespace SU.Backend.Database.Interfaces
     public interface IInsurancePolicyHolderRepository
     {
         Task<InsurancePolicyHolder> GetById(InsurancePolicyHolder insurancePolicyHolder);
+        Task<List<InsurancePolicyHolder>> IdentifyProspects();
     }
 }

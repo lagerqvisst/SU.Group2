@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SU.Backend.Models.Insurance;
 
 namespace SU.Backend.Models.Employee
 {
@@ -18,10 +19,9 @@ namespace SU.Backend.Models.Employee
         public int BaseSalary { get; set; }
         public Employee? Manager { get; set; }
         public string? AgentNumber { get; set; }
-
         public string Username { get; set; }
-
         public string Password { get; set; }
+
 
     }
 

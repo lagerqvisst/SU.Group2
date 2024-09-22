@@ -1,4 +1,5 @@
-﻿using SU.Backend.Database.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SU.Backend.Database.Interfaces;
 using SU.Backend.Models.Insurance;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,11 @@ namespace SU.Backend.Database.Repositories
         public async Task<InsurancePolicyHolder> GetById(InsurancePolicyHolder insurancePolicyHolder)
         {
             return await _context.InsurancePolicyHolders.FindAsync(insurancePolicyHolder);
+        }
+
+        public  Task<List<InsurancePolicyHolder>> IdentifyProspects()
+        {
+            return null;
         }
     }
 }

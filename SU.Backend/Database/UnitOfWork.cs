@@ -19,6 +19,10 @@ namespace SU.Backend.Database
 
         public InsuranceRepository Insurances { get; }
 
+        public InsuranceAddonTypeRepository InsuranceAddonTypes { get; }
+
+        public ProspectRepository Prospects { get; }
+
 
 
         public UnitOfWork(Context context)
@@ -32,6 +36,8 @@ namespace SU.Backend.Database
             PrivateCoverages = new PrivateCoverageRepository(_context);
             InsuranceCoverages = new InsuranceCoverageRepository(_context);
             Insurances = new InsuranceRepository(_context);
+            InsuranceAddonTypes = new InsuranceAddonTypeRepository(_context);
+            Prospects = new ProspectRepository(_context);
 
         }
 

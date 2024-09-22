@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SU.Backend.Database;
 
@@ -11,9 +12,10 @@ using SU.Backend.Database;
 namespace SU.Backend.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240922145929_Continued_Prospect")]
+    partial class Continued_Prospect
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -801,9 +803,8 @@ namespace SU.Backend.Migrations
                     b.Property<int?>("PrivateCustomerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ProspectStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("ProspectId");
 
@@ -811,7 +812,7 @@ namespace SU.Backend.Migrations
 
                     b.HasIndex("PrivateCustomerId");
 
-                    b.ToTable("Prospects");
+                    b.ToTable("Prospect");
                 });
 
             modelBuilder.Entity("SU.Backend.Models.Employee.Employee", b =>

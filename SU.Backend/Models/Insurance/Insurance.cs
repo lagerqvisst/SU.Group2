@@ -1,4 +1,5 @@
 ﻿using SU.Backend.Models.Customers;
+using SU.Backend.Models.Employee;
 using SU.Backend.Models.Enums.Insurance;
 using SU.Backend.Models.Insurance.Coverage;
 using System;
@@ -16,7 +17,6 @@ namespace SU.Backend.Models.Insurance
         // Foreign key to InsurancePolicyHolder (Försäkringstagare)
         public int InsurancePolicyHolderId { get; set; } // FK
         public InsurancePolicyHolder InsurancePolicyHolder { get; set; } // Navigation property
-
         public InsuranceCoverage InsuranceCoverage { get; set; } // Navigation property for insurance coverage
 
         // Navigation property for InsuranceAddon

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SU.Backend.Database;
 
@@ -11,9 +12,10 @@ using SU.Backend.Database;
 namespace SU.Backend.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240922143706_Refactor_CustomerFks")]
+    partial class Refactor_CustomerFks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -787,33 +789,6 @@ namespace SU.Backend.Migrations
                     b.ToTable("InsuredPersons");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Prospects.Prospect", b =>
-                {
-                    b.Property<int>("ProspectId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProspectId"), 1L, 1);
-
-                    b.Property<int?>("CompanyCustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PrivateCustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProspectStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ProspectId");
-
-                    b.HasIndex("CompanyCustomerId");
-
-                    b.HasIndex("PrivateCustomerId");
-
-                    b.ToTable("Prospects");
-                });
-
             modelBuilder.Entity("SU.Backend.Models.Employee.Employee", b =>
                 {
                     b.HasOne("SU.Backend.Models.Employee.Employee", "Manager")
@@ -954,23 +929,6 @@ namespace SU.Backend.Migrations
                         .WithMany("InsurancePolicyHolders")
                         .HasForeignKey("PrivateCustomerId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("CompanyCustomer");
-
-                    b.Navigation("PrivateCustomer");
-                });
-
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Prospects.Prospect", b =>
-                {
-                    b.HasOne("SU.Backend.Models.Customers.CompanyCustomer", "CompanyCustomer")
-                        .WithMany()
-                        .HasForeignKey("CompanyCustomerId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("SU.Backend.Models.Customers.PrivateCustomer", "PrivateCustomer")
-                        .WithMany()
-                        .HasForeignKey("PrivateCustomerId")
-                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("CompanyCustomer");
 
