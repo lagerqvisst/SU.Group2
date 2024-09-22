@@ -15,5 +15,9 @@ namespace SU.Backend.Models.Insurance.Coverage
         public decimal MonthlyPremium { get; set; } // Månadspremie
         public DateTime StartDate { get; set; } // Datum när alternativet börjar gälla
         public InsuranceType InsuranceType { get; set; }
+
+        // Navigational property till många PrivateCoverages
+        public ICollection<PrivateCoverage> PrivateCoverages { get; set; } = new List<PrivateCoverage>();
+
     }
 }

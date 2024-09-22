@@ -66,6 +66,22 @@ namespace SU.Backend.Database
                 .HasForeignKey(pi => pi.InsurancePolicyHolderId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // En försäkring har en InsuranceCoverage
+            modelBuilder.Entity<Insurance>()
+                .HasOne(i => i.InsuranceCoverage)
+                .WithOne(ic => ic.Insurance) // Assuming InsuranceCoverage has a reference back to Insurance
+                .HasForeignKey<InsuranceCoverage>(ic => ic.InsuranceId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            //En försäkring kan ha tillägg, just nu enbart relevant för privatförsäkringar enligt bilagan.
+            //Men implementationen stödjer fler tillägg för framtiden. 
+            modelBuilder.Entity<Insurance>()
+                .HasMany(pi => pi.InsuranceAddons)
+                .WithOne(ia => ia.Insurance)
+                .HasForeignKey(ia => ia.PrivateInsuranceId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             // En försäkringstagare kan vara antingen privatperson eller företag.
             modelBuilder.Entity<InsurancePolicyHolder>()
                 .HasOne(ip => ip.PrivateCustomer)
@@ -79,24 +95,6 @@ namespace SU.Backend.Database
                 .HasForeignKey(ip => ip.CompanyCustomerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //En försäkring har en IsuranceCoverage (den agerar grundklass för de olika försäkringstyperna)
-            //Förutom privatförsäkringar har de olika försäkringstyperna flera olika attribut.
-
-            modelBuilder.Entity<Insurance>()
-                .HasOne(pi => pi.InsuranceCoverage) // En Insurance har en InsuranceCoverage
-                .WithOne() // En InsuranceCoverage är kopplad till en Insurance
-                .HasForeignKey<Insurance>(pi => pi.InsuranceCoverageId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-
-            //En försäkring kan ha tillägg, just nu enbart relevant för privatförsäkringar enligt bilagan.
-            //Men implementationen stödjer fler tillägg för framtiden. 
-            modelBuilder.Entity<Insurance>()
-                .HasMany(pi => pi.InsuranceAddons)
-                .WithOne(ia => ia.Insurance)
-                .HasForeignKey(ia => ia.PrivateInsuranceId)
-                .OnDelete(DeleteBehavior.Cascade);
-
             //Ett tillägg har olika typer, de olika typerna har olika uträkningar.
             //Delade upp så det inte blir overcroweden med nullvärden i databasen. 
             modelBuilder.Entity<InsuranceAddon>()
@@ -104,11 +102,6 @@ namespace SU.Backend.Database
                 .WithMany() // Anta att det inte finns en navigationsproperty på InsuranceAddonType
                 .HasForeignKey(ia => ia.InsuranceAddonTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<InsuranceCoverage>()
-                .HasOne(i => i.Insurance)
-                .WithOne(i => i.InsuranceCoverage)
-                .HasForeignKey<InsuranceCoverage>(i => i.InsuranceId);
 
             //Insurance Coverage. Har frivilligt deltagande till de olika försäkringstyperna.
             modelBuilder.Entity<InsuranceCoverage>()
@@ -137,9 +130,10 @@ namespace SU.Backend.Database
 
             modelBuilder.Entity<PrivateCoverage>()
                 .HasOne(pc => pc.PrivateCoverageOption) // En PrivateCoverage har en PrivateCoverageOption
-                .WithOne() // En PrivateCoverageOption kan existera utan att vara kopplad
-                .HasForeignKey<PrivateCoverage>(pco => pco.PrivateCoverageOptionId)
-                .OnDelete(DeleteBehavior.Restrict); // Ta bort om den inte ska radera relaterade objekt
+                .WithMany(pco => pco.PrivateCoverages)  // En PrivateCoverageOption kan ha många PrivateCoverages
+                .HasForeignKey(pc => pc.PrivateCoverageOptionId)
+                .OnDelete(DeleteBehavior.Restrict);     // Bestäm om du vill använda cascade eller restrict
+
 
             modelBuilder.Entity<InsuredPerson>()
                 .HasOne(ep => ep.PrivateCoverage)

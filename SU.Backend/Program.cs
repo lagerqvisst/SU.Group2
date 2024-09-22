@@ -36,9 +36,8 @@ class Program
 
         ///Test InsuranceService
         var insuranceService = host.Services.GetRequiredService<IInsuranceService>();
+        await insuranceService.CreateInsurance(); 
 
-
-        await insuranceService.CreateInsuredPerson("Alex","1980-10-02");
 
 
     }

@@ -28,7 +28,6 @@ namespace SU.Backend.Services
         /// Exempelflöde
         /// </summary>
 
-
         //Steg 1: Skapa försäkringstagare (exempelvis en privatkund)
         public async Task<(bool Success, string Message)> CreateInsurancePolicyHolder(PrivateCustomer? privateCustomer, CompanyCustomer? companyCustomer)
         {
@@ -73,10 +72,6 @@ namespace SU.Backend.Services
                 return (false, "An error occurred while creating the insurance policy holder.");
             }
         }
-
-        //Steg 2 (privatkund): Väljer Privatförsäkringstyp
-        //Skapa InsuranceCoverage objekt först. 
-
         public async Task<(bool Success, string Message)> CreateInsuranceCoverage(Insurance insurance)
         {
             _logger.LogInformation("Creating insurance coverage...");
@@ -105,7 +100,7 @@ namespace SU.Backend.Services
 
 
         }
-        public Task<(bool Success, string Message)> CreateInsuredPerson(string name, string personalNumber)
+        public async Task<(bool Success, string Message)> CreateInsuredPerson(string name, string personalNumber, PrivateCoverage privateCoverage)
         {
             _logger.LogInformation("Creating insured person...");
 
@@ -114,8 +109,11 @@ namespace SU.Backend.Services
                 _unitOfWork.InsuredPersons.Add(new InsuredPerson
                 {
                     Name = name,
-                    PersonalNumber = personalNumber
+                    PersonalNumber = personalNumber,
+                    PrivateCoverage = privateCoverage
+
                 });
+
 
                 // Save the changes asynchronously
                 _logger.LogInformation("Saving changes to database");
@@ -123,17 +121,16 @@ namespace SU.Backend.Services
                 _logger.LogInformation("Changes saved successfully");
 
                 // Return success message after saving
-                return Task.FromResult((true, "Insured person created successfully."));
+                return (true, "Insured person created successfully.");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while creating insured person");
 
                 // Return failure message on error
-                return Task.FromResult((false, "An error occurred while creating the insured person."));
+                return (false, "An error occurred while creating the insured person.");
             }
         }
-
         public async Task<(bool Success, string Message)> CreatePrivateInsuranceCoverage(InsuranceCoverage insuranceCoverage, PrivateCoverageOption privateCoverageOption, InsuredPerson insuredPerson)
         {
             _logger.LogInformation("Creating private insurance coverage...");
@@ -161,5 +158,80 @@ namespace SU.Backend.Services
                 return (false, "An error occurred while creating the private insurance coverage.");
             }
         }
+        public async Task<(bool Success, string Message)> CreateInsurance()
+        {
+            _logger.LogInformation("Creating insurance...");
+
+            try
+            {
+                // Skapa huvudobjektet - Insurance
+                var insurance = new Insurance
+                {
+                    InsuranceType = InsuranceType.ChildAccidentAndHealthInsurance,
+                    InsuranceStatus = InsuranceStatus.Requested,
+                    PaymentPlan = PaymentPlan.Monthly,
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now.AddYears(1),
+                    Note = "This is a test insurance"
+                };
+
+                // Hämta PrivateCustomer för InsurancePolicyHolder
+                var privateCustomer = _unitOfWork.PrivateCustomers.GetPrivateCustomers().Result.First();
+                if (privateCustomer == null)
+                {
+                    return (false, "No private customer found.");
+                }
+
+                // Skapa InsurancePolicyHolder
+                var insurancePolicyHolder = new InsurancePolicyHolder
+                {
+                    PrivateCustomer = privateCustomer
+                };
+
+                // Skapa InsuranceCoverage
+                var insuranceCoverage = new InsuranceCoverage();
+
+                // Hämta PrivateCoverageOption
+                var privateCoverageOption = _unitOfWork.PrivateCoverageOptions.GetPrivateCoverageOptions().Result.First();
+                if (privateCoverageOption == null)
+                {
+                    return (false, "No private coverage option found.");
+                }
+
+                // Skapa PrivateCoverage
+                var privateCoverage = new PrivateCoverage
+                {
+                    InsuranceCoverage = insuranceCoverage,
+                    PrivateCoverageOption = privateCoverageOption,
+                    InsuredPerson = new InsuredPerson
+                    {
+                        Name = "Test Testsson",
+                        PersonalNumber = "19900101-1234"
+                    }
+                };
+
+                // Koppla navigationsobjekten
+                insurance.InsurancePolicyHolder = insurancePolicyHolder;
+                insuranceCoverage.PrivateCoverage = privateCoverage;
+
+                // Tillägg av InsuranceCoverage och koppling
+                insurance.InsuranceCoverage = insuranceCoverage;
+
+
+                // Lägg till Insurance till databasen
+                await _unitOfWork.Insurances.AddAsync(insurance);
+                await _unitOfWork.SaveChangesAsync();
+
+
+                return (true, "Insurance created successfully.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while creating insurance");
+                return (false, "An error occurred while creating the insurance.");
+            }
+        }
+
+
     }
 }

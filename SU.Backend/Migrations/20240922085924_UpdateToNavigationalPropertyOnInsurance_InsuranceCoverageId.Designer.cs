@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SU.Backend.Database;
 
@@ -11,9 +12,10 @@ using SU.Backend.Database;
 namespace SU.Backend.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240922085924_UpdateToNavigationalPropertyOnInsurance_InsuranceCoverageId")]
+    partial class UpdateToNavigationalPropertyOnInsurance_InsuranceCoverageId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,7 +240,8 @@ namespace SU.Backend.Migrations
                     b.HasIndex("InsuredPersonId")
                         .IsUnique();
 
-                    b.HasIndex("PrivateCoverageOptionId");
+                    b.HasIndex("PrivateCoverageOptionId")
+                        .IsUnique();
 
                     b.ToTable("PrivateCoverages");
                 });
@@ -554,6 +557,9 @@ namespace SU.Backend.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("InsuranceCoverageId")
+                        .HasColumnType("int");
+
                     b.Property<int>("InsurancePolicyHolderId")
                         .HasColumnType("int");
 
@@ -852,8 +858,8 @@ namespace SU.Backend.Migrations
                         .IsRequired();
 
                     b.HasOne("SU.Backend.Models.Insurance.Coverage.PrivateCoverageOption", "PrivateCoverageOption")
-                        .WithMany("PrivateCoverages")
-                        .HasForeignKey("PrivateCoverageOptionId")
+                        .WithOne()
+                        .HasForeignKey("SU.Backend.Models.Insurance.Coverage.PrivateCoverage", "PrivateCoverageOptionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -964,11 +970,6 @@ namespace SU.Backend.Migrations
                     b.Navigation("PropertyAndInventoryCoverage");
 
                     b.Navigation("VehicleInsuranceCoverage");
-                });
-
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Coverage.PrivateCoverageOption", b =>
-                {
-                    b.Navigation("PrivateCoverages");
                 });
 
             modelBuilder.Entity("SU.Backend.Models.Insurance.Insurance", b =>

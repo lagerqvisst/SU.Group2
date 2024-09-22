@@ -29,5 +29,24 @@ namespace SU.Backend.Database.Repositories
         {
             _context.Set<TEntity>().Remove(entity);
         }
+
+        //Async 
+        public async Task AddAsync(TEntity entity)
+        {
+            await _context.Set<TEntity>().AddAsync(entity);
+        }
+
+        public async Task UpdateAsync(TEntity entity)
+        {
+            _context.Set<TEntity>().Update(entity);
+            await _context.SaveChangesAsync(); // Spara ändringar
+        }
+
+        public async Task RemoveAsync(TEntity entity)
+        {
+            _context.Set<TEntity>().Remove(entity);
+            await _context.SaveChangesAsync(); // Spara ändringar
+        }
+
     }
 }

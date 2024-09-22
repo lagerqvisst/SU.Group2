@@ -17,7 +17,6 @@ namespace SU.Backend.Models.Insurance
         public int InsurancePolicyHolderId { get; set; } // FK
         public InsurancePolicyHolder InsurancePolicyHolder { get; set; } // Navigation property
 
-        public int InsuranceCoverageId { get; set; } // FK
         public InsuranceCoverage InsuranceCoverage { get; set; } // Navigation property for insurance coverage
 
         // Navigation property for InsuranceAddon
