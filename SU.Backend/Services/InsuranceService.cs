@@ -1,5 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SU.Backend.Database;
+using SU.Backend.Database.Interfaces;
+using SU.Backend.Database.Repositories;
 using SU.Backend.Models.Customers;
 using SU.Backend.Models.Enums.Insurance;
 using SU.Backend.Models.Insurance;
@@ -24,141 +27,9 @@ namespace SU.Backend.Services
             _logger = logger;
         }
 
-        /// <summary>
-        /// Exempelflöde
-        /// </summary>
-
-        //Steg 1: Skapa försäkringstagare (exempelvis en privatkund)
-        public async Task<(bool Success, string Message)> CreateInsurancePolicyHolder(PrivateCustomer? privateCustomer, CompanyCustomer? companyCustomer)
-        {
-            _logger.LogInformation("Creating insurance policy holder...");
-
-            try
-            {
-                // If we did not input a company customer, we assume it is a private customer
-                if (companyCustomer == null)
-                {
-                    _logger.LogInformation("Creating insurance policy holder for private customer");
-
-                    _unitOfWork.InsurancePolicyHolders.Add(new InsurancePolicyHolder
-                    {
-                        PrivateCustomer = privateCustomer
-                    });
-                }
-                else
-                {
-                    _logger.LogInformation("Creating insurance policy holder for company customer");
-
-                    _unitOfWork.InsurancePolicyHolders.Add(new InsurancePolicyHolder
-                    {
-                        CompanyCustomer = companyCustomer
-                    });
-
-                }
-
-                // Save the changes asynchronously
-                _logger.LogInformation("Saving changes to database");
-                _unitOfWork.SaveChanges();
-                _logger.LogInformation("Changes saved successfully");
-
-                // Return success message after saving
-                return (true, "Insurance policy holder created successfully.");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while creating insurance policy holder");
-
-                // Return failure message on error
-                return (false, "An error occurred while creating the insurance policy holder.");
-            }
-        }
-        public async Task<(bool Success, string Message)> CreateInsuranceCoverage(Insurance insurance)
-        {
-            _logger.LogInformation("Creating insurance coverage...");
-
-            try
-            {
-                var insuranceCoverage = new InsuranceCoverage
-                {
-                    Insurance = insurance
-                };
-
-                _logger.LogInformation("Adding insurance coverage to database");
-                _unitOfWork.InsuranceCoverages.Add(insuranceCoverage);
-                _logger.LogInformation("Insurance coverage added successfully");
-                _unitOfWork.SaveChanges();
-                return (true, "Insurance coverage created successfully.");
 
 
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "An error occurred while creating insurance coverage");
-                return (false, "An error occurred while creating the insurance coverage.");
-
-            }
-
-
-        }
-        public async Task<(bool Success, string Message)> CreateInsuredPerson(string name, string personalNumber, PrivateCoverage privateCoverage)
-        {
-            _logger.LogInformation("Creating insured person...");
-
-            try
-            {
-                _unitOfWork.InsuredPersons.Add(new InsuredPerson
-                {
-                    Name = name,
-                    PersonalNumber = personalNumber,
-                    PrivateCoverage = privateCoverage
-
-                });
-
-
-                // Save the changes asynchronously
-                _logger.LogInformation("Saving changes to database");
-                _unitOfWork.SaveChanges();
-                _logger.LogInformation("Changes saved successfully");
-
-                // Return success message after saving
-                return (true, "Insured person created successfully.");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while creating insured person");
-
-                // Return failure message on error
-                return (false, "An error occurred while creating the insured person.");
-            }
-        }
-        public async Task<(bool Success, string Message)> CreatePrivateInsuranceCoverage(InsuranceCoverage insuranceCoverage, PrivateCoverageOption privateCoverageOption, InsuredPerson insuredPerson)
-        {
-            _logger.LogInformation("Creating private insurance coverage...");
-
-            try
-            {
-                var PrivateInsuranceCoverage = new PrivateCoverage
-                {
-                    InsuranceCoverage = insuranceCoverage,
-                    PrivateCoverageOption = privateCoverageOption,
-                    InsuredPerson = insuredPerson
-                };
-
-                _logger.LogInformation("Adding private insurance coverage to database");
-                _unitOfWork.PrivateCoverages.Add(PrivateInsuranceCoverage);
-                _unitOfWork.SaveChanges();
-                _logger.LogInformation("Private insurance coverage added successfully");
-                return (true, "Private insurance coverage created successfully.");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while creating private insurance coverage");
-
-                // Return failure message on error
-                return (false, "An error occurred while creating the private insurance coverage.");
-            }
-        }
-        public async Task<(bool Success, string Message)> CreateInsurance()
+        public async Task<(bool Success, string Message)> CreateTestInsurance()
         {
             _logger.LogInformation("Creating insurance...");
 
@@ -195,6 +66,10 @@ namespace SU.Backend.Services
                 var privateCoverageOption = await _unitOfWork.PrivateCoverageOptions
                     .GetSpecificPrivateCoverageOption(750000, new DateTime(currentYear, 1, 1), insurance.InsuranceType);
 
+                if (privateCoverageOption == null)
+                {
+                    return (false, "No private coverage option found for the input.");
+                }
 
                 // Skapa PrivateCoverage
                 var privateCoverage = new PrivateCoverage
@@ -229,6 +104,46 @@ namespace SU.Backend.Services
                 return (false, "An error occurred while creating the insurance.");
             }
         }
+
+
+
+
+        public async Task<(bool Success, string Message)> RemoveAllInsurances()
+        {
+            try
+            {
+                _logger.LogInformation("Removing all insurances...");
+                var insurances = await _unitOfWork.Insurances.GetAllInsurances();
+
+                if (insurances == null || !insurances.Any())
+                {
+                    _logger.LogInformation("No insurances found to remove.");
+                    return (false, "No insurances found to remove.");
+                }
+
+                _logger.LogInformation($"Removing {insurances.Count} insurances...");
+                
+                foreach( var insurance in insurances)
+                {
+
+                    await _unitOfWork.Insurances.RemoveAsync(insurance);
+                    await _unitOfWork.InsurancePolicyHolders.RemoveAsync(insurance.InsurancePolicyHolder);
+                    await _unitOfWork.InsuredPersons.RemoveAsync(insurance.InsuranceCoverage.PrivateCoverage.InsuredPerson);
+                }
+
+                _logger.LogInformation("Saving changes...");
+                _unitOfWork.SaveChangesAsync();
+                _logger.LogInformation("All insurances removed successfully.");
+
+                return (true, "All insurances removed successfully.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while removing insurances");
+                return (false, $"An error occurred while removing insurances: {ex.Message}");
+            }
+        }
+        
 
 
     }

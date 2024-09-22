@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SU.Backend.Database;
 
@@ -11,9 +12,10 @@ using SU.Backend.Database;
 namespace SU.Backend.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240922113909_TestingWithInsuredPerson_1")]
+    partial class TestingWithInsuredPerson_1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -577,8 +579,7 @@ namespace SU.Backend.Migrations
 
                     b.HasKey("InsuranceId");
 
-                    b.HasIndex("InsurancePolicyHolderId")
-                        .IsUnique();
+                    b.HasIndex("InsurancePolicyHolderId");
 
                     b.ToTable("Insurances");
                 });
@@ -889,8 +890,8 @@ namespace SU.Backend.Migrations
             modelBuilder.Entity("SU.Backend.Models.Insurance.Insurance", b =>
                 {
                     b.HasOne("SU.Backend.Models.Insurance.InsurancePolicyHolder", "InsurancePolicyHolder")
-                        .WithOne("Insurance")
-                        .HasForeignKey("SU.Backend.Models.Insurance.Insurance", "InsurancePolicyHolderId")
+                        .WithMany()
+                        .HasForeignKey("InsurancePolicyHolderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -959,12 +960,6 @@ namespace SU.Backend.Migrations
                     b.Navigation("InsuranceAddons");
 
                     b.Navigation("InsuranceCoverage")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SU.Backend.Models.Insurance.InsurancePolicyHolder", b =>
-                {
-                    b.Navigation("Insurance")
                         .IsRequired();
                 });
 

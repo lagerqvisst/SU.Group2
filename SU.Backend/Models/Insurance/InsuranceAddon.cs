@@ -15,7 +15,7 @@ namespace SU.Backend.Models.Insurance
         public InsuranceAddonType InsuranceAddonType { get; set; } // Navigation property
 
         // Foreign key to PrivateInsurance
-        public int PrivateInsuranceId { get; set; } // FK
+        public int InsuranceId { get; set; } // FK
         public Insurance Insurance { get; set; } // Navigation property
 
         

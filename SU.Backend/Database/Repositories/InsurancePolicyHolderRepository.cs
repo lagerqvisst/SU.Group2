@@ -8,10 +8,15 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Database.Repositories
 {
-    public class InsurancePolicyHolderRepository : Repository<InsurancePolicyHolder>
+    public class InsurancePolicyHolderRepository : Repository<InsurancePolicyHolder>, IInsurancePolicyHolderRepository
     {
         public InsurancePolicyHolderRepository(Context context) : base(context)
         {
+        }
+
+        public async Task<InsurancePolicyHolder> GetById(InsurancePolicyHolder insurancePolicyHolder)
+        {
+            return await _context.InsurancePolicyHolders.FindAsync(insurancePolicyHolder);
         }
     }
 }

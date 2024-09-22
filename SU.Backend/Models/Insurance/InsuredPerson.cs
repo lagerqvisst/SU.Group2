@@ -17,13 +17,9 @@ namespace SU.Backend.Models.Insurance
         public string Name { get; set; }
         public string PersonalNumber { get; set; } // Personnummer
 
-        // Foreign key for the related policyholder
-        public int PrivateCoverageId { get; set; } // FK
-        public int? InsurancePolicyHolderId { get; set; } // FK
+        // Om en försäkrad person återfinns på flera försäkringar, så kan det vara bra att ha en samling av försäkringar.
+        public ICollection<PrivateCoverage> PrivateCoverages { get; set; } // Samling av försäkringar
 
-        // Navigation property to the policyholder
-        public InsurancePolicyHolder? InsurancePolicyHolder { get; set; }
-        public PrivateCoverage PrivateCoverage { get; set; }
 
     }
 

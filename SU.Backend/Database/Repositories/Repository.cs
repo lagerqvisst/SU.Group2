@@ -30,6 +30,11 @@ namespace SU.Backend.Database.Repositories
             _context.Set<TEntity>().Remove(entity);
         }
 
+        public void RemoveRange(IEnumerable<TEntity> entities)
+        {
+            _context.Set<TEntity>().RemoveRange(entities);
+        }
+
         //Async 
         public async Task AddAsync(TEntity entity)
         {
@@ -47,6 +52,13 @@ namespace SU.Backend.Database.Repositories
             _context.Set<TEntity>().Remove(entity);
             await _context.SaveChangesAsync(); // Spara ändringar
         }
+
+        public async Task RemoveRangeAsync(IEnumerable<TEntity> entities)
+        {
+            _context.Set<TEntity>().RemoveRange(entities);
+            await _context.SaveChangesAsync(); // Spara ändringar
+        }
+
 
     }
 }

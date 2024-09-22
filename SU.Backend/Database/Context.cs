@@ -64,14 +64,14 @@ namespace SU.Backend.Database
                 .HasOne(pi => pi.InsurancePolicyHolder)
                 .WithMany()
                 .HasForeignKey(pi => pi.InsurancePolicyHolderId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             // En försäkring har en InsuranceCoverage
             modelBuilder.Entity<Insurance>()
                 .HasOne(i => i.InsuranceCoverage)
                 .WithOne(ic => ic.Insurance) // Assuming InsuranceCoverage has a reference back to Insurance
                 .HasForeignKey<InsuranceCoverage>(ic => ic.InsuranceId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             //En försäkring kan ha tillägg, just nu enbart relevant för privatförsäkringar enligt bilagan.
@@ -79,7 +79,7 @@ namespace SU.Backend.Database
             modelBuilder.Entity<Insurance>()
                 .HasMany(pi => pi.InsuranceAddons)
                 .WithOne(ia => ia.Insurance)
-                .HasForeignKey(ia => ia.PrivateInsuranceId)
+                .HasForeignKey(ia => ia.InsuranceId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             // En försäkringstagare kan vara antingen privatperson eller företag.
@@ -95,6 +95,12 @@ namespace SU.Backend.Database
                 .HasForeignKey(ip => ip.CompanyCustomerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<InsurancePolicyHolder>()
+                .HasOne(ip => ip.Insurance)
+                .WithOne(i => i.InsurancePolicyHolder)
+                .HasForeignKey<Insurance>(i => i.InsurancePolicyHolderId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             //Ett tillägg har olika typer, de olika typerna har olika uträkningar.
             //Delade upp så det inte blir overcroweden med nullvärden i databasen. 
             modelBuilder.Entity<InsuranceAddon>()
@@ -102,6 +108,13 @@ namespace SU.Backend.Database
                 .WithMany() // Anta att det inte finns en navigationsproperty på InsuranceAddonType
                 .HasForeignKey(ia => ia.InsuranceAddonTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // En försäkring har en InsuranceCoverage
+            modelBuilder.Entity<InsuranceCoverage>()
+                .HasOne(ic => ic.Insurance)
+                .WithOne(i => i.InsuranceCoverage)
+                .HasForeignKey<InsuranceCoverage>(ic => ic.InsuranceId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             //Insurance Coverage. Har frivilligt deltagande till de olika försäkringstyperna.
             modelBuilder.Entity<InsuranceCoverage>()
@@ -114,7 +127,7 @@ namespace SU.Backend.Database
                 .HasOne(ic => ic.PrivateCoverage)
                 .WithOne(pc => pc.InsuranceCoverage)
                 .HasForeignKey<PrivateCoverage>(pc => pc.InsuranceCoverageId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<InsuranceCoverage>()
                 .HasOne(ic => ic.PropertyAndInventoryCoverage)
@@ -134,12 +147,13 @@ namespace SU.Backend.Database
                 .HasForeignKey(pc => pc.PrivateCoverageOptionId)
                 .OnDelete(DeleteBehavior.Restrict);     // Bestäm om du vill använda cascade eller restrict
 
+            modelBuilder.Entity<PrivateCoverage>()
+                .HasOne(pc => pc.InsuredPerson)
+                .WithMany(ip => ip.PrivateCoverages) // Ändra till WithMany
+                .HasForeignKey(pc => pc.InsuredPersonId)
+                .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<InsuredPerson>()
-                .HasOne(ep => ep.PrivateCoverage)
-                .WithOne(pc => pc.InsuredPerson)
-                .HasForeignKey<PrivateCoverage>(pc => pc.InsuredPersonId)
-                .OnDelete(DeleteBehavior.Restrict);
+            
 
             modelBuilder.Entity<VehicleInsuranceCoverage>()
                 .HasOne(vic => vic.RiskZone) // En VehicleInsuranceCoverage har en RiskZone
