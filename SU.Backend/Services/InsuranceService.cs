@@ -191,12 +191,10 @@ namespace SU.Backend.Services
                 // Skapa InsuranceCoverage
                 var insuranceCoverage = new InsuranceCoverage();
 
-                // Hämta PrivateCoverageOption
-                var privateCoverageOption = _unitOfWork.PrivateCoverageOptions.GetPrivateCoverageOptions().Result.First();
-                if (privateCoverageOption == null)
-                {
-                    return (false, "No private coverage option found.");
-                }
+                var currentYear = DateTime.Now.Year;
+                var privateCoverageOption = await _unitOfWork.PrivateCoverageOptions
+                    .GetSpecificPrivateCoverageOption(750000, new DateTime(currentYear, 1, 1), insurance.InsuranceType);
+
 
                 // Skapa PrivateCoverage
                 var privateCoverage = new PrivateCoverage

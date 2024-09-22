@@ -1,4 +1,5 @@
-﻿using SU.Backend.Models.Insurance.Coverage;
+﻿using SU.Backend.Models.Enums.Insurance;
+using SU.Backend.Models.Insurance.Coverage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace SU.Backend.Database.Interfaces
     public interface IPrivateCoverageOptionRepository
     {
         Task<List<PrivateCoverageOption>> GetPrivateCoverageOptions();
+
+        Task<PrivateCoverageOption> GetSpecificPrivateCoverageOption(decimal coverageAmount, DateTime startDate, InsuranceType insuranceType); 
     }
 }

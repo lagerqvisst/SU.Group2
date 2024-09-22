@@ -1,4 +1,6 @@
-﻿using SU.Backend.Database.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SU.Backend.Database.Interfaces;
+using SU.Backend.Models.Enums.Insurance;
 using SU.Backend.Models.Insurance.Coverage;
 using System;
 using System.Collections.Generic;
@@ -18,5 +20,30 @@ namespace SU.Backend.Database.Repositories
         {
             return _context.PrivateCoverageOption.ToList();
         }
+
+        public async Task<PrivateCoverageOption> GetSpecificPrivateCoverageOption(decimal coverageAmount, DateTime startDate, InsuranceType insuranceType)
+        {
+            int year = startDate.Year; // Få året från startdatumet
+
+            // Logga de inkommande värdena
+            Console.WriteLine($"Coverage Amount: {coverageAmount}, Start Date: {startDate.ToShortDateString()}, Year: {year}, Insurance Type: {insuranceType}");
+
+            // Hämta alla alternativ som matchar det givna året och försäkringstypen
+            var matchingOptions = await _context.PrivateCoverageOption
+                .Where(x => x.StartDate.Year == year && x.InsuranceType == insuranceType)
+                .ToListAsync();
+
+            // Logga alla alternativ för att se vad som finns
+            foreach (var option in matchingOptions)
+            {
+                Console.WriteLine($"Found Option - Amount: {option.CoverageAmount}, Start Date: {option.StartDate.ToShortDateString()}, Type: {option.InsuranceType}");
+            }
+
+            // Försök hämta den specifika täckningsalternativet
+            return await _context.PrivateCoverageOption
+                .FirstOrDefaultAsync(x => x.CoverageAmount == coverageAmount && x.StartDate.Year == year && x.InsuranceType == insuranceType);
+        }
+
+
     }
 }
