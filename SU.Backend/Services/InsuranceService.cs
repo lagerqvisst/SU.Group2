@@ -85,8 +85,7 @@ namespace SU.Backend.Services
                     InsuranceAddonType = addon
                 });
 
-                _logger.LogInformation($"Added Extra Premium to Monthly Premium");
-                privateCoverageOption.MonthlyPremium += addon.BaseExtraPremium;
+                
 
                 // Skapa PrivateCoverage
                 var privateCoverage = new PrivateCoverage

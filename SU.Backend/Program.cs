@@ -29,8 +29,7 @@ class Program
 
         ///Test EmplyeeController
         var employeeController = host.Services.GetRequiredService<EmployeeController>();
-        await employeeController.CreateRandomNewEmployee(EmployeeType.OutsideSales);
-        await employeeController.CreateRandomNewEmployee(EmployeeType.InsideSales);
+        //await employeeController.CreateRandomNewEmployee(EmployeeType.OutsideSales);
 
         ///Test PrivateCustomerController
         var privateCustomerController = host.Services.GetRequiredService<PrivateCustomerController>();
@@ -43,7 +42,7 @@ class Program
         ///Test InsuranceService
         var insuranceService = host.Services.GetRequiredService<IInsuranceService>();
         //await insuranceService.CreateTestInsurance();
-        //await insuranceService.RemoveAllInsurances(); 
+        await insuranceService.RemoveAllInsurances(); 
 
         var prospectService = host.Services.GetRequiredService<IProspectService>();
         //await prospectService.IdentifyProspects();

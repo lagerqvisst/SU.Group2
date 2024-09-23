@@ -14,7 +14,6 @@ namespace SU.Backend.Models.Insurance.Coverage
         public int PrivateCoverageId { get; set; } // PK
         public int InsuranceCoverageId { get; set; } // FK till InsuranceCoverage
         public int InsuredPersonId { get; set; } // FK till InsuredPerson
-
         public int PrivateCoverageOptionId { get; set; } // FK till PrivateCoverageOption (Nullable)
         public PrivateCoverageOption PrivateCoverageOption { get; set; } // Navigation till PrivateCoverageOption
         public InsuredPerson InsuredPerson { get; set; } // Navigation till InsuredPerson
