@@ -29,7 +29,7 @@ namespace SU.Backend.Database.Repositories
         public async Task<List<PrivateCustomer>> GetProspectDataForPrivateCustomers()
         {
             return await _context.PrivateCustomers
-                .Where(x => x.InsurancePolicyHolders.Count > 0 && x.InsurancePolicyHolders.Count < 2)
+                .Where(x => x.InsurancePolicyHolders.Count == 1)
                 .ToListAsync();
         }
 
