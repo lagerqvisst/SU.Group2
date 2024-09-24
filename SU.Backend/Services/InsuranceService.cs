@@ -4,6 +4,7 @@ using SU.Backend.Database;
 using SU.Backend.Database.Interfaces;
 using SU.Backend.Database.Repositories;
 using SU.Backend.Models.Customers;
+using SU.Backend.Models.Enums;
 using SU.Backend.Models.Enums.Insurance;
 using SU.Backend.Models.Enums.Insurance.Addons;
 using SU.Backend.Models.Insurances;
@@ -47,21 +48,27 @@ namespace SU.Backend.Services
                     Note = "This is a test insurance"
                 };
 
+                _logger.LogInformation("Finding test customer.");
                 // Hämta PrivateCustomer för InsurancePolicyHolder
                 var privateCustomer = _unitOfWork.PrivateCustomers.GetPrivateCustomers().Result.Last();
                 if (privateCustomer == null)
                 {
                     return (false, "No private customer found.");
                 }
+                _logger.LogInformation("Test customer found: {CustomerId} - {CustomerName}", privateCustomer.PrivateCustomerId, privateCustomer.FirstName);
 
+                //_logger.LogInformation
+
+                _logger.LogInformation("Creating InsurancePolicyHolder");
                 // Skapa InsurancePolicyHolder
-                var insurancePolicyHolder = new InsurancePolicyHolder
+                insurance.InsurancePolicyHolder = new InsurancePolicyHolder
                 {
                     PrivateCustomer = privateCustomer
                 };
+                _logger.LogInformation("Assigned fetched customer as insurance policy holder of insurance");
 
                 // Skapa InsuranceCoverage
-                var insuranceCoverage = new InsuranceCoverage();
+               
 
                 var currentYear = DateTime.Now.Year;
                 var privateCoverageOption = await _unitOfWork.PrivateCoverageOptions
@@ -85,9 +92,16 @@ namespace SU.Backend.Services
                     InsuranceAddonType = addon
                 });
 
-       
+                _logger.LogInformation("Calculating premium, adding both default premium and addon-premium (if added). Default Premium: {DefaultPremium}, Addon Premium: {AddonPremium}",
+                    privateCoverageOption.MonthlyPremium,
+                    addon.BaseExtraPremium);
+
+                insurance.Premium = privateCoverageOption.MonthlyPremium + addon.BaseExtraPremium;
+
+                _logger.LogInformation("Premium calculated: {CalculatedPremium}", insurance.Premium);
 
                 // Skapa PrivateCoverage
+                var insuranceCoverage = new InsuranceCoverage();
                 var privateCoverage = new PrivateCoverage
                 {
                     InsuranceCoverage = insuranceCoverage,
@@ -100,12 +114,24 @@ namespace SU.Backend.Services
                 };
 
                 // Koppla navigationsobjekten
-                insurance.InsurancePolicyHolder = insurancePolicyHolder;
                 insuranceCoverage.PrivateCoverage = privateCoverage;
 
-                // Tillägg av InsuranceCoverage och koppling
-                insurance.InsuranceCoverage = insuranceCoverage;
+                // Lägg till vem som sålde försäkringen.
+                _logger.LogInformation("Adding seller to insurance");
 
+                // Hämta säljaren med angiven roll.
+                var seller = await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.OutsideSales);
+
+                // Logga information om säljaren.
+                if (seller != null)
+                {
+                    insurance.Seller = seller;
+                    _logger.LogInformation("Seller added to insurance: {SellerId} - {SellerName}", seller.EmployeeId, seller.FirstName);
+                }
+                else
+                {
+                    _logger.LogWarning($"No seller found.");
+                }
 
                 // Lägg till Insurance till databasen
                 await _unitOfWork.Insurances.AddAsync(insurance);

@@ -50,6 +50,7 @@ namespace SU.Backend.Database.Utility
             var decimalTypes = new[]
             {
                 (typeof(InsuranceAddonType), new[] { "BaseExtraPremium", "CoverageAmount" }),
+                (typeof(Insurance), new[] { "Premium"}),
                 (typeof(LiabilityCoverage), new[] { "MonthlyPremium", "CoverageAmount" }),
                 (typeof(PrivateCoverageOption), new[] { "MonthlyPremium", "CoverageAmount" }),
                 (typeof(VehicleInsuranceCoverage), new[] {"BaseCost" , "Deductible" }),
@@ -70,14 +71,14 @@ namespace SU.Backend.Database.Utility
         // This class seeds the database with the different risk zones.
         // The data is hardcoded and will be added to the database when the database is created.
         // The related data is found from the business doucmentation (Bilaga 2).
-        public static void SeedRiskZones(this ModelBuilder modelBuilder)
+        public static void SeedRiskzones(this ModelBuilder modelBuilder)
         {
             // Seed för RizkZone
-            modelBuilder.Entity<RizkZone>().HasData(
-                new RizkZone { RiskZoneId = 1, RiskZoneLevel = RiskZoneLevel.Zone1, ZoneFactor = 1.3 },
-                new RizkZone { RiskZoneId = 2, RiskZoneLevel = RiskZoneLevel.Zone2, ZoneFactor = 1.2 },
-                new RizkZone { RiskZoneId = 3, RiskZoneLevel = RiskZoneLevel.Zone3, ZoneFactor = 1.1 },
-                new RizkZone { RiskZoneId = 4, RiskZoneLevel = RiskZoneLevel.Zone4, ZoneFactor = 1.0 }
+            modelBuilder.Entity<Rizkzone>().HasData(
+                new Rizkzone { RiskzoneId = 1, RiskzoneLevel = RiskzoneLevel.Zone1, ZoneFactor = 1.3 },
+                new Rizkzone { RiskzoneId = 2, RiskzoneLevel = RiskzoneLevel.Zone2, ZoneFactor = 1.2 },
+                new Rizkzone { RiskzoneId = 3, RiskzoneLevel = RiskzoneLevel.Zone3, ZoneFactor = 1.1 },
+                new Rizkzone { RiskzoneId = 4, RiskzoneLevel = RiskzoneLevel.Zone4, ZoneFactor = 1.0 }
             );
         }
 

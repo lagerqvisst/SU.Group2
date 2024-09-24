@@ -5,12 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SU.Backend.Models.Insurances;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SU.Backend.Models.Employees
 {
     public class Employee
     {
 
+        [Key]
         public int EmployeeId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -19,8 +22,10 @@ namespace SU.Backend.Models.Employees
         public int BaseSalary { get; set; }
 
         // Chef/Manager relation
+
         public Employee? Manager { get; set; }  // Navigation property
         public int? ManagerId { get; set; }     // Foreign key property
+
         public string? AgentNumber { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }

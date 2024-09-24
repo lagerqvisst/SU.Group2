@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Models.Enums
 {
-    public enum RiskZoneLevel
+    public enum RiskzoneLevel
     {
         Zone1, // Zon 1 high risk
         Zone2, // Zon 2

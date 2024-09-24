@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SU.Backend.Models.Enums.Prospects;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SU.Backend.Models.Insurances.Prospects
 {
@@ -23,12 +24,14 @@ namespace SU.Backend.Models.Insurances.Prospects
         // Foreign keys
         public int? PrivateCustomerId { get; set; }
         public int? CompanyCustomerId { get; set; }
-        public int? EmployeeId { get; set; }
+
+        [ForeignKey("Seller")]
+        public int? SellerId { get; set; }
 
         // Navigation properties
         public PrivateCustomer? PrivateCustomer { get; set; }
         public CompanyCustomer? CompanyCustomer { get; set; }
-        public Employee? Employee { get; set; }
+        public Employee? Seller { get; set; }
     }
 
 }

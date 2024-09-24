@@ -1,6 +1,7 @@
 ﻿using SU.Backend.Models.Insurances;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace SU.Backend.Models.Customers
 {
     public class CompanyCustomer
     {
+
         public int CompanyCustomerId { get; set; } // (PK)
 
         public string OrganizationNumber { get; set; } //Organisationsnummer

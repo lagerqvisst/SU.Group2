@@ -1,16 +1,18 @@
 ﻿using SU.Backend.Models.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SU.Backend.Models.Insurances.Coverage
 {
-    public class RizkZone
+    public class Rizkzone
     {
-        public int RiskZoneId { get; set; } // PK
-        public RiskZoneLevel RiskZoneLevel { get; set; } // Riskzon
+
+        [Key] public int RiskzoneId { get; set; } // PK
+        public RiskzoneLevel RiskzoneLevel { get; set; } // Riskzon
         public double ZoneFactor { get; set; } // Zonfaktor
 
         // Navigation properties

@@ -10,11 +10,13 @@ namespace SU.Backend.Models.Insurances
         public int? CompanyCustomerId { get; set; } // FK, nullable
         public int? PrivateCustomerId { get; set; } // FK, nullable
 
-        public Insurance Insurance { get; set; } // Navigation property
+        // Här är ICollection för att representera flera försäkringar
+        public ICollection<Insurance> Insurances { get; set; } = new List<Insurance>(); // Navigation property
 
         public CompanyCustomer? CompanyCustomer { get; set; } // Nullable object
         public PrivateCustomer? PrivateCustomer { get; set; } // Nullable object
     }
+
 
 
 

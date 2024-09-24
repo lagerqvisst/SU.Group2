@@ -21,7 +21,7 @@ namespace SU.Backend.Database.Repositories
             return await _context.Prospects
                 .Include(p => p.PrivateCustomer)
                 .Include(p => p.CompanyCustomer)
-                .Include(e => e.Employee)
+                .Include(e => e.Seller)
                 .ToListAsync();
         }
 

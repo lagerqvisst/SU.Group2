@@ -116,7 +116,7 @@ namespace SU.Backend.Services
             try
             {
                 _logger.LogInformation("Getting 1 Seller from Employee Repository");
-                var seller = await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.InsideSales);
+                var seller = await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.OutsideSales);
 
                 if (seller == null)
                 {
@@ -143,9 +143,9 @@ namespace SU.Backend.Services
 
                 foreach (var prospect in prospects)
                 {
-                    if (prospect.Employee == null)
+                    if (prospect.Seller == null)
                     {
-                        prospect.Employee = seller;
+                        prospect.Seller = seller;
                         prospect.AssignedAgentNumber = seller.AgentNumber;
 
                         await _unitOfWork.Prospects.UpdateAsync(prospect);

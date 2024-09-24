@@ -46,7 +46,7 @@ class Program
 
         var prospectService = host.Services.GetRequiredService<IProspectService>();
         //await prospectService.IdentifyProspects();
-        //await prospectService.TestAssignSellerToProspect();
+        await prospectService.TestAssignSellerToProspect();
 
     }
 

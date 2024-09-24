@@ -4,23 +4,23 @@
 
 namespace SU.Backend.Migrations
 {
-    public partial class AddedTypeColumn_Prospect : Migration
+    public partial class AddedPremiumToInsuranceObject : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "ProspectType",
-                table: "Prospects",
-                type: "nvarchar(max)",
+            migrationBuilder.AddColumn<decimal>(
+                name: "Premium",
+                table: "Insurances",
+                type: "decimal(18,2)",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: 0m);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "ProspectType",
-                table: "Prospects");
+                name: "Premium",
+                table: "Insurances");
         }
     }
 }
