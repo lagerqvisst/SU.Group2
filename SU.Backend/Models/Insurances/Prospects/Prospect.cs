@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SU.Backend.Models.Enums.Prospects;
 
-namespace SU.Backend.Models.Insurance.Prospects
+namespace SU.Backend.Models.Insurances.Prospects
 {
     public class Prospect
     {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SU.Backend.Database.Interfaces;
 using SU.Backend.Models.Enums.Insurance.Addons;
-using SU.Backend.Models.Insurance;
-using SU.Backend.Models.Insurance.Coverage;
+using SU.Backend.Models.Insurances;
+using SU.Backend.Models.Insurances.Coverage;
 using System;
 using System.Collections.Generic;
 using System.Linq;

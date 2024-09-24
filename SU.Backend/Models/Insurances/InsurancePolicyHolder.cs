@@ -1,7 +1,7 @@
 ﻿using SU.Backend.Models.Customers;
-using SU.Backend.Models.Insurance.Prospects;
+using SU.Backend.Models.Insurances.Prospects;
 
-namespace SU.Backend.Models.Insurance
+namespace SU.Backend.Models.Insurances
 {
     public class InsurancePolicyHolder
     {

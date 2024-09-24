@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SU.Backend.Models.Insurance
+namespace SU.Backend.Models.Insurances
 {
     public class InsuranceAddon
     {

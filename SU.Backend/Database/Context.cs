@@ -2,12 +2,12 @@
 using Microsoft.Extensions.Configuration;
 using SU.Backend.Models.Customers;
 using SU.Backend.Models.Employees;
-using SU.Backend.Models.Insurance;
+using SU.Backend.Models.Insurances;
 using SU.Backend.Models.Enums;
-using SU.Backend.Models.Insurance.Coverage;
+using SU.Backend.Models.Insurances.Coverage;
 using System.ComponentModel;
 using SU.Backend.Database.Utility;
-using SU.Backend.Models.Insurance.Prospects;
+using SU.Backend.Models.Insurances.Prospects;
 
 namespace SU.Backend.Database
 {
@@ -67,6 +67,18 @@ namespace SU.Backend.Database
                 .HasOne(pi => pi.InsurancePolicyHolder)
                 .WithMany()
                 .HasForeignKey(pi => pi.InsurancePolicyHolderId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Employee>()
+                .HasOne(e => e.Manager)
+                .WithMany()
+                .HasForeignKey(e => e.ManagerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Insurance>()
+                .HasOne(e=> e.Seller)
+                .WithMany()
+                .HasForeignKey(e => e.SellerId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             // En försäkring har en InsuranceCoverage

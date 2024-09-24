@@ -1,14 +1,14 @@
 ﻿using SU.Backend.Models.Customers;
 using SU.Backend.Models.Employees;
 using SU.Backend.Models.Enums.Insurance;
-using SU.Backend.Models.Insurance.Coverage;
+using SU.Backend.Models.Insurances.Coverage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SU.Backend.Models.Insurance
+namespace SU.Backend.Models.Insurances
 {
     public class Insurance
     {
@@ -21,6 +21,9 @@ namespace SU.Backend.Models.Insurance
 
         // Navigation property for InsuranceAddon
         public ICollection<InsuranceAddon>? InsuranceAddons { get; set; } = new List<InsuranceAddon>(); // Hanterar tillval
+
+        public int SellerId { get; set; } // FK to Employee
+        public Employee Seller { get; set; } // Navigation property for seller
 
         // Insurance-specific fields
         public InsuranceType InsuranceType { get; set; } // Enum for insurance type

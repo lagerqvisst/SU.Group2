@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SU.Backend.Database.Interfaces;
-using SU.Backend.Models.Insurance.Prospects;
+using SU.Backend.Models.Insurances.Prospects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

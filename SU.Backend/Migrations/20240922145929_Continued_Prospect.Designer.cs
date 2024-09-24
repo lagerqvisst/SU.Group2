@@ -171,7 +171,7 @@ namespace SU.Backend.Migrations
                     b.ToTable("EmployeeRoleAssignments");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Coverage.InsuranceCoverage", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.InsuranceCoverage", b =>
                 {
                     b.Property<int>("InsuranceCoverageId")
                         .ValueGeneratedOnAdd()
@@ -190,7 +190,7 @@ namespace SU.Backend.Migrations
                     b.ToTable("InsuranceCoverages");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Coverage.LiabilityCoverage", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.LiabilityCoverage", b =>
                 {
                     b.Property<int>("LiabilityCoverageId")
                         .ValueGeneratedOnAdd()
@@ -215,7 +215,7 @@ namespace SU.Backend.Migrations
                     b.ToTable("LiabilityCoverage");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Coverage.PrivateCoverage", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.PrivateCoverage", b =>
                 {
                     b.Property<int>("PrivateCoverageId")
                         .ValueGeneratedOnAdd()
@@ -244,7 +244,7 @@ namespace SU.Backend.Migrations
                     b.ToTable("PrivateCoverages");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Coverage.PrivateCoverageOption", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.PrivateCoverageOption", b =>
                 {
                     b.Property<int>("PrivateCoverageOptionId")
                         .ValueGeneratedOnAdd()
@@ -432,7 +432,7 @@ namespace SU.Backend.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Coverage.PropertyAndInventoryCoverage", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.PropertyAndInventoryCoverage", b =>
                 {
                     b.Property<int>("PropertyAndInventoryCoverageId")
                         .ValueGeneratedOnAdd()
@@ -467,7 +467,7 @@ namespace SU.Backend.Migrations
                     b.ToTable("PropertyAndInventoryCoverage");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Coverage.RizkZone", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.RizkZone", b =>
                 {
                     b.Property<int>("RiskZoneId")
                         .ValueGeneratedOnAdd()
@@ -513,7 +513,7 @@ namespace SU.Backend.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Coverage.VehicleInsuranceCoverage", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.VehicleInsuranceCoverage", b =>
                 {
                     b.Property<int>("VehicleInsuranceCoverageId")
                         .ValueGeneratedOnAdd()
@@ -544,7 +544,7 @@ namespace SU.Backend.Migrations
                     b.ToTable("VehicleInsuranceCoverage");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Insurance", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Insurance", b =>
                 {
                     b.Property<int>("InsuranceId")
                         .ValueGeneratedOnAdd()
@@ -585,7 +585,7 @@ namespace SU.Backend.Migrations
                     b.ToTable("Insurances");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.InsuranceAddon", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.InsuranceAddon", b =>
                 {
                     b.Property<int>("InsuranceAddonId")
                         .ValueGeneratedOnAdd()
@@ -608,7 +608,7 @@ namespace SU.Backend.Migrations
                     b.ToTable("InsuranceAddons");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.InsuranceAddonType", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.InsuranceAddonType", b =>
                 {
                     b.Property<int>("InsuranceAddonTypeId")
                         .ValueGeneratedOnAdd()
@@ -745,7 +745,7 @@ namespace SU.Backend.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.InsurancePolicyHolder", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.InsurancePolicyHolder", b =>
                 {
                     b.Property<int>("InsurancePolicyHolderId")
                         .ValueGeneratedOnAdd()
@@ -768,7 +768,7 @@ namespace SU.Backend.Migrations
                     b.ToTable("InsurancePolicyHolders");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.InsuredPerson", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.InsuredPerson", b =>
                 {
                     b.Property<int>("InsuredPersonId")
                         .ValueGeneratedOnAdd()
@@ -789,7 +789,7 @@ namespace SU.Backend.Migrations
                     b.ToTable("InsuredPersons");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Prospects.Prospect", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Prospects.Prospect", b =>
                 {
                     b.Property<int>("ProspectId")
                         .ValueGeneratedOnAdd()
@@ -835,43 +835,43 @@ namespace SU.Backend.Migrations
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Coverage.InsuranceCoverage", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.InsuranceCoverage", b =>
                 {
-                    b.HasOne("SU.Backend.Models.Insurance.Insurance", "Insurance")
+                    b.HasOne("SU.Backend.Models.Insurances.Insurance", "Insurance")
                         .WithOne("InsuranceCoverage")
-                        .HasForeignKey("SU.Backend.Models.Insurance.Coverage.InsuranceCoverage", "InsuranceId")
+                        .HasForeignKey("SU.Backend.Models.Insurances.Coverage.InsuranceCoverage", "InsuranceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Insurance");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Coverage.LiabilityCoverage", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.LiabilityCoverage", b =>
                 {
-                    b.HasOne("SU.Backend.Models.Insurance.Coverage.InsuranceCoverage", "InsuranceCoverage")
+                    b.HasOne("SU.Backend.Models.Insurances.Coverage.InsuranceCoverage", "InsuranceCoverage")
                         .WithOne("LiabilityCoverage")
-                        .HasForeignKey("SU.Backend.Models.Insurance.Coverage.LiabilityCoverage", "InsuranceCoverageId")
+                        .HasForeignKey("SU.Backend.Models.Insurances.Coverage.LiabilityCoverage", "InsuranceCoverageId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("InsuranceCoverage");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Coverage.PrivateCoverage", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.PrivateCoverage", b =>
                 {
-                    b.HasOne("SU.Backend.Models.Insurance.Coverage.InsuranceCoverage", "InsuranceCoverage")
+                    b.HasOne("SU.Backend.Models.Insurances.Coverage.InsuranceCoverage", "InsuranceCoverage")
                         .WithOne("PrivateCoverage")
-                        .HasForeignKey("SU.Backend.Models.Insurance.Coverage.PrivateCoverage", "InsuranceCoverageId")
+                        .HasForeignKey("SU.Backend.Models.Insurances.Coverage.PrivateCoverage", "InsuranceCoverageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SU.Backend.Models.Insurance.InsuredPerson", "InsuredPerson")
+                    b.HasOne("SU.Backend.Models.Insurances.InsuredPerson", "InsuredPerson")
                         .WithMany("PrivateCoverages")
                         .HasForeignKey("InsuredPersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SU.Backend.Models.Insurance.Coverage.PrivateCoverageOption", "PrivateCoverageOption")
+                    b.HasOne("SU.Backend.Models.Insurances.Coverage.PrivateCoverageOption", "PrivateCoverageOption")
                         .WithMany("PrivateCoverages")
                         .HasForeignKey("PrivateCoverageOptionId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -884,28 +884,28 @@ namespace SU.Backend.Migrations
                     b.Navigation("PrivateCoverageOption");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Coverage.PropertyAndInventoryCoverage", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.PropertyAndInventoryCoverage", b =>
                 {
-                    b.HasOne("SU.Backend.Models.Insurance.Coverage.InsuranceCoverage", "InsuranceCoverage")
+                    b.HasOne("SU.Backend.Models.Insurances.Coverage.InsuranceCoverage", "InsuranceCoverage")
                         .WithOne("PropertyAndInventoryCoverage")
-                        .HasForeignKey("SU.Backend.Models.Insurance.Coverage.PropertyAndInventoryCoverage", "InsuranceCoverageId")
+                        .HasForeignKey("SU.Backend.Models.Insurances.Coverage.PropertyAndInventoryCoverage", "InsuranceCoverageId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("InsuranceCoverage");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Coverage.VehicleInsuranceCoverage", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.VehicleInsuranceCoverage", b =>
                 {
-                    b.HasOne("SU.Backend.Models.Insurance.Coverage.InsuranceCoverage", "InsuranceCoverage")
+                    b.HasOne("SU.Backend.Models.Insurances.Coverage.InsuranceCoverage", "InsuranceCoverage")
                         .WithOne("VehicleInsuranceCoverage")
-                        .HasForeignKey("SU.Backend.Models.Insurance.Coverage.VehicleInsuranceCoverage", "InsuranceCoverageId")
+                        .HasForeignKey("SU.Backend.Models.Insurances.Coverage.VehicleInsuranceCoverage", "InsuranceCoverageId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SU.Backend.Models.Insurance.Coverage.RizkZone", "RiskZone")
+                    b.HasOne("SU.Backend.Models.Insurances.Coverage.RizkZone", "RiskZone")
                         .WithOne()
-                        .HasForeignKey("SU.Backend.Models.Insurance.Coverage.VehicleInsuranceCoverage", "RiskZoneId")
+                        .HasForeignKey("SU.Backend.Models.Insurances.Coverage.VehicleInsuranceCoverage", "RiskZoneId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -914,26 +914,26 @@ namespace SU.Backend.Migrations
                     b.Navigation("RiskZone");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Insurance", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Insurance", b =>
                 {
-                    b.HasOne("SU.Backend.Models.Insurance.InsurancePolicyHolder", "InsurancePolicyHolder")
+                    b.HasOne("SU.Backend.Models.Insurances.InsurancePolicyHolder", "InsurancePolicyHolder")
                         .WithOne("Insurance")
-                        .HasForeignKey("SU.Backend.Models.Insurance.Insurance", "InsurancePolicyHolderId")
+                        .HasForeignKey("SU.Backend.Models.Insurances.Insurance", "InsurancePolicyHolderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("InsurancePolicyHolder");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.InsuranceAddon", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.InsuranceAddon", b =>
                 {
-                    b.HasOne("SU.Backend.Models.Insurance.InsuranceAddonType", "InsuranceAddonType")
+                    b.HasOne("SU.Backend.Models.Insurances.InsuranceAddonType", "InsuranceAddonType")
                         .WithMany()
                         .HasForeignKey("InsuranceAddonTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SU.Backend.Models.Insurance.Insurance", "Insurance")
+                    b.HasOne("SU.Backend.Models.Insurances.Insurance", "Insurance")
                         .WithMany("InsuranceAddons")
                         .HasForeignKey("InsuranceId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -944,7 +944,7 @@ namespace SU.Backend.Migrations
                     b.Navigation("InsuranceAddonType");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.InsurancePolicyHolder", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.InsurancePolicyHolder", b =>
                 {
                     b.HasOne("SU.Backend.Models.Customers.CompanyCustomer", "CompanyCustomer")
                         .WithMany("InsurancePolicyHolders")
@@ -961,7 +961,7 @@ namespace SU.Backend.Migrations
                     b.Navigation("PrivateCustomer");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Prospects.Prospect", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Prospects.Prospect", b =>
                 {
                     b.HasOne("SU.Backend.Models.Customers.CompanyCustomer", "CompanyCustomer")
                         .WithMany()
@@ -993,7 +993,7 @@ namespace SU.Backend.Migrations
                     b.Navigation("RoleAssignments");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Coverage.InsuranceCoverage", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.InsuranceCoverage", b =>
                 {
                     b.Navigation("LiabilityCoverage");
 
@@ -1004,12 +1004,12 @@ namespace SU.Backend.Migrations
                     b.Navigation("VehicleInsuranceCoverage");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Coverage.PrivateCoverageOption", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.PrivateCoverageOption", b =>
                 {
                     b.Navigation("PrivateCoverages");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.Insurance", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Insurance", b =>
                 {
                     b.Navigation("InsuranceAddons");
 
@@ -1017,13 +1017,13 @@ namespace SU.Backend.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.InsurancePolicyHolder", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.InsurancePolicyHolder", b =>
                 {
                     b.Navigation("Insurance")
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurance.InsuredPerson", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.InsuredPerson", b =>
                 {
                     b.Navigation("PrivateCoverages");
                 });

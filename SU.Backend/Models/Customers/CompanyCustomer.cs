@@ -1,4 +1,4 @@
-﻿using SU.Backend.Models.Insurance;
+﻿using SU.Backend.Models.Insurances;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,9 @@ namespace SU.Backend.Models.Customers
 {
     public class CompanyCustomer
     {
-        public int CompanyCustomerId { get; set; } //Organisationsnummer (PK)
+        public int CompanyCustomerId { get; set; } // (PK)
+
+        public string OrganizationNumber { get; set; } //Organisationsnummer
 
         public string CompanyName { get; set; } //Företagsnamn
             

@@ -2,7 +2,7 @@
 using SU.Backend.Database;
 using SU.Backend.Models.Enums;
 using SU.Backend.Models.Enums.Prospects;
-using SU.Backend.Models.Insurance.Prospects;
+using SU.Backend.Models.Insurances.Prospects;
 using SU.Backend.Services.Interfaces;
 using System;
 using System.Collections.Generic;

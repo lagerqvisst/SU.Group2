@@ -1,7 +1,7 @@
 ﻿using SU.Backend.Database.Repositories;
 using SU.Backend.Models;
 using SU.Backend.Models.Employees;
-using SU.Backend.Models.Insurance;
+using SU.Backend.Models.Insurances;
 
 namespace SU.Backend.Database
 {

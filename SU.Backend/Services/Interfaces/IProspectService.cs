@@ -1,4 +1,4 @@
-﻿using SU.Backend.Models.Insurance.Prospects;
+﻿using SU.Backend.Models.Insurances.Prospects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

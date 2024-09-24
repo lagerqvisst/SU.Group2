@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SU.Backend.Models.Insurance.Coverage
+namespace SU.Backend.Models.Insurances.Coverage
 {
     public class LiabilityCoverage 
     {

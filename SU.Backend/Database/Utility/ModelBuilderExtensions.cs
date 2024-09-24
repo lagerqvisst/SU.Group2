@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SU.Backend.Models.Enums;
 using SU.Backend.Models.Enums.Insurance;
 using SU.Backend.Models.Enums.Insurance.Addons;
-using SU.Backend.Models.Insurance;
-using SU.Backend.Models.Insurance.Coverage;
+using SU.Backend.Models.Insurances;
+using SU.Backend.Models.Insurances.Coverage;
 using System;
 
 namespace SU.Backend.Database.Utility
