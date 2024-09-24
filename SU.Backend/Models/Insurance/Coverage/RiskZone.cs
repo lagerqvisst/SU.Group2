@@ -13,5 +13,7 @@ namespace SU.Backend.Models.Insurance.Coverage
         public RiskZoneLevel RiskZoneLevel { get; set; } // Riskzon
         public double ZoneFactor { get; set; } // Zonfaktor
 
+        // Navigation properties
+        public ICollection<VehicleInsuranceCoverage> VehicleInsuranceCoverages { get; set; } = new List<VehicleInsuranceCoverage>();
     }
 }

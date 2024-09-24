@@ -160,16 +160,13 @@ namespace SU.Backend.Database
 
             modelBuilder.Entity<VehicleInsuranceCoverage>()
                 .HasOne(vic => vic.RiskZone) // En VehicleInsuranceCoverage har en RiskZone
-                .WithOne() // En RiskZone är kopplad till en VehicleInsuranceCoverage
-                .HasForeignKey<VehicleInsuranceCoverage>(vic => vic.RiskZoneId)
+                .WithMany() // En RiskZone är kopplad till en VehicleInsuranceCoverage
+                .HasForeignKey(vic => vic.RiskZoneId)
                 .OnDelete(DeleteBehavior.Restrict);
 
 
             modelBuilder.Entity<PrivateCoverageOption>()
                 .HasKey(pco => pco.PrivateCoverageOptionId); // Definiera primärnyckeln
-
-            // Definiera relationer för VehicleInsuranceCoverage och RiskZone
-            // Gjorde en egen tabell för Riskzone då en enum inte tillåter decimaler. 
 
 
             modelBuilder.Entity<RizkZone>()
