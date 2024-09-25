@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SU.Backend.Database.Interfaces;
+using SU.Backend.Models.Comissions;
+using SU.Backend.Models.Enums.Insurance;
 using SU.Backend.Models.Insurances;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,50 @@ namespace SU.Backend.Database.Repositories
         public InsuranceRepository(Context context) : base(context)
         {
         }
+
+        public async Task<List<Insurance>> GetAllActiveInsurances()
+        {
+            return await _context.Insurances
+                .Include(s => s.Seller)
+                .Where(i => i.InsuranceStatus == InsuranceStatus.Active)
+                .ToListAsync();
+        }
+
+        public async Task<List<Commission>> GetSellerCommissions(DateTime startDate, DateTime endDate)
+        {
+            // Get active insurances within the specified date range
+            var insurances = await GetActiveInsurancesInDateRange(startDate, endDate);
+
+            if (insurances == null || !insurances.Any())
+            {
+                return new List<Commission>();
+            }
+
+            // Group by seller and calculate commissions
+            var commissions = insurances
+                .GroupBy(ins => ins.Seller)
+                .Select(group => new Commission
+                {
+                    Seller = group.Key,
+                    SellerName = group.Key.FirstName + " " + group.Key.LastName,
+                    CommissionAmount = Commission.CalculateCommission(group.Sum(ins => ins.Premium)),
+                    StartDate = startDate,
+                    EndDate = endDate
+                })
+                .ToList();
+
+            return commissions;
+        }
+
+
+        public async Task<List<Insurance>> GetActiveInsurancesInDateRange(DateTime startDate, DateTime endDate)
+        {
+            return await _context.Insurances
+                .Include(s => s.Seller) // Include the Seller navigation property
+                .Where(i => i.InsuranceStatus == InsuranceStatus.Active && i.StartDate >= startDate && i.StartDate <= endDate)
+                .ToListAsync();
+        }
+
 
         public async Task<List<Insurance>> GetAllInsurances()
         {

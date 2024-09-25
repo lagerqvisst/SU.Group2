@@ -41,7 +41,7 @@ namespace SU.Backend.Services
                 var insurance = new Insurance
                 {
                     InsuranceType = InsuranceType.ChildAccidentAndHealthInsurance,
-                    InsuranceStatus = InsuranceStatus.Requested,
+                    InsuranceStatus = InsuranceStatus.Active,
                     PaymentPlan = PaymentPlan.Monthly,
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now.AddYears(1),
@@ -120,7 +120,7 @@ namespace SU.Backend.Services
                 _logger.LogInformation("Adding seller to insurance");
 
                 // Hämta säljaren med angiven roll.
-                var seller = await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.OutsideSales);
+                var seller = await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.InsideSales);
 
                 // Logga information om säljaren.
                 if (seller != null)

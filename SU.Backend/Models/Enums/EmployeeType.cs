@@ -13,7 +13,6 @@ namespace SU.Backend.Models.Enums
         SalesAssistant,
         FinancialAssistant,
         SalesManager,
-        FinancialManager,
         CEO
     }
 }

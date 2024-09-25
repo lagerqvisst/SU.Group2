@@ -29,7 +29,7 @@ class Program
 
         ///Test EmplyeeController
         var employeeController = host.Services.GetRequiredService<EmployeeController>();
-        //await employeeController.CreateRandomNewEmployee(EmployeeType.OutsideSales);
+        //await employeeController.CreateRandomNewEmployee(EmployeeType.InsideSales);
 
         ///Test PrivateCustomerController
         var privateCustomerController = host.Services.GetRequiredService<PrivateCustomerController>();
@@ -46,7 +46,15 @@ class Program
 
         var prospectService = host.Services.GetRequiredService<IProspectService>();
         //await prospectService.IdentifyProspects();
-        await prospectService.TestAssignSellerToProspect();
+        //await prospectService.TestAssignSellerToProspect();
+
+        var commissionService = host.Services.GetRequiredService<ICommissionService>();
+
+        int currentYear = DateTime.Now.Year;
+        DateTime startDate = new DateTime(currentYear, 1, 1);
+        DateTime endDate = new DateTime(currentYear, 12, 31);
+
+        await commissionService.GetAllCommissions(startDate, endDate);
 
     }
 

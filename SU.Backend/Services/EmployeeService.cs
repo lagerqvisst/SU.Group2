@@ -84,6 +84,9 @@ namespace SU.Backend.Services
         }
 
         //Auto assign manager based on role
+        //Kanske kan bli knas när vi har anställda som har fler roller såsom Sales Assistant & Sales för fallet Karin.
+        //Kanske skapa en service metod för employeeservice där vi bygger en repositoryklass mot EmployeeRoleAssignments. 
+        //Då kan göra ett case där om en anställd har fler än 1 roll, så tar man den rollen som har högst procent och sätter som manager.
         public async Task<Employee?> GetManagerForRole(EmployeeType role)
         {
             switch (role)
@@ -91,13 +94,11 @@ namespace SU.Backend.Services
                 case EmployeeType.OutsideSales:
                 case EmployeeType.InsideSales:
                 case EmployeeType.SalesAssistant:
-                    return await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.SalesManager);
+                    return await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.SalesManager); //Iren Panik
 
+                //Dessa två svarar till VD Stenhård
                 case EmployeeType.FinancialAssistant:
-                    return await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.CEO);
-
                 case EmployeeType.SalesManager:
-                case EmployeeType.FinancialManager:
                     return await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.CEO);
 
                 default:

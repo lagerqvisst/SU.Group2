@@ -44,7 +44,6 @@ namespace SU.Backend.Helper
                 EmployeeType.SalesAssistant => (int)Salary.SalesAssistant,
                 EmployeeType.SalesManager => (int)Salary.SalesManager,
                 EmployeeType.FinancialAssistant => (int)Salary.FinancialAssistant,
-                EmployeeType.FinancialManager => (int)Salary.FinancialManager,
                 EmployeeType.CEO => (int)Salary.CEO,
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
