@@ -33,6 +33,9 @@ namespace SU.Backend.Services
 
         public async Task<(bool Success, string Message)> CreateTestInsurance()
         {
+            //GIT TRAINING - REMOVE
+            _logger.LogInformation("SOME CODE CHANGES...");
+
             _logger.LogInformation("Creating insurance...");
 
             try
