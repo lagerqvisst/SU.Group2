@@ -36,6 +36,7 @@ namespace SU.Backend.Configuration
             services.AddScoped<IInsuranceService, InsuranceService>();
             services.AddScoped<IProspectService, ProspectService>();
             services.AddScoped<ICommissionService, CommissionService>();
+            services.AddScoped<IStatisticsService, StatisticsService>();
 
             // Loggning
             services.AddLogging(configure => configure.AddConsole());

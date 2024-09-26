@@ -15,6 +15,7 @@ namespace SU.Backend.Database.Interfaces
         Task<List<Commission>> GetSellerCommissions(DateTime startDate, DateTime endDate);
         Task<List<Insurance>> GetActiveInsurancesInDateRange(DateTime startDate, DateTime endDate);
         Task<List<Insurance>> GetAllActiveInsurances();
+        Task<List<Insurance>> GetInsurancesByYear(int year);
 
     }
 }

@@ -36,5 +36,16 @@ namespace SU.Backend.Database.Repositories
                 .Where(e => e.Username == Username && e.Password == Password)
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<List<Employee>> GetSalesEmployees()
+        {
+            return await _context.Employees
+                .Include(e => e.RoleAssignments)
+                .Where(e => e.RoleAssignments.Any(ra =>
+                    (ra.Role == EmployeeType.OutsideSales || ra.Role == EmployeeType.InsideSales) &&
+                    ra.Percentage > 0))
+                .ToListAsync();
+        }
+
     }
 }

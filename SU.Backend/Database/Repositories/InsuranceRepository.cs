@@ -75,6 +75,15 @@ namespace SU.Backend.Database.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<Insurance>> GetInsurancesByYear(int year)
+        {
+            return await _context.Insurances
+                .Include(i => i.Seller) // Include the seller
+                .Where(i => i.StartDate.Year <= year && (i.EndDate == null || i.EndDate.Year >= year)) // Filter by the given year
+                .ToListAsync();
+        }
+
+
     }
 
 }

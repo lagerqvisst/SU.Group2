@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using SU.Backend.Configuration;
 using SU.Backend.Controllers;
 using SU.Backend.Models.Enums;
+using SU.Backend.Models.Enums.Insurance;
 using SU.Backend.Services.Interfaces;
 using System;
 using System.Threading.Tasks;
@@ -49,12 +50,20 @@ class Program
         //await prospectService.TestAssignSellerToProspect();
 
         var commissionService = host.Services.GetRequiredService<ICommissionService>();
+        //await commissionService.GetAllCommissions(startDate, endDate);
 
-        int currentYear = DateTime.Now.Year;
-        DateTime startDate = new DateTime(currentYear, 1, 1);
-        DateTime endDate = new DateTime(currentYear, 12, 31);
+        var statisticsService = host.Services.GetRequiredService<IStatisticsService>();
+        var statistics = await statisticsService.GetSellerStatistics(2024);
 
-        await commissionService.GetAllCommissions(startDate, endDate);
+        List<InsuranceType> insuranceTypes = new List<InsuranceType> { InsuranceType.ChildAccidentAndHealthInsurance, 
+                                                                       InsuranceType.AdultAccidentAndHealthInsurance,
+                                                                       InsuranceType.AdultLifeInsurance};
+
+        statisticsService.PrintSellerStatistics(statistics, 2024, insuranceTypes);
+
+        //Alex was here
+
+
 
     }
 
