@@ -25,6 +25,15 @@ namespace SU.Backend.Database.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<Insurance>> GetActiveInsurancesInDateRange(DateTime startDate, DateTime endDate)
+        {
+            return await _context.Insurances
+                .Include(s => s.Seller)
+                .Where(i => i.InsuranceStatus == InsuranceStatus.Active && i.StartDate >= startDate && i.StartDate <= endDate)
+                .ToListAsync();
+        }
+
+        //TODO: Include left join for sellers who did not sell any insurances
         public async Task<List<Commission>> GetSellerCommissions(DateTime startDate, DateTime endDate)
         {
             // Get active insurances within the specified date range
@@ -50,16 +59,6 @@ namespace SU.Backend.Database.Repositories
 
             return commissions;
         }
-
-
-        public async Task<List<Insurance>> GetActiveInsurancesInDateRange(DateTime startDate, DateTime endDate)
-        {
-            return await _context.Insurances
-                .Include(s => s.Seller) // Include the Seller navigation property
-                .Where(i => i.InsuranceStatus == InsuranceStatus.Active && i.StartDate >= startDate && i.StartDate <= endDate)
-                .ToListAsync();
-        }
-
 
         public async Task<List<Insurance>> GetAllInsurances()
         {

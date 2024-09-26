@@ -17,6 +17,8 @@ namespace SU.Backend.Models.Insurances.Prospects
         // Status of the prospect
         public ProspectStatus ProspectStatus { get; set; } // Status of the prospect
 
+        public string ContactNote { get; set; } // Note of contact
+
         public ProspectType ProspectType { get; set; } // Type of prospect
         public DateTime? ContactDate { get; set; } // Date of contact
         public string? AssignedAgentNumber { get; set; } // Assigned agent number
