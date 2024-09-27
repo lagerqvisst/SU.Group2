@@ -67,11 +67,6 @@ namespace SU.Backend.Services
         }
 
 
-
-
-
-
-
         public void PrintSellerStatistics(List<SellerStatistics> sellerStatistics, int year, List<InsuranceType> insuranceTypes)
         {
             // Mapping of InsuranceType enum to display names

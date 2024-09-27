@@ -28,10 +28,14 @@ namespace SU.Frontend
             services.AddTransient<TaskbarView>();
             services.AddTransient<LoginViewModel>();
             services.AddTransient<LoginWindow>();
+            services.AddTransient<StatisticsViewModel>();
+            services.AddTransient<Statistics>();
 
             //Frontend services
             services.AddScoped<INavigationService, NavigationService>();
             services.AddSingleton<ILoggedInUserService, LoggedInUserService>();
+            
+
 
         }
     }

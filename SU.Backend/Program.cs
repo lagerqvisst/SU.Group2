@@ -52,6 +52,8 @@ class Program
         var commissionService = host.Services.GetRequiredService<ICommissionService>();
         //await commissionService.GetAllCommissions(startDate, endDate);
 
+        //Tester för Statistikkravet i sista bilagan.
+        /*
         var statisticsService = host.Services.GetRequiredService<IStatisticsService>();
         var statistics = await statisticsService.GetSellerStatistics(2024);
 
@@ -59,7 +61,7 @@ class Program
                                                                        InsuranceType.AdultAccidentAndHealthInsurance,
                                                                        InsuranceType.AdultLifeInsurance};
 
-        statisticsService.PrintSellerStatistics(statistics, 2024, insuranceTypes);
+        statisticsService.PrintSellerStatistics(statistics, 2024, insuranceTypes);*/
 
         //Alex was here
 

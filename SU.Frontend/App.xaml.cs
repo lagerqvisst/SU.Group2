@@ -8,6 +8,7 @@ using SU.Frontend.ViewModels;
 using SU.Frontend.ViewModels.UserControls;
 using SU.Frontend.Views;
 using SU.Frontend.Views.UserControls;
+using System;
 using System.Windows;
 
 namespace SU.Frontend
@@ -36,6 +37,13 @@ namespace SU.Frontend
 
 
             // Hämta LoginViewModel och sätt DataContext
+
+            //Test charts
+            /*
+            var statViewModel = AppHost.Services.GetRequiredService<StatisticsViewModel>();
+            var statisticsWindow = AppHost.Services.GetRequiredService<Statistics>();
+            statisticsWindow.Show();*/
+
             var loginViewModel = AppHost.Services.GetRequiredService<LoginViewModel>();
             var startupWindow = AppHost.Services.GetRequiredService<LoginWindow>();
             startupWindow.Show();
