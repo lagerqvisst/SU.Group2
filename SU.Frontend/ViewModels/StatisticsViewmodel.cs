@@ -4,9 +4,16 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using OxyPlot;
-using OxyPlot.Series;
 using System.Windows;
+using SU.Backend.Models.Statistics;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using SU.Backend.Models.Enums.Insurance;
+using System.Globalization;
+using LiveChartsCore.Kernel.Sketches;
+using LiveChartsCore.SkiaSharpView.Painting;
+using SkiaSharp;
+
 
 namespace SU.Frontend.ViewModels
 {
@@ -14,74 +21,82 @@ namespace SU.Frontend.ViewModels
     {
         private readonly IStatisticsService _statisticsService;
 
-        // The plot model for OxyPlot
-        public PlotModel MyModel { get; private set; }
+        public ObservableCollection<SellerStatistics> Stats { get; set; }
 
-        // Property for X-axis labels
-        public ObservableCollection<string> XAxisLabels { get; set; } = new ObservableCollection<string>
-        {
-            "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
-        };
+        public ObservableCollection<ISeries> Series { get; set; }
 
-        // Command to load statistics
+        public ICartesianAxis[] XAxes { get; set; }
+        public ICartesianAxis[] YAxes { get; set; }
+
+        // Legend customization properties
+        public SolidColorPaint LegendBackgroundPaint { get; set; }
+        public SolidColorPaint LegendTextPaint { get; set; }
         public ICommand LoadStatisticsCommand { get; }
 
         public StatisticsViewModel(IStatisticsService statisticsService)
         {
             _statisticsService = statisticsService;
-            MyModel = new PlotModel { Title = "Seller Statistics" };
             LoadStatisticsCommand = new RelayCommand(async () => await LoadStatistics());
+            Stats = new ObservableCollection<SellerStatistics>();
+            Series = new ObservableCollection<ISeries>();
+            // Set up axis label formatters
+            // Set up the X-axis with month labels
+            XAxes = new[]
+            {
+                new Axis
+                {
+                    Labels = new[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" },
+                    Name = "Months",
+                    NamePaint = new SolidColorPaint(SKColors.Black), // Optional: Set the color for the axis name
+                }
+            };
+
+            // Set up the Y-axis
+            YAxes = new[]
+            {
+                new Axis
+                {
+                    Name = "# Sales",
+                    Labeler = value => value.ToString("N0"), // Format as an integer with no decimals
+                    MinLimit = -1
+                }
+            };
+
+            // Set up legend styling
+            LegendBackgroundPaint = new SolidColorPaint(SKColors.LightGray);
+            LegendTextPaint = new SolidColorPaint(SKColors.Black);
         }
 
         private async Task LoadStatistics()
         {
-            // Clear existing series
-            MyModel.Series.Clear();
+            var statistics = await _statisticsService.GetSellerStatistics(2024);
 
-            try
+            Stats.Clear();
+            foreach (var stat in statistics)
             {
-                // Fetch seller statistics (replace with actual year or user input)
-                var statistics = await _statisticsService.GetSellerStatistics(2024);
+                Stats.Add(stat);
+            }
 
-                // Check if statistics are retrieved
-                if (statistics == null || !statistics.Any())
+            Series.Clear();
+            foreach (var stat in statistics.Where(stat => stat.MonthlySales.Any(s => s.TotalSales > 0)))
+            {
+                var monthlySalesValues = Enumerable.Range(1, 12)
+                                                   .Select(month => stat.MonthlySales
+                                                       .FirstOrDefault(m => m.Month == month)?.TotalSales ?? 0)
+                                                   .ToArray();
+
+                var lineSeries = new LineSeries<int>
                 {
-                    // Handle no data case
-                    MyModel.InvalidatePlot(true); // Refresh the plot
-                    return;
-                }
+                    Values = monthlySalesValues,
+                    Name = stat.SellerName,
+                    Fill = null
+                };
 
-                foreach (var seller in statistics)
-                {
-                    // Ensure MonthlySales is not null or empty
-                    if (seller.MonthlySales == null || !seller.MonthlySales.Any())
-                    {
-                        continue; // Skip if no sales data
-                    }
-
-                    // Create a new series for each seller
-                    var lineSeries = new LineSeries
-                    {
-                        Title = seller.SellerName,
-                        ItemsSource = seller.MonthlySales.Select(m => new DataPoint(m.Month, m.TotalSales)).ToList()
-                    };
-
-                    // Add the series to the model
-                    MyModel.Series.Add(lineSeries);
-                }
-
-                // Notify that the chart data has been updated
-                OnPropertyChanged(nameof(MyModel));
+                Series.Add(lineSeries);
             }
-            catch (Exception ex)
-            {
-                // Handle any exceptions, such as logging or displaying an error message
-                MessageBox.Show($"Error loading statistics: {ex.Message}");
-            }
-            finally
-            {
-                MyModel.InvalidatePlot(true); // Refresh the plot after loading data
-            }
+
+            OnPropertyChanged(nameof(Series));
         }
+
     }
 }

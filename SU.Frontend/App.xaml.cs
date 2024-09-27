@@ -39,14 +39,14 @@ namespace SU.Frontend
             // Hämta LoginViewModel och sätt DataContext
 
             //Test charts
-            /*
+            
             var statViewModel = AppHost.Services.GetRequiredService<StatisticsViewModel>();
             var statisticsWindow = AppHost.Services.GetRequiredService<Statistics>();
-            statisticsWindow.Show();*/
+            statisticsWindow.Show();
 
-            var loginViewModel = AppHost.Services.GetRequiredService<LoginViewModel>();
-            var startupWindow = AppHost.Services.GetRequiredService<LoginWindow>();
-            startupWindow.Show();
+            //var loginViewModel = AppHost.Services.GetRequiredService<LoginViewModel>();
+            //var startupWindow = AppHost.Services.GetRequiredService<LoginWindow>();
+            //startupWindow.Show();
 
             base.OnStartup(e);
         }
