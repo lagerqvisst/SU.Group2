@@ -64,6 +64,7 @@ class Program
         statisticsService.PrintSellerStatistics(statistics, 2024, insuranceTypes);*/
 
         //Alex was here
+        //Kasper was here
 
 
 
