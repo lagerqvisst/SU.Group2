@@ -1,102 +1,170 @@
-﻿using SU.Backend.Services.Interfaces;
+﻿using LiveChartsCore.Kernel.Sketches;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore;
+using SU.Backend.Models.Enums.Insurance;
+using SU.Backend.Models.Statistics;
+using SU.Backend.Services.Interfaces;
 using SU.Frontend.Helper;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
-using SU.Backend.Models.Statistics;
-using LiveChartsCore;
-using LiveChartsCore.SkiaSharpView;
-using SU.Backend.Models.Enums.Insurance;
+using System.Windows.Controls;
 using System.Globalization;
-using LiveChartsCore.Kernel.Sketches;
+using System.Windows.Data;
 using LiveChartsCore.SkiaSharpView.Painting;
-using SkiaSharp;
+using SU.Frontend.Views;
 
 
-namespace SU.Frontend.ViewModels
+public class StatisticsViewModel : ObservableObject
 {
-    public class StatisticsViewModel : ObservableObject
+    private readonly IStatisticsService _statisticsService;
+
+    // Properties for binding
+    public ObservableCollection<SellerStatistics> Stats { get; set; }
+    public ObservableCollection<string> InsuranceCategories { get; set; }
+    private string _selectedInsuranceCategory;
+    public string SelectedInsuranceCategory
     {
-        private readonly IStatisticsService _statisticsService;
-
-        public ObservableCollection<SellerStatistics> Stats { get; set; }
-
-        public ObservableCollection<ISeries> Series { get; set; }
-
-        public ICartesianAxis[] XAxes { get; set; }
-        public ICartesianAxis[] YAxes { get; set; }
-
-        // Legend customization properties
-        public SolidColorPaint LegendBackgroundPaint { get; set; }
-        public SolidColorPaint LegendTextPaint { get; set; }
-        public ICommand LoadStatisticsCommand { get; }
-
-        public StatisticsViewModel(IStatisticsService statisticsService)
+        get => _selectedInsuranceCategory;
+        set
         {
-            _statisticsService = statisticsService;
-            LoadStatisticsCommand = new RelayCommand(async () => await LoadStatistics());
-            Stats = new ObservableCollection<SellerStatistics>();
-            Series = new ObservableCollection<ISeries>();
-            // Set up axis label formatters
-            // Set up the X-axis with month labels
-            XAxes = new[]
-            {
-                new Axis
-                {
-                    Labels = new[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" },
-                    Name = "Months",
-                    NamePaint = new SolidColorPaint(SKColors.Black), // Optional: Set the color for the axis name
-                }
-            };
+            _selectedInsuranceCategory = value;
+            OnPropertyChanged();
+        }
+    }
 
-            // Set up the Y-axis
-            YAxes = new[]
-            {
-                new Axis
-                {
-                    Name = "# Sales",
-                    Labeler = value => value.ToString("N0"), // Format as an integer with no decimals
-                    MinLimit = -1
-                }
-            };
+    public ObservableCollection<ISeries> Series { get; set; }
+    public ICartesianAxis[] XAxes { get; set; }
+    public ICartesianAxis[] YAxes { get; set; }
+    public ICommand LoadStatisticsCommand { get; }
 
-            // Set up legend styling
-            LegendBackgroundPaint = new SolidColorPaint(SKColors.LightGray);
-            LegendTextPaint = new SolidColorPaint(SKColors.Black);
+    public StatisticsViewModel(IStatisticsService statisticsService)
+    {
+        _statisticsService = statisticsService;
+        LoadStatisticsCommand = new RelayCommand(async () => await LoadStatistics());
+        Stats = new ObservableCollection<SellerStatistics>();
+        Series = new ObservableCollection<ISeries>();
+
+        // Initialize insurance categories
+        InsuranceCategories = new ObservableCollection<string> { "Privatförsäkring", "Företagsförsäkring" };
+        SelectedInsuranceCategory = InsuranceCategories.First();
+
+        // Set up chart axes
+        XAxes = new[]
+        {
+            new Axis
+            {
+                Labels = new[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" },
+                Name = "Months",
+            }
+        };
+        YAxes = new[]
+        {
+            new Axis
+            {
+                Name = "# Sales",
+                Labeler = value => value.ToString("N0"),
+                MinLimit = -1
+            }
+        };
+    }
+
+    // Legend customization properties
+    public SolidColorPaint LegendBackgroundPaint { get; set; }
+    public SolidColorPaint LegendTextPaint { get; set; }
+
+    private async Task LoadStatistics()
+    {
+        var insuranceTypes = GetInsuranceTypes(SelectedInsuranceCategory);
+        var statistics = await _statisticsService.GetSellerStatistics(2024, insuranceTypes);
+
+        Stats.Clear();
+        foreach (var stat in statistics)
+        {
+            Stats.Add(stat);
         }
 
-        private async Task LoadStatistics()
+        // Dynamically add columns to the DataGrid in the view
+        Application.Current.Dispatcher.Invoke(() =>
         {
-            var statistics = await _statisticsService.GetSellerStatistics(2024);
-
-            Stats.Clear();
-            foreach (var stat in statistics)
+            var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w is Statistics);
+            if (window != null)
             {
-                Stats.Add(stat);
-            }
-
-            Series.Clear();
-            foreach (var stat in statistics.Where(stat => stat.MonthlySales.Any(s => s.TotalSales > 0)))
-            {
-                var monthlySalesValues = Enumerable.Range(1, 12)
-                                                   .Select(month => stat.MonthlySales
-                                                       .FirstOrDefault(m => m.Month == month)?.TotalSales ?? 0)
-                                                   .ToArray();
-
-                var lineSeries = new LineSeries<int>
+                var dataGrid = window.FindName("StatisticsDataGrid") as DataGrid;
+                if (dataGrid != null)
                 {
-                    Values = monthlySalesValues,
-                    Name = stat.SellerName,
-                    Fill = null
-                };
+                    dataGrid.Columns.Clear();
 
-                Series.Add(lineSeries);
+                    // Add static column for Seller Name
+                    dataGrid.Columns.Add(new DataGridTextColumn { Header = "Säljare", Binding = new Binding("SellerName") });
+
+                    // Add columns for each month
+                    foreach (var month in Enumerable.Range(1, 12))
+                    {
+                        // Add sub-columns for each insurance type
+                        foreach (var insuranceType in insuranceTypes)
+                        {
+                            dataGrid.Columns.Add(new DataGridTextColumn
+                            {
+                                Header = $"{CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month)} {insuranceType}",
+                                Binding = new Binding($"MonthlySales[{month - 1}].InsuranceSalesCounts[{insuranceType}]")
+                            });
+                        }
+
+                        // Add total column for the month
+                        dataGrid.Columns.Add(new DataGridTextColumn
+                        {
+                            Header = $"{CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month)} Totalt",
+                            Binding = new Binding($"MonthlySales[{month - 1}].TotalSales")
+                        });
+                    }
+
+                    // Add columns for yearly total and average
+                    dataGrid.Columns.Add(new DataGridTextColumn { Header = "Totalt", Binding = new Binding("TotalYearlySales") });
+                    dataGrid.Columns.Add(new DataGridTextColumn { Header = "Medel/mån", Binding = new Binding("AverageMonthlySales") });
+                }
             }
+        });
 
-            OnPropertyChanged(nameof(Series));
+        Series.Clear();
+        foreach (var stat in statistics.Where(stat => stat.MonthlySales.Any(s => s.TotalSales > 0)))
+        {
+            var monthlySalesValues = Enumerable.Range(1, 12)
+                                               .Select(month => stat.MonthlySales
+                                                   .FirstOrDefault(m => m.Month == month)?.TotalSales ?? 0)
+                                               .ToArray();
+
+            var lineSeries = new LineSeries<int>
+            {
+                Values = monthlySalesValues,
+                Name = stat.SellerName,
+                Fill = null
+            };
+
+            Series.Add(lineSeries);
         }
 
+        OnPropertyChanged(nameof(Series));
+    }
+
+
+    private List<InsuranceType> GetInsuranceTypes(string category)
+    {
+        return category switch
+        {
+            "Privatförsäkring" => new List<InsuranceType>
+            {
+                InsuranceType.ChildAccidentAndHealthInsurance,
+                InsuranceType.AdultAccidentAndHealthInsurance,
+                InsuranceType.AdultLifeInsurance
+            },
+            "Företagsförsäkring" => new List<InsuranceType>
+            {
+                InsuranceType.PropertyAndInventoryInsurance,
+                InsuranceType.VehicleInsurance,
+                InsuranceType.LiabilityInsurance
+            },
+            _ => new List<InsuranceType>()
+        };
     }
 }
