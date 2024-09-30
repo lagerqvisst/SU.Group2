@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using SU.Backend.Database;
 using SU.Backend.Database.Interfaces;
 using SU.Backend.Database.Repositories;
+using SU.Backend.Helper;
 using SU.Backend.Models.Customers;
 using SU.Backend.Models.Enums;
 using SU.Backend.Models.Enums.Insurance;
@@ -31,10 +32,11 @@ namespace SU.Backend.Services
 
         public async Task<(bool Success, string Message)> CreateCompanyInsurance()
         {
-            _logger.LogInformation("Creating company insurance...");
+            _logger.LogInformation("Starting the process of creating a company insurance...");
 
             try
             {
+                // Create the insurance object
                 var insurance = new Insurance
                 {
                     InsuranceType = InsuranceType.VehicleInsurance,
@@ -44,46 +46,95 @@ namespace SU.Backend.Services
                     EndDate = DateTime.Now.AddYears(1),
                     Note = "This is a test insurance"
                 };
+                _logger.LogInformation("Insurance object created successfully.");
 
-                _logger.LogInformation("Finding test compay customer.");
-                // Hämta PrivateCustomer för InsurancePolicyHolder
+                // Fetch the last company customer
+                _logger.LogInformation("Attempting to fetch a test company customer...");
                 var companyCustomer = _unitOfWork.CompanyCustomers.GetCompanyCustomers().Result.Last();
                 if (companyCustomer == null)
                 {
+                    _logger.LogWarning("No company customer found.");
                     return (false, "No company customer found.");
                 }
-                _logger.LogInformation("Test customer found: {Org Nr} - {Company name}", companyCustomer.OrganizationNumber, companyCustomer.CompanyName);
+                _logger.LogInformation("Company customer found: {Org Nr} - {CompanyName}", companyCustomer.OrganizationNumber, companyCustomer.CompanyName);
 
-
-                _logger.LogInformation("Creating InsurancePolicyHolder");
-                // Skapa InsurancePolicyHolder
+                // Create InsurancePolicyHolder
+                _logger.LogInformation("Assigning the company customer as the insurance policy holder...");
                 insurance.InsurancePolicyHolder = new InsurancePolicyHolder
                 {
                     CompanyCustomer = companyCustomer
                 };
-                _logger.LogInformation("Assigned fetched company as insurance policy holder of insurance");
+                _logger.LogInformation("InsurancePolicyHolder created and assigned successfully.");
 
-                //Testa bilförsäkring 
+            
 
-                var coverage = new InsuranceCoverage
+
+                // Fetch the last risk zone
+                _logger.LogInformation("Attempting to fetch a risk zone...");
+                var riskZone = _unitOfWork.Riskzones.GetRiskZones().Result.Last();
+                if (riskZone == null)
                 {
-                    Insurance = insurance
-                };
+                    _logger.LogWarning("No risk zone found.");
+                    return (false, "No risk zone found.");
+                }
+                _logger.LogInformation("Risk zone found: {RiskzoneId} - {RiskzoneName}", riskZone.RiskzoneId, riskZone.RiskzoneLevel.ToString());
 
+                // Fetch the last vehicle insurance option
+                _logger.LogInformation("Attempting to fetch a vehicle insurance option...");
+                var vehicleInsuranceOption = _unitOfWork.VehicleInsuranceOptions.GetVehicleInsuranceOptions().Result.Last();
+                if (vehicleInsuranceOption == null)
+                {
+                    _logger.LogWarning("No vehicle insurance option found.");
+                    return (false, "No vehicle insurance option found.");
+                }
+                _logger.LogInformation("Vehicle insurance option found: {OptionId} - {OptionDescription}", vehicleInsuranceOption.VehicleInsuranceOptionId, vehicleInsuranceOption.OptionDescription.ToString());
+
+                // Create VehicleInsuranceCoverage
+                _logger.LogInformation("Creating vehicle insurance coverage...");
+                var insuranceCoverage = new InsuranceCoverage();
                 var vehicleCoverage = new VehicleInsuranceCoverage
                 {
-
+                    InsuranceCoverage = insuranceCoverage,
+                    VehicleInsuranceOption = vehicleInsuranceOption,
+                    Riskzone = riskZone,
+                    CoverageAmount = vehicleInsuranceOption.OptionCost,
+                    MonthlyPremium = PremiumCalculator.GetVehicleInsurancePremium(riskZone, vehicleInsuranceOption)
                 };
+                _logger.LogInformation("Vehicle insurance coverage created successfully with monthly premium: {MonthlyPremium}", vehicleCoverage.MonthlyPremium);
+
+                insuranceCoverage.VehicleInsuranceCoverage = vehicleCoverage;
+                insurance.Premium = vehicleCoverage.MonthlyPremium; //move premium from vehicle to insurance
+                insurance.InsuranceCoverage = insuranceCoverage;
+
+                // Fetch the seller with a specified role
+                _logger.LogInformation("Attempting to fetch a seller with the role: InsideSales...");
+                var seller = await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.InsideSales);
+                if (seller == null)
+                {
+                    _logger.LogWarning("No seller found with the role: InsideSales.");
+                }
+                else
+                {
+                    insurance.Seller = seller;
+                    _logger.LogInformation("Seller assigned to insurance: {SellerId} - {SellerName}", seller.EmployeeId, seller.FirstName);
+                }
+
+                // Save changes to the database
+                _logger.LogInformation("Saving the new company insurance to the database...");
+                await _unitOfWork.Insurances.AddAsync(insurance);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Company insurance created and saved successfully.");
 
                 return (true, "Company insurance created successfully.");
-
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while creating company insurance");
+                _logger.LogError(ex, "An error occurred while creating company insurance.");
                 return (false, "An error occurred while creating the company insurance.");
             }
         }
+
 
         public async Task<(bool Success, string Message)> CreateTestPrivateInsurance()
         {

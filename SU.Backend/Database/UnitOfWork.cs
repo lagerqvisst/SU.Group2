@@ -16,12 +16,13 @@ namespace SU.Backend.Database
         public InsuredPersonRepository InsuredPersons { get; }
         public PrivateCoverageRepository PrivateCoverages { get; }
         public InsuranceCoverageRepository InsuranceCoverages { get; }
-
         public InsuranceRepository Insurances { get; }
-
         public InsuranceAddonTypeRepository InsuranceAddonTypes { get; }
-
         public ProspectRepository Prospects { get; }
+
+        public VehicleInsuranceOptionRepository VehicleInsuranceOptions { get; }
+
+        public RiskzoneRepository Riskzones { get; }
 
 
 
@@ -39,6 +40,8 @@ namespace SU.Backend.Database
             InsuranceAddonTypes = new InsuranceAddonTypeRepository(_context);
             Prospects = new ProspectRepository(_context);
             CompanyCustomers = new CompanyCustomerRepository(_context);
+            VehicleInsuranceOptions = new VehicleInsuranceOptionRepository(_context);
+            Riskzones = new RiskzoneRepository(_context);
 
         }
 

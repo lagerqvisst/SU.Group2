@@ -36,6 +36,10 @@ class Program
         var privateCustomerController = host.Services.GetRequiredService<PrivateCustomerController>();
         //await privateCustomerController.GenerateRandomPrivateCustomer();
 
+        //Test CompanyCustomerService
+        var companyCustomerService = host.Services.GetRequiredService<ICompanyCustomerService>();
+        //await companyCustomerService.GenerateTestCompanyCustomer();
+
         ///Test LoginController
         //var loginController = host.Services.GetRequiredService<LoginController>();
         //await loginController.Authentication("cene", "zigzag");
@@ -43,6 +47,7 @@ class Program
         ///Test InsuranceService
         var insuranceService = host.Services.GetRequiredService<IInsuranceService>();
         //await insuranceService.CreateTestInsurance();
+        await insuranceService.CreateCompanyInsurance();
         //await insuranceService.RemoveAllInsurances(); 
 
         var prospectService = host.Services.GetRequiredService<IProspectService>();

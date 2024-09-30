@@ -13,8 +13,9 @@ namespace SU.Backend.Models.Insurances.Coverage
         public int RiskzoneId { get; set; } // FK till Riskzone
         public int VehicleInsuranceOptionId { get; set; } // FK till VehicleInsuranceOption
 
-        public decimal BaseCost { get; set; } // Grundkostnad per månad
-        public decimal Deductible { get; set; } // Självrisk
+        public decimal CoverageAmount { get; set; } // Grundkostnad per månad
+        public decimal MonthlyPremium { get; set; } // Månadspremie
+
 
         // Navigation properties
         public InsuranceCoverage InsuranceCoverage { get; set; } // Navigation till InsuranceCoverage

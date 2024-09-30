@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SU.Backend.Database;
 
@@ -11,9 +12,10 @@ using SU.Backend.Database;
 namespace SU.Backend.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240930191110_UpdateToTableName")]
+    partial class UpdateToTableName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -527,14 +529,14 @@ namespace SU.Backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VehicleInsuranceCoverageId"), 1L, 1);
 
-                    b.Property<decimal>("CoverageAmount")
+                    b.Property<decimal>("BaseCost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Deductible")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("InsuranceCoverageId")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("MonthlyPremium")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("RiskzoneId")
                         .HasColumnType("int");

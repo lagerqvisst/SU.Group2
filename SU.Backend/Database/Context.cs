@@ -36,6 +36,8 @@ namespace SU.Backend.Database
         public DbSet<CompanyCustomer> CompanyCustomers { get; set; }
         public DbSet<Riskzone> Riskzones { get; set; }
 
+        public DbSet<VehicleInsuranceOption> VehicleInsuranceOptions { get; set; }
+
 
 
 

@@ -53,7 +53,7 @@ namespace SU.Backend.Database.Utility
                 (typeof(Insurance), new[] { "Premium"}),
                 (typeof(LiabilityCoverage), new[] { "MonthlyPremium", "CoverageAmount" }),
                 (typeof(PrivateCoverageOption), new[] { "MonthlyPremium", "CoverageAmount" }),
-                (typeof(VehicleInsuranceCoverage), new[] {"BaseCost" , "Deductible" }),
+                (typeof(VehicleInsuranceCoverage), new[] { "MonthlyPremium", "CoverageAmount", }),
                 (typeof(PropertyAndInventoryCoverage), new[] { "PropertyPremium", "PropertyValue", "InventoryPremium", "InventoryValue" }),
                 (typeof(VehicleInsuranceOption), new[] { "Deductible", "OptionCost" }),
             };
