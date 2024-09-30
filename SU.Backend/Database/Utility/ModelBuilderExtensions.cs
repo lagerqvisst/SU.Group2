@@ -54,7 +54,8 @@ namespace SU.Backend.Database.Utility
                 (typeof(LiabilityCoverage), new[] { "MonthlyPremium", "CoverageAmount" }),
                 (typeof(PrivateCoverageOption), new[] { "MonthlyPremium", "CoverageAmount" }),
                 (typeof(VehicleInsuranceCoverage), new[] {"BaseCost" , "Deductible" }),
-                (typeof(PropertyAndInventoryCoverage), new[] { "PropertyPremium", "PropertyValue", "InventoryPremium", "InventoryValue" })
+                (typeof(PropertyAndInventoryCoverage), new[] { "PropertyPremium", "PropertyValue", "InventoryPremium", "InventoryValue" }),
+                (typeof(VehicleInsuranceOption), new[] { "Deductible", "OptionCost" }),
             };
 
             foreach (var (type, properties) in decimalTypes)
@@ -74,11 +75,11 @@ namespace SU.Backend.Database.Utility
         public static void SeedRiskzones(this ModelBuilder modelBuilder)
         {
             // Seed för RizkZone
-            modelBuilder.Entity<Rizkzone>().HasData(
-                new Rizkzone { RiskzoneId = 1, RiskzoneLevel = RiskzoneLevel.Zone1, ZoneFactor = 1.3 },
-                new Rizkzone { RiskzoneId = 2, RiskzoneLevel = RiskzoneLevel.Zone2, ZoneFactor = 1.2 },
-                new Rizkzone { RiskzoneId = 3, RiskzoneLevel = RiskzoneLevel.Zone3, ZoneFactor = 1.1 },
-                new Rizkzone { RiskzoneId = 4, RiskzoneLevel = RiskzoneLevel.Zone4, ZoneFactor = 1.0 }
+            modelBuilder.Entity<Riskzone>().HasData(
+                new Riskzone { RiskzoneId = 1, RiskzoneLevel = RiskzoneLevel.Zone1, ZoneFactor = 1.3 },
+                new Riskzone { RiskzoneId = 2, RiskzoneLevel = RiskzoneLevel.Zone2, ZoneFactor = 1.2 },
+                new Riskzone { RiskzoneId = 3, RiskzoneLevel = RiskzoneLevel.Zone3, ZoneFactor = 1.1 },
+                new Riskzone { RiskzoneId = 4, RiskzoneLevel = RiskzoneLevel.Zone4, ZoneFactor = 1.0 }
             );
         }
 
@@ -291,6 +292,26 @@ namespace SU.Backend.Database.Utility
                 new InsuranceAddonType { InsuranceAddonTypeId = 15, CoverageAmount = 3500, Description = AddonType.LongTermSickness, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.LongTermSickness, 3500) },
                 new InsuranceAddonType { InsuranceAddonTypeId = 16, CoverageAmount = 4000, Description = AddonType.LongTermSickness, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.LongTermSickness, 4000) }
                 );
+            #endregion
+        }
+
+        public static void SeedVehicleCoverageOptions(this ModelBuilder modelBuilder)
+        {
+            //Seed for VehicleInsuranceCoverageOptions (bilaga för Fordonsförsäkring personbil) 
+            #region Seed for VehicleInsuranceCoverageOptions
+            modelBuilder.Entity<VehicleInsuranceOption>().HasData(
+               new VehicleInsuranceOption { VehicleInsuranceOptionId = 1, Deductible = 1000, OptionDescription = VehicleCoverageOptions.Traffic, OptionCost = 350 },
+               new VehicleInsuranceOption { VehicleInsuranceOptionId = 2, Deductible = 1000, OptionDescription = VehicleCoverageOptions.Half, OptionCost = 550 },
+               new VehicleInsuranceOption { VehicleInsuranceOptionId = 3, Deductible = 1000, OptionDescription = VehicleCoverageOptions.Full, OptionCost = 800 },
+
+               new VehicleInsuranceOption { VehicleInsuranceOptionId = 4, Deductible = 2000, OptionDescription = VehicleCoverageOptions.Traffic, OptionCost = 300 },
+               new VehicleInsuranceOption { VehicleInsuranceOptionId = 5, Deductible = 2000, OptionDescription = VehicleCoverageOptions.Half, OptionCost = 450 },
+               new VehicleInsuranceOption { VehicleInsuranceOptionId = 6, Deductible = 2000, OptionDescription = VehicleCoverageOptions.Full, OptionCost = 700 },
+
+               new VehicleInsuranceOption { VehicleInsuranceOptionId = 7, Deductible = 3500, OptionDescription = VehicleCoverageOptions.Traffic, OptionCost = 250 },
+               new VehicleInsuranceOption { VehicleInsuranceOptionId = 8, Deductible = 3500, OptionDescription = VehicleCoverageOptions.Half, OptionCost = 400 },
+               new VehicleInsuranceOption { VehicleInsuranceOptionId = 9, Deductible = 3500, OptionDescription = VehicleCoverageOptions.Full, OptionCost = 600 }
+            );
             #endregion
         }
     }

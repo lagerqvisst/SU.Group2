@@ -29,16 +29,67 @@ namespace SU.Backend.Services
             _logger = logger;
         }
 
-
-
-        public async Task<(bool Success, string Message)> CreateTestInsurance()
+        public async Task<(bool Success, string Message)> CreateCompanyInsurance()
         {
-            //GIT TRAINING - REMOVE
-            _logger.LogInformation("SOME CODE CHANGES... :)");
+            _logger.LogInformation("Creating company insurance...");
 
-            _logger.LogInformation("Creating insurance...");
+            try
+            {
+                var insurance = new Insurance
+                {
+                    InsuranceType = InsuranceType.VehicleInsurance,
+                    InsuranceStatus = InsuranceStatus.Active,
+                    PaymentPlan = PaymentPlan.Monthly,
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now.AddYears(1),
+                    Note = "This is a test insurance"
+                };
 
-          // adding test comment
+                _logger.LogInformation("Finding test compay customer.");
+                // Hämta PrivateCustomer för InsurancePolicyHolder
+                var companyCustomer = _unitOfWork.CompanyCustomers.GetCompanyCustomers().Result.Last();
+                if (companyCustomer == null)
+                {
+                    return (false, "No company customer found.");
+                }
+                _logger.LogInformation("Test customer found: {Org Nr} - {Company name}", companyCustomer.OrganizationNumber, companyCustomer.CompanyName);
+
+
+                _logger.LogInformation("Creating InsurancePolicyHolder");
+                // Skapa InsurancePolicyHolder
+                insurance.InsurancePolicyHolder = new InsurancePolicyHolder
+                {
+                    CompanyCustomer = companyCustomer
+                };
+                _logger.LogInformation("Assigned fetched company as insurance policy holder of insurance");
+
+                //Testa bilförsäkring 
+
+                var coverage = new InsuranceCoverage
+                {
+                    Insurance = insurance
+                };
+
+                var vehicleCoverage = new VehicleInsuranceCoverage
+                {
+
+                };
+
+                return (true, "Company insurance created successfully.");
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while creating company insurance");
+                return (false, "An error occurred while creating the company insurance.");
+            }
+        }
+
+        public async Task<(bool Success, string Message)> CreateTestPrivateInsurance()
+        {
+
+            _logger.LogInformation("Creating private insurance...");
+
 
             try
             {

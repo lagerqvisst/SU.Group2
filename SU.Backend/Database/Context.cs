@@ -34,6 +34,7 @@ namespace SU.Backend.Database
         public DbSet<PrivateCoverage> PrivateCoverages { get; set; }
         public DbSet<Prospect> Prospects { get; set; }
         public DbSet<CompanyCustomer> CompanyCustomers { get; set; }
+        public DbSet<Riskzone> Riskzones { get; set; }
 
 
 
@@ -60,6 +61,7 @@ namespace SU.Backend.Database
             modelBuilder.SeedRiskzones();
             modelBuilder.SeedPrivateCoverageOptions();
             modelBuilder.SeedIsuranceAddonTypes();
+            modelBuilder.SeedVehicleCoverageOptions();
 
             // Definiera relationer
             #region Insurance 
@@ -173,6 +175,8 @@ namespace SU.Backend.Database
 
             #endregion
 
+
+
             #region Private Coverage
             modelBuilder.Entity<PrivateCoverage>()
                 .HasOne(pc => pc.PrivateCoverageOption) // En PrivateCoverage har en PrivateCoverageOption
@@ -188,11 +192,25 @@ namespace SU.Backend.Database
 
             #endregion
 
+            modelBuilder.Entity<Riskzone>()
+            .HasKey(x => x.RiskzoneId);
+
+            modelBuilder.Entity<VehicleInsuranceOption>()
+                .HasKey(x => x.VehicleInsuranceOptionId);
             #region Vehicle Coverage
+
+            // Configure VehicleInsuranceCoverage -> Riskzone relationship
             modelBuilder.Entity<VehicleInsuranceCoverage>()
-                .HasOne(vic => vic.Riskzone) // En VehicleInsuranceCoverage har en Riskzone
-                .WithMany() // En Riskzone är kopplad till en VehicleInsuranceCoverage
-                .HasForeignKey(vic => vic.RiskzoneId)
+                .HasOne(vic => vic.Riskzone) // Navigation to Riskzone
+                .WithMany(rz => rz.VehicleInsuranceCoverages) // Riskzone has many VehicleInsuranceCoverages
+                .HasForeignKey(vic => vic.RiskzoneId) // FK on VehicleInsuranceCoverage
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure VehicleInsuranceCoverage -> VehicleInsuranceOption relationship
+            modelBuilder.Entity<VehicleInsuranceCoverage>()
+                .HasOne(vic => vic.VehicleInsuranceOption) // Navigation to VehicleInsuranceOption
+                .WithMany(vo => vo.VehicleInsuranceCoverages) // VehicleInsuranceOption has many VehicleInsuranceCoverages
+                .HasForeignKey(vic => vic.VehicleInsuranceOptionId) // FK on VehicleInsuranceCoverage
                 .OnDelete(DeleteBehavior.Restrict);
 
             #endregion
