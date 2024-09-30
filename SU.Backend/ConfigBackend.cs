@@ -32,6 +32,7 @@ namespace SU.Backend.Configuration
             // Lägg till fler tjänster här
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IPrivateCustomerService, PrivateCustomerService>();
+            services.AddScoped<ICompanyCustomerService, CompanyCustomerService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IInsuranceService, InsuranceService>();
             services.AddScoped<IProspectService, ProspectService>();

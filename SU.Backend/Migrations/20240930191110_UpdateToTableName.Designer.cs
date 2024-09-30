@@ -12,8 +12,8 @@ using SU.Backend.Database;
 namespace SU.Backend.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240926091553_AddedPersonalNumberToEmployee")]
-    partial class AddedPersonalNumberToEmployee
+    [Migration("20240930191110_UpdateToTableName")]
+    partial class UpdateToTableName
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -475,7 +475,7 @@ namespace SU.Backend.Migrations
                     b.ToTable("PropertyAndInventoryCoverage");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.Rizkzone", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.Riskzone", b =>
                 {
                     b.Property<int>("RiskzoneId")
                         .ValueGeneratedOnAdd()
@@ -492,7 +492,7 @@ namespace SU.Backend.Migrations
 
                     b.HasKey("RiskzoneId");
 
-                    b.ToTable("Rizkzone");
+                    b.ToTable("Riskzones");
 
                     b.HasData(
                         new
@@ -541,7 +541,7 @@ namespace SU.Backend.Migrations
                     b.Property<int>("RiskzoneId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RizkzoneRiskzoneId")
+                    b.Property<int>("VehicleInsuranceOptionId")
                         .HasColumnType("int");
 
                     b.HasKey("VehicleInsuranceCoverageId");
@@ -551,9 +551,97 @@ namespace SU.Backend.Migrations
 
                     b.HasIndex("RiskzoneId");
 
-                    b.HasIndex("RizkzoneRiskzoneId");
+                    b.HasIndex("VehicleInsuranceOptionId");
 
                     b.ToTable("VehicleInsuranceCoverage");
+                });
+
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.VehicleInsuranceOption", b =>
+                {
+                    b.Property<int>("VehicleInsuranceOptionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VehicleInsuranceOptionId"), 1L, 1);
+
+                    b.Property<decimal>("Deductible")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("OptionCost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("OptionDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("VehicleInsuranceOptionId");
+
+                    b.ToTable("VehicleInsuranceOptions");
+
+                    b.HasData(
+                        new
+                        {
+                            VehicleInsuranceOptionId = 1,
+                            Deductible = 1000m,
+                            OptionCost = 350m,
+                            OptionDescription = "Traffic"
+                        },
+                        new
+                        {
+                            VehicleInsuranceOptionId = 2,
+                            Deductible = 1000m,
+                            OptionCost = 550m,
+                            OptionDescription = "Half"
+                        },
+                        new
+                        {
+                            VehicleInsuranceOptionId = 3,
+                            Deductible = 1000m,
+                            OptionCost = 800m,
+                            OptionDescription = "Full"
+                        },
+                        new
+                        {
+                            VehicleInsuranceOptionId = 4,
+                            Deductible = 2000m,
+                            OptionCost = 300m,
+                            OptionDescription = "Traffic"
+                        },
+                        new
+                        {
+                            VehicleInsuranceOptionId = 5,
+                            Deductible = 2000m,
+                            OptionCost = 450m,
+                            OptionDescription = "Half"
+                        },
+                        new
+                        {
+                            VehicleInsuranceOptionId = 6,
+                            Deductible = 2000m,
+                            OptionCost = 700m,
+                            OptionDescription = "Full"
+                        },
+                        new
+                        {
+                            VehicleInsuranceOptionId = 7,
+                            Deductible = 3500m,
+                            OptionCost = 250m,
+                            OptionDescription = "Traffic"
+                        },
+                        new
+                        {
+                            VehicleInsuranceOptionId = 8,
+                            Deductible = 3500m,
+                            OptionCost = 400m,
+                            OptionDescription = "Half"
+                        },
+                        new
+                        {
+                            VehicleInsuranceOptionId = 9,
+                            Deductible = 3500m,
+                            OptionCost = 600m,
+                            OptionDescription = "Full"
+                        });
                 });
 
             modelBuilder.Entity("SU.Backend.Models.Insurances.Insurance", b =>
@@ -943,19 +1031,23 @@ namespace SU.Backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SU.Backend.Models.Insurances.Coverage.Rizkzone", "Riskzone")
-                        .WithMany()
+                    b.HasOne("SU.Backend.Models.Insurances.Coverage.Riskzone", "Riskzone")
+                        .WithMany("VehicleInsuranceCoverages")
                         .HasForeignKey("RiskzoneId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SU.Backend.Models.Insurances.Coverage.Rizkzone", null)
+                    b.HasOne("SU.Backend.Models.Insurances.Coverage.VehicleInsuranceOption", "VehicleInsuranceOption")
                         .WithMany("VehicleInsuranceCoverages")
-                        .HasForeignKey("RizkzoneRiskzoneId");
+                        .HasForeignKey("VehicleInsuranceOptionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("InsuranceCoverage");
 
                     b.Navigation("Riskzone");
+
+                    b.Navigation("VehicleInsuranceOption");
                 });
 
             modelBuilder.Entity("SU.Backend.Models.Insurances.Insurance", b =>
@@ -1070,7 +1162,12 @@ namespace SU.Backend.Migrations
                     b.Navigation("PrivateCoverages");
                 });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.Rizkzone", b =>
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.Riskzone", b =>
+                {
+                    b.Navigation("VehicleInsuranceCoverages");
+                });
+
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.VehicleInsuranceOption", b =>
                 {
                     b.Navigation("VehicleInsuranceCoverages");
                 });

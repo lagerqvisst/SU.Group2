@@ -10,5 +10,7 @@ namespace SU.Backend.Database.Interfaces
     public interface ICompanyCustomerRepository
     {
         Task<List<CompanyCustomer>> GetProspectDataForCompanyCustomers();
+
+        Task<List<CompanyCustomer>> GetCompanyCustomers();
     }
 }

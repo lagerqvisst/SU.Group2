@@ -11,7 +11,9 @@ namespace SU.Backend.Services.Interfaces
 {
     public interface IInsuranceService
     {
-        Task<(bool Success, string Message)> CreateTestInsurance();
+        Task<(bool Success, string Message)> CreateTestPrivateInsurance();
+
+        Task<(bool Success, string Message)> CreateCompanyInsurance();
 
         Task<(bool Success, string Message)> RemoveAllInsurances();
 

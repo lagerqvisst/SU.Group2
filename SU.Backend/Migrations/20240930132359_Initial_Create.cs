@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SU.Backend.Migrations
 {
-    public partial class InitialCreate_1 : Migration
+    public partial class Initial_Create : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,6 +35,7 @@ namespace SU.Backend.Migrations
                 {
                     EmployeeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    PersonalNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -119,7 +120,7 @@ namespace SU.Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Rizkzone",
+                name: "Riskzones",
                 columns: table => new
                 {
                     RiskzoneId = table.Column<int>(type: "int", nullable: false)
@@ -129,7 +130,22 @@ namespace SU.Backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rizkzone", x => x.RiskzoneId);
+                    table.PrimaryKey("PK_Riskzones", x => x.RiskzoneId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VehicleInsuranceOption",
+                columns: table => new
+                {
+                    VehicleInsuranceOptionId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Deductible = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    OptionDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OptionCost = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VehicleInsuranceOption", x => x.VehicleInsuranceOptionId);
                 });
 
             migrationBuilder.CreateTable(
@@ -186,12 +202,13 @@ namespace SU.Backend.Migrations
                     ProspectId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProspectStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactNote = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProspectType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ContactDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AssignedAgentNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PrivateCustomerId = table.Column<int>(type: "int", nullable: true),
                     CompanyCustomerId = table.Column<int>(type: "int", nullable: true),
-                    EmployeeId = table.Column<int>(type: "int", nullable: true)
+                    SellerId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -203,8 +220,8 @@ namespace SU.Backend.Migrations
                         principalColumn: "CompanyCustomerId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Prospects_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
+                        name: "FK_Prospects_Employees_SellerId",
+                        column: x => x.SellerId,
                         principalTable: "Employees",
                         principalColumn: "EmployeeId",
                         onDelete: ReferentialAction.Restrict);
@@ -224,6 +241,7 @@ namespace SU.Backend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     InsurancePolicyHolderId = table.Column<int>(type: "int", nullable: false),
                     SellerId = table.Column<int>(type: "int", nullable: false),
+                    Premium = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     InsuranceType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     InsuranceStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PaymentPlan = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -379,9 +397,9 @@ namespace SU.Backend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     InsuranceCoverageId = table.Column<int>(type: "int", nullable: false),
                     RiskzoneId = table.Column<int>(type: "int", nullable: false),
+                    VehicleInsuranceOptionId = table.Column<int>(type: "int", nullable: false),
                     BaseCost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Deductible = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    RizkzoneRiskzoneId = table.Column<int>(type: "int", nullable: true)
+                    Deductible = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -393,16 +411,17 @@ namespace SU.Backend.Migrations
                         principalColumn: "InsuranceCoverageId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_VehicleInsuranceCoverage_Rizkzone_RiskzoneId",
+                        name: "FK_VehicleInsuranceCoverage_Riskzones_RiskzoneId",
                         column: x => x.RiskzoneId,
-                        principalTable: "Rizkzone",
+                        principalTable: "Riskzones",
                         principalColumn: "RiskzoneId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_VehicleInsuranceCoverage_Rizkzone_RizkzoneRiskzoneId",
-                        column: x => x.RizkzoneRiskzoneId,
-                        principalTable: "Rizkzone",
-                        principalColumn: "RiskzoneId");
+                        name: "FK_VehicleInsuranceCoverage_VehicleInsuranceOption_VehicleInsuranceOptionId",
+                        column: x => x.VehicleInsuranceOptionId,
+                        principalTable: "VehicleInsuranceOption",
+                        principalColumn: "VehicleInsuranceOptionId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -456,7 +475,7 @@ namespace SU.Backend.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Rizkzone",
+                table: "Riskzones",
                 columns: new[] { "RiskzoneId", "RiskzoneLevel", "ZoneFactor" },
                 values: new object[,]
                 {
@@ -464,6 +483,29 @@ namespace SU.Backend.Migrations
                     { 2, "Zone2", 1.2 },
                     { 3, "Zone3", 1.1000000000000001 },
                     { 4, "Zone4", 1.0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "VehicleInsuranceOption",
+                columns: new[] { "VehicleInsuranceOptionId", "Deductible", "OptionCost", "OptionDescription" },
+                values: new object[,]
+                {
+                    { 1, 1000m, 350m, "Traffic" },
+                    { 2, 1000m, 550m, "Half" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "VehicleInsuranceOption",
+                columns: new[] { "VehicleInsuranceOptionId", "Deductible", "OptionCost", "OptionDescription" },
+                values: new object[,]
+                {
+                    { 3, 1000m, 800m, "Full" },
+                    { 4, 2000m, 300m, "Traffic" },
+                    { 5, 2000m, 450m, "Half" },
+                    { 6, 2000m, 700m, "Full" },
+                    { 7, 3500m, 250m, "Traffic" },
+                    { 8, 3500m, 400m, "Half" },
+                    { 9, 3500m, 600m, "Full" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -546,14 +588,14 @@ namespace SU.Backend.Migrations
                 column: "CompanyCustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Prospects_EmployeeId",
-                table: "Prospects",
-                column: "EmployeeId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Prospects_PrivateCustomerId",
                 table: "Prospects",
                 column: "PrivateCustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Prospects_SellerId",
+                table: "Prospects",
+                column: "SellerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VehicleInsuranceCoverage_InsuranceCoverageId",
@@ -567,9 +609,9 @@ namespace SU.Backend.Migrations
                 column: "RiskzoneId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleInsuranceCoverage_RizkzoneRiskzoneId",
+                name: "IX_VehicleInsuranceCoverage_VehicleInsuranceOptionId",
                 table: "VehicleInsuranceCoverage",
-                column: "RizkzoneRiskzoneId");
+                column: "VehicleInsuranceOptionId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -608,7 +650,10 @@ namespace SU.Backend.Migrations
                 name: "InsuranceCoverages");
 
             migrationBuilder.DropTable(
-                name: "Rizkzone");
+                name: "Riskzones");
+
+            migrationBuilder.DropTable(
+                name: "VehicleInsuranceOption");
 
             migrationBuilder.DropTable(
                 name: "Insurances");

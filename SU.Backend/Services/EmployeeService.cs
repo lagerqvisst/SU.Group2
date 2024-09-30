@@ -42,6 +42,7 @@ namespace SU.Backend.Services
                     {
                         FirstName = info.Name.First,
                         LastName = info.Name.Last,
+                        PersonalNumber = "19900101-0000", 
                         Email = info.Email,
                         Username = EmployeeHelper.GenerateEmployeeUsername(info.Name),
                         Password = info.Login.Password,
