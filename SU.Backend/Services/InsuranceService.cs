@@ -136,6 +136,9 @@ namespace SU.Backend.Services
         public async Task<(bool Success, string Message)> CreateTestPrivateInsurance()
         {
 
+            // test hakuna matata tarea
+            await Console.Out.WriteLineAsync("hola");
+
             _logger.LogInformation("Creating private insurance...");
 
 
