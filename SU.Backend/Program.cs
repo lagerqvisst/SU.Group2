@@ -72,7 +72,12 @@ class Program
         //Kasper was here
         // Adam W was here for a second time since my first try didnt work!
         // Adam Å was here :)
+<<<<<<< Updated upstream
 
+=======
+        // Adam Å was here again :D
+        //
+>>>>>>> Stashed changes
 
     }
 
