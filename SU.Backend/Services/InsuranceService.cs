@@ -66,9 +66,6 @@ namespace SU.Backend.Services
                 };
                 _logger.LogInformation("InsurancePolicyHolder created and assigned successfully.");
 
-            
-
-
                 // Fetch the last risk zone
                 _logger.LogInformation("Attempting to fetch a risk zone...");
                 var riskZone = _unitOfWork.Riskzones.GetRiskZones().Result.Last();
