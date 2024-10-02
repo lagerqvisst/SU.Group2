@@ -80,6 +80,7 @@ class Program
 
         // Adam Å was here again :D
         //david was not here too
+        //Kasper was here again 
 
         //Console.WriteLine(RiskzoneLevel.Zone1);
 
