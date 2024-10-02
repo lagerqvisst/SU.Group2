@@ -58,7 +58,8 @@ namespace SU.Backend.Services
                         {
                             ProspectStatus = ProspectStatus.NotContacted,
                             ProspectType = ProspectType.Private,
-                            PrivateCustomer = privateCustomer
+                            PrivateCustomer = privateCustomer,
+                            ContactNote = "test"
                         });
                     }
                     else

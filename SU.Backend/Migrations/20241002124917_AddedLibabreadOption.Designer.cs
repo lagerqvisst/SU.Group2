@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SU.Backend.Database;
 
@@ -11,9 +12,10 @@ using SU.Backend.Database;
 namespace SU.Backend.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20241002124917_AddedLibabreadOption")]
+    partial class AddedLibabreadOption
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -248,92 +250,6 @@ namespace SU.Backend.Migrations
                     b.HasKey("LiabilityCoverageOptionId");
 
                     b.ToTable("LiabilityCoverageOption");
-
-                    b.HasData(
-                        new
-                        {
-                            LiabilityCoverageOptionId = 1,
-                            Deductible = "Quarter",
-                            MonthlyPremium = 800m,
-                            OptionAmount = "ThreeMillion"
-                        },
-                        new
-                        {
-                            LiabilityCoverageOptionId = 2,
-                            Deductible = "Quarter",
-                            MonthlyPremium = 1300m,
-                            OptionAmount = "FiveMillion"
-                        },
-                        new
-                        {
-                            LiabilityCoverageOptionId = 3,
-                            Deductible = "Quarter",
-                            MonthlyPremium = 1800m,
-                            OptionAmount = "TenMillion"
-                        },
-                        new
-                        {
-                            LiabilityCoverageOptionId = 4,
-                            Deductible = "Half",
-                            MonthlyPremium = 700m,
-                            OptionAmount = "ThreeMillion"
-                        },
-                        new
-                        {
-                            LiabilityCoverageOptionId = 5,
-                            Deductible = "Half",
-                            MonthlyPremium = 1200m,
-                            OptionAmount = "FiveMillion"
-                        },
-                        new
-                        {
-                            LiabilityCoverageOptionId = 6,
-                            Deductible = "Half",
-                            MonthlyPremium = 1700m,
-                            OptionAmount = "TenMillion"
-                        },
-                        new
-                        {
-                            LiabilityCoverageOptionId = 7,
-                            Deductible = "ThreeQuarter",
-                            MonthlyPremium = 600m,
-                            OptionAmount = "ThreeMillion"
-                        },
-                        new
-                        {
-                            LiabilityCoverageOptionId = 8,
-                            Deductible = "ThreeQuarter",
-                            MonthlyPremium = 1100m,
-                            OptionAmount = "FiveMillion"
-                        },
-                        new
-                        {
-                            LiabilityCoverageOptionId = 9,
-                            Deductible = "ThreeQuarter",
-                            MonthlyPremium = 1600m,
-                            OptionAmount = "TenMillion"
-                        },
-                        new
-                        {
-                            LiabilityCoverageOptionId = 10,
-                            Deductible = "Full",
-                            MonthlyPremium = 500m,
-                            OptionAmount = "ThreeMillion"
-                        },
-                        new
-                        {
-                            LiabilityCoverageOptionId = 11,
-                            Deductible = "Full",
-                            MonthlyPremium = 900m,
-                            OptionAmount = "FiveMillion"
-                        },
-                        new
-                        {
-                            LiabilityCoverageOptionId = 12,
-                            Deductible = "Full",
-                            MonthlyPremium = 1400m,
-                            OptionAmount = "TenMillion"
-                        });
                 });
 
             modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.PrivateCoverage", b =>

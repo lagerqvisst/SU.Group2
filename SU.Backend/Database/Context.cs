@@ -35,11 +35,9 @@ namespace SU.Backend.Database
         public DbSet<Prospect> Prospects { get; set; }
         public DbSet<CompanyCustomer> CompanyCustomers { get; set; }
         public DbSet<Riskzone> Riskzones { get; set; }
-
         public DbSet<VehicleInsuranceOption> VehicleInsuranceOptions { get; set; }
 
-
-
+        public DbSet<LiabilityCoverageOption> LiabilityCoverageOption { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -64,6 +62,7 @@ namespace SU.Backend.Database
             modelBuilder.SeedPrivateCoverageOptions();
             modelBuilder.SeedIsuranceAddonTypes();
             modelBuilder.SeedVehicleCoverageOptions();
+            modelBuilder.SeedLiabilityCoverageOptions();
 
             // Definiera relationer
             #region Insurance 
@@ -101,7 +100,6 @@ namespace SU.Backend.Database
                 .HasForeignKey<InsurancePolicyHolder>(iph => iph.InsuranceId)
                 .OnDelete(DeleteBehavior.Restrict); // Använd Restrict */
             #endregion
-
 
             #region Employee
 
@@ -177,8 +175,6 @@ namespace SU.Backend.Database
 
             #endregion
 
-
-
             #region Private Coverage
             modelBuilder.Entity<PrivateCoverage>()
                 .HasOne(pc => pc.PrivateCoverageOption) // En PrivateCoverage har en PrivateCoverageOption
@@ -217,6 +213,13 @@ namespace SU.Backend.Database
 
             #endregion
 
+#region LiabilityOption
+            modelBuilder.Entity<LiabilityCoverage>()
+                .HasOne(lc => lc.LiabilityCoverageOption)
+                .WithMany(l => l.LiabilityCoverages)
+                .HasForeignKey(lc => lc.LiabilityCoverageOptionId)
+                .OnDelete(DeleteBehavior.Restrict);
+            #endregion
             #region Prospect
             modelBuilder.Entity<Prospect>()
                 .HasOne(p => p.PrivateCustomer)

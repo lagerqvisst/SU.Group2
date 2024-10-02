@@ -11,7 +11,6 @@ namespace SU.Backend.Database.Interfaces
     public interface IIunsuranceRepository
     {
         Task<List<Insurance>> GetAllInsurances();
-
         Task<List<Commission>> GetSellerCommissions(DateTime startDate, DateTime endDate);
         Task<List<Insurance>> GetActiveInsurancesInDateRange(DateTime startDate, DateTime endDate);
         Task<List<Insurance>> GetAllActiveInsurances();

@@ -15,6 +15,10 @@ namespace SU.Backend.Services.Interfaces
 
         Task<(bool Success, string Message)> CreateCompanyInsurance();
 
+        Task<(bool Success, string Message)> CreateCompanyInsuranceProperty();
+
+        Task<(bool Success, string Message)> CreateCompanyLiability();
+
         Task<(bool Success, string Message)> RemoveAllInsurances();
 
     }

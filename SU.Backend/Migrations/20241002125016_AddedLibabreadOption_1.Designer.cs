@@ -12,8 +12,8 @@ using SU.Backend.Database;
 namespace SU.Backend.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240930132359_Initial_Create")]
-    partial class Initial_Create
+    [Migration("20241002125016_AddedLibabreadOption_1")]
+    partial class AddedLibabreadOption_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -212,6 +212,9 @@ namespace SU.Backend.Migrations
                     b.Property<int>("InsuranceCoverageId")
                         .HasColumnType("int");
 
+                    b.Property<int>("LiabilityCoverageOptionId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("MonthlyPremium")
                         .HasColumnType("decimal(18,2)");
 
@@ -220,7 +223,33 @@ namespace SU.Backend.Migrations
                     b.HasIndex("InsuranceCoverageId")
                         .IsUnique();
 
+                    b.HasIndex("LiabilityCoverageOptionId");
+
                     b.ToTable("LiabilityCoverage");
+                });
+
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.LiabilityCoverageOption", b =>
+                {
+                    b.Property<int>("LiabilityCoverageOptionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LiabilityCoverageOptionId"), 1L, 1);
+
+                    b.Property<string>("Deductible")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("MonthlyPremium")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("OptionAmount")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LiabilityCoverageOptionId");
+
+                    b.ToTable("LiabilityCoverageOption");
                 });
 
             modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.PrivateCoverage", b =>
@@ -529,14 +558,14 @@ namespace SU.Backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VehicleInsuranceCoverageId"), 1L, 1);
 
-                    b.Property<decimal>("BaseCost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Deductible")
+                    b.Property<decimal>("CoverageAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("InsuranceCoverageId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("MonthlyPremium")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("RiskzoneId")
                         .HasColumnType("int");
@@ -576,7 +605,7 @@ namespace SU.Backend.Migrations
 
                     b.HasKey("VehicleInsuranceOptionId");
 
-                    b.ToTable("VehicleInsuranceOption");
+                    b.ToTable("VehicleInsuranceOptions");
 
                     b.HasData(
                         new
@@ -914,7 +943,6 @@ namespace SU.Backend.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ContactNote")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PrivateCustomerId")
@@ -982,7 +1010,15 @@ namespace SU.Backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SU.Backend.Models.Insurances.Coverage.LiabilityCoverageOption", "LiabilityCoverageOption")
+                        .WithMany("LiabilityCoverages")
+                        .HasForeignKey("LiabilityCoverageOptionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("InsuranceCoverage");
+
+                    b.Navigation("LiabilityCoverageOption");
                 });
 
             modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.PrivateCoverage", b =>
@@ -1155,6 +1191,11 @@ namespace SU.Backend.Migrations
                     b.Navigation("PropertyAndInventoryCoverage");
 
                     b.Navigation("VehicleInsuranceCoverage");
+                });
+
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.LiabilityCoverageOption", b =>
+                {
+                    b.Navigation("LiabilityCoverages");
                 });
 
             modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.PrivateCoverageOption", b =>

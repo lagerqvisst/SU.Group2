@@ -132,6 +132,174 @@ namespace SU.Backend.Services
             }
         }
 
+        public async Task<(bool Success, string Message)> CreateCompanyInsuranceProperty()
+        {
+            _logger.LogInformation("Starting the process of creating a company insurance...");
+
+            try
+            {
+                // Create the insurance object
+                var insurance = new Insurance
+                {
+                    InsuranceType = InsuranceType.PropertyAndInventoryInsurance,
+                    InsuranceStatus = InsuranceStatus.Active,
+                    PaymentPlan = PaymentPlan.Monthly,
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now.AddYears(1),
+                    Note = "This is a test insurance"
+                };
+                _logger.LogInformation("Insurance object created successfully.");
+
+                // Fetch the last company customer
+                _logger.LogInformation("Attempting to fetch a test company customer...");
+                var companyCustomer = _unitOfWork.CompanyCustomers.GetCompanyCustomers().Result.Last();
+                if (companyCustomer == null)
+                {
+                    _logger.LogWarning("No company customer found.");
+                    return (false, "No company customer found.");
+                }
+                _logger.LogInformation("Company customer found: {Org Nr} - {CompanyName}", companyCustomer.OrganizationNumber, companyCustomer.CompanyName);
+
+                // Create InsurancePolicyHolder
+                _logger.LogInformation("Assigning the company customer as the insurance policy holder...");
+                insurance.InsurancePolicyHolder = new InsurancePolicyHolder
+                {
+                    CompanyCustomer = companyCustomer
+                };
+                _logger.LogInformation("InsurancePolicyHolder created and assigned successfully.");
+
+                
+                // Create VehicleInsuranceCoverage
+                _logger.LogInformation("Creating vehicle insurance coverage...");
+                var insuranceCoverage = new InsuranceCoverage();
+                var propertyCoverage = new PropertyAndInventoryCoverage
+                {
+                    InsuranceCoverage = insuranceCoverage,
+                    PropertyAddress = "Testgatan 1",
+                    PropertyValue = 1_000_000,
+                    PropertyPremium = 1000,
+                    InventoryValue = 500_000,
+                    InventoryPremium = 500,
+                };
+
+                insuranceCoverage.PropertyAndInventoryCoverage = propertyCoverage;
+                insurance.Premium = 1000; //egentligen räknas ut med logik från bilagan.
+                insurance.InsuranceCoverage = insuranceCoverage;
+
+                // Fetch the seller with a specified role
+                _logger.LogInformation("Attempting to fetch a seller with the role: InsideSales...");
+                var seller = await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.InsideSales);
+                if (seller == null)
+                {
+                    _logger.LogWarning("No seller found with the role: InsideSales.");
+                }
+                else
+                {
+                    insurance.Seller = seller;
+                    _logger.LogInformation("Seller assigned to insurance: {SellerId} - {SellerName}", seller.EmployeeId, seller.FirstName);
+                }
+
+                // Save changes to the database
+                _logger.LogInformation("Saving the new company insurance to the database...");
+                await _unitOfWork.Insurances.AddAsync(insurance);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Company insurance created and saved successfully.");
+
+                return (true, "Company insurance created successfully.");
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while creating insurance");
+                return (false, "An error occurred while creating the insurance.");
+            }
+        }
+
+        public async Task<(bool Success, string Message)> CreateCompanyLiability()
+        {
+            _logger.LogInformation("Starting the process of creating a company insurance...");
+
+            try
+            {
+                // Create the insurance object
+                var insurance = new Insurance
+                {
+                    InsuranceType = InsuranceType.LiabilityInsurance,
+                    InsuranceStatus = InsuranceStatus.Active,
+                    PaymentPlan = PaymentPlan.Monthly,
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now.AddYears(1),
+                    Note = "This is a test insurance"
+                };
+                _logger.LogInformation("Insurance object created successfully.");
+
+                // Fetch the last company customer
+                _logger.LogInformation("Attempting to fetch a test company customer...");
+                var companyCustomer = _unitOfWork.CompanyCustomers.GetCompanyCustomers().Result.Last();
+                if (companyCustomer == null)
+                {
+                    _logger.LogWarning("No company customer found.");
+                    return (false, "No company customer found.");
+                }
+                _logger.LogInformation("Company customer found: {Org Nr} - {CompanyName}", companyCustomer.OrganizationNumber, companyCustomer.CompanyName);
+
+                // Create InsurancePolicyHolder
+                _logger.LogInformation("Assigning the company customer as the insurance policy holder...");
+                insurance.InsurancePolicyHolder = new InsurancePolicyHolder
+                {
+                    CompanyCustomer = companyCustomer
+                };
+                _logger.LogInformation("InsurancePolicyHolder created and assigned successfully.");
+
+
+                _logger.LogInformation("Creating liability insurance coverage option...");
+                var liabiltiyCoverageOption = _unitOfWork.LiabilityCoverageOptions.GetLiabilityCoverage().Result.First();
+                if(liabiltiyCoverageOption == null)
+                {
+                    return (false, "No liability coverage option found.");
+                }
+
+                var insuranceCoverage = new InsuranceCoverage();
+                var liabilityCoverage = new LiabilityCoverage
+                {
+                    InsuranceCoverage = insuranceCoverage,
+                    LiabilityCoverageOption = liabiltiyCoverageOption,
+                };
+
+                insuranceCoverage.LiabilityCoverage = liabilityCoverage;
+                insurance.Premium = liabiltiyCoverageOption.MonthlyPremium; 
+                insurance.InsuranceCoverage = insuranceCoverage;
+
+                // Fetch the seller with a specified role
+                _logger.LogInformation("Attempting to fetch a seller with the role: InsideSales...");
+                var seller = await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.InsideSales);
+                if (seller == null)
+                {
+                    _logger.LogWarning("No seller found with the role: InsideSales.");
+                }
+                else
+                {
+                    insurance.Seller = seller;
+                    _logger.LogInformation("Seller assigned to insurance: {SellerId} - {SellerName}", seller.EmployeeId, seller.FirstName);
+                }
+
+                // Save changes to the database
+                _logger.LogInformation("Saving the new company insurance to the database...");
+                await _unitOfWork.Insurances.AddAsync(insurance);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Company insurance created and saved successfully.");
+
+                return (true, "Company insurance created successfully.");
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while creating insurance");
+                return (false, "An error occurred while creating the insurance.");
+            }
+        }
 
         public async Task<(bool Success, string Message)> CreateTestPrivateInsurance()
         {
@@ -152,7 +320,8 @@ namespace SU.Backend.Services
                     PaymentPlan = PaymentPlan.Monthly,
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now.AddYears(1),
-                    Note = "This is a test insurance"
+                    Note = "This is a test insurance",
+                  
                 };
 
                 _logger.LogInformation("Finding test customer.");
@@ -168,10 +337,17 @@ namespace SU.Backend.Services
 
                 _logger.LogInformation("Creating InsurancePolicyHolder");
                 // Skapa InsurancePolicyHolder
+
                 insurance.InsurancePolicyHolder = new InsurancePolicyHolder
                 {
                     PrivateCustomer = privateCustomer
                 };
+
+                if(insurance.InsurancePolicyHolder.PrivateCustomer == null)
+                {
+                    return (false, "The insurance policyholder object did not link to a customer");
+                }
+
                 _logger.LogInformation("Assigned fetched customer as insurance policy holder of insurance");
 
                 // Skapa InsuranceCoverage
@@ -193,6 +369,7 @@ namespace SU.Backend.Services
                     return (false, "No addon found for the input.");
                 }
                 _logger.LogInformation("Addon found");
+
 
                 insurance.InsuranceAddons.Add(new InsuranceAddon
                 {
@@ -222,7 +399,7 @@ namespace SU.Backend.Services
 
                 // Koppla navigationsobjekten
                 insuranceCoverage.PrivateCoverage = privateCoverage;
-
+                insurance.InsuranceCoverage = insuranceCoverage;
                 // Lägg till vem som sålde försäkringen.
                 _logger.LogInformation("Adding seller to insurance");
 
@@ -253,7 +430,6 @@ namespace SU.Backend.Services
                 return (false, "An error occurred while creating the insurance.");
             }
         }
-
 
         public async Task<(bool Success, string Message)> RemoveAllInsurances()
         {

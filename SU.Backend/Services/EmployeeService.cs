@@ -57,10 +57,12 @@ namespace SU.Backend.Services
                     {
                         Employee = employee,
                         Role = Role,
-                        Percentage = 100
+                        Percentage = 10
                     };
 
+
                     employee.RoleAssignments.Add(roleAssignment);
+
 
 
                     _logger.LogInformation("New employee object created");

@@ -56,6 +56,7 @@ namespace SU.Backend.Database.Utility
                 (typeof(VehicleInsuranceCoverage), new[] { "MonthlyPremium", "CoverageAmount", }),
                 (typeof(PropertyAndInventoryCoverage), new[] { "PropertyPremium", "PropertyValue", "InventoryPremium", "InventoryValue" }),
                 (typeof(VehicleInsuranceOption), new[] { "Deductible", "OptionCost" }),
+                (typeof(LiabilityCoverageOption), new[] { "MonthlyPremium" }),
             };
 
             foreach (var (type, properties) in decimalTypes)
@@ -314,5 +315,28 @@ namespace SU.Backend.Database.Utility
             );
             #endregion
         }
+
+        public static void SeedLiabilityCoverageOptions(this ModelBuilder modelBuilder)
+        {
+            #region Seed for LiabilityCoverageOptions
+            modelBuilder.Entity<LiabilityCoverageOption>().HasData(
+                new LiabilityCoverageOption { LiabilityCoverageOptionId = 1, Deductible = Deductible.Quarter, OptionAmount = LiabilityCoverageOptionAmounts.ThreeMillion, MonthlyPremium = 800 },
+                new LiabilityCoverageOption { LiabilityCoverageOptionId = 2, Deductible = Deductible.Quarter, OptionAmount = LiabilityCoverageOptionAmounts.FiveMillion, MonthlyPremium = 1300 },
+                new LiabilityCoverageOption { LiabilityCoverageOptionId = 3, Deductible = Deductible.Quarter, OptionAmount = LiabilityCoverageOptionAmounts.TenMillion, MonthlyPremium = 1800 },
+                new LiabilityCoverageOption { LiabilityCoverageOptionId = 4, Deductible = Deductible.Half, OptionAmount = LiabilityCoverageOptionAmounts.ThreeMillion, MonthlyPremium = 700 },
+                new LiabilityCoverageOption { LiabilityCoverageOptionId = 5, Deductible = Deductible.Half, OptionAmount = LiabilityCoverageOptionAmounts.FiveMillion, MonthlyPremium = 1200 },
+                new LiabilityCoverageOption { LiabilityCoverageOptionId = 6, Deductible = Deductible.Half, OptionAmount = LiabilityCoverageOptionAmounts.TenMillion, MonthlyPremium = 1700 },
+                new LiabilityCoverageOption { LiabilityCoverageOptionId = 7, Deductible = Deductible.ThreeQuarter, OptionAmount = LiabilityCoverageOptionAmounts.ThreeMillion, MonthlyPremium = 600 },
+                new LiabilityCoverageOption { LiabilityCoverageOptionId = 8, Deductible = Deductible.ThreeQuarter, OptionAmount = LiabilityCoverageOptionAmounts.FiveMillion, MonthlyPremium = 1100 },
+                new LiabilityCoverageOption { LiabilityCoverageOptionId = 9, Deductible = Deductible.ThreeQuarter, OptionAmount = LiabilityCoverageOptionAmounts.TenMillion, MonthlyPremium = 1600 },
+                new LiabilityCoverageOption { LiabilityCoverageOptionId = 10, Deductible = Deductible.Full, OptionAmount = LiabilityCoverageOptionAmounts.ThreeMillion, MonthlyPremium = 500 },
+                new LiabilityCoverageOption { LiabilityCoverageOptionId = 11, Deductible = Deductible.Full, OptionAmount = LiabilityCoverageOptionAmounts.FiveMillion, MonthlyPremium = 900 },
+                new LiabilityCoverageOption { LiabilityCoverageOptionId = 12, Deductible = Deductible.Full, OptionAmount = LiabilityCoverageOptionAmounts.TenMillion, MonthlyPremium = 1400 }
+                );
+
+            #endregion
+
+        }
+
     }
 }

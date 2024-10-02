@@ -12,8 +12,8 @@ using SU.Backend.Database;
 namespace SU.Backend.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240930191110_UpdateToTableName")]
-    partial class UpdateToTableName
+    [Migration("20241002093851_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -529,14 +529,14 @@ namespace SU.Backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VehicleInsuranceCoverageId"), 1L, 1);
 
-                    b.Property<decimal>("BaseCost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Deductible")
+                    b.Property<decimal>("CoverageAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("InsuranceCoverageId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("MonthlyPremium")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("RiskzoneId")
                         .HasColumnType("int");
@@ -914,7 +914,6 @@ namespace SU.Backend.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ContactNote")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PrivateCustomerId")

@@ -94,6 +94,7 @@ namespace SU.Frontend.ViewModels
                 {
                     //Vi kan använda denna användare i olika views utan att behöva skicka den vidare.
                     _loggedInUserService.LoggedInEmployee = result.Employee;
+                    //(Employee)
                     //TODO: Antingen göra overload så att vi kan skicka med ett objekt eller bara en vy. För vi kan kalla på loggeduser i nästa vy utan att passera den.
                     //_navigationService.NavigateTo("NEXT VIEW", "OBJECT");
                 }
