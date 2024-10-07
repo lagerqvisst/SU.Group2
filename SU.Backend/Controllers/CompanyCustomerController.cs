@@ -21,5 +21,23 @@ namespace SU.Backend.Controllers
             _companyCustomerService = companyCustomerService;
             _logger = logger;
         }
+
+        public async Task<(bool Success, string Message)> CreateCompanyCustomer(CompanyCustomer companyCustomer)
+        {
+            _logger.LogInformation("Controller activated to create new company customer...");
+            var result = await _companyCustomerService.CreateCompanyCustomer(companyCustomer);
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"{result.Customer}");
+                return (result.Success, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"{result.Message}");
+                return (result.Success, result.Message);
+            }
+        }
+
     }
 }

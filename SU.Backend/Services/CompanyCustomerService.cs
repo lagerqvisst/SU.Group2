@@ -36,7 +36,6 @@ namespace SU.Backend.Services
                     CompanyPhoneNumber = "08-123456",
                     CompanyLandlineNumber = "08-7654321",
                     CompanyEmailAdress = "info@exempel.se",
-
                 };
                 _logger.LogInformation("Company customer generated");
 
@@ -54,13 +53,21 @@ namespace SU.Backend.Services
 
                 return (false, "Failed to generate random company customer", null);
             }
+        }
 
-            async Task<(bool Success, string Message, CompanyCustomer Customer)> CreateCompanyCustomers(CompanyCustomer newCompanyCustomer)
+        public async Task<(bool Success, string Message, CompanyCustomer Customer)> CreateCompanyCustomers(CompanyCustomer newCompanyCustomer)
+
         {
-                _logger.LogInformation("Creating new company customer...");
 
-                try
+            _logger.LogInformation("Creating new company customer...");
+
+            try
+            {
                 {
+                   CompanyCustomer companyCustomer = new CompanyCustomer
+                };
+
+                { 
                     _logger.LogInformation("Attempting to create a new company customer...");
                     _unitOfWork.CompanyCustomers.AddAsync(newCompanyCustomer);
                     await _unitOfWork.SaveChangesAsync();
@@ -75,8 +82,8 @@ namespace SU.Backend.Services
                     return (false, $"An error occurred while creating the new company customer: {ex.Message}", null);
 
                 }
-            }
 
+            }
         }
-    }
+    }   
 }
