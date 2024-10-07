@@ -20,6 +20,14 @@ namespace SU.Backend.Database.Repositories
             return await _context.CompanyCustomers.ToListAsync();
         }
 
+        public async Task<List<CompanyCustomer>> CreateCompanyCustomers(CompanyCustomer newCompanyCustomer)
+        {
+            await _context.CompanyCustomers.AddAsync(newCompanyCustomer);
+            await _context.SaveChangesAsync();  
+            return await _context.CompanyCustomers.ToListAsync(); 
+        }
+
+
         public async Task<List<CompanyCustomer>> GetProspectDataForCompanyCustomers()
         {
             return await _context.CompanyCustomers

@@ -55,7 +55,28 @@ namespace SU.Backend.Services
                 return (false, "Failed to generate random company customer", null);
             }
 
-           
+            async Task<(bool Success, string Message, CompanyCustomer Customer)> CreateCompanyCustomers(CompanyCustomer newCompanyCustomer)
+        {
+                _logger.LogInformation("Creating new company customer...");
+
+                try
+                {
+                    _logger.LogInformation("Attempting to create a new company customer...");
+                    _unitOfWork.CompanyCustomers.AddAsync(newCompanyCustomer);
+                    await _unitOfWork.SaveChangesAsync();
+
+                    _logger.LogInformation("Company customer created successfully.");
+
+                    return (true, "Company customer was added to the database.", newCompanyCustomer);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex.ToString());
+                    return (false, $"An error occurred while creating the new company customer: {ex.Message}", null);
+
+                }
+            }
+
         }
     }
 }
