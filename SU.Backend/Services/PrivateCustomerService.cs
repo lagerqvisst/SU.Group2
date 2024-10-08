@@ -26,7 +26,7 @@ namespace SU.Backend.Services
         }
 
         // method to create a new private customer
-        public async Task<(bool Success, string Message)> CreateNewPrivateCustomer(PrivateCustomer privateCustomer)
+        public async Task<(bool Success, string Message, PrivateCustomer PrivateCustomer)> CreateNewPrivateCustomer(PrivateCustomer privateCustomer)
         {
             _logger.LogInformation("Creating new Private Customer...");
 
