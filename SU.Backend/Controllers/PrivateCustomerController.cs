@@ -36,5 +36,23 @@ namespace SU.Backend.Controllers
                 _logger.LogWarning($"Error creating customer: {result.Message}");
             }
         }
+
+        public async Task<(bool Success, string Message)> UpdatePrivateCustomer(PrivateCustomer privateCustomer)
+        {
+            _logger.LogInformation("Controller activated to update private customer...");
+            var result = await _privateCustomerService.UpdatePrivateCustomer(privateCustomer);
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"The private custimer has been succesfully updated {result.Customer}");
+                return (result.Success, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"An error has occured and the private customer could not be updated {result.Message}");
+                return (result.Success, result.Message);
+            }
+        }
+
     }
 }
