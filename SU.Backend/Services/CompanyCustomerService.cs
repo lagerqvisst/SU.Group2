@@ -102,6 +102,31 @@ namespace SU.Backend.Services
                 return (false, $"An error occurred while updating new company customer: {ex.Message}", null);
             }
         }
+
+        public async Task<(bool Success, string Message, CompanyCustomer Customer)> DeleteCompanyCustomer(CompanyCustomer companyCustomer)
+        {
+
+            _logger.LogInformation("Deleting company customer...");
+
+            try
+            {
+                _logger.LogInformation("Attempting to delete a company customer...");
+
+                // delete company customer in the database
+                await _unitOfWork.CompanyCustomers.RemoveAsync(companyCustomer);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Company customer was successfully deleted.");
+
+                return (true, "Company customer was deleted the database.", companyCustomer);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex.ToString());
+                return (false, $"An error occurred while deleting the company customer: {ex.Message}", null);
+            }
+
+        }
     }
 }
 

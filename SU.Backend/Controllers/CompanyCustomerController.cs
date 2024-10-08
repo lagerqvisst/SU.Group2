@@ -39,7 +39,7 @@ namespace SU.Backend.Controllers
             }
         }
 
-        public async Task<(bool Success, string Message)> UpdateCompanyCustomer (CompanyCustomer companyCustomer)
+        public async Task<(bool Success, string Message)> UpdateCompanyCustomer(CompanyCustomer companyCustomer)
         {
             _logger.LogInformation("Controller activated to update company customer...");
             var result = await _companyCustomerService.UpdateCompanyCustomer(companyCustomer);
@@ -53,6 +53,24 @@ namespace SU.Backend.Controllers
             {
                 _logger.LogWarning($"{result.Message}");
                 return (result.Success, result.Message);
+            }
+        }
+
+        public async Task<(bool Success, string Message)> DeleteCompanyCustomer(CompanyCustomer companyCustomer)
+        {
+            _logger.LogInformation("Controller activated to delete company customer...");
+            var result = await _companyCustomerService.DeleteCompanyCustomer(companyCustomer);
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"{result.Customer}");
+                return (result.Success, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"{result.Message}");
+                return (result.Success, result.Message);
+
             }
         }
 
