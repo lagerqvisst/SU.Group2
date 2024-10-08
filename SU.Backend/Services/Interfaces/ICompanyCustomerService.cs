@@ -12,6 +12,8 @@ namespace SU.Backend.Services.Interfaces
         Task<(bool Success, string Message, CompanyCustomer Customer)> GenerateTestCompanyCustomer();
 
         Task<(bool Success, string Message, CompanyCustomer Customer)> CreateCompanyCustomer(CompanyCustomer newCompanyCustomer);
+
+        Task<(bool Success, string Message, CompanyCustomer Customer)> UpdateCompanyCustomer(CompanyCustomer companyCustomer);
     }
 
 }
