@@ -13,6 +13,9 @@ namespace SU.Backend.Services.Interfaces
         Task<(bool Success, string Message, List<PrivateCustomer>)> GetPrivateCustomers();
         Task<(bool Success, string Message, PrivateCustomer Customer)> GetPrivateCustomerById(PrivateCustomer privateCustomer);
 
+        // Created the method in the service interface
+        Task<(bool Success, string Message, PrivateCustomer Customer)> DeletePrivateCustomer(PrivateCustomer privateCustomer);
+
 
 
     }
