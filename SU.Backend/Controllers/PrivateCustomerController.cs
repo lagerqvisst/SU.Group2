@@ -36,5 +36,24 @@ namespace SU.Backend.Controllers
                 _logger.LogWarning($"Error creating customer: {result.Message}");
             }
         }
+
+
+        public async Task<(bool Success, string Message)> DeletePrivateCustomer(PrivateCustomer privateCustomer)
+        {
+            _logger.LogInformation("Controller activated to delete private customer...");
+            var result = await _privateCustomerService.DeletePrivateCustomer(privateCustomer);
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"The private customer has been succesfully deleted: {result.Customer}");
+                return (result.Success, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"It was not possible to delete the private customer:{result.Message}");
+                return (result.Success, result.Message);
+
+            }
+        }
     }
 }

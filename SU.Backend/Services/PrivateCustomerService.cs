@@ -14,7 +14,7 @@ namespace SU.Backend.Services
 {
     public class PrivateCustomerService : IPrivateCustomerService
     {
-        private ILogger<PrivateCustomerService> _logger;
+        private ILogger<PrivateCustomerService> _logger; 
         private readonly IRandomGenerationService _randomInfoGenerationService;
         private readonly UnitOfWork _unitOfWork; 
 
@@ -25,6 +25,26 @@ namespace SU.Backend.Services
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<(bool Success, string Message, /*måste den här vara här??=>*/PrivateCustomer Customer)> DeletePrivateCustomer(PrivateCustomer PrivateCustomer)
+        {
+            _logger.LogInformation("Deleting private customer...");
+
+            try
+            {
+                _logger.LogInformation("Attempting to delete a private customer...");
+
+                await _unitOfWork.PrivateCustomers.RemoveAsync(PrivateCustomer);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Private customer was successfully deleted.");
+
+                return (true, "Private customer was deleted the database.", PrivateCustomer);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex.ToString());
+                return (false, $"An error occurred while deleting the private customer: {ex.Message}", null);
+        
         // method to create a new private customer
         public async Task<(bool Success, string Message)> CreateNewPrivateCustomer(PrivateCustomer privateCustomer)
         {
