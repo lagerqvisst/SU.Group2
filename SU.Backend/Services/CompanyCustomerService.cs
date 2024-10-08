@@ -55,10 +55,7 @@ namespace SU.Backend.Services
             }
         }
 
-
-
-
-
+        //Create a new company customer
         public async Task<(bool Success, string Message, CompanyCustomer Customer)> CreateCompanyCustomer(CompanyCustomer newCompanyCustomer)
         {
             _logger.LogInformation("Creating new company customer...");
@@ -82,6 +79,29 @@ namespace SU.Backend.Services
             }
         }
 
+        //Update an existing company customer
+        public async Task<(bool Success, string Message, CompanyCustomer Customer)> UpdateCompanyCustomer(CompanyCustomer companyCustomer)
+        {
+            _logger.LogInformation("Updating company customer...");
+
+            try
+            {
+                _logger.LogInformation("Attempting to update a company customer...");
+
+                // Update company customer in the database
+                await _unitOfWork.CompanyCustomers.UpdateAsync(companyCustomer);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Company customer updated successfully.");
+
+                return (true, "Company customer was updated in the database.", companyCustomer);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex.ToString());
+                return (false, $"An error occurred while updating new company customer: {ex.Message}", null);
+            }
+        }
     }
 }
 
