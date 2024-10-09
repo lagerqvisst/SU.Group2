@@ -56,7 +56,7 @@ namespace SU.Backend.Controllers
             }
 
         }
-        
+
         // controller for UpdatePrivateCustomer method
         public async Task<(bool Success, string Message)> UpdatePrivateCustomer(PrivateCustomer privateCustomer)
         {
@@ -94,4 +94,6 @@ namespace SU.Backend.Controllers
                 
         }
     }
+}
+
 
