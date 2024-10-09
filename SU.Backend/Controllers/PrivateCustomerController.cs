@@ -44,6 +44,19 @@ namespace SU.Backend.Controllers
             _logger.LogInformation("Private Customer object added via GUI");
             var result = await _privateCustomerService.CreateNewPrivateCustomer(privateCustomer);
 
+            if (result.Success)
+            {
+                _logger.LogInformation($"{result.Message}");
+                return (result.Success, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"{result.Message}");
+                return (result.Success, result.Message);
+            }
+
+        }
+        
         // controller for UpdatePrivateCustomer method
         public async Task<(bool Success, string Message)> UpdatePrivateCustomer(PrivateCustomer privateCustomer)
         {
@@ -74,11 +87,11 @@ namespace SU.Backend.Controllers
                 return (result.Success, result.Message);
             }
             else
-           
+            {
                 _logger.LogWarning($"{result.Message}");
                 return (result.Success, result.Message);
-
             }
+                
         }
     }
 
