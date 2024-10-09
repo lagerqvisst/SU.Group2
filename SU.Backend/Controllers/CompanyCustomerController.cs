@@ -29,7 +29,7 @@ namespace SU.Backend.Controllers
 
             if (result.Success)
             {
-                _logger.LogInformation($"{result.Customer}");
+                _logger.LogInformation($"{result.Message}");
                 return (result.Success, result.Message);
             }
             else
@@ -46,7 +46,7 @@ namespace SU.Backend.Controllers
 
             if (result.Success)
             {
-                _logger.LogInformation($"{result.Customer}");
+                _logger.LogInformation($"{result.Message}");
                 return (result.Success, result.Message);
             }
             else
@@ -63,7 +63,7 @@ namespace SU.Backend.Controllers
 
             if (result.Success)
             {
-                _logger.LogInformation($"{result.Customer}");
+                _logger.LogInformation($"{result.Message}");
                 return (result.Success, result.Message);
             }
             else
