@@ -7,6 +7,7 @@ using SU.Backend.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,7 +15,6 @@ namespace SU.Backend.Services
 {
     public class PrivateCustomerService : IPrivateCustomerService
     {
-    50-add-service-method-to-privatecustomerservice-to-update-new-privatecustomer-entity-through-unit-of-work
         private ILogger<PrivateCustomerService> _logger; 
         private readonly IRandomGenerationService _randomInfoGenerationService;
         private readonly UnitOfWork _unitOfWork; 
@@ -45,6 +45,9 @@ namespace SU.Backend.Services
             {
                 _logger.LogWarning(ex.ToString());
                 return (false, $"An error occurred while deleting the private customer: {ex.Message}", null);
+
+            }
+        }
         
         // method to create a new private customer
         public async Task<(bool Success, string Message)> CreateNewPrivateCustomer(PrivateCustomer privateCustomer)
