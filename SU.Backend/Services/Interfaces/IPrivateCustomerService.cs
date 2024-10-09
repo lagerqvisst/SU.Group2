@@ -17,6 +17,7 @@ namespace SU.Backend.Services.Interfaces
         // Created the method in the service interface
         Task<(bool Success, string Message, PrivateCustomer Customer)> DeletePrivateCustomer(PrivateCustomer privateCustomer);
 
+        Task<(bool Success, string Message, PrivateCustomer Customer)> UpdatePrivateCustomer(PrivateCustomer privateCustomer);
 
 
     }

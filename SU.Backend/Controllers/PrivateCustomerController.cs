@@ -37,6 +37,15 @@ namespace SU.Backend.Controllers
             }
         }
 
+      50-add-service-method-to-privatecustomerservice-to-update-new-privatecustomer-entity-through-unit-of-work
+        public async Task<(bool Success, string Message)> UpdatePrivateCustomer(PrivateCustomer privateCustomer)
+        {
+            _logger.LogInformation("Controller activated to update private customer...");
+            var result = await _privateCustomerService.UpdatePrivateCustomer(privateCustomer);
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"The private custimer has been succesfully updated {result.Customer}");
 
         public async Task<(bool Success, string Message)> DeletePrivateCustomer(PrivateCustomer privateCustomer)
         {
@@ -49,7 +58,13 @@ namespace SU.Backend.Controllers
                 return (result.Success, result.Message);
             }
             else
-            {
+           
+              50-add-service-method-to-privatecustomerservice-to-update-new-privatecustomer-entity-through-unit-of-work
+                _logger.LogWarning($"An error has occured and the private customer could not be updated {result.Message}");
+                return (result.Success, result.Message);
+            }
+        }
+
                 _logger.LogWarning($"It was not possible to delete the private customer:{result.Message}");
                 return (result.Success, result.Message);
 

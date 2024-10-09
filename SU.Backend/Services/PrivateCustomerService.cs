@@ -14,6 +14,7 @@ namespace SU.Backend.Services
 {
     public class PrivateCustomerService : IPrivateCustomerService
     {
+    50-add-service-method-to-privatecustomerservice-to-update-new-privatecustomer-entity-through-unit-of-work
         private ILogger<PrivateCustomerService> _logger; 
         private readonly IRandomGenerationService _randomInfoGenerationService;
         private readonly UnitOfWork _unitOfWork; 
@@ -135,5 +136,29 @@ namespace SU.Backend.Services
                 return (false, "An error occurred: " + ex.Message, null);
             }
         }
+
+        public async Task<(bool Success, string Message, PrivateCustomer Customer)> UpdatePrivateCustomer(PrivateCustomer privateCustomer)
+        {
+            _logger.LogInformation("Updating private customer...");
+
+            try
+            {
+                _logger.LogInformation("Attempting to update a private customer...");
+
+                await _unitOfWork.PrivateCustomers.UpdateAsync(privateCustomer);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Private customer has been successfully updated.");
+
+                return (true, "The private customer has been updated on the database.", privateCustomer);
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning(e.ToString());
+                return (false, $"An error has occurred while updating the private customer: {e.Message}", null);
+            }
+        }
+
     }
 }
+
