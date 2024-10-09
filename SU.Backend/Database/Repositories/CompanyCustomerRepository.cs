@@ -32,7 +32,12 @@ namespace SU.Backend.Database.Repositories
             return await _context.CompanyCustomers
                 .Where(x => x.InsurancePolicyHolders.Count == 1)
                 .ToListAsync();
+        }
 
+        //Used for udating and deleting specific company customer.
+        public async Task<CompanyCustomer?> GetCompanyCustomerById (int id)
+        {
+            return await _context.CompanyCustomers.FirstOrDefaultAsync(x => x.CompanyCustomerId == id);
         }
     }
 }
