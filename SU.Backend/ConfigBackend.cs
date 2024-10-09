@@ -28,6 +28,7 @@ namespace SU.Backend.Configuration
             services.AddTransient<EmployeeController>();
             services.AddTransient<PrivateCustomerController>(); 
             services.AddTransient<LoginController>();
+            services.AddTransient<CompanyCustomerController>();
 
             // Lägg till fler tjänster här
             services.AddScoped<IEmployeeService, EmployeeService>();

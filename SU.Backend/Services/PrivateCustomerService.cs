@@ -7,6 +7,7 @@ using SU.Backend.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,7 +15,7 @@ namespace SU.Backend.Services
 {
     public class PrivateCustomerService : IPrivateCustomerService
     {
-        private ILogger<PrivateCustomerService> _logger;
+        private ILogger<PrivateCustomerService> _logger; 
         private readonly IRandomGenerationService _randomInfoGenerationService;
         private readonly UnitOfWork _unitOfWork; 
 
@@ -24,7 +25,53 @@ namespace SU.Backend.Services
             _randomInfoGenerationService = randomInfoGenerationService;
             _unitOfWork = unitOfWork;
         }
+        // method to update a private customer 
+        public async Task<(bool Success, string Message)> UpdatePrivateCustomer(PrivateCustomer privateCustomer)
+        {
+            _logger.LogInformation("Updating private customer...");
 
+            try
+            {
+                _logger.LogInformation("Attempting to update a private customer...");
+
+                await _unitOfWork.PrivateCustomers.UpdateAsync(privateCustomer);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Private customer has been successfully updated.");
+
+                return (true, "The private customer has been updated on the database.");
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning(e.ToString());
+                return (false, $"An error has occurred while updating the private customer: {e.Message.ToString()}");
+            }
+        }
+
+        //method to delete an existing private customer
+        public async Task<(bool Success, string Message)> DeletePrivateCustomer(PrivateCustomer privateCustomer)
+        {
+            _logger.LogInformation("Deleting private customer...");
+
+            try
+            {
+                _logger.LogInformation("Attempting to delete a private customer...");
+
+                await _unitOfWork.PrivateCustomers.RemoveAsync(privateCustomer);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Private customer was successfully deleted.");
+
+                return (true, "Private customer was deleted the database.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex.ToString());
+                return (false, $"An error occurred while deleting the private customer: {ex.Message.ToString()}");
+
+            }
+        }
+        
         // method to create a new private customer
         public async Task<(bool Success, string Message)> CreateNewPrivateCustomer(PrivateCustomer privateCustomer)
         {
@@ -115,5 +162,7 @@ namespace SU.Backend.Services
                 return (false, "An error occurred: " + ex.Message, null);
             }
         }
+
     }
 }
+

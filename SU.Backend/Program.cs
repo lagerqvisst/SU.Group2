@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SU.Backend.Configuration;
 using SU.Backend.Controllers;
+using SU.Backend.Models.Customers;
 using SU.Backend.Models.Enums;
 using SU.Backend.Models.Enums.Insurance;
 using SU.Backend.Services.Interfaces;
@@ -38,10 +39,38 @@ class Program
 
         //Test CompanyCustomerService
         var companyCustomerService = host.Services.GetRequiredService<ICompanyCustomerService>();
+        var CompanyCustomerController = host.Services.GetRequiredService<CompanyCustomerController>();
+
         //await companyCustomerService.GenerateTestCompanyCustomer();
 
+
+        /*var newCompanyCustomer = new CompanyCustomer
+        {
+            // CompanyCustomerID generates automatically
+            CompanyName = "TestCompany",
+            OrganizationNumber = "123456-7890",
+            ContactPerson = "TestContact",
+            ContactPersonPhonenumber = "070-1234567",
+            CompanyAdress = "TestStreet 1, 12345 TestCity",
+            CompanyPhoneNumber = "08-123456",
+            CompanyLandlineNumber = "08-7654321",
+            CompanyEmailAdress = "dsad"
+        };*/
+
+        //await CompanyCustomerController.CreateCompanyCustomer(newCompanyCustomer);
+        
+        //Enter specific ID to get a specific CompanyCustomer
+        //var CompanyCustomers = await companyCustomerService.GetCompanyCustomerById(3);
+
+        //Update specific CompanyCustomer
+        /*CompanyCustomers.Customer.CompanyName = "TestCompany22";
+        await CompanyCustomerController.UpdateCompanyCustomer(CompanyCustomers.Customer);*/
+
+        //Delete specific CompanyCustomer
+        //await CompanyCustomerController.DeleteCompanyCustomer(CompanyCustomers.Customer);
+
         ///Test LoginController
-        //var loginController = host.Services.GetRequiredService<LoginController>();
+        var loginController = host.Services.GetRequiredService<LoginController>();
         //await loginController.Authentication("cene", "zigzag");
 
         ///Test InsuranceService
@@ -49,7 +78,7 @@ class Program
         //await insuranceService.CreateTestPrivateInsurance();
         //await insuranceService.CreateCompanyInsurance();
         //await insuranceService.CreateCompanyInsuranceProperty();
-        await insuranceService.CreateCompanyLiability();
+        //await insuranceService.CreateCompanyLiability();
         //await insuranceService.RemoveAllInsurances(); 
 
         var prospectService = host.Services.GetRequiredService<IProspectService>();

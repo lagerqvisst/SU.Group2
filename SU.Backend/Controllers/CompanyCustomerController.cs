@@ -29,7 +29,7 @@ namespace SU.Backend.Controllers
 
             if (result.Success)
             {
-                _logger.LogInformation($"{result.Customer}");
+                _logger.LogInformation($"{result.Message}");
                 return (result.Success, result.Message);
             }
             else
@@ -46,7 +46,7 @@ namespace SU.Backend.Controllers
 
             if (result.Success)
             {
-                _logger.LogInformation($"{result.Customer}");
+                _logger.LogInformation($"{result.Message}");
                 return (result.Success, result.Message);
             }
             else
@@ -63,14 +63,30 @@ namespace SU.Backend.Controllers
 
             if (result.Success)
             {
-                _logger.LogInformation($"{result.Customer}");
+                _logger.LogInformation($"{result.Message}");
                 return (result.Success, result.Message);
             }
             else
             {
                 _logger.LogWarning($"{result.Message}");
                 return (result.Success, result.Message);
+            }
+        }
 
+        public async Task<(bool Success, string Message, CompanyCustomer? Customer)> GetCompanyCustomerById(int id)
+        {
+            _logger.LogInformation("Controller activated to retrieve company customer by ID...");
+            var result = await _companyCustomerService.GetCompanyCustomerById(id);
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"{result.Message}");
+                return (result.Success, result.Message, result.Customer);
+            }
+            else
+            {
+                _logger.LogWarning($"{result.Message}");
+                return (result.Success, result.Message, result.Customer);
             }
         }
 

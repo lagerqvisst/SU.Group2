@@ -56,7 +56,7 @@ namespace SU.Backend.Services
         }
 
         //Create a new company customer
-        public async Task<(bool Success, string Message, CompanyCustomer Customer)> CreateCompanyCustomer(CompanyCustomer newCompanyCustomer)
+        public async Task<(bool Success, string Message)> CreateCompanyCustomer(CompanyCustomer newCompanyCustomer)
         {
             _logger.LogInformation("Creating new company customer...");
 
@@ -64,23 +64,23 @@ namespace SU.Backend.Services
             {
                 _logger.LogInformation("Attempting to create a new company customer...");
 
-                // Lägg till det nya företagskunden i databasen
+                // Add the new company customer to the database
                 await _unitOfWork.CompanyCustomers.AddAsync(newCompanyCustomer);
                 await _unitOfWork.SaveChangesAsync();
 
                 _logger.LogInformation("Company customer created successfully.");
 
-                return (true, "Company customer was added to the database.", newCompanyCustomer);
+                return (true, "Company customer was added to the database.");
             }
             catch (Exception ex)
             {
                 _logger.LogWarning(ex.ToString());
-                return (false, $"An error occurred while creating the new company customer: {ex.Message}", null);
+                return (false, $"An error occurred while creating the new company customer: {ex.Message}");
             }
         }
 
         //Update an existing company customer
-        public async Task<(bool Success, string Message, CompanyCustomer Customer)> UpdateCompanyCustomer(CompanyCustomer companyCustomer)
+        public async Task<(bool Success, string Message)> UpdateCompanyCustomer(CompanyCustomer companyCustomer)
         {
             _logger.LogInformation("Updating company customer...");
 
@@ -94,16 +94,16 @@ namespace SU.Backend.Services
 
                 _logger.LogInformation("Company customer updated successfully.");
 
-                return (true, "Company customer was updated in the database.", companyCustomer);
+                return (true, "Company customer was updated in the database.");
             }
             catch (Exception ex)
             {
                 _logger.LogWarning(ex.ToString());
-                return (false, $"An error occurred while updating new company customer: {ex.Message}", null);
+                return (false, $"An error occurred while updating new company customer: {ex.Message}");
             }
         }
 
-        public async Task<(bool Success, string Message, CompanyCustomer Customer)> DeleteCompanyCustomer(CompanyCustomer companyCustomer)
+        public async Task<(bool Success, string Message)> DeleteCompanyCustomer(CompanyCustomer companyCustomer)
         {
 
             _logger.LogInformation("Deleting company customer...");
@@ -118,14 +118,27 @@ namespace SU.Backend.Services
 
                 _logger.LogInformation("Company customer was successfully deleted.");
 
-                return (true, "Company customer was deleted the database.", companyCustomer);
+                return (true, "Company customer was deleted the database.");
             }
             catch (Exception ex)
             {
                 _logger.LogWarning(ex.ToString());
-                return (false, $"An error occurred while deleting the company customer: {ex.Message}", null);
+                return (false, $"An error occurred while deleting the company customer: {ex.Message}");
             }
 
+        }
+        // Used for updating and deleting specific company customer.
+        public async Task<(bool Success, string Message, CompanyCustomer? Customer)> GetCompanyCustomerById(int id)
+        {
+            try
+            {
+                var customer = await _unitOfWork.CompanyCustomers.GetCompanyCustomerById(id);
+                return (true, "Successfully retrieved company customer", customer);
+            }
+            catch (Exception ex)
+            {
+                return (false, "An error occurred: " + ex.Message, null);
+            }
         }
     }
 }

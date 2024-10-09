@@ -13,6 +13,7 @@ namespace SU.Backend.Controllers
 {
     public class PrivateCustomerController
     {
+
         private readonly IPrivateCustomerService _privateCustomerService;
         private readonly ILogger<PrivateCustomerController> _logger;
 
@@ -43,6 +44,12 @@ namespace SU.Backend.Controllers
             _logger.LogInformation("Private Customer object added via GUI");
             var result = await _privateCustomerService.CreateNewPrivateCustomer(privateCustomer);
 
+        // controller for UpdatePrivateCustomer method
+        public async Task<(bool Success, string Message)> UpdatePrivateCustomer(PrivateCustomer privateCustomer)
+        {
+            _logger.LogInformation("Private Customer object updated via GUI");
+            var result = await _privateCustomerService.UpdatePrivateCustomer(privateCustomer);
+
             if (result.Success)
             {
                 _logger.LogInformation($"{result.Message}");
@@ -53,7 +60,25 @@ namespace SU.Backend.Controllers
                 _logger.LogWarning($"{result.Message}");
                 return (result.Success, result.Message);
             }
+        }
 
+        // controller for DeletePrivateCustomer method 
+        public async Task<(bool Success, string Message)> DeletePrivateCustomer(PrivateCustomer privateCustomer)
+        {
+            _logger.LogInformation("Private Customer deleted via GUI");
+            var result = await _privateCustomerService.DeletePrivateCustomer(privateCustomer);
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"{result.Message}");
+                return (result.Success, result.Message);
+            }
+            else
+           
+                _logger.LogWarning($"{result.Message}");
+                return (result.Success, result.Message);
+
+            }
         }
     }
-}
+
