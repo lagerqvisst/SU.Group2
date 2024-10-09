@@ -38,6 +38,12 @@ namespace SU.Backend.Controllers
             }
         }
 
+        // controller for CreateNewPrivateCustomer method 
+        public async Task<(bool Success, String Message)> CreateNewPrivateCustomer(PrivateCustomer privateCustomer)
+        {
+            _logger.LogInformation("Private Customer object added via GUI");
+            var result = await _privateCustomerService.CreateNewPrivateCustomer(privateCustomer);
+
         // controller for UpdatePrivateCustomer method
         public async Task<(bool Success, string Message)> UpdatePrivateCustomer(PrivateCustomer privateCustomer)
         {
