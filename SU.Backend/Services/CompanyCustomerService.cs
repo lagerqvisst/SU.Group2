@@ -64,7 +64,7 @@ namespace SU.Backend.Services
             {
                 _logger.LogInformation("Attempting to create a new company customer...");
 
-                // Lägg till det nya företagskunden i databasen
+                // Add the new company customer to the database
                 await _unitOfWork.CompanyCustomers.AddAsync(newCompanyCustomer);
                 await _unitOfWork.SaveChangesAsync();
 
@@ -126,6 +126,19 @@ namespace SU.Backend.Services
                 return (false, $"An error occurred while deleting the company customer: {ex.Message}");
             }
 
+        }
+        // Used for updating and deleting specific company customer.
+        public async Task<(bool Success, string Message, CompanyCustomer? Customer)> GetCompanyCustomerById(int id)
+        {
+            try
+            {
+                var customer = await _unitOfWork.CompanyCustomers.GetCompanyCustomerById(id);
+                return (true, "Successfully retrieved company customer", customer);
+            }
+            catch (Exception ex)
+            {
+                return (false, "An error occurred: " + ex.Message, null);
+            }
         }
     }
 }
