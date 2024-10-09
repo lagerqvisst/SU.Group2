@@ -36,5 +36,24 @@ namespace SU.Backend.Controllers
                 _logger.LogWarning($"Error creating customer: {result.Message}");
             }
         }
+
+        // controller for CreateNewPrivateCustomer method 
+        public async Task<(bool Success, String Message)> CreateNewPrivateCustomer(PrivateCustomer privateCustomer)
+        {
+            _logger.LogInformation("Private Customer object added via GUI");
+            var result = await _privateCustomerService.CreateNewPrivateCustomer(privateCustomer);
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"{result.Message}");
+                return (result.Success, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"{result.Message}");
+                return (result.Success, result.Message);
+            }
+
+        }
     }
 }
