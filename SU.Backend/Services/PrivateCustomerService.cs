@@ -14,15 +14,61 @@ namespace SU.Backend.Services
 {
     public class PrivateCustomerService : IPrivateCustomerService
     {
-        private ILogger<EmployeeService> _logger;
+    50-add-service-method-to-privatecustomerservice-to-update-new-privatecustomer-entity-through-unit-of-work
+        private ILogger<PrivateCustomerService> _logger; 
         private readonly IRandomGenerationService _randomInfoGenerationService;
         private readonly UnitOfWork _unitOfWork; 
 
-        public PrivateCustomerService(IRandomGenerationService randomInfoGenerationService, UnitOfWork unitOfWork)
+        public PrivateCustomerService(IRandomGenerationService randomInfoGenerationService, UnitOfWork unitOfWork, ILogger<PrivateCustomerService> logger)
         {
+            _logger = logger;
             _randomInfoGenerationService = randomInfoGenerationService;
             _unitOfWork = unitOfWork;
         }
+
+        public async Task<(bool Success, string Message, /*måste den här vara här??=>*/PrivateCustomer Customer)> DeletePrivateCustomer(PrivateCustomer PrivateCustomer)
+        {
+            _logger.LogInformation("Deleting private customer...");
+
+            try
+            {
+                _logger.LogInformation("Attempting to delete a private customer...");
+
+                await _unitOfWork.PrivateCustomers.RemoveAsync(PrivateCustomer);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Private customer was successfully deleted.");
+
+                return (true, "Private customer was deleted the database.", PrivateCustomer);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex.ToString());
+                return (false, $"An error occurred while deleting the private customer: {ex.Message}", null);
+        
+        // method to create a new private customer
+        public async Task<(bool Success, string Message)> CreateNewPrivateCustomer(PrivateCustomer privateCustomer)
+        {
+            _logger.LogInformation("Creating new Private Customer...");
+
+            try
+            {
+                _logger.LogInformation("Attemptig to save to database...");
+                await _unitOfWork.PrivateCustomers.AddAsync(privateCustomer);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("New private customer has been succesfully added to the database");
+
+                return (true, "The new private customer was succesfully added to the system.");
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning(e.ToString());
+                return (false, $"There was an error saving the new user: {e.Message.ToString()}");
+            }
+
+        }
+
         public async Task<(bool Success, string Message, PrivateCustomer Customer)> GenerateRandomPrivateCustomer()
         {
             try
