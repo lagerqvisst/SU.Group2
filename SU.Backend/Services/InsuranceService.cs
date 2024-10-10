@@ -30,6 +30,7 @@ namespace SU.Backend.Services
             _logger = logger;
         }
 
+        //Create a company insurance
         public async Task<(bool Success, string Message)> CreateCompanyInsurance()
         {
             _logger.LogInformation("Starting the process of creating a company insurance...");

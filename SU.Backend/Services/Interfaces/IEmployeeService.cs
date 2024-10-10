@@ -1,4 +1,5 @@
-﻿using SU.Backend.Models.Employees;
+﻿using SU.Backend.Models.Comissions;
+using SU.Backend.Models.Employees;
 using SU.Backend.Models.Enums;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,7 @@ namespace SU.Backend.Services.Interfaces
     {
         Task<(bool Success, string Message, Employee Employee)> GenerateRandomEmployee(EmployeeType Role);
         Task<Employee?> GetManagerForRole(EmployeeType role);
+
+        Task<(bool Success, string Message, List<Employee?> Employees)> ListAllEmployees();
     }
 }
