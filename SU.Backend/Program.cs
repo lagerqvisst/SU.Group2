@@ -44,7 +44,7 @@ class Program
         //await companyCustomerService.GenerateTestCompanyCustomer();
 
 
-        /*var newCompanyCustomer = new CompanyCustomer
+       /* var newCompanyCustomer = new CompanyCustomer
         {
             // CompanyCustomerID generates automatically
             CompanyName = "TestCompany",
@@ -59,11 +59,11 @@ class Program
 
         //await CompanyCustomerController.CreateCompanyCustomer(newCompanyCustomer);
         
-        //Enter specific ID to get a specific CompanyCustomer
-        //var CompanyCustomers = await companyCustomerService.GetCompanyCustomerById(3);
+        //Enter specific ID to get a specific CompanyCustomer to either update or delete.
+        var CompanyCustomers = await companyCustomerService.GetCompanyCustomerById(4);
 
         //Update specific CompanyCustomer
-        /*CompanyCustomers.Customer.CompanyName = "TestCompany22";
+        /*CompanyCustomers.Customer.CompanyName = "Peps Persson";
         await CompanyCustomerController.UpdateCompanyCustomer(CompanyCustomers.Customer);*/
 
         //Delete specific CompanyCustomer

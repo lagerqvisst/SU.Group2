@@ -60,10 +60,7 @@ namespace SU.Backend.Services
                         Percentage = 10
                     };
 
-
                     employee.RoleAssignments.Add(roleAssignment);
-
-
 
                     _logger.LogInformation("New employee object created");
                     // Spara den nya anställda i databasen via UnitOfWork
@@ -106,6 +103,27 @@ namespace SU.Backend.Services
 
                 default:
                     return null;
+            }
+        }
+
+        public async Task<(bool Success, string Message, List<Employee?> Employees)> ListAllEmployees()
+        {
+            _logger.LogInformation("Getting all employees");
+            try
+            {
+                var employees = await _unitOfWork.Employees.ListAllEmployees();
+                if (employees == null || !employees.Any())
+                {
+                    _logger.LogInformation("No employees found");
+                    return (false, "No employees found", null);
+                }
+                _logger.LogInformation($"Found {employees.Count} employees");
+                return (true, "Employees retrived succesfully", employees);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting employees");
+                return (false, "Error getting employees", null);
             }
         }
     }
