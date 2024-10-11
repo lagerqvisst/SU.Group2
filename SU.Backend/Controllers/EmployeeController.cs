@@ -56,7 +56,7 @@ namespace SU.Backend.Controllers
         public async Task<(bool Success, string Message)> CreateEmployee(Employee employee)
         {
             _logger.LogInformation("Controller activated to create new employee...");
-            var result = await _employeeService.CreateEmployee(employee);
+            var result = await _employeeService.CreateNewEmployee(employee);
 
             if (result.Success)
             {
