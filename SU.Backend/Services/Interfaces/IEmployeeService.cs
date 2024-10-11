@@ -1,4 +1,5 @@
 ﻿using SU.Backend.Models.Comissions;
+using SU.Backend.Models.Customers;
 using SU.Backend.Models.Employees;
 using SU.Backend.Models.Enums;
 using System;
@@ -15,5 +16,11 @@ namespace SU.Backend.Services.Interfaces
         Task<Employee?> GetManagerForRole(EmployeeType role);
 
         Task<(bool Success, string Message, List<Employee?> Employees)> ListAllEmployees();
+
+        Task<(bool Success, string Message)> CreateNewEmployee(Employee employee);
+
+        Task<(bool Success, string Message)> UpdateEmployee(Employee employee);
+
+        Task<(bool Success, string Message)> DeleteEmployee(Employee employee);
     }
 }
