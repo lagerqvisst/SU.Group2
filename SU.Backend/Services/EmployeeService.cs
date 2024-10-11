@@ -35,7 +35,7 @@ namespace SU.Backend.Services
                 _logger.LogInformation("Random employee generated");
                 if (success)
                 {
-                   
+
                     var info = randomUser.Results[0];
 
                     _logger.LogInformation("Creating new employee object");
@@ -43,14 +43,14 @@ namespace SU.Backend.Services
                     {
                         FirstName = info.Name.First,
                         LastName = info.Name.Last,
-                        PersonalNumber = "19900101-0000", 
+                        PersonalNumber = "19900101-0000",
                         Email = info.Email,
                         Username = EmployeeHelper.GenerateEmployeeUsername(info.Name),
                         Password = info.Login.Password,
                         Manager = await GetManagerForRole(Role),
                         BaseSalary = EmployeeHelper.GetSalaryForEmployeeType(Role),
                         AgentNumber = (Role == EmployeeType.OutsideSales || Role == EmployeeType.InsideSales) ? EmployeeHelper.GenerateFourDigitCode() : null,
-                        
+
                     };
 
                     _logger.LogInformation("Creating new role assignment object");
@@ -146,7 +146,7 @@ namespace SU.Backend.Services
             catch (Exception e)
             {
                 _logger.LogWarning(e.ToString());
-                return (false, $"There was an error saving the new user: {e.Message.ToString()}");
+                return (false, $"There was an error saving the new employee: {e.Message.ToString()}");
             }
 
         }
@@ -157,19 +157,44 @@ namespace SU.Backend.Services
 
             try
             {
-                _logger.LogInformation("Attempting to update a private customer...");
+                _logger.LogInformation("Attempting to update a Employee...");
 
                 await _unitOfWork.Employees.UpdateAsync(employee);
                 await _unitOfWork.SaveChangesAsync();
 
-                _logger.LogInformation("Private customer has been successfully updated.");
+                _logger.LogInformation("Employee has been successfully updated.");
 
-                return (true, "The private customer has been updated on the database.");
+                return (true, "The Employee has been updated on the database.");
             }
             catch (Exception e)
             {
                 _logger.LogWarning(e.ToString());
-                return (false, $"An error has occurred while updating the private customer: {e.Message.ToString()}");
+                return (false, $"An error has occurred while updating the employee: {e.Message.ToString()}");
             }
         }
+        //Method to delete employee
+        public async Task<(bool Success, string Message)> DeleteEmployee(Employee employee)
+        {
+            _logger.LogInformation("Deleting employee...");
+
+            try
+            {
+                _logger.LogInformation("Attempting to delete a employee...");
+
+                await _unitOfWork.Employees.RemoveAsync(employee);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Employee was successfully deleted.");
+
+                return (true, "Employee was deleted the database.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex.ToString());
+                return (false, $"An error occurred while deleting the employee: {ex.Message.ToString()}");
+
+            }
+        }
+    }
+
 }
