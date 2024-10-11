@@ -53,10 +53,10 @@ namespace SU.Backend.Controllers
             }
         }
         //Controller for add employee
-        public async Task<(bool Success, string Message)> AddNewEmployee(Employee employee)
+        public async Task<(bool Success, string Message)> CreateEmployee(Employee employee)
         {
             _logger.LogInformation("Controller activated to create new employee...");
-            var result = await _employeeService.CreateNewEmployee(employee);
+            var result = await _employeeService.CreateEmployee(employee);
 
             if (result.Success)
             {
@@ -74,6 +74,23 @@ namespace SU.Backend.Controllers
         {
             _logger.LogInformation("Employee object updated via GUI");
             var result = await _employeeService.DeleteEmployee(employee);
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"{result.Message}");
+                return (result.Success, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"{result.Message}");
+                return (result.Success, result.Message);
+            }
+        }
+        //Controller for update employee
+        public async Task<(bool Success, string Message)> UpdateEmployee(Employee employee)
+        {
+            _logger.LogInformation("Employee object updated via GUI");
+            var result = await _employeeService.UpdateEmployee(employee);
 
             if (result.Success)
             {
