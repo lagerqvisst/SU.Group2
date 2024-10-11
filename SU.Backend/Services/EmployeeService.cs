@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using SU.Backend.Database;
 using SU.Backend.Helper;
+using SU.Backend.Models.Customers;
 using SU.Backend.Models.Employees;
 using SU.Backend.Models.Enums;
 using SU.Backend.Services.Interfaces;
@@ -125,6 +126,29 @@ namespace SU.Backend.Services
                 _logger.LogError(ex, "Error getting employees");
                 return (false, "Error getting employees", null);
             }
+        }
+        //method to add new Emplyee
+
+        public async Task<(bool Success, string Message)> CreateNewEmployee(Employee employee)
+        {
+            _logger.LogInformation("Creating new Employee...");
+
+            try
+            {
+                _logger.LogInformation("Attemptig to save to database...");
+                await _unitOfWork.Employees.AddAsync(employee);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Employee has been succesfully added to the database");
+
+                return (true, "The new Employee customer was succesfully added to the system.");
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning(e.ToString());
+                return (false, $"There was an error saving the new user: {e.Message.ToString()}");
+            }
+
         }
     }
 }
