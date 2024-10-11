@@ -150,5 +150,26 @@ namespace SU.Backend.Services
             }
 
         }
-    }
+        //method to update new Employee
+        public async Task<(bool Success, string Message)> UpdateEmployee(Employee employee)
+        {
+            _logger.LogInformation("Updating Employee...");
+
+            try
+            {
+                _logger.LogInformation("Attempting to update a private customer...");
+
+                await _unitOfWork.Employees.UpdateAsync(employee);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Private customer has been successfully updated.");
+
+                return (true, "The private customer has been updated on the database.");
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning(e.ToString());
+                return (false, $"An error has occurred while updating the private customer: {e.Message.ToString()}");
+            }
+        }
 }
