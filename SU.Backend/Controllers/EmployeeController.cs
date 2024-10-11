@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
+using SU.Backend.Models.Customers;
 using SU.Backend.Models.Employees;
 using SU.Backend.Models.Enums;
+using SU.Backend.Services;
 using SU.Backend.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -50,6 +52,22 @@ namespace SU.Backend.Controllers
                 _logger.LogWarning($"Error retrieving employees: {result.Message}");
             }
         }
-        
+        public async Task<(bool Success, string Message)> AddNewEmployee(Employee employee)
+        {
+            _logger.LogInformation("Controller activated to create new company customer...");
+            var result = await _employeeService.CreateNewEmployee(employee);
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"{result.Message}");
+                return (result.Success, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"{result.Message}");
+                return (result.Success, result.Message);
+            }
+        }
+
     }
 }
