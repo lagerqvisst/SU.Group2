@@ -5,10 +5,13 @@ using Microsoft.Extensions.Logging;
 using SU.Backend.Configuration;
 using SU.Backend.Controllers;
 using SU.Backend.Models.Customers;
+using SU.Backend.Models.Employees;
 using SU.Backend.Models.Enums;
 using SU.Backend.Models.Enums.Insurance;
 using SU.Backend.Services.Interfaces;
 using System;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 class Program
@@ -32,10 +35,35 @@ class Program
         ///Test EmplyeeController
         var employeeController = host.Services.GetRequiredService<EmployeeController>();
         //await employeeController.CreateRandomNewEmployee(EmployeeType.OutsideSales);
+        
+        var newEmployee = new Employee
+        {
+            PersonalNumber = "123",
+            FirstName = "Test",
+            LastName = "Test",
+            Email = "Test",
+            BaseSalary = 0,
+            Username = "Test",
+            Password = "Test",
+
+        };
+
+        var roleassignement = new EmployeeRoleAssignment
+        {
+            Role = EmployeeType.FinancialAssistant,
+            Percentage = 100
+
+        };
+
+        newEmployee.RoleAssignments.Add(roleassignement);
+        employeeController.CreateEmployee(newEmployee);
 
         ///Test PrivateCustomerController
         var privateCustomerController = host.Services.GetRequiredService<PrivateCustomerController>();
         //await privateCustomerController.GenerateRandomPrivateCustomer();
+
+       
+
 
         //Test CompanyCustomerService
         var companyCustomerService = host.Services.GetRequiredService<ICompanyCustomerService>();
