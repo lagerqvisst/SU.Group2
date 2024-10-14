@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SU.Backend.Configuration;
 using SU.Backend.Controllers;
+using SU.Backend.Database;
 using SU.Backend.Models.Customers;
 using SU.Backend.Models.Employees;
 using SU.Backend.Models.Enums;
@@ -26,19 +27,23 @@ class Program
             })
             .Build();
 
+        UnitOfWork unitOfWork = new UnitOfWork(host.Services.GetRequiredService<Context>());
 
-
+        #region DbTests
         ///Test DatabaseTestService
         var databaseTestService = host.Services.GetRequiredService<IDatabaseTestService>();
         //await databaseTestService.SeedEmployeeOrganisation();
+        #endregion
 
+        #region EmployeeTests
         ///Test EmplyeeController
         var employeeController = host.Services.GetRequiredService<EmployeeController>();
+        var employeeService = host.Services.GetRequiredService<IEmployeeService>();
         //await employeeController.CreateRandomNewEmployee(EmployeeType.OutsideSales);
-        
+
         var newEmployee = new Employee
         {
-            PersonalNumber = "123",
+            PersonalNumber = "1234XD",
             FirstName = "Test",
             LastName = "Test",
             Email = "Test",
@@ -58,6 +63,9 @@ class Program
         newEmployee.RoleAssignments.Add(roleassignement);
         await employeeController.CreateEmployee(newEmployee);
 
+        #endregion
+
+        #region Customer tests
         ///Test PrivateCustomerController
         var privateCustomerController = host.Services.GetRequiredService<PrivateCustomerController>();
         //await privateCustomerController.GenerateRandomPrivateCustomer();
@@ -97,22 +105,54 @@ class Program
         //Delete specific CompanyCustomer
         //await CompanyCustomerController.DeleteCompanyCustomer(CompanyCustomers.Customer);
 
+        #endregion
+
+        #region Login Tests
         ///Test LoginController
         var loginController = host.Services.GetRequiredService<LoginController>();
         //await loginController.Authentication("cene", "zigzag");
+        #endregion
 
+        #region Insurance tests
         ///Test InsuranceService
         var insuranceService = host.Services.GetRequiredService<IInsuranceService>();
+        var insuranceController = host.Services.GetRequiredService<InsuranceController>();
+        var privateCoverageService = host.Services.GetRequiredService<IPrivateCoverageService>();
+
+        //Test remove
+
+        var insuranceToDelete = await unitOfWork.Insurances.GetInsuranceById(19);
+        await insuranceService.DeleteInsurance(insuranceToDelete);
+
+        /*
+        //Test customer
+        var customer = unitOfWork.PrivateCustomers.GetPrivateCustomers().Result.First();
+        //Test option
+        var privateCoverageOption = privateCoverageService.GetPrivateCoverageOptionAsync(750000, InsuranceType.ChildAccidentAndHealthInsurance);
+        //Test seller 
+        var seller = await employeeService.GetEmployeeById(2);
+
+        //Om vi vill ha typ en checkbox för att enkelt säga att förskrad person är samma som försäkringstagare
+        bool isPolicyHolderInsured = true;
+
+        var insuranceType = InsuranceType.AdultLifeInsurance;
+
+        await insuranceController.CreatePrivateInsurance(customer, insuranceType, privateCoverageOption.Result.CoverageOption, seller.Employee, isPolicyHolderInsured);
+        */
         //await insuranceService.CreateTestPrivateInsurance();
         //await insuranceService.CreateCompanyInsurance();
         //await insuranceService.CreateCompanyInsuranceProperty();
         //await insuranceService.CreateCompanyLiability();
         //await insuranceService.RemoveAllInsurances(); 
+        #endregion
 
+        #region Prospect tests
         var prospectService = host.Services.GetRequiredService<IProspectService>();
         //await prospectService.IdentifyProspects();
         //await prospectService.TestAssignSellerToProspect();
+        #endregion
 
+        #region Statistics tests
         var commissionService = host.Services.GetRequiredService<ICommissionService>();
         //await commissionService.GetAllCommissions(startDate, endDate);
 
@@ -126,20 +166,7 @@ class Program
                                                                        InsuranceType.AdultLifeInsurance};
 
         statisticsService.PrintSellerStatistics(statistics, 2024, insuranceTypes);*/
-
-        //Alex was here
-        //Kasper was here
-        // Adam W was here for a second time since my first try didnt work!
-        // Adam Å was here :)
-        // Adam Å was here again :D
-        //
-        // emily was here
-
-        // Adam Å was here again :D
-        //david was not here too
-        //Kasper was here again 
-
-        //Console.WriteLine(RiskzoneLevel.Zone1);
+        #endregion
 
     }
 
