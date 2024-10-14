@@ -135,11 +135,11 @@ namespace SU.Backend.Services
 
             try
             {
-                _logger.LogInformation("Attemptig to save to database...");
+                _logger.LogInformation("Attempting to save to database...");
                 await _unitOfWork.Employees.AddAsync(employee);
                 await _unitOfWork.SaveChangesAsync();
 
-                _logger.LogInformation("Employee has been succesfully added to the database");
+                _logger.LogInformation("Employee has been successfully added to the database");
 
                 return (true, "The new Employee customer was succesfully added to the system.");
             }
