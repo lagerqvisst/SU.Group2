@@ -15,7 +15,6 @@ namespace SU.Backend.Controllers
     {
         private readonly ICompanyCustomerService _companyCustomerService;
         private readonly ILogger<CompanyCustomerController> _logger;
-
         public CompanyCustomerController(ICompanyCustomerService companyCustomerService, ILogger<CompanyCustomerController> logger)
         {
             _companyCustomerService = companyCustomerService;
