@@ -40,8 +40,9 @@ class Program
         var employeeController = host.Services.GetRequiredService<EmployeeController>();
         var employeeService = host.Services.GetRequiredService<IEmployeeService>();
         //await employeeController.CreateRandomNewEmployee(EmployeeType.OutsideSales);
+        // var result = await employeeController.ListAllEmployees();
 
-        var newEmployee = new Employee
+       /* var newEmployee = new Employee
         {
             PersonalNumber = "1234XD",
             FirstName = "Test",
@@ -62,7 +63,7 @@ class Program
 
         newEmployee.RoleAssignments.Add(roleassignement);
         await employeeController.CreateEmployee(newEmployee);
-
+       */
         #endregion
 
         #region Customer tests
@@ -121,8 +122,8 @@ class Program
 
         //Test remove
 
-        var insuranceToDelete = await unitOfWork.Insurances.GetInsuranceById(19);
-        await insuranceService.DeleteInsurance(insuranceToDelete);
+        /*var insuranceToDelete = await unitOfWork.Insurances.GetInsuranceById(19);
+        await insuranceService.DeleteInsurance(insuranceToDelete);*/
 
         /*
         //Test customer

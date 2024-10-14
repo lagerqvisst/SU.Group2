@@ -38,18 +38,20 @@ namespace SU.Backend.Controllers
             }
         }
 
-        public async Task ListAllEmployees(Employee employee)
+        public async Task <(bool Success, string Message, List <Employee>)> ListAllEmployees()
         {
             _logger.LogInformation("Controller activated to list all employees...");
             var result = await _employeeService.ListAllEmployees();
 
             if (result.Success)
             {
-                _logger.LogInformation($"Employees retrieved successfully:\n{result.Employees}");
+                _logger.LogInformation($"Employees retrieved successfully:\n{result.Employees.Count}");
+                return (result.Success, result.Message, result.Employees);
             }
             else
             {
                 _logger.LogWarning($"Error retrieving employees: {result.Message}");
+                return (result.Success, result.Message, null);
             }
         }
         //Controller for add employee
