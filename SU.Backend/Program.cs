@@ -56,7 +56,7 @@ class Program
         };
 
         newEmployee.RoleAssignments.Add(roleassignement);
-        employeeController.CreateEmployee(newEmployee);
+        await employeeController.CreateEmployee(newEmployee);
 
         ///Test PrivateCustomerController
         var privateCustomerController = host.Services.GetRequiredService<PrivateCustomerController>();
