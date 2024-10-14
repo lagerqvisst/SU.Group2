@@ -86,6 +86,21 @@ namespace SU.Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "LiabilityCoverageOption",
+                columns: table => new
+                {
+                    LiabilityCoverageOptionId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Deductible = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OptionAmount = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MonthlyPremium = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LiabilityCoverageOption", x => x.LiabilityCoverageOptionId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PrivateCoverageOption",
                 columns: table => new
                 {
@@ -170,28 +185,29 @@ namespace SU.Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "InsurancePolicyHolders",
+                name: "Insurances",
                 columns: table => new
                 {
-                    InsurancePolicyHolderId = table.Column<int>(type: "int", nullable: false)
+                    InsuranceId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CompanyCustomerId = table.Column<int>(type: "int", nullable: true),
-                    PrivateCustomerId = table.Column<int>(type: "int", nullable: true)
+                    InsurancePolicyHolderId = table.Column<int>(type: "int", nullable: false),
+                    SellerId = table.Column<int>(type: "int", nullable: false),
+                    Premium = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    InsuranceType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    InsuranceStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PaymentPlan = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InsurancePolicyHolders", x => x.InsurancePolicyHolderId);
+                    table.PrimaryKey("PK_Insurances", x => x.InsuranceId);
                     table.ForeignKey(
-                        name: "FK_InsurancePolicyHolders_CompanyCustomers_CompanyCustomerId",
-                        column: x => x.CompanyCustomerId,
-                        principalTable: "CompanyCustomers",
-                        principalColumn: "CompanyCustomerId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_InsurancePolicyHolders_PrivateCustomers_PrivateCustomerId",
-                        column: x => x.PrivateCustomerId,
-                        principalTable: "PrivateCustomers",
-                        principalColumn: "PrivateCustomerId",
+                        name: "FK_Insurances_Employees_SellerId",
+                        column: x => x.SellerId,
+                        principalTable: "Employees",
+                        principalColumn: "EmployeeId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -231,39 +247,6 @@ namespace SU.Backend.Migrations
                         principalTable: "PrivateCustomers",
                         principalColumn: "PrivateCustomerId",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Insurances",
-                columns: table => new
-                {
-                    InsuranceId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    InsurancePolicyHolderId = table.Column<int>(type: "int", nullable: false),
-                    SellerId = table.Column<int>(type: "int", nullable: false),
-                    Premium = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    InsuranceType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    InsuranceStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PaymentPlan = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Note = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Insurances", x => x.InsuranceId);
-                    table.ForeignKey(
-                        name: "FK_Insurances_Employees_SellerId",
-                        column: x => x.SellerId,
-                        principalTable: "Employees",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Insurances_InsurancePolicyHolders_InsurancePolicyHolderId",
-                        column: x => x.InsurancePolicyHolderId,
-                        principalTable: "InsurancePolicyHolders",
-                        principalColumn: "InsurancePolicyHolderId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -312,12 +295,46 @@ namespace SU.Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "InsurancePolicyHolders",
+                columns: table => new
+                {
+                    InsurancePolicyHolderId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CompanyCustomerId = table.Column<int>(type: "int", nullable: true),
+                    PrivateCustomerId = table.Column<int>(type: "int", nullable: true),
+                    InsuranceId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InsurancePolicyHolders", x => x.InsurancePolicyHolderId);
+                    table.ForeignKey(
+                        name: "FK_InsurancePolicyHolders_CompanyCustomers_CompanyCustomerId",
+                        column: x => x.CompanyCustomerId,
+                        principalTable: "CompanyCustomers",
+                        principalColumn: "CompanyCustomerId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_InsurancePolicyHolders_Insurances_InsuranceId",
+                        column: x => x.InsuranceId,
+                        principalTable: "Insurances",
+                        principalColumn: "InsuranceId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InsurancePolicyHolders_PrivateCustomers_PrivateCustomerId",
+                        column: x => x.PrivateCustomerId,
+                        principalTable: "PrivateCustomers",
+                        principalColumn: "PrivateCustomerId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "LiabilityCoverage",
                 columns: table => new
                 {
                     LiabilityCoverageId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     InsuranceCoverageId = table.Column<int>(type: "int", nullable: false),
+                    LiabilityCoverageOptionId = table.Column<int>(type: "int", nullable: false),
                     MonthlyPremium = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CoverageAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
@@ -330,6 +347,12 @@ namespace SU.Backend.Migrations
                         principalTable: "InsuranceCoverages",
                         principalColumn: "InsuranceCoverageId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LiabilityCoverage_LiabilityCoverageOption_LiabilityCoverageOptionId",
+                        column: x => x.LiabilityCoverageOptionId,
+                        principalTable: "LiabilityCoverageOption",
+                        principalColumn: "LiabilityCoverageOptionId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -448,6 +471,25 @@ namespace SU.Backend.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "LiabilityCoverageOption",
+                columns: new[] { "LiabilityCoverageOptionId", "Deductible", "MonthlyPremium", "OptionAmount" },
+                values: new object[,]
+                {
+                    { 1, "Quarter", 800m, "ThreeMillion" },
+                    { 2, "Quarter", 1300m, "FiveMillion" },
+                    { 3, "Quarter", 1800m, "TenMillion" },
+                    { 4, "Half", 700m, "ThreeMillion" },
+                    { 5, "Half", 1200m, "FiveMillion" },
+                    { 6, "Half", 1700m, "TenMillion" },
+                    { 7, "ThreeQuarter", 600m, "ThreeMillion" },
+                    { 8, "ThreeQuarter", 1100m, "FiveMillion" },
+                    { 9, "ThreeQuarter", 1600m, "TenMillion" },
+                    { 10, "Full", 500m, "ThreeMillion" },
+                    { 11, "Full", 900m, "FiveMillion" },
+                    { 12, "Full", 1400m, "TenMillion" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "PrivateCoverageOption",
                 columns: new[] { "PrivateCoverageOptionId", "CoverageAmount", "InsuranceType", "MonthlyPremium", "StartDate" },
                 values: new object[,]
@@ -465,7 +507,14 @@ namespace SU.Backend.Migrations
                     { 11, 500000m, "AdultAccidentAndHealthInsurance", 250m, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
                     { 12, 350000m, "AdultAccidentAndHealthInsurance", 175m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
                     { 13, 450000m, "AdultAccidentAndHealthInsurance", 225m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 14, 550000m, "AdultAccidentAndHealthInsurance", 275m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 14, 550000m, "AdultAccidentAndHealthInsurance", 275m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PrivateCoverageOption",
+                columns: new[] { "PrivateCoverageOptionId", "CoverageAmount", "InsuranceType", "MonthlyPremium", "StartDate" },
+                values: new object[,]
+                {
                     { 15, 300000m, "AdultLifeInsurance", 150m, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
                     { 16, 400000m, "AdultLifeInsurance", 200m, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
                     { 17, 500000m, "AdultLifeInsurance", 250m, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
@@ -491,14 +540,7 @@ namespace SU.Backend.Migrations
                 values: new object[,]
                 {
                     { 1, 1000m, 350m, "Traffic" },
-                    { 2, 1000m, 550m, "Half" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "VehicleInsuranceOptions",
-                columns: new[] { "VehicleInsuranceOptionId", "Deductible", "OptionCost", "OptionDescription" },
-                values: new object[,]
-                {
+                    { 2, 1000m, 550m, "Half" },
                     { 3, 1000m, 800m, "Full" },
                     { 4, 2000m, 300m, "Traffic" },
                     { 5, 2000m, 450m, "Half" },
@@ -540,14 +582,15 @@ namespace SU.Backend.Migrations
                 column: "CompanyCustomerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_InsurancePolicyHolders_InsuranceId",
+                table: "InsurancePolicyHolders",
+                column: "InsuranceId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_InsurancePolicyHolders_PrivateCustomerId",
                 table: "InsurancePolicyHolders",
                 column: "PrivateCustomerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Insurances_InsurancePolicyHolderId",
-                table: "Insurances",
-                column: "InsurancePolicyHolderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Insurances_SellerId",
@@ -559,6 +602,11 @@ namespace SU.Backend.Migrations
                 table: "LiabilityCoverage",
                 column: "InsuranceCoverageId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LiabilityCoverage_LiabilityCoverageOptionId",
+                table: "LiabilityCoverage",
+                column: "LiabilityCoverageOptionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PrivateCoverages_InsuranceCoverageId",
@@ -623,6 +671,9 @@ namespace SU.Backend.Migrations
                 name: "InsuranceAddons");
 
             migrationBuilder.DropTable(
+                name: "InsurancePolicyHolders");
+
+            migrationBuilder.DropTable(
                 name: "LiabilityCoverage");
 
             migrationBuilder.DropTable(
@@ -641,10 +692,19 @@ namespace SU.Backend.Migrations
                 name: "InsuranceAddonTypes");
 
             migrationBuilder.DropTable(
+                name: "LiabilityCoverageOption");
+
+            migrationBuilder.DropTable(
                 name: "InsuredPersons");
 
             migrationBuilder.DropTable(
                 name: "PrivateCoverageOption");
+
+            migrationBuilder.DropTable(
+                name: "CompanyCustomers");
+
+            migrationBuilder.DropTable(
+                name: "PrivateCustomers");
 
             migrationBuilder.DropTable(
                 name: "InsuranceCoverages");
@@ -660,15 +720,6 @@ namespace SU.Backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "Employees");
-
-            migrationBuilder.DropTable(
-                name: "InsurancePolicyHolders");
-
-            migrationBuilder.DropTable(
-                name: "CompanyCustomers");
-
-            migrationBuilder.DropTable(
-                name: "PrivateCustomers");
         }
     }
 }

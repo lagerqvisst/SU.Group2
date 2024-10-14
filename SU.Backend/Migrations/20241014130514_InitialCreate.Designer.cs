@@ -12,7 +12,7 @@ using SU.Backend.Database;
 namespace SU.Backend.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20241002093851_InitialCreate")]
+    [Migration("20241014130514_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -212,6 +212,9 @@ namespace SU.Backend.Migrations
                     b.Property<int>("InsuranceCoverageId")
                         .HasColumnType("int");
 
+                    b.Property<int>("LiabilityCoverageOptionId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("MonthlyPremium")
                         .HasColumnType("decimal(18,2)");
 
@@ -220,7 +223,119 @@ namespace SU.Backend.Migrations
                     b.HasIndex("InsuranceCoverageId")
                         .IsUnique();
 
+                    b.HasIndex("LiabilityCoverageOptionId");
+
                     b.ToTable("LiabilityCoverage");
+                });
+
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.LiabilityCoverageOption", b =>
+                {
+                    b.Property<int>("LiabilityCoverageOptionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LiabilityCoverageOptionId"), 1L, 1);
+
+                    b.Property<string>("Deductible")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("MonthlyPremium")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("OptionAmount")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LiabilityCoverageOptionId");
+
+                    b.ToTable("LiabilityCoverageOption");
+
+                    b.HasData(
+                        new
+                        {
+                            LiabilityCoverageOptionId = 1,
+                            Deductible = "Quarter",
+                            MonthlyPremium = 800m,
+                            OptionAmount = "ThreeMillion"
+                        },
+                        new
+                        {
+                            LiabilityCoverageOptionId = 2,
+                            Deductible = "Quarter",
+                            MonthlyPremium = 1300m,
+                            OptionAmount = "FiveMillion"
+                        },
+                        new
+                        {
+                            LiabilityCoverageOptionId = 3,
+                            Deductible = "Quarter",
+                            MonthlyPremium = 1800m,
+                            OptionAmount = "TenMillion"
+                        },
+                        new
+                        {
+                            LiabilityCoverageOptionId = 4,
+                            Deductible = "Half",
+                            MonthlyPremium = 700m,
+                            OptionAmount = "ThreeMillion"
+                        },
+                        new
+                        {
+                            LiabilityCoverageOptionId = 5,
+                            Deductible = "Half",
+                            MonthlyPremium = 1200m,
+                            OptionAmount = "FiveMillion"
+                        },
+                        new
+                        {
+                            LiabilityCoverageOptionId = 6,
+                            Deductible = "Half",
+                            MonthlyPremium = 1700m,
+                            OptionAmount = "TenMillion"
+                        },
+                        new
+                        {
+                            LiabilityCoverageOptionId = 7,
+                            Deductible = "ThreeQuarter",
+                            MonthlyPremium = 600m,
+                            OptionAmount = "ThreeMillion"
+                        },
+                        new
+                        {
+                            LiabilityCoverageOptionId = 8,
+                            Deductible = "ThreeQuarter",
+                            MonthlyPremium = 1100m,
+                            OptionAmount = "FiveMillion"
+                        },
+                        new
+                        {
+                            LiabilityCoverageOptionId = 9,
+                            Deductible = "ThreeQuarter",
+                            MonthlyPremium = 1600m,
+                            OptionAmount = "TenMillion"
+                        },
+                        new
+                        {
+                            LiabilityCoverageOptionId = 10,
+                            Deductible = "Full",
+                            MonthlyPremium = 500m,
+                            OptionAmount = "ThreeMillion"
+                        },
+                        new
+                        {
+                            LiabilityCoverageOptionId = 11,
+                            Deductible = "Full",
+                            MonthlyPremium = 900m,
+                            OptionAmount = "FiveMillion"
+                        },
+                        new
+                        {
+                            LiabilityCoverageOptionId = 12,
+                            Deductible = "Full",
+                            MonthlyPremium = 1400m,
+                            OptionAmount = "TenMillion"
+                        });
                 });
 
             modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.PrivateCoverage", b =>
@@ -685,8 +800,6 @@ namespace SU.Backend.Migrations
 
                     b.HasKey("InsuranceId");
 
-                    b.HasIndex("InsurancePolicyHolderId");
-
                     b.HasIndex("SellerId");
 
                     b.ToTable("Insurances");
@@ -863,12 +976,18 @@ namespace SU.Backend.Migrations
                     b.Property<int?>("CompanyCustomerId")
                         .HasColumnType("int");
 
+                    b.Property<int>("InsuranceId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("PrivateCustomerId")
                         .HasColumnType("int");
 
                     b.HasKey("InsurancePolicyHolderId");
 
                     b.HasIndex("CompanyCustomerId");
+
+                    b.HasIndex("InsuranceId")
+                        .IsUnique();
 
                     b.HasIndex("PrivateCustomerId");
 
@@ -981,7 +1100,15 @@ namespace SU.Backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SU.Backend.Models.Insurances.Coverage.LiabilityCoverageOption", "LiabilityCoverageOption")
+                        .WithMany("LiabilityCoverages")
+                        .HasForeignKey("LiabilityCoverageOptionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("InsuranceCoverage");
+
+                    b.Navigation("LiabilityCoverageOption");
                 });
 
             modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.PrivateCoverage", b =>
@@ -1051,19 +1178,11 @@ namespace SU.Backend.Migrations
 
             modelBuilder.Entity("SU.Backend.Models.Insurances.Insurance", b =>
                 {
-                    b.HasOne("SU.Backend.Models.Insurances.InsurancePolicyHolder", "InsurancePolicyHolder")
-                        .WithMany("Insurances")
-                        .HasForeignKey("InsurancePolicyHolderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("SU.Backend.Models.Employees.Employee", "Seller")
                         .WithMany("Insurances")
                         .HasForeignKey("SellerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("InsurancePolicyHolder");
 
                     b.Navigation("Seller");
                 });
@@ -1092,14 +1211,22 @@ namespace SU.Backend.Migrations
                     b.HasOne("SU.Backend.Models.Customers.CompanyCustomer", "CompanyCustomer")
                         .WithMany("InsurancePolicyHolders")
                         .HasForeignKey("CompanyCustomerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SU.Backend.Models.Insurances.Insurance", "Insurance")
+                        .WithOne("InsurancePolicyHolder")
+                        .HasForeignKey("SU.Backend.Models.Insurances.InsurancePolicyHolder", "InsuranceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SU.Backend.Models.Customers.PrivateCustomer", "PrivateCustomer")
                         .WithMany("InsurancePolicyHolders")
                         .HasForeignKey("PrivateCustomerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("CompanyCustomer");
+
+                    b.Navigation("Insurance");
 
                     b.Navigation("PrivateCustomer");
                 });
@@ -1156,6 +1283,11 @@ namespace SU.Backend.Migrations
                     b.Navigation("VehicleInsuranceCoverage");
                 });
 
+            modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.LiabilityCoverageOption", b =>
+                {
+                    b.Navigation("LiabilityCoverages");
+                });
+
             modelBuilder.Entity("SU.Backend.Models.Insurances.Coverage.PrivateCoverageOption", b =>
                 {
                     b.Navigation("PrivateCoverages");
@@ -1177,11 +1309,9 @@ namespace SU.Backend.Migrations
 
                     b.Navigation("InsuranceCoverage")
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurances.InsurancePolicyHolder", b =>
-                {
-                    b.Navigation("Insurances");
+                    b.Navigation("InsurancePolicyHolder")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SU.Backend.Models.Insurances.InsuredPerson", b =>

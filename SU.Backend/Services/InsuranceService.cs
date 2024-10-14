@@ -61,7 +61,7 @@ namespace SU.Backend.Services
                 _logger.LogInformation("Customer provided: {CustomerId} - {CustomerName}", privateCustomer.PrivateCustomerId, privateCustomer.FirstName);
 
                 // Skapa InsurancePolicyHolder och koppla till försäkringen
-                insurance.InsurancePolicyHolder = new InsurancePolicyHolder
+                var insurancePolicyHolder = new InsurancePolicyHolder
                 {
                     PrivateCustomer = privateCustomer
                 };
@@ -100,6 +100,7 @@ namespace SU.Backend.Services
                 // Koppla navigationsobjekten
                 insuranceCoverage.PrivateCoverage = privateCoverage;
                 insurance.InsuranceCoverage = insuranceCoverage;
+                insurance.InsurancePolicyHolder = insurancePolicyHolder;
 
                 // Lägg till vem som sålde försäkringen
                 if (seller != null)

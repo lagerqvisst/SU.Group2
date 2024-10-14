@@ -65,12 +65,19 @@ namespace SU.Backend.Database
             modelBuilder.SeedLiabilityCoverageOptions();
 
             // Definiera relationer
-            #region Insurance 
+            #region Insurance
+            /*
+            modelBuilder.Entity<InsurancePolicyHolder>()
+                .HasOne(i => i.Insurance)
+                .WithOne(i => i.InsurancePolicyHolder)
+                .HasForeignKey<Insurance>(ic => ic.InsurancePolicyHolderId)
+                .OnDelete(DeleteBehavior.Cascade); */
+
             modelBuilder.Entity<Insurance>()
-                .HasOne(i => i.InsurancePolicyHolder) // En Insurance har en InsurancePolicyHolder
-                .WithMany(iph => iph.Insurances)      // En InsurancePolicyHolder har många Insurance
-                .HasForeignKey(i => i.InsurancePolicyHolderId) // FK
-                .OnDelete(DeleteBehavior.Cascade);    // Radera relaterade Insurance vid borttagning av InsurancePolicyHolder
+                .HasOne(i => i.InsurancePolicyHolder)  // En Insurance har en InsurancePolicyHolder
+                .WithOne(iph => iph.Insurance)         // En InsurancePolicyHolder har en Insurance
+                .HasForeignKey<InsurancePolicyHolder>(iph => iph.InsuranceId)  // FK i InsurancePolicyHolder
+                .OnDelete(DeleteBehavior.Cascade);     // Radera InsurancePolicyHolder när Insurance tas bort
 
             modelBuilder.Entity<Insurance>()
                .HasOne(e => e.Seller)
@@ -93,12 +100,7 @@ namespace SU.Backend.Database
             #endregion
 
             #region InsurancePolicyHolder
-            /*
-            modelBuilder.Entity<InsurancePolicyHolder>()
-                .HasOne(iph => iph.Insurance)
-                .WithOne(i => i.InsurancePolicyHolder)
-                .HasForeignKey<InsurancePolicyHolder>(iph => iph.InsuranceId)
-                .OnDelete(DeleteBehavior.Restrict); // Använd Restrict */
+           
             #endregion
 
             #region Employee
@@ -114,10 +116,11 @@ namespace SU.Backend.Database
             #region Private Customer
 
             modelBuilder.Entity<PrivateCustomer>()
-                .HasMany(pc => pc.InsurancePolicyHolders) // A PrivateCustomer can have many InsurancePolicyHolders
-                .WithOne(iph => iph.PrivateCustomer) // Each InsurancePolicyHolder has one PrivateCustomer
-                .HasForeignKey(iph => iph.PrivateCustomerId) // Foreign key in InsurancePolicyHolder
-                .OnDelete(DeleteBehavior.Cascade); // Optional: specify delete behavior */
+            .HasMany(pc => pc.InsurancePolicyHolders) // A PrivateCustomer can have many InsurancePolicyHolders
+            .WithOne(iph => iph.PrivateCustomer) // Each InsurancePolicyHolder has one PrivateCustomer
+            .HasForeignKey(iph => iph.PrivateCustomerId) // Foreign key in InsurancePolicyHolder
+            .OnDelete(DeleteBehavior.Restrict); // Förhindra kaskadradering vid borttagning av PrivateCustomer
+
             #endregion
 
             #region Company Customer
@@ -125,7 +128,7 @@ namespace SU.Backend.Database
                 .HasMany(cc => cc.InsurancePolicyHolders)
                 .WithOne(iph => iph.CompanyCustomer)
                 .HasForeignKey(iph => iph.CompanyCustomerId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
             #endregion
 
             #region Insurance Addon
