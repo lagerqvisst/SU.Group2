@@ -71,7 +71,6 @@ namespace SU.Backend.Database.Repositories
                         .ThenInclude(pc => pc.PrivateCoverageOption) // Inkludera PrivateCoverageOption
                 .Include(i => i.InsuranceCoverage)
                     .ThenInclude(ic => ic.PrivateCoverage)
-                        .ThenInclude(pc => pc.InsuredPerson) // Inkludera InsuredPerson
                 .Include(i => i.InsuranceAddons)
                 .ToListAsync();
         }
@@ -94,7 +93,6 @@ namespace SU.Backend.Database.Repositories
                         .ThenInclude(pc => pc.PrivateCoverageOption) // Inkludera PrivateCoverageOption
                 .Include(i => i.InsuranceCoverage)
                     .ThenInclude(ic => ic.PrivateCoverage)
-                        .ThenInclude(pc => pc.InsuredPerson) // Inkludera InsuredPerson
                 .Include(i => i.InsuranceAddons)
                 .FirstOrDefaultAsync(i => i.InsuranceId == id);
         }

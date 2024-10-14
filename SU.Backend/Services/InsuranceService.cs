@@ -37,12 +37,32 @@ namespace SU.Backend.Services
             PrivateCoverageOption privateCoverageOption,
             Employee seller,
             bool isPolicyHolderInsured,
-            InsuredPerson? insuredPerson = null) // Nullable insuredPerson om det är en annan person
+            InsuredPerson? insuredPerson = null) 
         {
             _logger.LogInformation("Creating private insurance...");
 
             try
             {
+                // Validera privateCustomer
+                if (privateCustomer == null)
+                {
+                    return (false, "No private customer provided.");
+                }
+
+                // Validera coverage option
+                if (privateCoverageOption == null)
+                {
+                    return (false, "No private coverage option provided.");
+                }
+
+                // Validera insuredPerson om försäkringstagaren inte är försäkrad
+                if (!isPolicyHolderInsured && (insuredPerson == null ||
+                    string.IsNullOrEmpty(insuredPerson.InsuredPersonName) ||
+                    string.IsNullOrEmpty(insuredPerson.InsuredPersonPersonalNumber)))
+                {
+                    return (false, "No insured person provided.");
+                }
+
                 // Skapa huvudobjektet - Insurance
                 var insurance = new Insurance
                 {
@@ -77,25 +97,23 @@ namespace SU.Backend.Services
 
                 _logger.LogInformation("Total premium calculated: {CalculatedPremium}", insurance.Premium);
 
+
+
                 // Skapa PrivateCoverage
                 var insuranceCoverage = new InsuranceCoverage();
                 var privateCoverage = new PrivateCoverage
                 {
                     InsuranceCoverage = insuranceCoverage,
                     PrivateCoverageOption = privateCoverageOption,
-                    InsuredPerson = isPolicyHolderInsured
-                        ? new InsuredPerson // Om försäkringstagaren är den försäkrade
-                        {
-                            Name = $"{privateCustomer.FirstName} {privateCustomer.LastName}",
-                            PersonalNumber = privateCustomer.PersonalNumber
-                        }
-                        : insuredPerson // Om försäkringstagaren inte är den försäkrade
+                    InsuredPersonName = isPolicyHolderInsured
+                                ? $"{privateCustomer.FirstName} {privateCustomer.LastName}"
+                                : insuredPerson?.InsuredPersonName,
+                    InsuredPersonPersonalNumber = isPolicyHolderInsured
+                                ? privateCustomer.PersonalNumber
+                                : insuredPerson?.InsuredPersonPersonalNumber
                 };
 
-                if (privateCoverage.InsuredPerson == null)
-                {
-                    return (false, "No insured person provided.");
-                }
+
 
                 // Koppla navigationsobjekten
                 insuranceCoverage.PrivateCoverage = privateCoverage;
@@ -490,11 +508,6 @@ namespace SU.Backend.Services
                 {
                     InsuranceCoverage = insuranceCoverage,
                     PrivateCoverageOption = privateCoverageOption,
-                    InsuredPerson = new InsuredPerson
-                    {
-                        Name = "Test Testsson",
-                        PersonalNumber = "19900101-1234"
-                    }
                 };
 
                 // Koppla navigationsobjekten
@@ -574,7 +587,6 @@ namespace SU.Backend.Services
                     await _unitOfWork.Insurances.RemoveAsync(insurance);
                     //Workaround until we fix Cascade Delete problem...
                     await _unitOfWork.InsurancePolicyHolders.RemoveAsync(insurance.InsurancePolicyHolder);
-                    await _unitOfWork.InsuredPersons.RemoveAsync(insurance.InsuranceCoverage.PrivateCoverage.InsuredPerson);
                 }
 
                 _logger.LogInformation("Saving changes...");

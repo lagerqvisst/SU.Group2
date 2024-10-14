@@ -122,7 +122,7 @@ class Program
 
         //Test remove
 
-        var insuranceToDelete = await unitOfWork.Insurances.GetInsuranceById(2);
+        var insuranceToDelete = await unitOfWork.Insurances.GetInsuranceById(3);
         await insuranceService.DeleteInsurance(insuranceToDelete);
 
         

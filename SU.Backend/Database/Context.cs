@@ -26,7 +26,6 @@ namespace SU.Backend.Database
         public DbSet<PrivateCustomer> PrivateCustomers { get; set; }
         public DbSet<InsurancePolicyHolder> InsurancePolicyHolders { get; set; }
         public DbSet<Insurance> Insurances { get; set; } // Changed to plural
-        public DbSet<InsuredPerson> InsuredPersons { get; set; }
         public DbSet<InsuranceCoverage> InsuranceCoverages { get; set; }
         public DbSet<InsuranceAddon> InsuranceAddons { get; set; }
         public DbSet<InsuranceAddonType> InsuranceAddonTypes { get; set; }
@@ -185,11 +184,6 @@ namespace SU.Backend.Database
                 .HasForeignKey(pc => pc.PrivateCoverageOptionId)
                 .OnDelete(DeleteBehavior.Restrict);     // Statisk data ska inte tas bort
 
-            modelBuilder.Entity<PrivateCoverage>()
-                .HasOne(pc => pc.InsuredPerson)
-                .WithMany(ip => ip.PrivateCoverages) // Ändra till WithMany
-                .HasForeignKey(pc => pc.InsuredPersonId)
-                .OnDelete(DeleteBehavior.Cascade);
 
             #endregion
 
