@@ -51,5 +51,12 @@ namespace SU.Backend.Database.Repositories
         {
             return await _context.Employees.ToListAsync();
         }
+
+        public async Task<Employee> GetEmployeeById(int id)
+        {
+            return await _context.Employees
+                .Include(e => e.RoleAssignments)
+                .FirstOrDefaultAsync(e => e.EmployeeId == id);
+        }
     }
 }

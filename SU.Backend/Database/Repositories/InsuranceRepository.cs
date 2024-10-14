@@ -17,6 +17,7 @@ namespace SU.Backend.Database.Repositories
         {
         }
 
+        
         public async Task<List<Insurance>> GetAllActiveInsurances()
         {
             return await _context.Insurances
@@ -81,6 +82,21 @@ namespace SU.Backend.Database.Repositories
                 .Include(i => i.Seller) // Include the seller
                 .Where(i => i.StartDate.Year <= year && (i.EndDate == null || i.EndDate.Year >= year)) // Filter by the given year
                 .ToListAsync();
+        }
+
+        public async Task<Insurance> GetInsuranceById(int id)
+        {
+            return await _context.Insurances
+                .Include(i => i.InsurancePolicyHolder)
+                    .ThenInclude(p => p.PrivateCustomer)
+                .Include(i => i.InsuranceCoverage)
+                    .ThenInclude(ic => ic.PrivateCoverage)
+                        .ThenInclude(pc => pc.PrivateCoverageOption) // Inkludera PrivateCoverageOption
+                .Include(i => i.InsuranceCoverage)
+                    .ThenInclude(ic => ic.PrivateCoverage)
+                        .ThenInclude(pc => pc.InsuredPerson) // Inkludera InsuredPerson
+                .Include(i => i.InsuranceAddons)
+                .FirstOrDefaultAsync(i => i.InsuranceId == id);
         }
 
 

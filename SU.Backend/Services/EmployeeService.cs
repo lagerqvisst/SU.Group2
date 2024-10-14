@@ -195,6 +195,29 @@ namespace SU.Backend.Services
 
             }
         }
-    }
 
+        public async Task<(bool Success, string Message, Employee? Employee)> GetEmployeeById(int id)
+        {
+            _logger.LogInformation("Getting employee by id");
+
+            try
+            {
+                var employee = await _unitOfWork.Employees.GetEmployeeById(id);
+
+                if (employee == null)
+                {
+                    _logger.LogInformation("No employee found");
+                    return (false, "No employee found", null);
+                }
+
+                _logger.LogInformation("Employee found");
+                return (true, "Employee found", employee);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting employee");
+                return (false, "Error getting employee", null);
+            }
+        }
+    }
 }

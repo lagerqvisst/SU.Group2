@@ -5,6 +5,7 @@ using SU.Backend.Database.Interfaces;
 using SU.Backend.Database.Repositories;
 using SU.Backend.Helper;
 using SU.Backend.Models.Customers;
+using SU.Backend.Models.Employees;
 using SU.Backend.Models.Enums;
 using SU.Backend.Models.Enums.Insurance;
 using SU.Backend.Models.Enums.Insurance.Addons;
@@ -30,8 +31,105 @@ namespace SU.Backend.Services
             _logger = logger;
         }
 
+        public async Task<(bool Success, string Message)> CreatePrivateInsurance(
+            PrivateCustomer privateCustomer,
+            InsuranceType insuranceType,
+            PrivateCoverageOption privateCoverageOption,
+            Employee seller,
+            bool isPolicyHolderInsured,
+            InsuredPerson? insuredPerson = null) // Nullable insuredPerson om det är en annan person
+        {
+            _logger.LogInformation("Creating private insurance...");
+
+            try
+            {
+                // Skapa huvudobjektet - Insurance
+                var insurance = new Insurance
+                {
+                    InsuranceType = insuranceType,
+                    InsuranceStatus = InsuranceStatus.Requested,  // Sätter status till Requested som default
+                    PaymentPlan = PaymentPlan.Monthly,
+                    StartDate = DateTime.Now,  // Sätter startdatum till nuvarande tidpunkt. //Kan ändras som input parameter
+                    EndDate = DateTime.Now.AddYears(1),
+                    Note = "This is a test insurance" //Addera som input parameter?
+                };
+
+                if (privateCustomer == null)
+                {
+                    return (false, "No private customer provided.");
+                }
+                _logger.LogInformation("Customer provided: {CustomerId} - {CustomerName}", privateCustomer.PrivateCustomerId, privateCustomer.FirstName);
+
+                // Skapa InsurancePolicyHolder och koppla till försäkringen
+                insurance.InsurancePolicyHolder = new InsurancePolicyHolder
+                {
+                    PrivateCustomer = privateCustomer
+                };
+
+                // Kontrollera om coverage option är null
+                if (privateCoverageOption == null)
+                {
+                    return (false, "No private coverage option provided.");
+                }
+
+                _logger.LogInformation("Calculating premium based on coverage option.");
+                insurance.Premium = privateCoverageOption.MonthlyPremium;  // Grundpremien
+
+                _logger.LogInformation("Total premium calculated: {CalculatedPremium}", insurance.Premium);
+
+                // Skapa PrivateCoverage
+                var insuranceCoverage = new InsuranceCoverage();
+                var privateCoverage = new PrivateCoverage
+                {
+                    InsuranceCoverage = insuranceCoverage,
+                    PrivateCoverageOption = privateCoverageOption,
+                    InsuredPerson = isPolicyHolderInsured
+                        ? new InsuredPerson // Om försäkringstagaren är den försäkrade
+                        {
+                            Name = $"{privateCustomer.FirstName} {privateCustomer.LastName}",
+                            PersonalNumber = privateCustomer.PersonalNumber
+                        }
+                        : insuredPerson // Om försäkringstagaren inte är den försäkrade
+                };
+
+                if (privateCoverage.InsuredPerson == null)
+                {
+                    return (false, "No insured person provided.");
+                }
+
+                // Koppla navigationsobjekten
+                insuranceCoverage.PrivateCoverage = privateCoverage;
+                insurance.InsuranceCoverage = insuranceCoverage;
+
+                // Lägg till vem som sålde försäkringen
+                if (seller != null)
+                {
+                    insurance.Seller = seller;
+                    _logger.LogInformation("Seller added to insurance: {SellerId} - {SellerName}", seller.EmployeeId, seller.FirstName);
+                }
+                else
+                {
+                    _logger.LogWarning("No seller found.");
+                    return (false, "No seller found.");
+                }
+
+                // Lägg till försäkring till databasen
+                await _unitOfWork.Insurances.AddAsync(insurance);
+                await _unitOfWork.SaveChangesAsync();
+
+                return (true, "Insurance created successfully.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while creating the insurance");
+                return (false, "An error occurred while creating the insurance.");
+            }
+        }
+
+
+
         //Create a company insurance
-        public async Task<(bool Success, string Message)> CreateCompanyInsurance()
+        public async Task<(bool Success, string Message)> CreateTestCompanyInsurance()
         {
             _logger.LogInformation("Starting the process of creating a company insurance...");
 
@@ -133,7 +231,7 @@ namespace SU.Backend.Services
             }
         }
 
-        public async Task<(bool Success, string Message)> CreateCompanyInsuranceProperty()
+        public async Task<(bool Success, string Message)> CreateTestCompanyInsuranceProperty()
         {
             _logger.LogInformation("Starting the process of creating a company insurance...");
 
@@ -217,7 +315,7 @@ namespace SU.Backend.Services
             }
         }
 
-        public async Task<(bool Success, string Message)> CreateCompanyLiability()
+        public async Task<(bool Success, string Message)> CreateTestCompanyLiability()
         {
             _logger.LogInformation("Starting the process of creating a company insurance...");
 
@@ -429,6 +527,28 @@ namespace SU.Backend.Services
             {
                 _logger.LogError(ex, "An error occurred while creating insurance");
                 return (false, "An error occurred while creating the insurance.");
+            }
+        }
+
+        public async Task<(bool Success, string Message)> DeleteInsurance(Insurance insurance)
+        {
+            _logger.LogInformation("Deleting insurance...");
+
+            try
+            {
+                _logger.LogInformation("Attempting to delete an insurance...");
+
+                await _unitOfWork.Insurances.RemoveAsync(insurance);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Insurance was successfully deleted.");
+
+                return (true, "Insurance was deleted the database.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex.ToString());
+                return (false, $"An error occurred while deleting the insurance: {ex.Message.ToString()}");
             }
         }
 
