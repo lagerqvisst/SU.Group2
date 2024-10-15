@@ -399,18 +399,6 @@ namespace SU.Backend.Services
 
             try
             {
-                // Create the insurance object
-                var insurance = new Insurance
-                {
-                    InsuranceType = InsuranceType.LiabilityInsurance,
-                    InsuranceStatus = InsuranceStatus.Active,
-                    PaymentPlan = PaymentPlan.Monthly,
-                    StartDate = DateTime.Now,
-                    EndDate = DateTime.Now.AddYears(1),
-                    Note = "This is a test insurance"
-                };
-                _logger.LogInformation("Insurance object created successfully.");
-
                 // Fetch the last company customer
                 _logger.LogInformation("Attempting to fetch a test company customer...");
                 var companyCustomer = _unitOfWork.CompanyCustomers.GetCompanyCustomers().Result.Last();
@@ -421,45 +409,48 @@ namespace SU.Backend.Services
                 }
                 _logger.LogInformation("Company customer found: {Org Nr} - {CompanyName}", companyCustomer.OrganizationNumber, companyCustomer.CompanyName);
 
-                // Create InsurancePolicyHolder
-                _logger.LogInformation("Assigning the company customer as the insurance policy holder...");
-                insurance.InsurancePolicyHolder = new InsurancePolicyHolder
-                {
-                    CompanyCustomer = companyCustomer
-                };
-                _logger.LogInformation("InsurancePolicyHolder created and assigned successfully.");
-
-
                 _logger.LogInformation("Creating liability insurance coverage option...");
                 var liabiltiyCoverageOption = _unitOfWork.LiabilityCoverageOptions.GetLiabilityCoverage().Result.First();
-                if(liabiltiyCoverageOption == null)
+                if (liabiltiyCoverageOption == null)
                 {
                     return (false, "No liability coverage option found.");
                 }
 
-                var insuranceCoverage = new InsuranceCoverage();
-                var liabilityCoverage = new LiabilityCoverage
-                {
-                    InsuranceCoverage = insuranceCoverage,
-                    LiabilityCoverageOption = liabiltiyCoverageOption,
-                };
-
-                insuranceCoverage.LiabilityCoverage = liabilityCoverage;
-                insurance.Premium = liabiltiyCoverageOption.MonthlyPremium; 
-                insurance.InsuranceCoverage = insuranceCoverage;
 
                 // Fetch the seller with a specified role
                 _logger.LogInformation("Attempting to fetch a seller with the role: InsideSales...");
-                var seller = await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.InsideSales);
-                if (seller == null)
+                var seller = await _unitOfWork.Employees.GetEmployeeById(1);
+
+
+                // Create the insurance object
+                var insurance = new Insurance
                 {
-                    _logger.LogWarning("No seller found with the role: InsideSales.");
-                }
-                else
-                {
-                    insurance.Seller = seller;
-                    _logger.LogInformation("Seller assigned to insurance: {SellerId} - {SellerName}", seller.EmployeeId, seller.FirstName);
-                }
+                    InsuranceType = InsuranceType.LiabilityInsurance,
+                    InsuranceStatus = InsuranceStatus.Active,
+                    PaymentPlan = PaymentPlan.Monthly,
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now.AddYears(1),
+                    Note = "This is a test insurance",
+
+                    InsurancePolicyHolder = new InsurancePolicyHolder
+                    {
+                        CompanyCustomer = companyCustomer,
+                    }, 
+
+                    InsuranceCoverage = new InsuranceCoverage
+                    {
+                        LiabilityCoverage = new LiabilityCoverage
+                        {
+                            LiabilityCoverageOption = liabiltiyCoverageOption,
+                        }
+                    }, 
+
+                    Premium = liabiltiyCoverageOption.MonthlyPremium,
+                    Seller = seller
+                };
+                _logger.LogInformation("Insurance object created successfully.");
+
+
 
                 // Save changes to the database
                 _logger.LogInformation("Saving the new company insurance to the database...");

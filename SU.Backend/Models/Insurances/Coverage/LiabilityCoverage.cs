@@ -15,7 +15,5 @@ namespace SU.Backend.Models.Insurances.Coverage
 
         public LiabilityCoverageOption LiabilityCoverageOption { get; set; } // Navigation till LiabilityCoverageOption
 
-        public decimal MonthlyPremium { get; set; } // Månadspremie för ansvarsförsäkring
-        public decimal CoverageAmount { get; set; } // Belopp för ansvarsförsäkring
     }
 }
