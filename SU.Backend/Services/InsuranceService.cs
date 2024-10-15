@@ -153,7 +153,7 @@ namespace SU.Backend.Services
             }
         }
 
-        public async Task<(bool Success, string Message)> CreatePropertyInventoryInsurance(CompanyCustomer companyCustomer, PropertyAndInventoryCoverage propertyAndInventoryCoverage, string note)
+        public async Task<(bool Success, string Message)> CreatePropertyInventoryInsurance(CompanyCustomer companyCustomer, PropertyAndInventoryCoverage propertyAndInventoryCoverage, Employee seller, string note)
         {
             _logger.LogInformation("Creating property and inventory insurance...");
 
@@ -167,7 +167,7 @@ namespace SU.Backend.Services
                     PaymentPlan = PaymentPlan.Monthly,
                     StartDate = DateTime.Now,  // Sätter startdatum till nuvarande tidpunkt. //Kan ändras som input parameter
                     EndDate = DateTime.Now.AddYears(1),
-                    Note = note, //Addera som input parameter?
+                    Note = note, 
 
                     InsurancePolicyHolder = new InsurancePolicyHolder
                     {
@@ -179,7 +179,9 @@ namespace SU.Backend.Services
                         PropertyAndInventoryCoverage = propertyAndInventoryCoverage
                     },
 
-                    Premium = PropertyAndInventoryCoverage.CalculateTotalPremium(propertyAndInventoryCoverage.PropertyPremium, propertyAndInventoryCoverage.InventoryPremium)
+                    Premium = PropertyAndInventoryCoverage.CalculateTotalPremium(propertyAndInventoryCoverage.PropertyPremium, propertyAndInventoryCoverage.InventoryPremium),
+
+                    Seller = seller
 
                 };
                     

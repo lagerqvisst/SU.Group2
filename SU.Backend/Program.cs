@@ -121,8 +121,8 @@ class Program
         var privateCoverageService = host.Services.GetRequiredService<IPrivateCoverageService>();
 
         //Test remove
-        //var insuranceToDelete = await unitOfWork.Insurances.GetInsuranceById(4);
-        //await insuranceService.DeleteInsurance(insuranceToDelete);
+        var insuranceToDelete = await unitOfWork.Insurances.GetInsuranceById(6);
+        await insuranceService.DeleteInsurance(insuranceToDelete);
 
         //Test property and inventory
 
@@ -131,9 +131,9 @@ class Program
             PropertyAddress = "TestStreet 1, 12345 TestCity"
         };
         //Test company customer 
-        var companyCustomer = await companyCustomerService.GetCompanyCustomerById(1);
-
-        await insuranceController.CreatePropertyInventoryInsurance(companyCustomer.Customer, propertyCoverage, "TestNote");
+        //var companyCustomer = await companyCustomerService.GetCompanyCustomerById(1);
+        //var seller = await employeeService.GetEmployeeById(1);
+        //await insuranceController.CreatePropertyInventoryInsurance(companyCustomer.Customer, propertyCoverage, seller.Employee, "TestNote");
 
         //Test customer
         /*

@@ -26,7 +26,7 @@ namespace SU.Backend.Services.Interfaces
 
         Task<(bool Success, string Message)> CreatePropertyInventoryInsurance
             (CompanyCustomer companyCustomer,
-            PropertyAndInventoryCoverage propertyAndInventoryCoverage, string note);
+            PropertyAndInventoryCoverage propertyAndInventoryCoverage, Employee seller, string note);
 
         Task<(bool Success, string Message)> DeleteInsurance(
            Insurance insurance);

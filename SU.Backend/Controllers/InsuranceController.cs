@@ -45,10 +45,10 @@ namespace SU.Backend.Controllers
         }
 
         public async Task CreatePropertyInventoryInsurance(CompanyCustomer companyCustomer,
-            PropertyAndInventoryCoverage propertyAndInventoryCoverage, string note)
+            PropertyAndInventoryCoverage propertyAndInventoryCoverage, Employee seller, string note)
         {
             _logger.LogInformation("Controller activated to create new property and inventory insurance...");
-            var result = await _insuranceService.CreatePropertyInventoryInsurance(companyCustomer, propertyAndInventoryCoverage, note);
+            var result = await _insuranceService.CreatePropertyInventoryInsurance(companyCustomer, propertyAndInventoryCoverage, seller, note);
 
             if (result.Success)
             {
