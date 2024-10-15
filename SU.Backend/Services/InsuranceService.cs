@@ -132,6 +132,14 @@ namespace SU.Backend.Services
                     return (false, "No seller found.");
                 }
 
+                //test addon 
+
+                var addon = _unitOfWork.InsuranceAddonTypes.GetAddonTypes().Result.First();
+
+                insurance.InsuranceAddons.Add(new InsuranceAddon
+                {
+                    InsuranceAddonType = addon
+                });
                 // Lägg till försäkring till databasen
                 await _unitOfWork.Insurances.AddAsync(insurance);
                 await _unitOfWork.SaveChangesAsync();
