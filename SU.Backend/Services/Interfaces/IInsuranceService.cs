@@ -24,6 +24,10 @@ namespace SU.Backend.Services.Interfaces
             bool isPolicyHolderInsured,
             InsuredPerson? insuredPerson = null);
 
+        Task<(bool Success, string Message)> CreatePropertyInventoryInsurance
+            (CompanyCustomer companyCustomer,
+            PropertyAndInventoryCoverage propertyAndInventoryCoverage, Employee seller, string note);
+
         Task<(bool Success, string Message)> DeleteInsurance(
            Insurance insurance);
 

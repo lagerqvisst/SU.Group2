@@ -43,6 +43,22 @@ namespace SU.Backend.Controllers
                 _logger.LogWarning($"Error creating private insurance: {result.Message}");
             }
         }
+
+        public async Task CreatePropertyInventoryInsurance(CompanyCustomer companyCustomer,
+            PropertyAndInventoryCoverage propertyAndInventoryCoverage, Employee seller, string note)
+        {
+            _logger.LogInformation("Controller activated to create new property and inventory insurance...");
+            var result = await _insuranceService.CreatePropertyInventoryInsurance(companyCustomer, propertyAndInventoryCoverage, seller, note);
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"Property and inventory insurance created successfully:\n{result.Message}");
+            }
+            else
+            {
+                _logger.LogWarning($"Error creating property and inventory insurance: {result.Message}");
+            }
+        }
     }
 }
 

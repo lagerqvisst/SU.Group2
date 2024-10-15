@@ -9,6 +9,7 @@ using SU.Backend.Models.Customers;
 using SU.Backend.Models.Employees;
 using SU.Backend.Models.Enums;
 using SU.Backend.Models.Enums.Insurance;
+using SU.Backend.Models.Insurances.Coverage;
 using SU.Backend.Services.Interfaces;
 using System;
 using System.ComponentModel;
@@ -120,11 +121,20 @@ class Program
         var privateCoverageService = host.Services.GetRequiredService<IPrivateCoverageService>();
 
         //Test remove
-
-        var insuranceToDelete = await unitOfWork.Insurances.GetInsuranceById(4);
+        var insuranceToDelete = await unitOfWork.Insurances.GetInsuranceById(6);
         await insuranceService.DeleteInsurance(insuranceToDelete);
 
-        
+        //Test property and inventory
+
+        var propertyCoverage = new PropertyAndInventoryCoverage(1000000, 500000)
+        {
+            PropertyAddress = "TestStreet 1, 12345 TestCity"
+        };
+        //Test company customer 
+        //var companyCustomer = await companyCustomerService.GetCompanyCustomerById(1);
+        //var seller = await employeeService.GetEmployeeById(1);
+        //await insuranceController.CreatePropertyInventoryInsurance(companyCustomer.Customer, propertyCoverage, seller.Employee, "TestNote");
+
         //Test customer
         /*
         var customer = unitOfWork.PrivateCustomers.GetPrivateCustomers().Result.First();
@@ -141,7 +151,7 @@ class Program
 
         await insuranceController.CreatePrivateInsurance(customer, insuranceType, privateCoverageOption.Result.CoverageOption, seller.Employee, isPolicyHolderInsured);
         */
-    
+
 
         //await insuranceService.CreateTestPrivateInsurance();
         //await insuranceService.CreateCompanyInsurance();
