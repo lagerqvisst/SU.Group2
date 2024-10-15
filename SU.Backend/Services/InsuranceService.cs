@@ -153,6 +153,54 @@ namespace SU.Backend.Services
             }
         }
 
+        public async Task<(bool Success, string Message)> CreatePropertyInventoryInsurance(CompanyCustomer companyCustomer, PropertyAndInventoryCoverage propertyAndInventoryCoverage, string note)
+        {
+            _logger.LogInformation("Creating property and inventory insurance...");
+
+            try
+            {
+                // Skapa huvudobjektet - Insurance
+                var insurance = new Insurance
+                {
+                    InsuranceType = InsuranceType.PropertyAndInventoryInsurance,
+                    InsuranceStatus = InsuranceStatus.Requested,  // Sätter status till Requested som default
+                    PaymentPlan = PaymentPlan.Monthly,
+                    StartDate = DateTime.Now,  // Sätter startdatum till nuvarande tidpunkt. //Kan ändras som input parameter
+                    EndDate = DateTime.Now.AddYears(1),
+                    Note = note, //Addera som input parameter?
+
+                    InsurancePolicyHolder = new InsurancePolicyHolder
+                    {
+                        CompanyCustomer = companyCustomer
+                    },
+
+                    InsuranceCoverage = new InsuranceCoverage
+                    {
+                        PropertyAndInventoryCoverage = propertyAndInventoryCoverage
+                    },
+
+                    Premium = PropertyAndInventoryCoverage.CalculateTotalPremium(propertyAndInventoryCoverage.PropertyPremium, propertyAndInventoryCoverage.InventoryPremium)
+
+                };
+                    
+                _logger.LogInformation("Total premium calculated: {CalculatedPremium}", insurance.Premium);
+                _logger.LogInformation("Property and inventory insurance created successfully.");
+                _logger.LogInformation("Saving the new property and inventory insurance to the database...");
+
+                await _unitOfWork.Insurances.AddAsync(insurance);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Property and inventory insurance created and saved successfully.");
+
+                return (true, "Property and inventory insurance created successfully.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while creating the insurance");
+                return (false, "An error occurred while creating the insurance.");
+            }
+        }
+
 
 
         //Create a company insurance
@@ -298,6 +346,7 @@ namespace SU.Backend.Services
                 // Create VehicleInsuranceCoverage
                 _logger.LogInformation("Creating vehicle insurance coverage...");
                 var insuranceCoverage = new InsuranceCoverage();
+                /*
                 var propertyCoverage = new PropertyAndInventoryCoverage
                 {
                     InsuranceCoverage = insuranceCoverage,
@@ -306,9 +355,9 @@ namespace SU.Backend.Services
                     PropertyPremium = 1000,
                     InventoryValue = 500_000,
                     InventoryPremium = 500,
-                };
+                };*/
 
-                insuranceCoverage.PropertyAndInventoryCoverage = propertyCoverage;
+                //insuranceCoverage.PropertyAndInventoryCoverage = propertyCoverage;
                 insurance.Premium = 1000; //egentligen räknas ut med logik från bilagan.
                 insurance.InsuranceCoverage = insuranceCoverage;
 
