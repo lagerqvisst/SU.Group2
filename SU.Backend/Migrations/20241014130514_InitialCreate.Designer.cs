@@ -12,8 +12,8 @@ using SU.Backend.Database;
 namespace SU.Backend.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20241002125547_SeedForLibabreadOptions")]
-    partial class SeedForLibabreadOptions
+    [Migration("20241014130514_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -800,8 +800,6 @@ namespace SU.Backend.Migrations
 
                     b.HasKey("InsuranceId");
 
-                    b.HasIndex("InsurancePolicyHolderId");
-
                     b.HasIndex("SellerId");
 
                     b.ToTable("Insurances");
@@ -978,12 +976,18 @@ namespace SU.Backend.Migrations
                     b.Property<int?>("CompanyCustomerId")
                         .HasColumnType("int");
 
+                    b.Property<int>("InsuranceId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("PrivateCustomerId")
                         .HasColumnType("int");
 
                     b.HasKey("InsurancePolicyHolderId");
 
                     b.HasIndex("CompanyCustomerId");
+
+                    b.HasIndex("InsuranceId")
+                        .IsUnique();
 
                     b.HasIndex("PrivateCustomerId");
 
@@ -1174,19 +1178,11 @@ namespace SU.Backend.Migrations
 
             modelBuilder.Entity("SU.Backend.Models.Insurances.Insurance", b =>
                 {
-                    b.HasOne("SU.Backend.Models.Insurances.InsurancePolicyHolder", "InsurancePolicyHolder")
-                        .WithMany("Insurances")
-                        .HasForeignKey("InsurancePolicyHolderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("SU.Backend.Models.Employees.Employee", "Seller")
                         .WithMany("Insurances")
                         .HasForeignKey("SellerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("InsurancePolicyHolder");
 
                     b.Navigation("Seller");
                 });
@@ -1215,14 +1211,22 @@ namespace SU.Backend.Migrations
                     b.HasOne("SU.Backend.Models.Customers.CompanyCustomer", "CompanyCustomer")
                         .WithMany("InsurancePolicyHolders")
                         .HasForeignKey("CompanyCustomerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SU.Backend.Models.Insurances.Insurance", "Insurance")
+                        .WithOne("InsurancePolicyHolder")
+                        .HasForeignKey("SU.Backend.Models.Insurances.InsurancePolicyHolder", "InsuranceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SU.Backend.Models.Customers.PrivateCustomer", "PrivateCustomer")
                         .WithMany("InsurancePolicyHolders")
                         .HasForeignKey("PrivateCustomerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("CompanyCustomer");
+
+                    b.Navigation("Insurance");
 
                     b.Navigation("PrivateCustomer");
                 });
@@ -1305,11 +1309,9 @@ namespace SU.Backend.Migrations
 
                     b.Navigation("InsuranceCoverage")
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("SU.Backend.Models.Insurances.InsurancePolicyHolder", b =>
-                {
-                    b.Navigation("Insurances");
+                    b.Navigation("InsurancePolicyHolder")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SU.Backend.Models.Insurances.InsuredPerson", b =>

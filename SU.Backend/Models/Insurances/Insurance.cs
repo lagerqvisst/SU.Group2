@@ -16,7 +16,6 @@ namespace SU.Backend.Models.Insurances
         public int InsuranceId { get; set; } // PK
 
         // Foreign key to InsurancePolicyHolder (Försäkringstagare)
-        public int InsurancePolicyHolderId { get; set; } // FK
         public InsurancePolicyHolder InsurancePolicyHolder { get; set; } // Navigation property
         public InsuranceCoverage InsuranceCoverage { get; set; } // Navigation property for insurance coverage
 

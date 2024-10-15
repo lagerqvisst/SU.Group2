@@ -37,12 +37,12 @@ class Program
 
         #region EmployeeTests
         ///Test EmplyeeController
+        
         var employeeController = host.Services.GetRequiredService<EmployeeController>();
         var employeeService = host.Services.GetRequiredService<IEmployeeService>();
         //await employeeController.CreateRandomNewEmployee(EmployeeType.OutsideSales);
-        // var result = await employeeController.ListAllEmployees();
-
-       /* var newEmployee = new Employee
+        /*
+        var newEmployee = new Employee
         {
             PersonalNumber = "1234XD",
             FirstName = "Test",
@@ -62,8 +62,7 @@ class Program
         };
 
         newEmployee.RoleAssignments.Add(roleassignement);
-        await employeeController.CreateEmployee(newEmployee);
-       */
+        await employeeController.CreateEmployee(newEmployee);*/
         #endregion
 
         #region Customer tests
@@ -76,7 +75,7 @@ class Program
 
         //Test CompanyCustomerService
         var companyCustomerService = host.Services.GetRequiredService<ICompanyCustomerService>();
-        var CompanyCustomerController = host.Services.GetRequiredService<CompanyCustomerController>();
+        //var CompanyCustomerController = host.Services.GetRequiredService<CompanyCustomerController>();
 
         //await companyCustomerService.GenerateTestCompanyCustomer();
 
@@ -97,7 +96,7 @@ class Program
         //await CompanyCustomerController.CreateCompanyCustomer(newCompanyCustomer);
         
         //Enter specific ID to get a specific CompanyCustomer to either update or delete.
-        var CompanyCustomers = await companyCustomerService.GetCompanyCustomerById(4);
+        //var CompanyCustomers = await companyCustomerService.GetCompanyCustomerById(4);
 
         //Update specific CompanyCustomer
         /*CompanyCustomers.Customer.CompanyName = "Peps Persson";
@@ -122,24 +121,28 @@ class Program
 
         //Test remove
 
-        /*var insuranceToDelete = await unitOfWork.Insurances.GetInsuranceById(19);
-        await insuranceService.DeleteInsurance(insuranceToDelete);*/
+        var insuranceToDelete = await unitOfWork.Insurances.GetInsuranceById(4);
+        await insuranceService.DeleteInsurance(insuranceToDelete);
 
-        /*
+        
         //Test customer
+        /*
         var customer = unitOfWork.PrivateCustomers.GetPrivateCustomers().Result.First();
         //Test option
         var privateCoverageOption = privateCoverageService.GetPrivateCoverageOptionAsync(750000, InsuranceType.ChildAccidentAndHealthInsurance);
         //Test seller 
-        var seller = await employeeService.GetEmployeeById(2);
+        var seller = await employeeService.GetEmployeeById(1);
 
         //Om vi vill ha typ en checkbox för att enkelt säga att förskrad person är samma som försäkringstagare
         bool isPolicyHolderInsured = true;
 
         var insuranceType = InsuranceType.AdultLifeInsurance;
 
+
         await insuranceController.CreatePrivateInsurance(customer, insuranceType, privateCoverageOption.Result.CoverageOption, seller.Employee, isPolicyHolderInsured);
         */
+    
+
         //await insuranceService.CreateTestPrivateInsurance();
         //await insuranceService.CreateCompanyInsurance();
         //await insuranceService.CreateCompanyInsuranceProperty();

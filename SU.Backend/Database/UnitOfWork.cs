@@ -13,7 +13,6 @@ namespace SU.Backend.Database
         public CompanyCustomerRepository CompanyCustomers { get; }
         public PrivateCoverageOptionRepository PrivateCoverageOptions { get; }
         public InsurancePolicyHolderRepository InsurancePolicyHolders { get; }
-        public InsuredPersonRepository InsuredPersons { get; }
         public PrivateCoverageRepository PrivateCoverages { get; }
         public InsuranceCoverageRepository InsuranceCoverages { get; }
         public InsuranceRepository Insurances { get; }
@@ -35,7 +34,6 @@ namespace SU.Backend.Database
             PrivateCustomers = new PrivateCustomerRepository(_context);
             PrivateCoverageOptions = new PrivateCoverageOptionRepository(_context);
             InsurancePolicyHolders = new InsurancePolicyHolderRepository(_context);
-            InsuredPersons = new InsuredPersonRepository(_context);
             PrivateCoverages = new PrivateCoverageRepository(_context);
             InsuranceCoverages = new InsuranceCoverageRepository(_context);
             Insurances = new InsuranceRepository(_context);
