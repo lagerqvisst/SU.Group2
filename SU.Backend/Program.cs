@@ -63,7 +63,6 @@ class Program
 
         newEmployee.RoleAssignments.Add(roleassignement);
         await employeeController.CreateEmployee(newEmployee);*/
-
         #endregion
 
         #region Customer tests
