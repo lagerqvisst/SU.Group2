@@ -41,8 +41,24 @@ namespace SU.Backend.Services.Interfaces
         );
 
         //Företagsförsäkring: Ansvar
+        Task<(bool Success, string Message)> CreateLiabilityInsurance(
+                    CompanyCustomer companyCustomer,
+                    LiabilityCoverage liabilityCoverage,
+                    Employee seller,
+                    string note,
+                    DateTime? startDate = null,
+                    DateTime? endDate = null
+        );
 
         //Företagsförsäkring: Fordon
+        Task<(bool Success, string Message)> CreateVehicleInsurance(
+                    CompanyCustomer companyCustomer,
+                    VehicleInsuranceCoverage vehicleCoverage,
+                    Employee seller,
+                    string note,
+                    DateTime? startDate = null,
+                    DateTime? endDate = null
+        );
 
         Task<(bool Success, string Message)> DeleteInsurance(
            Insurance insurance);
