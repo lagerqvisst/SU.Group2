@@ -56,5 +56,6 @@ namespace SU.Backend.Services.Interfaces
 
         Task<(bool Success, string Message)> CreateTestCompanyLiability();
 
+        Task<(bool Success, string Message, List<InsuranceAddonType> insuranceAddonTypes)> ListAllInsuranceAddonTypes();
     }
 }
