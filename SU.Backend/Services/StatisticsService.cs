@@ -23,47 +23,58 @@ namespace SU.Backend.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<SellerStatistics>> GetSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null)
+        public async Task<(bool Success, string Message, List<SellerStatistics> Statistics)> GetSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null)
         {
-            // Step 1: Get all employees who are sellers (inside or outside sales roles)
-            var salesEmployees = await _unitOfWork.Employees.GetSalesEmployees();
+            _logger.LogInformation($"Getting seller statistics for year {year} and insurance types: {string.Join(", ", insuranceTypes)}");
 
-            // Step 2: Retrieve insurances for the specified year and types, with related seller information
-            var insurancesQuery = await _unitOfWork.Insurances.GetInsurancesByYear(year); // Ensure this method retrieves insurances for the whole year
-
-            if (insuranceTypes != null && insuranceTypes.Any())
+            try
             {
-                insurancesQuery = insurancesQuery.Where(i => insuranceTypes.Contains(i.InsuranceType)).ToList(); // Filter in-memory
+                // Step 1: Get all employees who are sellers (inside or outside sales roles)
+                var salesEmployees = await _unitOfWork.Employees.GetSalesEmployees();
+
+                // Step 2: Retrieve insurances for the specified year and types, with related seller information
+                var insurancesQuery = await _unitOfWork.Insurances.GetInsurancesByYear(year); // Ensure this method retrieves insurances for the whole year
+
+                if (insuranceTypes != null && insuranceTypes.Any())
+                {
+                    insurancesQuery = insurancesQuery.Where(i => insuranceTypes.Contains(i.InsuranceType)).ToList(); // Filter in-memory
+                }
+
+                // Step 3: Group by seller and aggregate monthly data
+                var groupedData = salesEmployees.GroupJoin(
+                    insurancesQuery,
+                    seller => seller.EmployeeId,
+                    insurance => insurance.SellerId,
+                    (seller, insurances) => new
+                    {
+                        Seller = seller,
+                        MonthlySales = Enumerable.Range(1, 12).Select(month => new MonthlySalesData
+                        {
+                            Month = month,
+                            InsuranceSalesCounts = insurances
+                                .Where(i => i.StartDate.Month == month)
+                                .GroupBy(i => i.InsuranceType)
+                                .ToDictionary(group => group.Key, group => group.Count())
+                        }).ToList()
+                    })
+                    .Select(data => new SellerStatistics
+                    {
+                        SellerName = data.Seller.FirstName + " " + data.Seller.LastName,
+                        AgentNumber = data.Seller.AgentNumber,
+                        MonthlySales = data.MonthlySales,
+                        TotalYearlySales = data.MonthlySales.Sum(m => m.TotalSales),
+                        AverageMonthlySales = data.MonthlySales.Average(m => m.TotalSales)
+                    })
+                    .ToList();
+
+                return (true, "Success", groupedData);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while getting seller statistics");
+                return (false, "An error occurred while fetching seller statistics", new List<SellerStatistics>());
             }
 
-            // Step 3: Group by seller and aggregate monthly data
-            var groupedData = salesEmployees.GroupJoin(
-                insurancesQuery,
-                seller => seller.EmployeeId,
-                insurance => insurance.SellerId,
-                (seller, insurances) => new
-                {
-                    Seller = seller,
-                    MonthlySales = Enumerable.Range(1, 12).Select(month => new MonthlySalesData
-                    {
-                        Month = month,
-                        InsuranceSalesCounts = insurances
-                            .Where(i => i.StartDate.Month == month)
-                            .GroupBy(i => i.InsuranceType)
-                            .ToDictionary(group => group.Key, group => group.Count())
-                    }).ToList()
-                })
-                .Select(data => new SellerStatistics
-                {
-                    SellerName = data.Seller.FirstName + " " + data.Seller.LastName,
-                    AgentNumber = data.Seller.AgentNumber,
-                    MonthlySales = data.MonthlySales,
-                    TotalYearlySales = data.MonthlySales.Sum(m => m.TotalSales),
-                    AverageMonthlySales = data.MonthlySales.Average(m => m.TotalSales)
-                })
-                .ToList();
-
-            return groupedData;
         }
 
 

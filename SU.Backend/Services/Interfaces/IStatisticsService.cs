@@ -10,8 +10,7 @@ namespace SU.Backend.Services.Interfaces
 {
     public interface IStatisticsService
     {
-        Task<List<SellerStatistics>> GetSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null);
-
+        Task<(bool Success, string Message, List<SellerStatistics> Statistics)> GetSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null);
         void PrintSellerStatistics(List<SellerStatistics> sellerStatistics, int year, List<InsuranceType> insuranceTypes);
     }
 }
