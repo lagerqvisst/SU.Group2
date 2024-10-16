@@ -23,6 +23,24 @@ namespace SU.Backend.Services
             _logger = logger;
         }
 
+        public async Task<(bool Success, string Message, List<PrivateCoverageOption> Opions)> GetAllPrivateCoverageOption()
+        {
+            _logger.LogInformation("Controller activated to get all private coverage options...");
+
+            try
+            {
+                var coverageOptions = _unitOfWork.PrivateCoverageOptions.GetPrivateCoverageOptions();
+                _logger.LogInformation("Private coverage options found: {CoverageOptionsCount}", coverageOptions.Result.Count);
+
+                return (true, "Private coverage options found.", coverageOptions.Result);
+            }
+            catch (Exception ex) 
+            {
+                _logger.LogError(ex, "Error occurred while fetching private coverage options.");
+                return (false, "An error occurred while fetching the private coverage options.", new List<PrivateCoverageOption>());
+            }
+        }
+
         // Metod för att hämta en specifik PrivateCoverageOption
         public async Task<(bool Success, PrivateCoverageOption? CoverageOption, string Message)> GetPrivateCoverageOptionAsync(decimal coverageAmount, InsuranceType insuranceType)
         {

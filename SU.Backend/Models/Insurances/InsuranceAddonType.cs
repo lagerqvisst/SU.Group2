@@ -1,4 +1,5 @@
-﻿using SU.Backend.Models.Enums.Insurance.Addons;
+﻿using SU.Backend.Helper;
+using SU.Backend.Models.Enums.Insurance.Addons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,31 +25,9 @@ namespace SU.Backend.Models.Insurances
         {
             Description = description;
             CoverageAmount = coverageAmount;
-            BaseExtraPremium = CalculateExtraPremium(description, coverageAmount);
+            BaseExtraPremium = PremiumCalculator.CalculateAddonExtraPremium(description, coverageAmount);
         }
 
-
-        public static decimal CalculateExtraPremium(AddonType addonType, decimal coverageAmount)
-        {
-            decimal extraPremiumRate;
-
-            // Justera påslagsräntan baserat på typ av tillägg
-            switch (addonType)
-            {
-                case AddonType.SicknessAccident:
-                    extraPremiumRate = 0.0003m; // Ränta för SicknessAccident
-                    break;
-                case AddonType.LongTermSickness:
-                    extraPremiumRate = 0.0005m; // Ränta för LongTermSickness
-                    break;
-                default:
-                    extraPremiumRate = 0.0003m; // Standardrate om inget annat
-                    break;
-            }
-
-            // Beräkna den extra premien baserat på belopp och typ
-            return coverageAmount * extraPremiumRate;
-        }
 
     }
 

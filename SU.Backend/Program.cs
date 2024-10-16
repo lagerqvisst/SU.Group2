@@ -41,29 +41,7 @@ class Program
         
         var employeeController = host.Services.GetRequiredService<EmployeeController>();
         var employeeService = host.Services.GetRequiredService<IEmployeeService>();
-        //await employeeController.CreateRandomNewEmployee(EmployeeType.OutsideSales);
-        /*
-        var newEmployee = new Employee
-        {
-            PersonalNumber = "1234XD",
-            FirstName = "Test",
-            LastName = "Test",
-            Email = "Test",
-            BaseSalary = 0,
-            Username = "Test",
-            Password = "Test",
-
-        };
-
-        var roleassignement = new EmployeeRoleAssignment
-        {
-            Role = EmployeeType.FinancialAssistant,
-            Percentage = 100
-
-        };
-
-        newEmployee.RoleAssignments.Add(roleassignement);
-        await employeeController.CreateEmployee(newEmployee);*/
+        
         #endregion
 
         #region Customer tests
@@ -120,66 +98,15 @@ class Program
         var insuranceController = host.Services.GetRequiredService<InsuranceController>();
         var privateCoverageService = host.Services.GetRequiredService<IPrivateCoverageService>();
 
-        //Test remove
-        var insuranceToDelete = await unitOfWork.Insurances.GetInsuranceById(6);
-        await insuranceService.DeleteInsurance(insuranceToDelete);
-
-        //Test property and inventory
-
-        var propertyCoverage = new PropertyAndInventoryCoverage(1000000, 500000)
-        {
-            PropertyAddress = "TestStreet 1, 12345 TestCity"
-        };
-        //Test company customer 
-        //var companyCustomer = await companyCustomerService.GetCompanyCustomerById(1);
-        //var seller = await employeeService.GetEmployeeById(1);
-        //await insuranceController.CreatePropertyInventoryInsurance(companyCustomer.Customer, propertyCoverage, seller.Employee, "TestNote");
-
-        //Test customer
-        /*
-        var customer = unitOfWork.PrivateCustomers.GetPrivateCustomers().Result.First();
-        //Test option
-        var privateCoverageOption = privateCoverageService.GetPrivateCoverageOptionAsync(750000, InsuranceType.ChildAccidentAndHealthInsurance);
-        //Test seller 
-        var seller = await employeeService.GetEmployeeById(1);
-
-        //Om vi vill ha typ en checkbox för att enkelt säga att förskrad person är samma som försäkringstagare
-        bool isPolicyHolderInsured = true;
-
-        var insuranceType = InsuranceType.AdultLifeInsurance;
-
-
-        await insuranceController.CreatePrivateInsurance(customer, insuranceType, privateCoverageOption.Result.CoverageOption, seller.Employee, isPolicyHolderInsured);
-        */
-
-
-        //await insuranceService.CreateTestPrivateInsurance();
-        //await insuranceService.CreateCompanyInsurance();
-        //await insuranceService.CreateCompanyInsuranceProperty();
-        //await insuranceService.CreateCompanyLiability();
-        //await insuranceService.RemoveAllInsurances(); 
         #endregion
 
         #region Prospect tests
         var prospectService = host.Services.GetRequiredService<IProspectService>();
-        //await prospectService.IdentifyProspects();
-        //await prospectService.TestAssignSellerToProspect();
         #endregion
 
         #region Statistics tests
         var commissionService = host.Services.GetRequiredService<ICommissionService>();
-        //await commissionService.GetAllCommissions(startDate, endDate);
 
-        //Tester för Statistikkravet i sista bilagan.
-        /*
-        var statisticsService = host.Services.GetRequiredService<IStatisticsService>();
-        var statistics = await statisticsService.GetSellerStatistics(2024);
-
-        List<InsuranceType> insuranceTypes = new List<InsuranceType> { InsuranceType.ChildAccidentAndHealthInsurance, 
-                                                                       InsuranceType.AdultAccidentAndHealthInsurance,
-                                                                       InsuranceType.AdultLifeInsurance};
-
-        statisticsService.PrintSellerStatistics(statistics, 2024, insuranceTypes);*/
         #endregion
 
     }

@@ -21,5 +21,7 @@ namespace SU.Backend.Models.Insurances.Coverage
         public InsuranceCoverage InsuranceCoverage { get; set; } // Navigation till InsuranceCoverage
         public VehicleInsuranceOption VehicleInsuranceOption { get; set; } // Navigation till VehicleInsuranceOption
         public Riskzone Riskzone { get; set; } // Navigation till Riskzone
+
+
     }
 }

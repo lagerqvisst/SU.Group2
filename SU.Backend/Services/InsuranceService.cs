@@ -37,113 +37,71 @@ namespace SU.Backend.Services
             PrivateCoverageOption privateCoverageOption,
             Employee seller,
             bool isPolicyHolderInsured,
-            InsuredPerson? insuredPerson = null) 
+            string? note,
+            DateTime? startDate = null,
+            DateTime? endDate = null,
+            List<InsuranceAddonType>? addons = null, // Nullable lista med addons
+            InsuredPerson? insuredPerson = null)
         {
             _logger.LogInformation("Creating private insurance...");
 
             try
             {
-                // Validera privateCustomer
-                if (privateCustomer == null)
-                {
-                    return (false, "No private customer provided.");
-                }
-
-                // Validera coverage option
-                if (privateCoverageOption == null)
-                {
-                    return (false, "No private coverage option provided.");
-                }
-
-                // Validera insuredPerson om försäkringstagaren inte är försäkrad
+                // Validera indata
+                if (privateCustomer == null) return (false, "No private customer provided.");
+                if (privateCoverageOption == null) return (false, "No private coverage option provided.");
                 if (!isPolicyHolderInsured && (insuredPerson == null ||
                     string.IsNullOrEmpty(insuredPerson.InsuredPersonName) ||
                     string.IsNullOrEmpty(insuredPerson.InsuredPersonPersonalNumber)))
                 {
                     return (false, "No insured person provided.");
                 }
+                if (seller == null) return (false, "No seller found.");
 
-                // Skapa huvudobjektet - Insurance
+                // Skapa försäkringen
                 var insurance = new Insurance
                 {
                     InsuranceType = insuranceType,
-                    InsuranceStatus = InsuranceStatus.Requested,  // Sätter status till Requested som default
+                    InsuranceStatus = InsuranceStatus.Requested,
                     PaymentPlan = PaymentPlan.Monthly,
-                    StartDate = DateTime.Now,  // Sätter startdatum till nuvarande tidpunkt. //Kan ändras som input parameter
-                    EndDate = DateTime.Now.AddYears(1),
-                    Note = "This is a test insurance" //Addera som input parameter?
-                };
+                    StartDate = startDate ?? DateTime.Now,
+                    EndDate = endDate ?? DateTime.Now.AddYears(1),
+                    Note = note,
 
-                if (privateCustomer == null)
-                {
-                    return (false, "No private customer provided.");
-                }
-                _logger.LogInformation("Customer provided: {CustomerId} - {CustomerName}", privateCustomer.PrivateCustomerId, privateCustomer.FirstName);
+                    InsurancePolicyHolder = new InsurancePolicyHolder
+                    {
+                        PrivateCustomer = privateCustomer
+                    },
 
-                // Skapa InsurancePolicyHolder och koppla till försäkringen
-                var insurancePolicyHolder = new InsurancePolicyHolder
-                {
-                    PrivateCustomer = privateCustomer
-                };
+                    InsuranceCoverage = new InsuranceCoverage
+                    {
+                        PrivateCoverage = new PrivateCoverage
+                        {
+                            PrivateCoverageOption = privateCoverageOption,
 
-                // Kontrollera om coverage option är null
-                if (privateCoverageOption == null)
-                {
-                    return (false, "No private coverage option provided.");
-                }
-
-                _logger.LogInformation("Calculating premium based on coverage option.");
-                insurance.Premium = privateCoverageOption.MonthlyPremium;  // Grundpremien
-
-                _logger.LogInformation("Total premium calculated: {CalculatedPremium}", insurance.Premium);
-
-
-
-                // Skapa PrivateCoverage
-                var insuranceCoverage = new InsuranceCoverage();
-                var privateCoverage = new PrivateCoverage
-                {
-                    InsuranceCoverage = insuranceCoverage,
-                    PrivateCoverageOption = privateCoverageOption,
-                    InsuredPersonName = isPolicyHolderInsured
+                            // Om försäkringstagaren är försäkrad, använd försäkringstagarens uppgifter, annars ta ny input.
+                            InsuredPersonName = isPolicyHolderInsured
                                 ? $"{privateCustomer.FirstName} {privateCustomer.LastName}"
                                 : insuredPerson?.InsuredPersonName,
-                    InsuredPersonPersonalNumber = isPolicyHolderInsured
+                            InsuredPersonPersonalNumber = isPolicyHolderInsured
                                 ? privateCustomer.PersonalNumber
                                 : insuredPerson?.InsuredPersonPersonalNumber
+                        }
+                    },
+
+                    Premium = privateCoverageOption.MonthlyPremium,
+
+                    Seller = seller
                 };
 
+                // Använd helper-metoden för att hantera tillägg och uppdatera premie
+                InsuranceBuilder.ApplyAddons(insurance, addons);
 
-
-                // Koppla navigationsobjekten
-                insuranceCoverage.PrivateCoverage = privateCoverage;
-                insurance.InsuranceCoverage = insuranceCoverage;
-                insurance.InsurancePolicyHolder = insurancePolicyHolder;
-
-                // Lägg till vem som sålde försäkringen
-                if (seller != null)
-                {
-                    insurance.Seller = seller;
-                    _logger.LogInformation("Seller added to insurance: {SellerId} - {SellerName}", seller.EmployeeId, seller.FirstName);
-                }
-                else
-                {
-                    _logger.LogWarning("No seller found.");
-                    return (false, "No seller found.");
-                }
-
-                //test addon 
-
-                var addon = _unitOfWork.InsuranceAddonTypes.GetAddonTypes().Result.First();
-
-                insurance.InsuranceAddons.Add(new InsuranceAddon
-                {
-                    InsuranceAddonType = addon
-                });
-                // Lägg till försäkring till databasen
+                // Spara försäkringen i databasen
                 await _unitOfWork.Insurances.AddAsync(insurance);
                 await _unitOfWork.SaveChangesAsync();
 
+                _logger.LogInformation("Private insurance created successfully with total premium: {Premium}", insurance.Premium);
                 return (true, "Insurance created successfully.");
             }
             catch (Exception ex)
@@ -153,38 +111,53 @@ namespace SU.Backend.Services
             }
         }
 
-        public async Task<(bool Success, string Message)> CreatePropertyInventoryInsurance(CompanyCustomer companyCustomer, PropertyAndInventoryCoverage propertyAndInventoryCoverage, Employee seller, string note)
+
+
+        public async Task<(bool Success, string Message)> CreatePropertyInventoryInsurance(
+            CompanyCustomer companyCustomer,
+            PropertyAndInventoryCoverage propertyAndInventoryCoverage,
+            Employee seller,
+            string note,
+            DateTime? startDate = null, // Nullable startDate parameter, om man inte anger ett datum när försäkringen ska gälla, tas dagens datum.
+            DateTime? endDate = null    // Nullable endDate parameter
+)
         {
             _logger.LogInformation("Creating property and inventory insurance...");
 
             try
             {
+                // Kontrollera att nödvändiga parametrar inte är null
+                if (companyCustomer == null) return (false, "No company customer provided.");
+                if (propertyAndInventoryCoverage == null) return (false, "No property and inventory coverage provided.");
+                if (seller == null) return (false, "No seller provided.");
+
                 // Skapa huvudobjektet - Insurance
                 var insurance = new Insurance
                 {
                     InsuranceType = InsuranceType.PropertyAndInventoryInsurance,
                     InsuranceStatus = InsuranceStatus.Requested,  // Sätter status till Requested som default
                     PaymentPlan = PaymentPlan.Monthly,
-                    StartDate = DateTime.Now,  // Sätter startdatum till nuvarande tidpunkt. //Kan ändras som input parameter
-                    EndDate = DateTime.Now.AddYears(1),
-                    Note = note, 
+                    StartDate = startDate ?? DateTime.Now,  // Om inget startdatum skickas in används nuvarande tidpunkt
+                    EndDate = endDate ?? DateTime.Now.AddYears(1), // Om inget slutdatum skickas in används ett år framåt
+                    Note = note ?? "No note provided.", // Sätter default note om ingen skickas in
 
                     InsurancePolicyHolder = new InsurancePolicyHolder
                     {
-                        CompanyCustomer = companyCustomer
+                        CompanyCustomer = companyCustomer ?? throw new ArgumentNullException(nameof(companyCustomer)) // Säkerställer att companyCustomer inte är null
                     },
 
                     InsuranceCoverage = new InsuranceCoverage
                     {
-                        PropertyAndInventoryCoverage = propertyAndInventoryCoverage
+                        PropertyAndInventoryCoverage = propertyAndInventoryCoverage ?? throw new ArgumentNullException(nameof(propertyAndInventoryCoverage)) // Säkerställer att PropertyAndInventoryCoverage inte är null
                     },
 
-                    Premium = PropertyAndInventoryCoverage.CalculateTotalPremium(propertyAndInventoryCoverage.PropertyPremium, propertyAndInventoryCoverage.InventoryPremium),
+                    Premium = PremiumCalculator.CalculateTotalPropertyAndInventoryPremium(
+                        propertyAndInventoryCoverage?.PropertyPremium ?? 0,
+                        propertyAndInventoryCoverage?.InventoryPremium ?? 0),
 
-                    Seller = seller
-
+                    Seller = seller ?? throw new ArgumentNullException(nameof(seller)) // Säkerställer att seller inte är null
                 };
-                    
+
                 _logger.LogInformation("Total premium calculated: {CalculatedPremium}", insurance.Premium);
                 _logger.LogInformation("Property and inventory insurance created successfully.");
                 _logger.LogInformation("Saving the new property and inventory insurance to the database...");
@@ -205,7 +178,29 @@ namespace SU.Backend.Services
 
 
 
-        //Create a company insurance
+        public async Task<(bool Success, string Message)> DeleteInsurance(Insurance insurance)
+        {
+            _logger.LogInformation("Deleting insurance...");
+
+            try
+            {
+                _logger.LogInformation("Attempting to delete an insurance...");
+
+                await _unitOfWork.Insurances.RemoveAsync(insurance);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Insurance was successfully deleted.");
+
+                return (true, "Insurance was deleted the database.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex.ToString());
+                return (false, $"An error occurred while deleting the insurance: {ex.Message.ToString()}");
+            }
+        }
+
+        #region Tests
         public async Task<(bool Success, string Message)> CreateTestCompanyInsurance()
         {
             _logger.LogInformation("Starting the process of creating a company insurance...");
@@ -399,18 +394,6 @@ namespace SU.Backend.Services
 
             try
             {
-                // Create the insurance object
-                var insurance = new Insurance
-                {
-                    InsuranceType = InsuranceType.LiabilityInsurance,
-                    InsuranceStatus = InsuranceStatus.Active,
-                    PaymentPlan = PaymentPlan.Monthly,
-                    StartDate = DateTime.Now,
-                    EndDate = DateTime.Now.AddYears(1),
-                    Note = "This is a test insurance"
-                };
-                _logger.LogInformation("Insurance object created successfully.");
-
                 // Fetch the last company customer
                 _logger.LogInformation("Attempting to fetch a test company customer...");
                 var companyCustomer = _unitOfWork.CompanyCustomers.GetCompanyCustomers().Result.Last();
@@ -421,45 +404,48 @@ namespace SU.Backend.Services
                 }
                 _logger.LogInformation("Company customer found: {Org Nr} - {CompanyName}", companyCustomer.OrganizationNumber, companyCustomer.CompanyName);
 
-                // Create InsurancePolicyHolder
-                _logger.LogInformation("Assigning the company customer as the insurance policy holder...");
-                insurance.InsurancePolicyHolder = new InsurancePolicyHolder
-                {
-                    CompanyCustomer = companyCustomer
-                };
-                _logger.LogInformation("InsurancePolicyHolder created and assigned successfully.");
-
-
                 _logger.LogInformation("Creating liability insurance coverage option...");
                 var liabiltiyCoverageOption = _unitOfWork.LiabilityCoverageOptions.GetLiabilityCoverage().Result.First();
-                if(liabiltiyCoverageOption == null)
+                if (liabiltiyCoverageOption == null)
                 {
                     return (false, "No liability coverage option found.");
                 }
 
-                var insuranceCoverage = new InsuranceCoverage();
-                var liabilityCoverage = new LiabilityCoverage
-                {
-                    InsuranceCoverage = insuranceCoverage,
-                    LiabilityCoverageOption = liabiltiyCoverageOption,
-                };
-
-                insuranceCoverage.LiabilityCoverage = liabilityCoverage;
-                insurance.Premium = liabiltiyCoverageOption.MonthlyPremium; 
-                insurance.InsuranceCoverage = insuranceCoverage;
 
                 // Fetch the seller with a specified role
                 _logger.LogInformation("Attempting to fetch a seller with the role: InsideSales...");
-                var seller = await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.InsideSales);
-                if (seller == null)
+                var seller = await _unitOfWork.Employees.GetEmployeeById(1);
+
+
+                // Create the insurance object
+                var insurance = new Insurance
                 {
-                    _logger.LogWarning("No seller found with the role: InsideSales.");
-                }
-                else
-                {
-                    insurance.Seller = seller;
-                    _logger.LogInformation("Seller assigned to insurance: {SellerId} - {SellerName}", seller.EmployeeId, seller.FirstName);
-                }
+                    InsuranceType = InsuranceType.LiabilityInsurance,
+                    InsuranceStatus = InsuranceStatus.Active,
+                    PaymentPlan = PaymentPlan.Monthly,
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now.AddYears(1),
+                    Note = "This is a test insurance",
+
+                    InsurancePolicyHolder = new InsurancePolicyHolder
+                    {
+                        CompanyCustomer = companyCustomer,
+                    }, 
+
+                    InsuranceCoverage = new InsuranceCoverage
+                    {
+                        LiabilityCoverage = new LiabilityCoverage
+                        {
+                            LiabilityCoverageOption = liabiltiyCoverageOption,
+                        }
+                    }, 
+
+                    Premium = liabiltiyCoverageOption.MonthlyPremium,
+                    Seller = seller
+                };
+                _logger.LogInformation("Insurance object created successfully.");
+
+
 
                 // Save changes to the database
                 _logger.LogInformation("Saving the new company insurance to the database...");
@@ -603,63 +589,11 @@ namespace SU.Backend.Services
             }
         }
 
-        public async Task<(bool Success, string Message)> DeleteInsurance(Insurance insurance)
-        {
-            _logger.LogInformation("Deleting insurance...");
+        #endregion
 
-            try
-            {
-                _logger.LogInformation("Attempting to delete an insurance...");
+        
 
-                await _unitOfWork.Insurances.RemoveAsync(insurance);
-                await _unitOfWork.SaveChangesAsync();
-
-                _logger.LogInformation("Insurance was successfully deleted.");
-
-                return (true, "Insurance was deleted the database.");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning(ex.ToString());
-                return (false, $"An error occurred while deleting the insurance: {ex.Message.ToString()}");
-            }
-        }
-
-        public async Task<(bool Success, string Message)> RemoveAllInsurances()
-        {
-            try
-            {
-                _logger.LogInformation("Removing all insurances...");
-                var insurances = await _unitOfWork.Insurances.GetAllInsurances();
-
-                if (insurances == null || !insurances.Any())
-                {
-                    _logger.LogInformation("No insurances found to remove.");
-                    return (false, "No insurances found to remove.");
-                }
-
-                _logger.LogInformation($"Removing {insurances.Count} insurances...");
-                
-                foreach( var insurance in insurances)
-                {
-
-                    await _unitOfWork.Insurances.RemoveAsync(insurance);
-                    //Workaround until we fix Cascade Delete problem...
-                    await _unitOfWork.InsurancePolicyHolders.RemoveAsync(insurance.InsurancePolicyHolder);
-                }
-
-                _logger.LogInformation("Saving changes...");
-                _unitOfWork.SaveChangesAsync();
-                _logger.LogInformation("All insurances removed successfully.");
-
-                return (true, "All insurances removed successfully.");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while removing insurances");
-                return (false, $"An error occurred while removing insurances: {ex.Message}");
-            }
-        }
+        
         
 
 
