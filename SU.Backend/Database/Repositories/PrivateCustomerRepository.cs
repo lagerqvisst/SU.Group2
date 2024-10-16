@@ -33,6 +33,10 @@ namespace SU.Backend.Database.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<PrivateCustomer>> ListAllPrivateCustomers()
+        {
+            return await _context.PrivateCustomers.ToListAsync();
+        }
     }
 
 }
