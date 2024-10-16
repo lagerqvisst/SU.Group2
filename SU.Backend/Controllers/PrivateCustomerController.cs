@@ -93,6 +93,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+
         public async Task<(List<PrivateCustomer> PrivateCustomers, string Message)> PrivateCustomers()
         {
             _logger.LogInformation("Controller activated to list all private customers...");
