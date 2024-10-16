@@ -58,5 +58,10 @@ namespace SU.Backend.Database.Repositories
                 .Include(e => e.RoleAssignments)
                 .FirstOrDefaultAsync(e => e.EmployeeId == id);
         }
+
+        public async Task<List<EmployeeRoleAssignment>> ListAllEmployeeRoleAssignments()
+        {
+            return await _context.EmployeeRoleAssignments.ToListAsync();
+        }
     }
 }

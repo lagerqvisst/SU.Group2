@@ -24,6 +24,23 @@ namespace SU.Backend.Controllers
             _logger = logger;
         }
 
+        public async Task<(List<InsuranceAddonType> insuranceAddonTypes, string Message)> ListAllInsuranceAddonTypes()
+        {
+            _logger.LogInformation("Controller activated to list all insurance addon types...");
+            var result = await _insuranceService.ListAllInsuranceAddonTypes();
+
+            if (result.Success) 
+            {
+                _logger.LogInformation($"Insurance addon types retrieved succesfully:\n{result.Message}");
+                return (result.insuranceAddonTypes, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"Error retrieving insurance addon types: {result.Message}");
+                return (new List<InsuranceAddonType>(), result.Message);
+            }
+        }
+
         public async Task CreatePrivateInsurance(PrivateCustomer privateCustomer,
             InsuranceType insuranceType,
             PrivateCoverageOption privateCoverageOption,

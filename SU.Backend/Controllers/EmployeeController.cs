@@ -106,5 +106,21 @@ namespace SU.Backend.Controllers
             }
         }
 
+        public async Task<(List<EmployeeRoleAssignment> EmployeeRoleAssignments, string Message)> ListAllEmployeeRoleAssignments()
+        {
+            _logger.LogInformation("Controller activated to list all employee role assignments...");
+            var result = await _employeeService.ListAllEmployeeRoleAssignments();
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"Employee role assignments found:\n{result.Message}");
+                return (result.EmployeeRoleAssignments, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"Error retrieving employee role assignments: {result.Message}");
+                return (new List <EmployeeRoleAssignment>(), result.Message);
+            }
+        }
     }
 }
