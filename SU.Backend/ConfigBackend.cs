@@ -34,6 +34,7 @@ namespace SU.Backend.Configuration
             services.AddTransient<ProspectController>();
             services.AddTransient<StatisticsController>();
             services.AddTransient<ComissionController>();
+            services.AddTransient<InvoiceController>();
 
             // Lägg till fler tjänster här
             services.AddScoped<IEmployeeService, EmployeeService>();
@@ -45,6 +46,7 @@ namespace SU.Backend.Configuration
             services.AddScoped<ICommissionService, CommissionService>();
             services.AddScoped<IStatisticsService, StatisticsService>();
             services.AddScoped<IPrivateCoverageService, PrivateCoverageService>();
+            services.AddScoped<IInvoiceService, InvoiceService>();
 
             // Loggning
             services.AddLogging(configure => configure.AddConsole());
