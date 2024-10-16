@@ -37,5 +37,22 @@ namespace SU.Backend.Controllers
             }
             return (result.Message, result.Statistics);
         }
+
+        public async Task<(List<InsuranceStatistics>, string Message)> GetMonthlyInsuranceStats()
+        {
+            _logger.LogInformation("Getting monthly insurance statistics...");
+
+            var result = await _statisticsService.GetMonthlyInsuranceStatistics();
+
+            if (result.Success)
+            {
+                _logger.LogInformation("Monthly insurance statistics retrieved successfully");
+            }
+            else
+            {
+                _logger.LogWarning("Error retrieving monthly insurance statistics: {result.Message}");
+            }
+            return (result.Statistics, result.Message);
+        }
     }
 }

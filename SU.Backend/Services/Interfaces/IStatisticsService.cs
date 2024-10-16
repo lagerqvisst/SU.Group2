@@ -11,6 +11,6 @@ namespace SU.Backend.Services.Interfaces
     public interface IStatisticsService
     {
         Task<(bool Success, string Message, List<SellerStatistics> Statistics)> GetSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null);
-        void PrintSellerStatistics(List<SellerStatistics> sellerStatistics, int year, List<InsuranceType> insuranceTypes);
+        Task<(bool Success, string Message, List<InsuranceStatistics> Statistics)> GetMonthlyInsuranceStatistics();
     }
 }
