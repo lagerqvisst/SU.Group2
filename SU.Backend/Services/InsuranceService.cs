@@ -143,19 +143,19 @@ namespace SU.Backend.Services
 
                     InsurancePolicyHolder = new InsurancePolicyHolder
                     {
-                        CompanyCustomer = companyCustomer ?? throw new ArgumentNullException(nameof(companyCustomer)) // Säkerställer att companyCustomer inte är null
+                        CompanyCustomer = companyCustomer
                     },
 
                     InsuranceCoverage = new InsuranceCoverage
                     {
-                        PropertyAndInventoryCoverage = propertyAndInventoryCoverage ?? throw new ArgumentNullException(nameof(propertyAndInventoryCoverage)) // Säkerställer att PropertyAndInventoryCoverage inte är null
+                        PropertyAndInventoryCoverage = propertyAndInventoryCoverage
                     },
 
                     Premium = PremiumCalculator.CalculateTotalPropertyAndInventoryPremium(
                         propertyAndInventoryCoverage?.PropertyPremium ?? 0,
                         propertyAndInventoryCoverage?.InventoryPremium ?? 0),
 
-                    Seller = seller ?? throw new ArgumentNullException(nameof(seller)) // Säkerställer att seller inte är null
+                    Seller = seller // Säkerställer att seller inte är null
                 };
 
                 _logger.LogInformation("Total premium calculated: {CalculatedPremium}", insurance.Premium);
