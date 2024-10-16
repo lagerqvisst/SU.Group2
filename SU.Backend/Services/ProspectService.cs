@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using SU.Backend.Database;
+using SU.Backend.Models.Employees;
 using SU.Backend.Models.Enums;
 using SU.Backend.Models.Enums.Prospects;
 using SU.Backend.Models.Insurances.Prospects;
@@ -110,61 +111,66 @@ namespace SU.Backend.Services
         }
 
 
-        public async Task<(bool Success, string Message)> TestAssignSellerToProspect()
+        public async Task<(bool Success, string Message)> AssignSellerToSpecificProspect(Employee employee, Prospect prospect)
         {
-            _logger.LogInformation("Updating prospect status");
+            _logger.LogInformation("Checking if employee has the correct role assignments");
 
             try
             {
-                _logger.LogInformation("Getting 1 Seller from Employee Repository");
-                var seller = await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.OutsideSales);
+                // Kontrollera om anställd har antingen OutsideSales eller InsideSales roller
+                var hasValidRole = employee.RoleAssignments.Any(role =>
+                    role.Role == EmployeeType.OutsideSales || role.Role == EmployeeType.InsideSales);
 
-                if (seller == null)
+                if (!hasValidRole)
                 {
-                    _logger.LogInformation("No sellers found");
-                    return (false, "No sellers found");
+                    _logger.LogInformation("Employee does not have the correct role (OutsideSales or InsideSales)");
+                    return (false, "Employee does not have the correct role (OutsideSales or InsideSales)");
                 }
 
-                _logger.LogInformation("Getting all prospects from database");
-                var prospects = await _unitOfWork.Prospects.GetAllProspects();
+                _logger.LogInformation("Employee has a valid role assignment");
 
-                if(prospects == null)
+                // Kontrollera om prospektet redan har en säljare
+                if (prospect.Seller != null)
                 {
-                    _logger.LogInformation("No prospects found");
-                    return (false, "No prospects found");
+                    _logger.LogInformation($"Prospect with id: {prospect.ProspectId} already has a seller assigned");
+                    return (false, "Prospect already has a seller assigned");
                 }
 
-                var privateProspects = prospects.Where(p => p.ProspectType == ProspectType.Private).ToList();
-                var companyProspects = prospects.Where(p => p.ProspectType == ProspectType.Company).ToList();
+                // Tilldela säljaren till det specifika prospektet
+                _logger.LogInformation($"Assigning seller to prospect id: {prospect.ProspectId}");
+                prospect.Seller = employee;
+                prospect.AssignedAgentNumber = employee.AgentNumber;
 
-                _logger.LogInformation($"#{privateProspects.Count} private prospect(s) found");
-                _logger.LogInformation($"#{companyProspects.Count} company prospect(s) found");
-
-                _logger.LogInformation("Assigning Seller to prospects");
-
-                foreach (var prospect in prospects)
-                {
-                    if (prospect.Seller == null)
-                    {
-                        prospect.Seller = seller;
-                        prospect.AssignedAgentNumber = seller.AgentNumber;
-
-                        await _unitOfWork.Prospects.UpdateAsync(prospect);
-                        _logger.LogInformation($"Seller assigned to prospect id: {prospect.ProspectId}");
-                    }
-                }
+                await _unitOfWork.Prospects.UpdateAsync(prospect);
 
                 _logger.LogInformation("Saving changes to database");
                 await _unitOfWork.SaveChangesAsync();
 
-                return (true, "Seller assigned to prospects");
+                return (true, "Seller assigned to the specific prospect");
 
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Error assigning seller to prospects");
-                return (false, "Error assigning seller to prospects");
+                _logger.LogError(e, "Error assigning seller to the specific prospect");
+                return (false, "Error assigning seller to the specific prospect");
+            }
+        }
 
+        public async Task<(bool Success, string Message, List<Prospect> prospects)> GetAllCurrentProspects()
+        {
+            _logger.LogInformation("Getting all current prospects");
+
+            try
+            {
+                var prospects = await _unitOfWork.Prospects.GetAllProspects();
+                _logger.LogInformation($"Found {prospects.Count} current prospects");
+
+                return (true, $"{prospects.Count} current prospects found", prospects);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error getting all current prospects");
+                return (false, "Error getting all current prospects", null);
             }
         }
     }
