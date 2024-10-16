@@ -192,6 +192,79 @@ namespace SU.Backend.Services
             }
         }
 
+        public async Task<(bool Success, string Message)> CreateLiabilityInsurance(
+           CompanyCustomer companyCustomer,
+           LiabilityCoverage liabilityCoverage,
+           Employee seller,
+           string note,
+           DateTime? startDate = null,
+           DateTime? endDate = null)
+        {
+            _logger.LogInformation("Starting the process of creating a company liability insurance...");
+
+            try
+            {
+                // Validera inputdata
+                if (companyCustomer == null)
+                {
+                    _logger.LogWarning("No company customer provided.");
+                    return (false, "No company customer provided.");
+                }
+                _logger.LogInformation("Company customer provided: {Org Nr} - {CompanyName}", companyCustomer.OrganizationNumber, companyCustomer.CompanyName);
+
+                if (liabilityCoverage == null)
+                {
+                    _logger.LogWarning("No liability coverage option provided.");
+                    return (false, "No liability coverage option provided.");
+                }
+
+                if (seller == null)
+                {
+                    _logger.LogWarning("No seller provided.");
+                    return (false, "No seller provided.");
+                }
+
+                // Skapa försäkringsobjektet
+                var insurance = new Insurance
+                {
+                    InsuranceType = InsuranceType.LiabilityInsurance,
+                    InsuranceStatus = InsuranceStatus.Requested,
+                    PaymentPlan = PaymentPlan.Monthly,
+                    StartDate = startDate ?? DateTime.Now,  // Använd inskickat startdatum, annars nuvarande tid
+                    EndDate = endDate ?? DateTime.Now.AddYears(1),  // Använd inskickat slutdatum, annars ett år framåt
+                    Note = note,
+
+                    InsurancePolicyHolder = new InsurancePolicyHolder
+                    {
+                        CompanyCustomer = companyCustomer
+                    },
+
+                    InsuranceCoverage = new InsuranceCoverage
+                    {
+                        LiabilityCoverage = liabilityCoverage
+                    },
+
+                    Premium = liabilityCoverage.LiabilityCoverageOption.MonthlyPremium,
+                    Seller = seller
+                };
+                _logger.LogInformation("Insurance object created successfully.");
+
+                // Spara ändringarna till databasen
+                _logger.LogInformation("Saving the new company insurance to the database...");
+                await _unitOfWork.Insurances.AddAsync(insurance);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Company insurance created and saved successfully.");
+
+                return (true, "Company liability insurance created successfully.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while creating insurance");
+                return (false, "An error occurred while creating the insurance.");
+            }
+        }
+
 
 
         public async Task<(bool Success, string Message)> DeleteInsurance(Insurance insurance)
@@ -605,12 +678,89 @@ namespace SU.Backend.Services
             }
         }
 
+        public async Task<(bool Success, string Message)> CreateVehicleInsurance(
+            CompanyCustomer companyCustomer,
+            VehicleInsuranceCoverage vehicleCoverage,
+            Employee seller,
+            string note,
+            DateTime? startDate = null,
+            DateTime? endDate = null)
+        {
+            _logger.LogInformation("Starting the process of creating a company vehicle insurance...");
+
+            try
+            {
+                // Validera inputdata
+                if (companyCustomer == null)
+                {
+                    _logger.LogWarning("No company customer provided.");
+                    return (false, "No company customer provided.");
+                }
+                _logger.LogInformation("Company customer provided: {Org Nr} - {CompanyName}", companyCustomer.OrganizationNumber, companyCustomer.CompanyName);
+
+                if (vehicleCoverage == null)
+                {
+                    _logger.LogWarning("No vehicle insurance coverage provided.");
+                    return (false, "No vehicle insurance coverage provided.");
+                }
+
+                if (seller == null)
+                {
+                    _logger.LogWarning("No seller provided.");
+                    return (false, "No seller provided.");
+                }
+
+                // Skapa försäkringsobjektet
+                var insurance = new Insurance
+                {
+                    InsuranceType = InsuranceType.VehicleInsurance,
+                    InsuranceStatus = InsuranceStatus.Active,
+                    PaymentPlan = PaymentPlan.Monthly,
+                    StartDate = startDate ?? DateTime.Now,  // Använd inskickat startdatum, annars nuvarande tid
+                    EndDate = endDate ?? DateTime.Now.AddYears(1),  // Använd inskickat slutdatum, annars ett år framåt
+                    Note = note,
+
+                    InsurancePolicyHolder = new InsurancePolicyHolder
+                    {
+                        CompanyCustomer = companyCustomer
+                    },
+
+                    InsuranceCoverage = new InsuranceCoverage
+                    {
+                        VehicleInsuranceCoverage = vehicleCoverage
+                    },
+
+                    Premium = PremiumCalculator.GetVehicleInsurancePremium(vehicleCoverage.Riskzone, vehicleCoverage.VehicleInsuranceOption),
+                    Seller = seller
+                };
+                _logger.LogInformation("Insurance object created successfully.");
+
+                // Spara ändringarna till databasen
+                _logger.LogInformation("Saving the new company vehicle insurance to the database...");
+                await _unitOfWork.Insurances.AddAsync(insurance);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Company vehicle insurance created and saved successfully.");
+
+                return (true, "Company vehicle insurance created successfully.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while creating company vehicle insurance.");
+                return (false, "An error occurred while creating the company vehicle insurance.");
+            }
+        }
+
+
+
+
+
         #endregion
 
-        
 
-        
-        
+
+
+
 
 
     }

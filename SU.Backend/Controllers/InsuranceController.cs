@@ -41,7 +41,7 @@ namespace SU.Backend.Controllers
             }
         }
 
-        public async Task CreatePrivateInsurance(PrivateCustomer privateCustomer,
+        public async Task<(bool Success, string Message)> CreatePrivateInsurance(PrivateCustomer privateCustomer,
             InsuranceType insuranceType,
             PrivateCoverageOption privateCoverageOption,
             Employee seller,
@@ -58,14 +58,16 @@ namespace SU.Backend.Controllers
             if (result.Success)
             {
                 _logger.LogInformation($"Private insurance created successfully:\n{result.Message}");
+                return (result.Success, result.Message);
             }
             else
             {
                 _logger.LogWarning($"Error creating private insurance: {result.Message}");
+                return (result.Success, result.Message);
             }
         }
 
-        public async Task CreatePropertyInventoryInsurance(CompanyCustomer companyCustomer,
+        public async Task<(bool Success, string Message)> CreatePropertyInventoryInsurance(CompanyCustomer companyCustomer,
             PropertyAndInventoryCoverage propertyAndInventoryCoverage, Employee seller, string note)
         {
             _logger.LogInformation("Controller activated to create new property and inventory insurance...");
@@ -74,10 +76,48 @@ namespace SU.Backend.Controllers
             if (result.Success)
             {
                 _logger.LogInformation($"Property and inventory insurance created successfully:\n{result.Message}");
+                return (result.Success, result.Message);
             }
             else
             {
                 _logger.LogWarning($"Error creating property and inventory insurance: {result.Message}");
+                return (result.Success, result.Message);
+            }
+        }
+
+        public async Task<(bool Success, string Message)> CreateLiabilityInsurance(CompanyCustomer companyCustomer,
+            LiabilityCoverage liabilityCoverage, Employee seller, string note)
+        {
+            _logger.LogInformation("Controller activated to create new liability insurance...");
+            var result = await _insuranceService.CreateLiabilityInsurance(companyCustomer, liabilityCoverage, seller, note);
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"Liability insurance created successfully:\n{result.Message}");
+                return (result.Success, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"Error creating liability insurance: {result.Message}");
+                return (result.Success, result.Message);
+            }
+        }
+
+        public async Task<(bool Success, string Message)> CreateVehicleInsurance(CompanyCustomer companyCustomer,
+            VehicleInsuranceCoverage vehicleCoverage, Employee seller, string note)
+        {
+            _logger.LogInformation("Controller activated to create new vehicle insurance...");
+            var result = await _insuranceService.CreateVehicleInsurance(companyCustomer, vehicleCoverage, seller, note);
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"Vehicle insurance created successfully:\n{result.Message}");
+                return (result.Success, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"Error creating vehicle insurance: {result.Message}");
+                return (result.Success, result.Message);
             }
         }
     }
