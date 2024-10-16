@@ -33,6 +33,7 @@ namespace SU.Backend.Configuration
             services.AddTransient<PrivateCoverageController>();
             services.AddTransient<ProspectController>();
             services.AddTransient<StatisticsController>();
+            services.AddTransient<ComissionController>();
 
             // Lägg till fler tjänster här
             services.AddScoped<IEmployeeService, EmployeeService>();
