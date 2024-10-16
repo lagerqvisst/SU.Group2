@@ -219,5 +219,23 @@ namespace SU.Backend.Services
                 return (false, "Error getting employee", null);
             }
         }
+
+        public async Task<(bool Success, string Message, List<EmployeeRoleAssignment> EmployeeRoleAssignments)> ListAllEmployeeRoleAssignments()
+        {
+            _logger.LogInformation("Controller activated to get all employee role assignments...");
+
+            try
+            {
+                var employeeroleassignments = _unitOfWork.Employees.ListAllEmployeeRoleAssignments();
+                _logger.LogInformation("Employee role assignments found: {EmployeeRoleAssignmentsCount}", employeeroleassignments.Result.Count);
+
+                return (true, "Employee role assignments found.", employeeroleassignments.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching employee role assignments.");
+                return (false, "An error occurred while fetching the employee role assignments.", new List<EmployeeRoleAssignment>());
+            }
+        }
     }
 }
