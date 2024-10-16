@@ -1,4 +1,5 @@
 ﻿using SU.Backend.Models.Customers;
+using SU.Backend.Models.Employees;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,9 @@ namespace SU.Backend.Services.Interfaces
 
         //Used for updating and deleting specific company customer.
         Task<(bool Success, string Message, CompanyCustomer? Customer)> GetCompanyCustomerById(int id);
+
+        Task<(bool Success, string Message, List<CompanyCustomer> CompanyCustomers)> ListAllCompanyCustomers();
+
     }
 
 }

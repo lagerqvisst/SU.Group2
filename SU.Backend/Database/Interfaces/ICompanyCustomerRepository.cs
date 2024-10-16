@@ -16,5 +16,7 @@ namespace SU.Backend.Database.Interfaces
         Task<List<CompanyCustomer>> GetCompanyCustomers();
 
         Task<CompanyCustomer?> GetCompanyCustomerById(int id);
+
+        Task<List<CompanyCustomer>> ListAllCompanyCustomers();
     }
 }

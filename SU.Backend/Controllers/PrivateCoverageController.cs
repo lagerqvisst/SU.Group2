@@ -46,7 +46,7 @@ namespace SU.Backend.Controllers
             if (result.Success)
             {
                 _logger.LogInformation($"Private coverage options found:\n{result.Message}");
-                return (result.Opions, result.Message);
+                return (result.Options, result.Message);
             }
             else
             {
