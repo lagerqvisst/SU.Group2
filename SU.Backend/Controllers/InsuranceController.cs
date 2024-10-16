@@ -29,10 +29,14 @@ namespace SU.Backend.Controllers
             PrivateCoverageOption privateCoverageOption,
             Employee seller,
             bool isPolicyHolderInsured,
+            string? note,
+            DateTime? startDate = null,
+            DateTime? endDate = null,
+            List<InsuranceAddonType>? addons = null, // Nullable lista med addons
             InsuredPerson? insuredPerson = null)
         {
             _logger.LogInformation("Controller activated to create new private insurance...");
-            var result = await _insuranceService.CreatePrivateInsurance(privateCustomer, insuranceType, privateCoverageOption, seller, isPolicyHolderInsured, insuredPerson);
+            var result = await _insuranceService.CreatePrivateInsurance(privateCustomer, insuranceType, privateCoverageOption, seller, isPolicyHolderInsured, note, startDate, endDate, addons, insuredPerson);
 
             if (result.Success)
             {

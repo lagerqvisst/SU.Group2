@@ -16,17 +16,33 @@ namespace SU.Backend.Services.Interfaces
     {
 
         //Implementation 
+
+        //Privatförsäkring
         Task<(bool Success, string Message)> CreatePrivateInsurance(
             PrivateCustomer privateCustomer,
             InsuranceType insuranceType,
             PrivateCoverageOption privateCoverageOption,
             Employee seller,
             bool isPolicyHolderInsured,
+            string? note,
+            DateTime? startDate = null,
+            DateTime? endDate = null,
+            List<InsuranceAddonType>? addons = null, // Nullable lista med addons
             InsuredPerson? insuredPerson = null);
 
-        Task<(bool Success, string Message)> CreatePropertyInventoryInsurance
-            (CompanyCustomer companyCustomer,
-            PropertyAndInventoryCoverage propertyAndInventoryCoverage, Employee seller, string note);
+        //Företagsförsäkring: Fastighet & Inventarie
+        Task<(bool Success, string Message)> CreatePropertyInventoryInsurance(
+                    CompanyCustomer companyCustomer,
+                    PropertyAndInventoryCoverage propertyAndInventoryCoverage,
+                    Employee seller,
+                    string note,
+                    DateTime? startDate = null, 
+                    DateTime? endDate = null    
+        );
+
+        //Företagsförsäkring: Ansvar
+
+        //Företagsförsäkring: Fordon
 
         Task<(bool Success, string Message)> DeleteInsurance(
            Insurance insurance);
@@ -40,7 +56,6 @@ namespace SU.Backend.Services.Interfaces
 
         Task<(bool Success, string Message)> CreateTestCompanyLiability();
 
-        Task<(bool Success, string Message)> RemoveAllInsurances();
 
     }
 }

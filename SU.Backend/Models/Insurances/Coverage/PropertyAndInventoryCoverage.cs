@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SU.Backend.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,34 +26,9 @@ namespace SU.Backend.Models.Insurances.Coverage
             PropertyValue = propertyValue;
             InventoryValue = inventoryValue;
 
-            PropertyPremium = CalculatePropertyPremium(propertyValue);
-            InventoryPremium = CalculateInventoryPremium(inventoryValue);
+            PropertyPremium = PremiumCalculator.CalculatePropertyPremium(propertyValue);
+            InventoryPremium = PremiumCalculator.CalculateInventoryPremium(inventoryValue);
         }
 
-        // Statisk metod för att beräkna fastighetspremien
-        public static decimal CalculatePropertyPremium(decimal propertyValue)
-        {
-            const decimal premiumRate = 0.002m; // 0.2% rate
-            return propertyValue * premiumRate;
-        }
-
-        // Statisk metod för att beräkna inventariepremien
-        public static decimal CalculateInventoryPremium(decimal inventoryValue)
-        {
-            const decimal premiumRate = 0.002m; // 0.2% rate
-            return inventoryValue * premiumRate;
-        }
-
-        // Statisk metod för att summera den totala premien
-        public static decimal CalculateTotalPremium(decimal propertyPremium, decimal inventoryPremium)
-        {
-            return propertyPremium + inventoryPremium;
-        }
-
-        // Alternativ metod som returnerar totalpremien direkt
-        public decimal GetTotalPremium()
-        {
-            return PropertyPremium + InventoryPremium;
-        }
     }
 }
