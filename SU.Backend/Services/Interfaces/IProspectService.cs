@@ -1,4 +1,5 @@
-﻿using SU.Backend.Models.Insurances.Prospects;
+﻿using SU.Backend.Models.Employees;
+using SU.Backend.Models.Insurances.Prospects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace SU.Backend.Services.Interfaces
     {
         Task<(bool Success, string Message, List<Prospect> prospects)> IdentifyProspects();
 
-        Task<(bool Success, string Message)> TestAssignSellerToProspect();
+        Task<(bool Success, string Message)> AssignSellerToSpecificProspect(Employee employee, Prospect prospect);
+
+        Task<(bool Success, string Message, List<Prospect> prospects)> GetAllCurrentProspects();
     }
 }
