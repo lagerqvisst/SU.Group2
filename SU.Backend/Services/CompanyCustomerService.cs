@@ -140,6 +140,24 @@ namespace SU.Backend.Services
                 return (false, "An error occurred: " + ex.Message, null);
             }
         }
+
+        public async Task<(bool Success, string Message, List<CompanyCustomer> CompanyCustomers)> ListAllCompanyCustomers()
+        {
+            _logger.LogInformation("Controller activated to get all company customers...");
+
+            try
+            {
+                var companycustomers = _unitOfWork.CompanyCustomers.GetCompanyCustomers();
+                _logger.LogInformation("Company customers found: {CompanyCustomersCount}", companycustomers.Result.Count);
+
+                return (true, "Company customers found.", companycustomers.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching company customers.");
+                return (false, "An error occurred while fetching the company customers.", new List<CompanyCustomer>());
+            }
+        }
     }
 }
 

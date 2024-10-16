@@ -23,7 +23,7 @@ namespace SU.Backend.Services
             _logger = logger;
         }
 
-        public async Task<(bool Success, string Message, List<PrivateCoverageOption> Opions)> GetAllPrivateCoverageOption()
+        public async Task<(bool Success, string Message, List<PrivateCoverageOption> Options)> GetAllPrivateCoverageOption()
         {
             _logger.LogInformation("Controller activated to get all private coverage options...");
 

@@ -39,5 +39,10 @@ namespace SU.Backend.Database.Repositories
         {
             return await _context.CompanyCustomers.FirstOrDefaultAsync(x => x.CompanyCustomerId == id);
         }
+
+        public async Task <List<CompanyCustomer>> ListAllCompanyCustomers()
+        {
+            return await _context.CompanyCustomers.ToListAsync();
+        }
     }
 }
