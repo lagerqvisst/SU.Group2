@@ -15,7 +15,7 @@ namespace SU.Backend.Services.Interfaces
         Task<(bool Success, string Message)> CreateNewPrivateCustomer(PrivateCustomer privateCustomer);
         Task<(bool Success, string Message)> DeletePrivateCustomer(PrivateCustomer privateCustomer);
         Task<(bool Success, string Message)> UpdatePrivateCustomer(PrivateCustomer privateCustomer);
-
+        Task<(bool Success, string Message, List<PrivateCustomer> PrivateCustomers)> ListAllPrivateCustomers();
 
     }
 }

@@ -163,6 +163,23 @@ namespace SU.Backend.Services
             }
         }
 
+        public async Task<(bool Success, string Message, List<PrivateCustomer> PrivateCustomers)> ListAllPrivateCustomers()
+        {
+            _logger.LogInformation("Controller activated to get all private customers...");
+
+            try
+            {
+                var privatecustomers = _unitOfWork.PrivateCustomers.GetPrivateCustomers();
+                _logger.LogInformation("Private customers found: {PrivateCustomersCount}", privatecustomers.Result.Count);
+
+                return (true, "Private customers found.", privatecustomers.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching private customers.");
+                return (false, "An error occurred while fetching the private customers.", new List<PrivateCustomer>());
+            }
+        }
     }
 }
 

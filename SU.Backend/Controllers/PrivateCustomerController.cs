@@ -91,7 +91,23 @@ namespace SU.Backend.Controllers
                 _logger.LogWarning($"{result.Message}");
                 return (result.Success, result.Message);
             }
-                
+        }
+
+
+        public async Task<(List<PrivateCustomer> PrivateCustomers, string Message)> PrivateCustomers()
+        {
+            _logger.LogInformation("Controller activated to list all private customers...");
+            var result = await _privateCustomerService.ListAllPrivateCustomers();
+            if (result.Success)
+            {
+                _logger.LogInformation($"Private customers retrieved successfully:\n{result.Message}");
+                return (result.PrivateCustomers, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"Error retrieving private customers: {result.Message}");
+                return (new List<PrivateCustomer>(), result.Message);
+            }
         }
     }
 }
