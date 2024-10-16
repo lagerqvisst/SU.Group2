@@ -111,7 +111,23 @@ namespace SU.Backend.Services
             }
         }
 
+         public async Task<(bool Success, string Message, List<InsuranceAddonType> insuranceAddonTypes)> ListAllInsuranceAddonTypes()
+        {
+            _logger.LogInformation("Controller activated to get all insurance addon types...");
 
+            try
+            {
+                var insuranceAddonTypes = _unitOfWork.InsuranceAddonTypes.GetAddonTypes();
+                _logger.LogInformation("Insurance addon types found: {InsuranceAddonTypeCount}", insuranceAddonTypes.Result.Count);
+
+                return (true, "Insurance addon types found", insuranceAddonTypes.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching insurance addont types.");
+                return (false, "An error occurred while fetching the insurance addon types.", new List<InsuranceAddonType>());
+            }
+        }
 
         public async Task<(bool Success, string Message)> CreatePropertyInventoryInsurance(
             CompanyCustomer companyCustomer,
