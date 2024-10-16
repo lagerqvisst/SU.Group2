@@ -77,67 +77,43 @@ namespace SU.Backend.Services
 
         }
 
-
-        public void PrintSellerStatistics(List<SellerStatistics> sellerStatistics, int year, List<InsuranceType> insuranceTypes)
+        public async Task<(bool Success, string Message, List<InsuranceStatistics> Statistics)> GetMonthlyInsuranceStatistics()
         {
-            // Mapping of InsuranceType enum to display names
-            var insuranceTypeNames = insuranceTypes.ToDictionary(type => type, type => type.ToString().Replace("Insurance", "").Replace("AndHealth", ""));
+            _logger.LogInformation("Fetching monthly insurance statistics");
 
-            // Print table headers
-            Console.WriteLine($"(exempel på tabell för valda försäkringstyper)\n");
-            Console.Write($"{"Säljare/försäkring",-20} ");
-
-            // Print month names header
-            for (int month = 1; month <= 12; month++)
+            try
             {
-                string monthName = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);
-                Console.Write($"{monthName,-10}");
-            }
+                // Steg 1: Hämta alla aktiva försäkringar
+                var activeInsurances = await _unitOfWork.Insurances.GetAllActiveInsurances();
 
-            // Print insurance types header for each month
-            foreach (var type in insuranceTypeNames)
-            {
-                Console.Write($"{type.Value,-10}");
-            }
-
-            Console.Write("Total      ");
-            Console.WriteLine("Hela året");
-
-            // Loop through each seller to print their statistics
-            foreach (var seller in sellerStatistics)
-            {
-                Console.Write($"{seller.SellerName,-20}");
-
-                int yearlyTotal = 0; // Track total sales for the year
-
-                // Loop through all 12 months
-                for (int month = 1; month <= 12; month++)
+                // Kontrollera om det finns några försäkringar
+                if (activeInsurances == null || !activeInsurances.Any())
                 {
-                    var monthlyData = seller.MonthlySales.FirstOrDefault(m => m.Month == month);
-
-                    if (monthlyData != null)
-                    {
-                        int totalMonthlySales = 0;
-
-                        // Print the sales data for each insurance type dynamically
-                        foreach (var type in insuranceTypes)
-                        {
-                            int count = monthlyData.InsuranceSalesCounts.TryGetValue(type, out var insuranceCount) ? insuranceCount : 0;
-                            totalMonthlySales += count;
-                            Console.Write($"{count,-10}");
-                        }
-
-                        yearlyTotal += totalMonthlySales;
-                        Console.Write($"{totalMonthlySales,-10}");
-                    }
+                    _logger.LogInformation("No active insurances found");
+                    return (false, "No active insurances found", new List<InsuranceStatistics>());
                 }
 
-                // Print yearly total and monthly average
-                int averageMonthlySales = seller.MonthlySales.Count > 0 ? yearlyTotal / seller.MonthlySales.Count : 0;
-                Console.WriteLine($" {yearlyTotal,-10} {averageMonthlySales,-10}");
-            }
+                // Steg 2: Grupper försäkringar efter försäkringstyp och månad
+                var statistics = activeInsurances
+                    .GroupBy(i => new { i.InsuranceType, Month = i.StartDate.Month })
+                    .Select(g => new InsuranceStatistics
+                    {
+                        InsuranceType = g.Key.InsuranceType.ToString(),
+                        Month = g.Key.Month,
+                        TotalPolicies = g.Count(),
+                        TotalPremium = g.Sum(i => i.Premium)
+                    })
+                    .OrderBy(stat => stat.Month)  // Sortera efter månad
+                    .ToList();
 
-            Console.ReadLine();
+                // Steg 3: Returnera resultat
+                return (true, "Success", statistics);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while fetching insurance statistics");
+                return (false, "An error occurred while fetching insurance statistics", new List<InsuranceStatistics>());
+            }
         }
 
 
