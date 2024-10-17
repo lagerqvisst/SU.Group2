@@ -23,13 +23,13 @@ namespace SU.Backend.Services
             _logger = logger;
         }
 
-        public async Task<(bool Success, string Message, List<PrivateCoverageOption> Options)> GetAllPrivateCoverageOption()
+        public async Task<(bool Success, string Message, List<PrivateCoverageOption> PrivateCoverageOptions)> GetAllPrivateCoverageOptions()
         {
             _logger.LogInformation("Controller activated to get all private coverage options...");
 
             try
             {
-                var coverageOptions = _unitOfWork.PrivateCoverageOptions.GetPrivateCoverageOptions();
+                var coverageOptions = _unitOfWork.PrivateCoverageOptions.GetAllPrivateCoverageOptions();
                 _logger.LogInformation("Private coverage options found: {CoverageOptionsCount}", coverageOptions.Result.Count);
 
                 return (true, "Private coverage options found.", coverageOptions.Result);

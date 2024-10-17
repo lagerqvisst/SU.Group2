@@ -38,15 +38,15 @@ namespace SU.Backend.Controllers
             }
         }
 
-        public async Task<(List<PrivateCoverageOption>, string Message)> GetAllOptions()
+        public async Task<(List<PrivateCoverageOption>, string Message)> GetAllPrivateCoverageOptions()
         {
             _logger.LogInformation("Controller activated to get all private coverage options...");
-            var result = await _privateCoverageService.GetAllPrivateCoverageOption();
+            var result = await _privateCoverageService.GetAllPrivateCoverageOptions();
 
             if (result.Success)
             {
                 _logger.LogInformation($"Private coverage options found:\n{result.Message}");
-                return (result.Options, result.Message);
+                return (result.PrivateCoverageOptions, result.Message);
             }
             else
             {
