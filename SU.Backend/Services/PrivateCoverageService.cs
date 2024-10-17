@@ -41,6 +41,24 @@ namespace SU.Backend.Services
             }
         }
 
+        public Task<(bool Success, string Message, List<PrivateCoverage> PrivateCoverages)> GetAllPrivateCoverages()
+        {
+            _logger.LogInformation("Controller activated to get all private coverages...");
+
+            try
+            {
+                var privatecoverages = _unitOfWork.PrivateCoverages.GetAllPrivateCoverages();
+                _logger.LogInformation("Private coverages found: {CoveragesCount}", privatecoverages.Result.Count);
+
+                return Task.FromResult((true, "Private coverages found.", privatecoverages.Result));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching private coverages.");
+                return Task.FromResult((false, "An error occurred while fetching the private coverages.", new List<PrivateCoverage>()));
+            }
+        }
+
         // Metod för att hämta en specifik PrivateCoverageOption
         public async Task<(bool Success, PrivateCoverageOption? CoverageOption, string Message)> GetPrivateCoverageOptionAsync(decimal coverageAmount, InsuranceType insuranceType)
         {
