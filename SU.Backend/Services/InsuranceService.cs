@@ -842,6 +842,25 @@ namespace SU.Backend.Services
             }
         }
 
+        public async Task<(bool Success, string Message, List<VehicleInsuranceOption> VehicleInsuranceCoverages)> GetAllVehicleInsuranceOptions()
+        {
+            _logger.LogInformation("Controller activated to list all vehicle insurance coverage options...");
+
+            try
+            {
+                var vehicleInsuranceOptions = _unitOfWork.VehicleInsuranceOptions.GetVehicleInsuranceOptions();
+                _logger.LogInformation("Vehicle insurance options retrieved succesfully: {VehicleInsuranceOptionsCount}",
+                                       vehicleInsuranceOptions.Result.Count);
+
+                return (true, "Vehicle insurance options retrieved successfully.", vehicleInsuranceOptions.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching vehicle insurance options.");
+                return (false, "An error occurred while fetching the vehicle insurance options.", new List<VehicleInsuranceOption>());
+            }
+        }
+
         #endregion
 
 
