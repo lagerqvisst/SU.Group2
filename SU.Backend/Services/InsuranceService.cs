@@ -919,6 +919,26 @@ namespace SU.Backend.Services
 
         }
 
+        public async Task<(bool Success, string Message, List<PropertyAndInventoryCoverage> 
+            PropertyAndInventoryCoverages)> GetAllPropertyAndInventoryCoverages()
+        {
+            _logger.LogInformation("Controller activated to list all property and inventory coverages...");
+
+            try
+            {
+                var propertyAndInventoryCoverages = _unitOfWork.PropertyAndInventoryCoverages.GetAllPropertyAndInventoryCoverages();
+                _logger.LogInformation("Property and inventory coverages retrieved succesfully: {PropertyAndInventoryCoveragesCount}",
+                                                          propertyAndInventoryCoverages.Result.Count);
+
+                return (true, "Property and inventory coverages retrieved successfully.", propertyAndInventoryCoverages.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching property and inventory coverages.");
+                return (false, "An error occurred while fetching the property and inventory coverages.", new List<PropertyAndInventoryCoverage>());
+            }
+        }
+
         #endregion
 
 

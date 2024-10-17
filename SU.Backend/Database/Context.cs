@@ -38,6 +38,7 @@ namespace SU.Backend.Database
         public DbSet<VehicleInsuranceCoverage> VehicleInsuranceCoverages { get; set; }
         public DbSet<LiabilityCoverageOption> LiabilityCoverageOption { get; set; }
         public DbSet<LiabilityCoverage> LiabilityCoverages { get; set; }
+        public DbSet<PropertyAndInventoryCoverage> PropertyAndInventoryCoverages { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
