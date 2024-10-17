@@ -787,6 +787,24 @@ namespace SU.Backend.Services
             }
         }
 
+        public async Task<(bool Success, string Message, List<Insurance> Insurances)> GetAllInsurances()
+        {
+            _logger.LogInformation("Controller activated to get all insurances...");
+
+            try
+            {
+                var insurances = _unitOfWork.Insurances.GetAllInsurances();
+                _logger.LogInformation("Insurances found: {InsuranceCount}", insurances.Result.Count);
+
+                return (true, "Insurances found", insurances.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching insurances.");
+                return (false, "An error occurred while fetching the insurances.", new List<Insurance>());
+            }
+        }
+
         #endregion
 
 

@@ -78,5 +78,7 @@ namespace SU.Backend.Services.Interfaces
         Task<(bool Success, string Message, List<InsuranceAddon> InsuranceAddons)> GetAllInsuranceAddons();
 
         Task<(bool Success, string Message, List<InsurancePolicyHolder> InsurancePolicyHolders)> GetAllInsurancePolicyHolders();
+
+        Task<(bool Success, string Message, List<Insurance> Insurances)> GetAllInsurances();
     }
 }
