@@ -12,7 +12,7 @@ namespace SU.Backend.Database.Interfaces
 {
     public interface IInsuranceAddonTypeRepository
     {
-        Task<List<InsuranceAddonType>> ListAllInsuranceAddonTypes();
+        Task<List<InsuranceAddonType>> GetAllInsuranceAddonTypes();
 
         Task<InsuranceAddonType> GetSpecificAddonType(AddonType addonType, decimal coverageAmount);
     }

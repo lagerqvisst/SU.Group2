@@ -111,13 +111,13 @@ namespace SU.Backend.Services
             }
         }
 
-         public async Task<(bool Success, string Message, List<InsuranceAddonType> InsuranceAddonTypes)> ListAllInsuranceAddonTypes()
+         public async Task<(bool Success, string Message, List<InsuranceAddonType> InsuranceAddonTypes)> GetAllInsuranceAddonTypes()
          {
             _logger.LogInformation("Controller activated to get all insurance addon types...");
 
             try
             {
-                var insuranceAddonTypes = _unitOfWork.InsuranceAddonTypes.ListAllInsuranceAddonTypes();
+                var insuranceAddonTypes = _unitOfWork.InsuranceAddonTypes.GetAllInsuranceAddonTypes();
                 _logger.LogInformation("Insurance addon types found: {InsuranceAddonTypeCount}", insuranceAddonTypes.Result.Count);
 
                 return (true, "Insurance addon types found", insuranceAddonTypes.Result);
