@@ -15,10 +15,6 @@ namespace SU.Backend.Database.Repositories
         {
         }
 
-        public async Task<List<CompanyCustomer>> GetCompanyCustomers()
-        {
-            return await _context.CompanyCustomers.ToListAsync();
-        }
 
         public async Task<List<CompanyCustomer>> CreateCompanyCustomers(CompanyCustomer CompanyCustomer)
         {
@@ -40,7 +36,7 @@ namespace SU.Backend.Database.Repositories
             return await _context.CompanyCustomers.FirstOrDefaultAsync(x => x.CompanyCustomerId == id);
         }
 
-        public async Task <List<CompanyCustomer>> ListAllCompanyCustomers()
+        public async Task <List<CompanyCustomer>> GetAllCompanyCustomers()
         {
             return await _context.CompanyCustomers.ToListAsync();
         }

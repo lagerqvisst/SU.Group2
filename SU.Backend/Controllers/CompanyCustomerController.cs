@@ -89,10 +89,10 @@ namespace SU.Backend.Controllers
             }
         }
 
-        public async Task<(List<CompanyCustomer> CompanyCustomers, string Message)> ListAllCompanyCustomers()
+        public async Task<(List<CompanyCustomer> CompanyCustomers, string Message)> GetAllCompanyCustomers()
         {
             _logger.LogInformation("Controller activated to list all company customers...");
-            var result = await _companyCustomerService.ListAllCompanyCustomers();
+            var result = await _companyCustomerService.GetAllCompanyCustomers();
             if (result.Success)
             {
                 _logger.LogInformation($"Company customers retrieved successfully:\n{result.Message}");
