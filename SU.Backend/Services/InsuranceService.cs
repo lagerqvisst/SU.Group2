@@ -310,7 +310,7 @@ namespace SU.Backend.Services
 
                 // Fetch the last company customer
                 _logger.LogInformation("Attempting to fetch a test company customer...");
-                var companyCustomer = _unitOfWork.CompanyCustomers.GetCompanyCustomers().Result.Last();
+                var companyCustomer = _unitOfWork.CompanyCustomers.GetAllCompanyCustomers().Result.Last();
                 if (companyCustomer == null)
                 {
                     _logger.LogWarning("No company customer found.");
@@ -412,7 +412,7 @@ namespace SU.Backend.Services
 
                 // Fetch the last company customer
                 _logger.LogInformation("Attempting to fetch a test company customer...");
-                var companyCustomer = _unitOfWork.CompanyCustomers.GetCompanyCustomers().Result.Last();
+                var companyCustomer = _unitOfWork.CompanyCustomers.GetAllCompanyCustomers().Result.Last();
                 if (companyCustomer == null)
                 {
                     _logger.LogWarning("No company customer found.");
@@ -485,7 +485,7 @@ namespace SU.Backend.Services
             {
                 // Fetch the last company customer
                 _logger.LogInformation("Attempting to fetch a test company customer...");
-                var companyCustomer = _unitOfWork.CompanyCustomers.GetCompanyCustomers().Result.Last();
+                var companyCustomer = _unitOfWork.CompanyCustomers.GetAllCompanyCustomers().Result.Last();
                 if (companyCustomer == null)
                 {
                     _logger.LogWarning("No company customer found.");

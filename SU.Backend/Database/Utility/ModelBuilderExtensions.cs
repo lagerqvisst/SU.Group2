@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using SU.Backend.Helper;
 using SU.Backend.Models.Enums;
 using SU.Backend.Models.Enums.Insurance;
 using SU.Backend.Models.Enums.Insurance.Addons;
@@ -274,23 +275,23 @@ namespace SU.Backend.Database.Utility
 
             #region Seed for SicknessAccident
             modelBuilder.Entity<InsuranceAddonType>().HasData(
-                new InsuranceAddonType { InsuranceAddonTypeId = 1, CoverageAmount = 100_000m, Description = AddonType.SicknessAccident, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.SicknessAccident, 100_00m) },
-                new InsuranceAddonType { InsuranceAddonTypeId = 2, CoverageAmount = 200_000m, Description = AddonType.SicknessAccident, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.SicknessAccident, 200_00m) },
-                new InsuranceAddonType { InsuranceAddonTypeId = 3, CoverageAmount = 300_000m, Description = AddonType.SicknessAccident, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.SicknessAccident, 300_00m) },
-                new InsuranceAddonType { InsuranceAddonTypeId = 4, CoverageAmount = 400_000m, Description = AddonType.SicknessAccident, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.SicknessAccident, 400_00m) },
-                new InsuranceAddonType { InsuranceAddonTypeId = 5, CoverageAmount = 500_000m, Description = AddonType.SicknessAccident, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.SicknessAccident, 500_00m) },
-                new InsuranceAddonType { InsuranceAddonTypeId = 6, CoverageAmount = 600_000m, Description = AddonType.SicknessAccident, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.SicknessAccident, 600_00m) },
-                new InsuranceAddonType { InsuranceAddonTypeId = 7, CoverageAmount = 700_000m, Description = AddonType.SicknessAccident, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.SicknessAccident, 700_00m) },
-                new InsuranceAddonType { InsuranceAddonTypeId = 8, CoverageAmount = 800_000m, Description = AddonType.SicknessAccident, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.SicknessAccident, 800_00m) },
+                new InsuranceAddonType { InsuranceAddonTypeId = 1, CoverageAmount = 100_000m, Description = AddonType.SicknessAccident, BaseExtraPremium = PremiumCalculator.CalculateAddonExtraPremium(AddonType.SicknessAccident, 100_00m) },
+                new InsuranceAddonType { InsuranceAddonTypeId = 2, CoverageAmount = 200_000m, Description = AddonType.SicknessAccident, BaseExtraPremium = PremiumCalculator.CalculateAddonExtraPremium(AddonType.SicknessAccident, 200_00m) },
+                new InsuranceAddonType { InsuranceAddonTypeId = 3, CoverageAmount = 300_000m, Description = AddonType.SicknessAccident, BaseExtraPremium = PremiumCalculator.CalculateAddonExtraPremium(AddonType.SicknessAccident, 300_00m) },
+                new InsuranceAddonType { InsuranceAddonTypeId = 4, CoverageAmount = 400_000m, Description = AddonType.SicknessAccident, BaseExtraPremium = PremiumCalculator.CalculateAddonExtraPremium(AddonType.SicknessAccident, 400_00m) },
+                new InsuranceAddonType { InsuranceAddonTypeId = 5, CoverageAmount = 500_000m, Description = AddonType.SicknessAccident, BaseExtraPremium = PremiumCalculator.CalculateAddonExtraPremium(AddonType.SicknessAccident, 500_00m) },
+                new InsuranceAddonType { InsuranceAddonTypeId = 6, CoverageAmount = 600_000m, Description = AddonType.SicknessAccident, BaseExtraPremium = PremiumCalculator.CalculateAddonExtraPremium(AddonType.SicknessAccident, 600_00m) },
+                new InsuranceAddonType { InsuranceAddonTypeId = 7, CoverageAmount = 700_000m, Description = AddonType.SicknessAccident, BaseExtraPremium = PremiumCalculator.CalculateAddonExtraPremium(AddonType.SicknessAccident, 700_00m) },
+                new InsuranceAddonType { InsuranceAddonTypeId = 8, CoverageAmount = 800_000m, Description = AddonType.SicknessAccident, BaseExtraPremium = PremiumCalculator.CalculateAddonExtraPremium(AddonType.SicknessAccident, 800_00m) },
 
-                new InsuranceAddonType { InsuranceAddonTypeId = 9,  CoverageAmount = 500,  Description = AddonType.LongTermSickness, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.LongTermSickness, 500) },
-                new InsuranceAddonType { InsuranceAddonTypeId = 10, CoverageAmount = 1000, Description = AddonType.LongTermSickness, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.LongTermSickness, 1000) },
-                new InsuranceAddonType { InsuranceAddonTypeId = 11, CoverageAmount = 1500, Description = AddonType.LongTermSickness, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.LongTermSickness, 1500) },
-                new InsuranceAddonType { InsuranceAddonTypeId = 12, CoverageAmount = 2000, Description = AddonType.LongTermSickness, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.LongTermSickness, 2000) },
-                new InsuranceAddonType { InsuranceAddonTypeId = 13, CoverageAmount = 2500, Description = AddonType.LongTermSickness, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.LongTermSickness, 2500) },
-                new InsuranceAddonType { InsuranceAddonTypeId = 14, CoverageAmount = 3000, Description = AddonType.LongTermSickness, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.LongTermSickness, 3000) },
-                new InsuranceAddonType { InsuranceAddonTypeId = 15, CoverageAmount = 3500, Description = AddonType.LongTermSickness, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.LongTermSickness, 3500) },
-                new InsuranceAddonType { InsuranceAddonTypeId = 16, CoverageAmount = 4000, Description = AddonType.LongTermSickness, BaseExtraPremium = InsuranceAddonType.CalculateExtraPremium(AddonType.LongTermSickness, 4000) }
+                new InsuranceAddonType { InsuranceAddonTypeId = 9,  CoverageAmount = 500,  Description = AddonType.LongTermSickness, BaseExtraPremium = PremiumCalculator.CalculateAddonExtraPremium(AddonType.LongTermSickness, 500) },
+                new InsuranceAddonType { InsuranceAddonTypeId = 10, CoverageAmount = 1000, Description = AddonType.LongTermSickness, BaseExtraPremium = PremiumCalculator.CalculateAddonExtraPremium(AddonType.LongTermSickness, 1000) },
+                new InsuranceAddonType { InsuranceAddonTypeId = 11, CoverageAmount = 1500, Description = AddonType.LongTermSickness, BaseExtraPremium = PremiumCalculator.CalculateAddonExtraPremium(AddonType.LongTermSickness, 1500) },
+                new InsuranceAddonType { InsuranceAddonTypeId = 12, CoverageAmount = 2000, Description = AddonType.LongTermSickness, BaseExtraPremium = PremiumCalculator.CalculateAddonExtraPremium(AddonType.LongTermSickness, 2000) },
+                new InsuranceAddonType { InsuranceAddonTypeId = 13, CoverageAmount = 2500, Description = AddonType.LongTermSickness, BaseExtraPremium = PremiumCalculator.CalculateAddonExtraPremium(AddonType.LongTermSickness, 2500) },
+                new InsuranceAddonType { InsuranceAddonTypeId = 14, CoverageAmount = 3000, Description = AddonType.LongTermSickness, BaseExtraPremium = PremiumCalculator.CalculateAddonExtraPremium(AddonType.LongTermSickness, 3000) },
+                new InsuranceAddonType { InsuranceAddonTypeId = 15, CoverageAmount = 3500, Description = AddonType.LongTermSickness, BaseExtraPremium = PremiumCalculator.CalculateAddonExtraPremium(AddonType.LongTermSickness, 3500) },
+                new InsuranceAddonType { InsuranceAddonTypeId = 16, CoverageAmount = 4000, Description = AddonType.LongTermSickness, BaseExtraPremium = PremiumCalculator.CalculateAddonExtraPremium(AddonType.LongTermSickness, 4000) }
                 );
             #endregion
         }
