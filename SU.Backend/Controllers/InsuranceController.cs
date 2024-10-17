@@ -155,6 +155,24 @@ namespace SU.Backend.Controllers
             }
         }
 
+        public async Task<(List<VehicleInsuranceCoverage> VehicleInsuranceCoverages, string Message)> GetAllVehicleInsuranceCoverages()
+        {
+            _logger.LogInformation("Controller activated to list all vehicle insurance coverages...");
+            var result = await _insuranceService.GetAllVehicleInsuranceCoverages();
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"Vehicle insurance coverages retrieved succesfully:\n{result.Message}");
+                return (result.VehicleInsuranceCoverages, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"Error retrieving vehicle insurance coverages: {result.Message}");
+                return (new List<VehicleInsuranceCoverage>(), result.Message);
+            }
+        }
+
+
         public async Task<(List<InsurancePolicyHolder> InsurancePolicyHolders, string Message)> GetAllInsurancePolicyHolders()
         {
             _logger.LogInformation("Controller activated to list all insurance policy holders...");
