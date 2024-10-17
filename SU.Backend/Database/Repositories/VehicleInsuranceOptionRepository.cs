@@ -20,6 +20,4 @@ namespace SU.Backend.Database.Repositories
             return await _context.VehicleInsuranceOptions.ToListAsync();
         }
     }
-    
-    
 }

@@ -27,6 +27,8 @@ namespace SU.Backend.Database
 
         public LiabilityCoverageOptionRepository LiabilityCoverageOptions { get; }
 
+        public VehicleInsuranceCoverageRepository VehicleInsuranceCoverages { get; }
+
 
 
         public UnitOfWork(Context context)
@@ -44,6 +46,7 @@ namespace SU.Backend.Database
             Prospects = new ProspectRepository(_context);
             CompanyCustomers = new CompanyCustomerRepository(_context);
             VehicleInsuranceOptions = new VehicleInsuranceOptionRepository(_context);
+            VehicleInsuranceCoverages = new VehicleInsuranceCoverageRepository(_context);
             Riskzones = new RiskzoneRepository(_context);
             LiabilityCoverageOptions = new LiabilityCoverageOptionRepository(_context);
 
