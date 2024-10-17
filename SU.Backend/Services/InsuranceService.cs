@@ -328,7 +328,7 @@ namespace SU.Backend.Services
 
                 // Fetch the last risk zone
                 _logger.LogInformation("Attempting to fetch a risk zone...");
-                var riskZone = _unitOfWork.Riskzones.GetRiskZones().Result.Last();
+                var riskZone = _unitOfWork.Riskzones.GetAllRiskZones().Result.Last();
                 if (riskZone == null)
                 {
                     _logger.LogWarning("No risk zone found.");
@@ -863,7 +863,21 @@ namespace SU.Backend.Services
 
         public async Task<(bool Success, string Message, List<Riskzone> Riskzones)> GetAllRiskzones()
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("Controller activated to list all riskzones...");
+
+            try
+            {
+                var riskzones = _unitOfWork.Riskzones.GetAllRiskZones();
+                _logger.LogInformation("Riskzones retrieved succesfully: {RiskzonesCount}",
+                                                          riskzones.Result.Count);
+
+                return (true, "Riskzones retrieved successfully.", riskzones.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching riskzones.");
+                return (false, "An error occurred while fetching the riskzones.", new List<Riskzone>());
+            }
         }
 
         public async Task<(bool Success, string Message, List<LiabilityCoverageOption> LiabilityCoverageOptions)> GetAllLiabilityCoverageOptions()
