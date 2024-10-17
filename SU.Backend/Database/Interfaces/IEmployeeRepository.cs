@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SU.Backend.Models.Employees;
+using Microsoft.EntityFrameworkCore;
 
 namespace SU.Backend.Database.Interfaces
 {
@@ -20,7 +21,6 @@ namespace SU.Backend.Database.Interfaces
 
         Task<Employee> GetEmployeeById(int id);
 
-        
-
+        Task<List<EmployeeRoleAssignment>> ListAllEmployeeRoleAssignments();
     }
 }

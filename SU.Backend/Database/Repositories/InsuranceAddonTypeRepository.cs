@@ -17,7 +17,7 @@ namespace SU.Backend.Database.Repositories
         {
         }
 
-        public async Task<List<InsuranceAddonType>> GetAddonTypes()
+        public async Task <List<InsuranceAddonType>> ListAllInsuranceAddonTypes()
         {
             return await _context.InsuranceAddonTypes.ToListAsync();
         }
