@@ -82,22 +82,17 @@ namespace SU.Frontend.ViewModels
         {
             try
             {
-                // Set loading state before starting authentication
-                // TODO: Ensure text changes before async operation.
                 IsLoading = true;
-
                 await Task.Delay(100); // Small delay to allow UI update
-
 
                 var result = await _loginController.Authentication(UserName, Password);
                 if (result.Success)
                 {
-                    //Vi kan använda denna användare i olika views utan att behöva skicka den vidare.
                     _loggedInUserService.LoggedInEmployee = result.Employee;
-                    //(Employee)
-                    //TODO: Antingen göra overload så att vi kan skicka med ett objekt eller bara en vy. För vi kan kalla på loggeduser i nästa vy utan att passera den.
-                    //_navigationService.NavigateTo("NEXT VIEW", "OBJECT");
+
+                    _navigationService.NavigateBasedOnRole(result.Employee, _navigationService);
                 }
+
                 MessageBox.Show($"{result.Message}");
             }
             catch (Exception ex)
@@ -106,10 +101,10 @@ namespace SU.Frontend.ViewModels
             }
             finally
             {
-                // Reset loading state after authentication is complete
                 IsLoading = false;
             }
         }
+
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SU.Backend.Models.Employees;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +10,6 @@ namespace SU.Frontend.Helper.Navigation
     public interface INavigationService
     {
         void NavigateTo(string viewName, object parameter = null);
+        void NavigateBasedOnRole(Employee employee, INavigationService navigationService);
     }
 }
