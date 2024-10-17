@@ -257,6 +257,23 @@ namespace SU.Backend.Controllers
                 return (new List<Riskzone>(), result.Message);
             }
         }
+
+        public async Task<(List<PropertyAndInventoryCoverage> PropertyAndInventoryCoverages, string Message)> GetAllPropertyAndInventoryCoverages()
+        {
+            _logger.LogInformation("Controller activated to list all property and inventory coverages...");
+            var result = await _insuranceService.GetAllPropertyAndInventoryCoverages();
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"Property and inventory coverages retrieved succesfully:\n{result.Message}");
+                return (result.PropertyAndInventoryCoverages, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"Error retrieving property and inventory coverages: {result.Message}");
+                return (new List<PropertyAndInventoryCoverage>(), result.Message);
+            }
+        }
     }
 }
 
