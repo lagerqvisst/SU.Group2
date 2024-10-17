@@ -24,5 +24,10 @@ namespace SU.Backend.Database.Repositories
         {
             return null;
         }
+
+        public async Task<List<InsurancePolicyHolder>> ListAllInsurancePolicyHolders()
+        {
+            return await _context.InsurancePolicyHolders.ToListAsync();
+        }
     }
 }
