@@ -15,7 +15,7 @@ namespace SU.Backend.Database.Repositories
         {
         }
 
-        public async Task<List<LiabilityCoverageOption>> GetLiabilityCoverage()
+        public async Task<List<LiabilityCoverageOption>> GetLiabilityCoverageOptions()
         {
             return await _context.LiabilityCoverageOption.ToListAsync();
         }

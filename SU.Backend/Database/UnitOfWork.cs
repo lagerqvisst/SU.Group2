@@ -2,6 +2,7 @@
 using SU.Backend.Models;
 using SU.Backend.Models.Employees;
 using SU.Backend.Models.Insurances;
+using SU.Backend.Models.Insurances.Coverage;
 
 namespace SU.Backend.Database
 {
@@ -29,6 +30,7 @@ namespace SU.Backend.Database
 
         public VehicleInsuranceCoverageRepository VehicleInsuranceCoverages { get; }
 
+        public LiabilityCoverageRepository LiabilityCoverages { get; }
 
 
         public UnitOfWork(Context context)
@@ -49,6 +51,7 @@ namespace SU.Backend.Database
             VehicleInsuranceCoverages = new VehicleInsuranceCoverageRepository(_context);
             Riskzones = new RiskzoneRepository(_context);
             LiabilityCoverageOptions = new LiabilityCoverageOptionRepository(_context);
+            LiabilityCoverages = new LiabilityCoverageRepository(_context);
 
         }
 

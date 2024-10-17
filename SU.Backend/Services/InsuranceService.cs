@@ -494,7 +494,7 @@ namespace SU.Backend.Services
                 _logger.LogInformation("Company customer found: {Org Nr} - {CompanyName}", companyCustomer.OrganizationNumber, companyCustomer.CompanyName);
 
                 _logger.LogInformation("Creating liability insurance coverage option...");
-                var liabiltiyCoverageOption = _unitOfWork.LiabilityCoverageOptions.GetLiabilityCoverage().Result.First();
+                var liabiltiyCoverageOption = _unitOfWork.LiabilityCoverageOptions.GetLiabilityCoverageOptions().Result.First();
                 if (liabiltiyCoverageOption == null)
                 {
                     return (false, "No liability coverage option found.");
@@ -859,6 +859,36 @@ namespace SU.Backend.Services
                 _logger.LogError(ex, "Error occurred while fetching vehicle insurance options.");
                 return (false, "An error occurred while fetching the vehicle insurance options.", new List<VehicleInsuranceOption>());
             }
+        }
+
+        public async Task<(bool Success, string Message, List<Riskzone> Riskzones)> GetAllRiskzones()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<(bool Success, string Message, List<LiabilityCoverageOption> LiabilityCoverageOptions)> GetAllLiabilityCoverageOptions()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<(bool Success, string Message, List<LiabilityCoverage> LiabilityCoverages)> GetAllLiabilityCoverages()
+        {
+            _logger.LogInformation("Controller activated to list all liability coverages...");
+
+            try
+            {
+                var liabilityCoverages = _unitOfWork.LiabilityCoverages.GetLiabilityCoverage();
+                _logger.LogInformation("Liability coverages retrieved succesfully: {LiabilityCoveragesCount}",
+                                       liabilityCoverages.Result.Count);
+
+                return (true, "Liability coverages retrieved successfully.", liabilityCoverages.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching liability coverages.");
+                return (false, "An error occurred while fetching the liability coverages.", new List<LiabilityCoverage>());
+            }
+
         }
 
         #endregion
