@@ -769,9 +769,23 @@ namespace SU.Backend.Services
             }
         }
 
+        public async Task<(bool Success, string Message, List<InsuranceAddon> InsuranceAddons)> GetAllInsuranceAddons()
+        {
+            _logger.LogInformation("Controller activated to get all insurance addons...");
 
+            try
+            {
+                var insuranceaddons = _unitOfWork.InsuranceAddons.GetAllInsuranceAddons();
+                _logger.LogInformation("Insurance addons found: {InsuranceAddonCount}", insuranceaddons.Result.Count);
 
-
+                return (true, "Insurance addons found", insuranceaddons.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching insurance addons.");
+                return (false, "An error occurred while fetching the insurance addons.", new List<InsuranceAddon>());
+            }
+        }
 
         #endregion
 
