@@ -24,10 +24,10 @@ namespace SU.Backend.Controllers
             _logger = logger;
         }
 
-        public async Task<(List<InsuranceAddonType> insuranceAddonTypes, string Message)> ListAllInsuranceAddonTypes()
+        public async Task<(List<InsuranceAddonType> insuranceAddonTypes, string Message)> GetAllInsuranceAddonTypes()
         {
             _logger.LogInformation("Controller activated to list all insurance addon types...");
-            var result = await _insuranceService.ListAllInsuranceAddonTypes();
+            var result = await _insuranceService.GetAllInsuranceAddonTypes();
 
             if (result.Success) 
             {

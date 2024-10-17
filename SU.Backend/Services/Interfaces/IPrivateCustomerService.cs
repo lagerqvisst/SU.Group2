@@ -10,12 +10,11 @@ namespace SU.Backend.Services.Interfaces
     public interface IPrivateCustomerService
     {
         Task<(bool Success, string Message, PrivateCustomer Customer)> GenerateRandomPrivateCustomer();
-        Task<(bool Success, string Message, List<PrivateCustomer>)> GetPrivateCustomers();
         Task<(bool Success, string Message, PrivateCustomer Customer)> GetPrivateCustomerById(PrivateCustomer privateCustomer);
         Task<(bool Success, string Message)> CreateNewPrivateCustomer(PrivateCustomer privateCustomer);
         Task<(bool Success, string Message)> DeletePrivateCustomer(PrivateCustomer privateCustomer);
         Task<(bool Success, string Message)> UpdatePrivateCustomer(PrivateCustomer privateCustomer);
-        Task<(bool Success, string Message, List<PrivateCustomer> PrivateCustomers)> ListAllPrivateCustomers();
+        Task<(bool Success, string Message, List<PrivateCustomer> PrivateCustomers)> GetAllPrivateCustomers();
 
     }
 }

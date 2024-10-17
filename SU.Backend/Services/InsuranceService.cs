@@ -578,7 +578,7 @@ namespace SU.Backend.Services
 
                 _logger.LogInformation("Finding test customer.");
                 // Hämta PrivateCustomer för InsurancePolicyHolder
-                var privateCustomer = _unitOfWork.PrivateCustomers.GetPrivateCustomers().Result.Last();
+                var privateCustomer = _unitOfWork.PrivateCustomers.GetAllPrivateCustomers().Result.Last();
                 if (privateCustomer == null)
                 {
                     return (false, "No private customer found.");

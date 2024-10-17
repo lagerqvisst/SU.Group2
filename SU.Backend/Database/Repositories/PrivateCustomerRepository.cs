@@ -21,11 +21,6 @@ namespace SU.Backend.Database.Repositories
             return await _context.PrivateCustomers.FirstOrDefaultAsync(x => x.PrivateCustomerId == privateCustomer.PrivateCustomerId);
         }
 
-        public async Task<List<PrivateCustomer>> GetPrivateCustomers() 
-        {
-            return _context.PrivateCustomers.ToList();
-        }
-
         public async Task<List<PrivateCustomer>> GetProspectDataForPrivateCustomers()
         {
             return await _context.PrivateCustomers
@@ -33,7 +28,7 @@ namespace SU.Backend.Database.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<PrivateCustomer>> ListAllPrivateCustomers()
+        public async Task<List<PrivateCustomer>> GetAllPrivateCustomers()
         {
             return await _context.PrivateCustomers.ToListAsync();
         }
