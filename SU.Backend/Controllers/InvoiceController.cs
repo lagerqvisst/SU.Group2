@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using SU.Backend.Models.Invoices;
 using SU.Backend.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace SU.Backend.Controllers
             _logger = logger;
         }
 
-        public async Task<(bool Success, string Message, List<object> InvoiceData)> GenerateInvoiceData()
+        public async Task<(bool Success, string Message, List<InvoiceEntry> InvoiceData)> GenerateInvoiceData()
         {
             _logger.LogInformation("Controller activated to generate invoice data...");
 
@@ -33,7 +34,7 @@ namespace SU.Backend.Controllers
             else
             {
                 _logger.LogWarning($"Error generating invoice data: {result.Message}");
-                return (result.Success, result.Message, new List<object>());
+                return (result.Success, result.Message, new List<InvoiceEntry>());
             }
         }
     }

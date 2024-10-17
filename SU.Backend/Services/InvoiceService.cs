@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using SU.Backend.Database;
 using SU.Backend.Helper;
+using SU.Backend.Models.Invoices;
 using SU.Backend.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace SU.Backend.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<(bool Success, string Message, List<object> InvoiceData)> GenerateInvoiceData()
+        public async Task<(bool Success, string Message, List<InvoiceEntry> InvoiceData)> GenerateInvoiceData()
         {
             _logger.LogInformation("Starting the invoice data generation process...");
 
@@ -40,12 +41,12 @@ namespace SU.Backend.Services
                 if (!insurancesToInvoice.Any())
                 {
                     _logger.LogInformation("No insurances to invoice for this month.");
-                    return (false, "No insurances to invoice for this month.", new List<object>());
+                    return (false, "No insurances to invoice for this month.", new List<InvoiceEntry>());
                 }
 
                 // Generera fakturadata
                 var invoiceData = insurancesToInvoice
-                    .Select(i => InvoiceHelper.CreateInvoiceEntry(i)) // Använd den statiska hjälpfunktionen
+                    .Select(i => InvoiceHelper.CreateInvoiceEntry(i)) // Använd den uppdaterade hjälpfunktionen
                     .ToList();
 
                 return (true, "Invoice data generated successfully.", invoiceData);
@@ -53,8 +54,9 @@ namespace SU.Backend.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error during invoice data generation");
-                return (false, "An error occurred during invoice data generation.", new List<object>());
+                return (false, "An error occurred during invoice data generation.", new List<InvoiceEntry>());
             }
         }
+
     }
 }

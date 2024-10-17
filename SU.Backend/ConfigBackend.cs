@@ -47,6 +47,7 @@ namespace SU.Backend.Configuration
             services.AddScoped<IStatisticsService, StatisticsService>();
             services.AddScoped<IPrivateCoverageService, PrivateCoverageService>();
             services.AddScoped<IInvoiceService, InvoiceService>();
+            services.AddScoped<IDataExportService, DataExportService>();
 
             // Loggning
             services.AddLogging(configure => configure.AddConsole());

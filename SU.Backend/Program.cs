@@ -15,6 +15,7 @@ using SU.Backend.Services.Interfaces;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Net.WebSockets;
 using System.Threading.Tasks;
 
 class Program
@@ -109,6 +110,17 @@ class Program
         var commissionService = host.Services.GetRequiredService<ICommissionService>();
 
         #endregion
+
+        //Export testing
+        
+        var dataexportservice = host.Services.GetRequiredService<IDataExportService>();
+        var comissionService = host.Services.GetRequiredService<ICommissionService>();
+        var invoiceService = host.Services.GetRequiredService<IInvoiceService>();
+
+        var invoices = await invoiceService.GenerateInvoiceData();
+
+        await dataexportservice.ExportInvoicesToExcel(invoices.InvoiceData);
+
 
     }
 
