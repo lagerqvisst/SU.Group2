@@ -12,6 +12,11 @@ namespace SU.Backend.Database.Repositories
         public PrivateCoverageRepository(Context context) : base(context)
         {
         }
+
+        public async Task<List<PrivateCoverage>> GetAllPrivateCoverages()
+        {
+            return await _context.PrivateCoverages.ToListAsync();
+        }
     }
 
 }
