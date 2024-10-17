@@ -80,5 +80,7 @@ namespace SU.Backend.Services.Interfaces
         Task<(bool Success, string Message, List<InsurancePolicyHolder> InsurancePolicyHolders)> GetAllInsurancePolicyHolders();
 
         Task<(bool Success, string Message, List<Insurance> Insurances)> GetAllInsurances();
+
+        Task<(bool Success, string Message, List<InsuranceCoverage> InsuranceCoverages)> GetAllInsuranceCoverages();
     }
 }

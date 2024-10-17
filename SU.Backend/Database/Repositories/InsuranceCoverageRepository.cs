@@ -1,4 +1,5 @@
-﻿using SU.Backend.Database.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SU.Backend.Database.Interfaces;
 using SU.Backend.Models.Insurances.Coverage;
 using System;
 using System.Collections.Generic;
