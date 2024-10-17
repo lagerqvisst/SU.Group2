@@ -38,10 +38,10 @@ namespace SU.Backend.Controllers
             }
         }
 
-        public async Task <(bool Success, string Message, List <Employee>)> ListAllEmployees()
+        public async Task <(bool Success, string Message, List <Employee>)> GetAllEmployees()
         {
             _logger.LogInformation("Controller activated to list all employees...");
-            var result = await _employeeService.ListAllEmployees();
+            var result = await _employeeService.GetAllEmployees();
 
             if (result.Success)
             {

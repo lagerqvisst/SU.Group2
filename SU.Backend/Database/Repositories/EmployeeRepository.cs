@@ -47,7 +47,7 @@ namespace SU.Backend.Database.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<Employee>> ListAllEmployees()
+        public async Task<List<Employee>> GetAllEmployees()
         {
             return await _context.Employees.ToListAsync();
         }

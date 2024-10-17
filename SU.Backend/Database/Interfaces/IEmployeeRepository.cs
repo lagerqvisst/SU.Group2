@@ -21,6 +21,8 @@ namespace SU.Backend.Database.Interfaces
 
         Task<Employee> GetEmployeeById(int id);
 
+        Task <List<Employee>> GetAllEmployees();
+
         Task<List<EmployeeRoleAssignment>> ListAllEmployeeRoleAssignments();
     }
 }

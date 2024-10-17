@@ -107,12 +107,12 @@ namespace SU.Backend.Services
             }
         }
 
-        public async Task<(bool Success, string Message, List<Employee?> Employees)> ListAllEmployees()
+        public async Task<(bool Success, string Message, List<Employee> Employees)> GetAllEmployees()
         {
             _logger.LogInformation("Getting all employees");
             try
             {
-                var employees = await _unitOfWork.Employees.ListAllEmployees();
+                var employees = await _unitOfWork.Employees.GetAllEmployees();
                 if (employees == null || !employees.Any())
                 {
                     _logger.LogInformation("No employees found");
