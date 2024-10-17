@@ -24,6 +24,23 @@ namespace SU.Backend.Controllers
             _logger = logger;
         }
 
+        public async Task<(List<Insurance> insurances, string Message)> GetAllInsurances()
+        {
+            _logger.LogInformation("Controller activated to list all insurances...");
+            var result = await _insuranceService.GetAllInsurances();
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"Insurances retrieved successfully:\n{result.Message}");
+                return (result.Insurances, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"Error retrieving insurances: {result.Message}");
+                return (new List<Insurance>(), result.Message);
+            }
+        }
+
         public async Task<(List<InsuranceAddonType> insuranceAddonTypes, string Message)> GetAllInsuranceAddonTypes()
         {
             _logger.LogInformation("Controller activated to list all insurance addon types...");
