@@ -121,10 +121,10 @@ namespace SU.Backend.Controllers
             }
         }
 
-        public async Task<(List<InsurancePolicyHolder> InsurancePolicyHolders, string Message)> ListAllInsurancePolicyHolders()
+        public async Task<(List<InsurancePolicyHolder> InsurancePolicyHolders, string Message)> GetAllInsurancePolicyHolders()
         {
             _logger.LogInformation("Controller activated to list all insurance policy holders...");
-            var result = await _insuranceService.ListAllInsurancePolicyHolders();
+            var result = await _insuranceService.GetAllInsurancePolicyHolders();
 
             if (result.Success)
             {

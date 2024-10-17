@@ -751,13 +751,13 @@ namespace SU.Backend.Services
             }
         }
 
-        public async Task<(bool Success, string Message, List<InsurancePolicyHolder> InsurancePolicyHolders)> ListAllInsurancePolicyHolders()
+        public async Task<(bool Success, string Message, List<InsurancePolicyHolder> InsurancePolicyHolders)> GetAllInsurancePolicyHolders()
         {
             _logger.LogInformation("Controller activated to list all insurance policy holders...");
 
             try
             {
-                var insurancePolicyHolders = _unitOfWork.InsurancePolicyHolders.ListAllInsurancePolicyHolders();
+                var insurancePolicyHolders = _unitOfWork.InsurancePolicyHolders.GetAllInsurancePolicyHolders();
                 _logger.LogInformation("Insurance policy holders retrieved succesfully: {InsurancePolicyHolderCount}", insurancePolicyHolders.Result.Count);
 
                 return (true , "Insurance policy holders retrieved successfully.", insurancePolicyHolders.Result);
