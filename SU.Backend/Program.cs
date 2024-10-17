@@ -15,6 +15,7 @@ using SU.Backend.Services.Interfaces;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Net.WebSockets;
 using System.Threading.Tasks;
 
 class Program
@@ -109,6 +110,19 @@ class Program
         var commissionService = host.Services.GetRequiredService<ICommissionService>();
 
         #endregion
+
+        //Export testing
+        
+        var dataexportservice = host.Services.GetRequiredService<IDataExportService>();
+        var comissionService = host.Services.GetRequiredService<ICommissionService>();
+
+        var commissions = await commissionService.GetAllCommissions(
+            new DateTime(2020, 1, 1),  // Startdatum: 1 januari 2020
+            new DateTime(2030, 1, 1)   // Slutdatum: 1 januari 2030
+        );
+
+
+        await dataexportservice.ExportCommissionsToExcel(commissions.Commissions);
 
     }
 

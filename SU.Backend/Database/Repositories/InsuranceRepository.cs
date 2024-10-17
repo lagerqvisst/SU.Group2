@@ -52,6 +52,7 @@ namespace SU.Backend.Database.Repositories
                 {
                     Seller = group.Key,
                     SellerName = group.Key.FirstName + " " + group.Key.LastName,
+                    PersonalNumber = group.Key.PersonalNumber,
                     CommissionAmount = Commission.CalculateCommission(group.Sum(ins => ins.Premium)),
                     StartDate = startDate,
                     EndDate = endDate
