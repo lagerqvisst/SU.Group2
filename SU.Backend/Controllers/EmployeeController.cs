@@ -106,10 +106,10 @@ namespace SU.Backend.Controllers
             }
         }
 
-        public async Task<(List<EmployeeRoleAssignment> EmployeeRoleAssignments, string Message)> ListAllEmployeeRoleAssignments()
+        public async Task<(List<EmployeeRoleAssignment> EmployeeRoleAssignments, string Message)> GetAllEmployeeRoleAssignments()
         {
             _logger.LogInformation("Controller activated to list all employee role assignments...");
-            var result = await _employeeService.ListAllEmployeeRoleAssignments();
+            var result = await _employeeService.GetAllEmployeeRoleAssignments();
 
             if (result.Success)
             {
