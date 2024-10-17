@@ -72,6 +72,8 @@ namespace SU.Backend.Services.Interfaces
 
         Task<(bool Success, string Message)> CreateTestCompanyLiability();
 
-        Task<(bool Success, string Message, List<InsuranceAddonType> insuranceAddonTypes)> ListAllInsuranceAddonTypes();
+        Task<(bool Success, string Message, List<InsuranceAddonType> InsuranceAddonTypes)> ListAllInsuranceAddonTypes();
+
+        Task<(bool Success, string Message, List<InsurancePolicyHolder> InsurancePolicyHolders)> ListAllInsurancePolicyHolders();
     }
 }

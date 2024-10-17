@@ -32,7 +32,7 @@ namespace SU.Backend.Controllers
             if (result.Success) 
             {
                 _logger.LogInformation($"Insurance addon types retrieved succesfully:\n{result.Message}");
-                return (result.insuranceAddonTypes, result.Message);
+                return (result.InsuranceAddonTypes, result.Message);
             }
             else
             {

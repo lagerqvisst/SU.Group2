@@ -111,7 +111,7 @@ namespace SU.Backend.Services
             }
         }
 
-         public async Task<(bool Success, string Message, List<InsuranceAddonType> insuranceAddonTypes)> ListAllInsuranceAddonTypes()
+         public async Task<(bool Success, string Message, List<InsuranceAddonType> InsuranceAddonTypes)> ListAllInsuranceAddonTypes()
          {
             _logger.LogInformation("Controller activated to get all insurance addon types...");
 
@@ -748,6 +748,24 @@ namespace SU.Backend.Services
             {
                 _logger.LogError(ex, "An error occurred while creating company vehicle insurance.");
                 return (false, "An error occurred while creating the company vehicle insurance.");
+            }
+        }
+
+        public async Task<(bool Success, string Message, List<InsurancePolicyHolder> InsurancePolicyHolders)> ListAllInsurancePolicyHolders()
+        {
+            _logger.LogInformation("Controller activated to list all insurance policy holders...");
+
+            try
+            {
+                var insurancePolicyHolders = _unitOfWork.InsurancePolicyHolders.ListAllInsurancePolicyHolders();
+                _logger.LogInformation("Insurance policy holders retrieved succesfully: {InsurancePolicyHolderCount}", insurancePolicyHolders.Result.Count);
+
+                return (true , "Insurance policy holders retrieved successfully.", insurancePolicyHolders.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching insurance policy holders.");
+                return (false, "An error occurred while fetching the insurance policy holders.", new List<InsurancePolicyHolder>());
             }
         }
 
