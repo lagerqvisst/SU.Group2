@@ -240,6 +240,23 @@ namespace SU.Backend.Controllers
                 return (new List<LiabilityCoverageOption>(), result.Message);
             }
         }
+
+        public async Task<(List<Riskzone> Riskzones, string Message)> GetAllRiskZones()
+        {
+            _logger.LogInformation("Controller activated to list all riskzones...");
+            var result = await _insuranceService.GetAllRiskzones();
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"Riskzones retrieved succesfully:\n{result.Message}");
+                return (result.Riskzones, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"Error retrieving riskzones: {result.Message}");
+                return (new List<Riskzone>(), result.Message);
+            }
+        }
     }
 }
 
