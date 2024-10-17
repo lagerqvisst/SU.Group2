@@ -10,8 +10,8 @@ namespace SU.Backend.Database.Interfaces
     public interface IPrivateCustomerRepository
     {
         Task<PrivateCustomer> GetPrivateCustomerById(PrivateCustomer privateCustomer);
-        Task<List<PrivateCustomer>> GetPrivateCustomers();
+        Task<List<PrivateCustomer>> GetAllPrivateCustomers();
 
-       Task<List<PrivateCustomer>> GetProspectDataForPrivateCustomers(); 
+       Task<List<PrivateCustomer>> GetProspectDataForPrivateCustomers();
     }
 }

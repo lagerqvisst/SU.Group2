@@ -15,7 +15,7 @@ namespace SU.Backend.Database.Repositories
         {
         }
 
-        public async Task<List<Riskzone>> GetRiskZones()
+        public async Task<List<Riskzone>> GetAllRiskZones()
         {
             return await _context.Riskzones.ToListAsync();
         }

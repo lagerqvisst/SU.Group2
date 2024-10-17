@@ -38,10 +38,10 @@ namespace SU.Backend.Controllers
             }
         }
 
-        public async Task <(bool Success, string Message, List <Employee>)> ListAllEmployees()
+        public async Task <(bool Success, string Message, List <Employee>)> GetAllEmployees()
         {
             _logger.LogInformation("Controller activated to list all employees...");
-            var result = await _employeeService.ListAllEmployees();
+            var result = await _employeeService.GetAllEmployees();
 
             if (result.Success)
             {
@@ -106,10 +106,10 @@ namespace SU.Backend.Controllers
             }
         }
 
-        public async Task<(List<EmployeeRoleAssignment> EmployeeRoleAssignments, string Message)> ListAllEmployeeRoleAssignments()
+        public async Task<(List<EmployeeRoleAssignment> EmployeeRoleAssignments, string Message)> GetAllEmployeeRoleAssignments()
         {
             _logger.LogInformation("Controller activated to list all employee role assignments...");
-            var result = await _employeeService.ListAllEmployeeRoleAssignments();
+            var result = await _employeeService.GetAllEmployeeRoleAssignments();
 
             if (result.Success)
             {

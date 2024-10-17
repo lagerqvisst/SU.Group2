@@ -72,6 +72,27 @@ namespace SU.Backend.Services.Interfaces
 
         Task<(bool Success, string Message)> CreateTestCompanyLiability();
 
-        Task<(bool Success, string Message, List<InsuranceAddonType> insuranceAddonTypes)> ListAllInsuranceAddonTypes();
+        //Lists
+        Task<(bool Success, string Message, List<InsuranceAddonType> InsuranceAddonTypes)> GetAllInsuranceAddonTypes();
+
+        Task<(bool Success, string Message, List<InsuranceAddon> InsuranceAddons)> GetAllInsuranceAddons();
+
+        Task<(bool Success, string Message, List<InsurancePolicyHolder> InsurancePolicyHolders)> GetAllInsurancePolicyHolders();
+
+        Task<(bool Success, string Message, List<Insurance> Insurances)> GetAllInsurances();
+
+        Task<(bool Success, string Message, List<InsuranceCoverage> InsuranceCoverages)> GetAllInsuranceCoverages();
+
+        Task<(bool Success, string Message, List<VehicleInsuranceCoverage> VehicleInsuranceCoverages)> GetAllVehicleInsuranceCoverages();
+
+        Task<(bool Success, string Message, List<VehicleInsuranceOption> VehicleInsuranceCoverages)> GetAllVehicleInsuranceOptions();
+
+        Task<(bool Success, string Message, List<Riskzone> Riskzones)> GetAllRiskzones();
+
+        Task<(bool Success, string Message, List<LiabilityCoverageOption> LiabilityCoverageOptions)> GetAllLiabilityCoverageOptions();
+
+        Task<(bool Success, string Message, List<LiabilityCoverage> LiabilityCoverages)> GetAllLiabilityCoverages();
+
+        Task<(bool Success, string Message, List<PropertyAndInventoryCoverage> PropertyAndInventoryCoverages)> GetAllPropertyAndInventoryCoverages();
     }
 }

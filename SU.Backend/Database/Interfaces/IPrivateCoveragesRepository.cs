@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Database.Interfaces
 {
-    public interface ILiabilityCoverageOptionRepository
+    public interface IPrivateCoveragesRepository
     {
-        Task<List<LiabilityCoverageOption>> GetLiabilityCoverageOptions();
+        Task<List<PrivateCoverage>> GetAllPrivateCoverages();
     }
 }

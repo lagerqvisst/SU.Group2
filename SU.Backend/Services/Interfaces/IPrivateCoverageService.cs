@@ -11,6 +11,7 @@ namespace SU.Backend.Services.Interfaces
     public interface IPrivateCoverageService
     {
         Task<(bool Success, PrivateCoverageOption? CoverageOption, string Message)> GetPrivateCoverageOptionAsync(decimal coverageAmount, InsuranceType insuranceType);
-        Task<(bool Success, string Message, List<PrivateCoverageOption> Options)> GetAllPrivateCoverageOption(); 
+        Task<(bool Success, string Message, List<PrivateCoverageOption> PrivateCoverageOptions)> GetAllPrivateCoverageOptions(); 
+        Task<(bool Success, string Message, List<PrivateCoverage> PrivateCoverages)> GetAllPrivateCoverages();
     }
 }

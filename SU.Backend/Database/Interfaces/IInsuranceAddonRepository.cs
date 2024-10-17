@@ -10,10 +10,8 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Database.Interfaces
 {
-    public interface IInsuranceAddonTypeRepository
+    public interface IInsuranceAddonRepository
     {
-        Task<List<InsuranceAddonType>> GetAllInsuranceAddonTypes();
-
-        Task<InsuranceAddonType> GetSpecificAddonType(AddonType addonType, decimal coverageAmount);
+        Task<List<InsuranceAddon>> GetAllInsuranceAddons();
     }
 }

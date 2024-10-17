@@ -2,6 +2,7 @@
 using SU.Backend.Models;
 using SU.Backend.Models.Employees;
 using SU.Backend.Models.Insurances;
+using SU.Backend.Models.Insurances.Coverage;
 
 namespace SU.Backend.Database
 {
@@ -17,6 +18,8 @@ namespace SU.Backend.Database
         public InsuranceCoverageRepository InsuranceCoverages { get; }
         public InsuranceRepository Insurances { get; }
         public InsuranceAddonTypeRepository InsuranceAddonTypes { get; }
+
+        public InsuranceAddonRepository InsuranceAddons { get; }
         public ProspectRepository Prospects { get; }
 
         public VehicleInsuranceOptionRepository VehicleInsuranceOptions { get; }
@@ -25,6 +28,10 @@ namespace SU.Backend.Database
 
         public LiabilityCoverageOptionRepository LiabilityCoverageOptions { get; }
 
+        public VehicleInsuranceCoverageRepository VehicleInsuranceCoverages { get; }
+
+        public LiabilityCoverageRepository LiabilityCoverages { get; }
+        public PropertyAndInventoryCoverageRepository PropertyAndInventoryCoverages { get; }
 
 
         public UnitOfWork(Context context)
@@ -37,12 +44,16 @@ namespace SU.Backend.Database
             PrivateCoverages = new PrivateCoverageRepository(_context);
             InsuranceCoverages = new InsuranceCoverageRepository(_context);
             Insurances = new InsuranceRepository(_context);
+            InsuranceAddons = new InsuranceAddonRepository(_context);
             InsuranceAddonTypes = new InsuranceAddonTypeRepository(_context);
             Prospects = new ProspectRepository(_context);
             CompanyCustomers = new CompanyCustomerRepository(_context);
             VehicleInsuranceOptions = new VehicleInsuranceOptionRepository(_context);
+            VehicleInsuranceCoverages = new VehicleInsuranceCoverageRepository(_context);
             Riskzones = new RiskzoneRepository(_context);
             LiabilityCoverageOptions = new LiabilityCoverageOptionRepository(_context);
+            LiabilityCoverages = new LiabilityCoverageRepository(_context);
+            PropertyAndInventoryCoverages = new PropertyAndInventoryCoverageRepository(_context);
 
         }
 

@@ -94,10 +94,10 @@ namespace SU.Backend.Controllers
         }
 
 
-        public async Task<(List<PrivateCustomer> PrivateCustomers, string Message)> PrivateCustomers()
+        public async Task<(List<PrivateCustomer> PrivateCustomers, string Message)> GetAllPrivateCustomers()
         {
             _logger.LogInformation("Controller activated to list all private customers...");
-            var result = await _privateCustomerService.ListAllPrivateCustomers();
+            var result = await _privateCustomerService.GetAllPrivateCustomers();
             if (result.Success)
             {
                 _logger.LogInformation($"Private customers retrieved successfully:\n{result.Message}");

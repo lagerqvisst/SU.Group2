@@ -16,7 +16,7 @@ namespace SU.Backend.Database.Repositories
         {
         }
 
-        public async Task<List<PrivateCoverageOption>> GetPrivateCoverageOptions()
+        public async Task<List<PrivateCoverageOption>> GetAllPrivateCoverageOptions()
         {
             return _context.PrivateCoverageOption.ToList();
         }

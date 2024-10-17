@@ -141,13 +141,13 @@ namespace SU.Backend.Services
             }
         }
 
-        public async Task<(bool Success, string Message, List<CompanyCustomer> CompanyCustomers)> ListAllCompanyCustomers()
+        public async Task<(bool Success, string Message, List<CompanyCustomer> CompanyCustomers)> GetAllCompanyCustomers()
         {
             _logger.LogInformation("Controller activated to get all company customers...");
 
             try
             {
-                var companycustomers = _unitOfWork.CompanyCustomers.GetCompanyCustomers();
+                var companycustomers = _unitOfWork.CompanyCustomers.GetAllCompanyCustomers();
                 _logger.LogInformation("Company customers found: {CompanyCustomersCount}", companycustomers.Result.Count);
 
                 return (true, "Company customers found.", companycustomers.Result);

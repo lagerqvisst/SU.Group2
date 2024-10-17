@@ -23,13 +23,13 @@ namespace SU.Backend.Services
             _logger = logger;
         }
 
-        public async Task<(bool Success, string Message, List<PrivateCoverageOption> Options)> GetAllPrivateCoverageOption()
+        public async Task<(bool Success, string Message, List<PrivateCoverageOption> PrivateCoverageOptions)> GetAllPrivateCoverageOptions()
         {
             _logger.LogInformation("Controller activated to get all private coverage options...");
 
             try
             {
-                var coverageOptions = _unitOfWork.PrivateCoverageOptions.GetPrivateCoverageOptions();
+                var coverageOptions = _unitOfWork.PrivateCoverageOptions.GetAllPrivateCoverageOptions();
                 _logger.LogInformation("Private coverage options found: {CoverageOptionsCount}", coverageOptions.Result.Count);
 
                 return (true, "Private coverage options found.", coverageOptions.Result);
@@ -38,6 +38,24 @@ namespace SU.Backend.Services
             {
                 _logger.LogError(ex, "Error occurred while fetching private coverage options.");
                 return (false, "An error occurred while fetching the private coverage options.", new List<PrivateCoverageOption>());
+            }
+        }
+
+        public Task<(bool Success, string Message, List<PrivateCoverage> PrivateCoverages)> GetAllPrivateCoverages()
+        {
+            _logger.LogInformation("Controller activated to get all private coverages...");
+
+            try
+            {
+                var privatecoverages = _unitOfWork.PrivateCoverages.GetAllPrivateCoverages();
+                _logger.LogInformation("Private coverages found: {CoveragesCount}", privatecoverages.Result.Count);
+
+                return Task.FromResult((true, "Private coverages found.", privatecoverages.Result));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching private coverages.");
+                return Task.FromResult((false, "An error occurred while fetching the private coverages.", new List<PrivateCoverage>()));
             }
         }
 

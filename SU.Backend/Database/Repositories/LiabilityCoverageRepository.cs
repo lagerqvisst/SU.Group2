@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Database.Repositories
 {
-    public class InsuranceCoverageRepository : Repository<InsuranceCoverage>, IInsuranceCoverageRepository
+    public class LiabilityCoverageRepository : Repository<LiabilityCoverage>, ILiabilityCoverageRepository
     {
-        public InsuranceCoverageRepository(Context context) : base(context)
+        public LiabilityCoverageRepository(Context context) : base(context)
         {
         }
 
-        public async Task<List<InsuranceCoverage>> GetAllInsuranceCoverages()
+        public async Task<List<LiabilityCoverage>> GetLiabilityCoverage()
         {
-            return await _context.InsuranceCoverages.ToListAsync();
+            return await _context.LiabilityCoverages.ToListAsync();
         }
     }
 }

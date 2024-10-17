@@ -148,28 +148,14 @@ namespace SU.Backend.Services
             }
         }
 
-        public async Task<(bool Success, string Message, List<PrivateCustomer>)> GetPrivateCustomers()
-        {
-            try
-            {
-                var customers = await _unitOfWork.PrivateCustomers.GetPrivateCustomers();
-                return (true, "Successfully retrieved customers", customers);
 
-            }
-            catch (Exception ex)
-            {
-
-                return (false, "An error occurred: " + ex.Message, null);
-            }
-        }
-
-        public async Task<(bool Success, string Message, List<PrivateCustomer> PrivateCustomers)> ListAllPrivateCustomers()
+        public async Task<(bool Success, string Message, List<PrivateCustomer> PrivateCustomers)> GetAllPrivateCustomers()
         {
             _logger.LogInformation("Controller activated to get all private customers...");
 
             try
             {
-                var privatecustomers = _unitOfWork.PrivateCustomers.GetPrivateCustomers();
+                var privatecustomers = _unitOfWork.PrivateCustomers.GetAllPrivateCustomers();
                 _logger.LogInformation("Private customers found: {PrivateCustomersCount}", privatecustomers.Result.Count);
 
                 return (true, "Private customers found.", privatecustomers.Result);

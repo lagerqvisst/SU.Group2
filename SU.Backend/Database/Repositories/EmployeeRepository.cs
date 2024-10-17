@@ -47,7 +47,7 @@ namespace SU.Backend.Database.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<Employee>> ListAllEmployees()
+        public async Task<List<Employee>> GetAllEmployees()
         {
             return await _context.Employees.ToListAsync();
         }
@@ -59,7 +59,7 @@ namespace SU.Backend.Database.Repositories
                 .FirstOrDefaultAsync(e => e.EmployeeId == id);
         }
 
-        public async Task<List<EmployeeRoleAssignment>> ListAllEmployeeRoleAssignments()
+        public async Task<List<EmployeeRoleAssignment>> GetAllEmployeeRoleAssignments()
         {
             return await _context.EmployeeRoleAssignments.ToListAsync();
         }

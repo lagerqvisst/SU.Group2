@@ -107,24 +107,20 @@ namespace SU.Backend.Services
             }
         }
 
-        public async Task<(bool Success, string Message, List<Employee?> Employees)> ListAllEmployees()
+        public async Task<(bool Success, string Message, List<Employee> Employees)> GetAllEmployees()
         {
-            _logger.LogInformation("Getting all employees");
+            _logger.LogInformation("Controller activated to get all employees");
             try
             {
-                var employees = await _unitOfWork.Employees.ListAllEmployees();
-                if (employees == null || !employees.Any())
-                {
-                    _logger.LogInformation("No employees found");
-                    return (false, "No employees found", null);
-                }
-                _logger.LogInformation($"Found {employees.Count} employees");
-                return (true, "Employees retrived succesfully", employees);
+                var employees = await _unitOfWork.Employees.GetAllEmployees();
+                _logger.LogInformation("Employees found: {EmployeesCount}", employees.Count);
+
+                return (true, "Employees found", employees);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting employees");
-                return (false, "Error getting employees", null);
+               _logger.LogError(ex, "Error occurred while fetching employees");
+                return (false, "An error occurred while fetching the employees", new List<Employee>());
             }
         }
         //method to add new Emplyee
@@ -220,13 +216,13 @@ namespace SU.Backend.Services
             }
         }
 
-        public async Task<(bool Success, string Message, List<EmployeeRoleAssignment> EmployeeRoleAssignments)> ListAllEmployeeRoleAssignments()
+        public async Task<(bool Success, string Message, List<EmployeeRoleAssignment> EmployeeRoleAssignments)> GetAllEmployeeRoleAssignments()
         {
             _logger.LogInformation("Controller activated to get all employee role assignments...");
 
             try
             {
-                var employeeroleassignments = _unitOfWork.Employees.ListAllEmployeeRoleAssignments();
+                var employeeroleassignments = _unitOfWork.Employees.GetAllEmployeeRoleAssignments();
                 _logger.LogInformation("Employee role assignments found: {EmployeeRoleAssignmentsCount}", employeeroleassignments.Result.Count);
 
                 return (true, "Employee role assignments found.", employeeroleassignments.Result);

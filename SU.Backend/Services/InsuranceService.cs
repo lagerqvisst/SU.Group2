@@ -111,13 +111,13 @@ namespace SU.Backend.Services
             }
         }
 
-         public async Task<(bool Success, string Message, List<InsuranceAddonType> insuranceAddonTypes)> ListAllInsuranceAddonTypes()
-        {
+         public async Task<(bool Success, string Message, List<InsuranceAddonType> InsuranceAddonTypes)> GetAllInsuranceAddonTypes()
+         {
             _logger.LogInformation("Controller activated to get all insurance addon types...");
 
             try
             {
-                var insuranceAddonTypes = _unitOfWork.InsuranceAddonTypes.GetAddonTypes();
+                var insuranceAddonTypes = _unitOfWork.InsuranceAddonTypes.GetAllInsuranceAddonTypes();
                 _logger.LogInformation("Insurance addon types found: {InsuranceAddonTypeCount}", insuranceAddonTypes.Result.Count);
 
                 return (true, "Insurance addon types found", insuranceAddonTypes.Result);
@@ -127,7 +127,7 @@ namespace SU.Backend.Services
                 _logger.LogError(ex, "Error occurred while fetching insurance addont types.");
                 return (false, "An error occurred while fetching the insurance addon types.", new List<InsuranceAddonType>());
             }
-        }
+         }
 
         public async Task<(bool Success, string Message)> CreatePropertyInventoryInsurance(
             CompanyCustomer companyCustomer,
@@ -310,7 +310,7 @@ namespace SU.Backend.Services
 
                 // Fetch the last company customer
                 _logger.LogInformation("Attempting to fetch a test company customer...");
-                var companyCustomer = _unitOfWork.CompanyCustomers.GetCompanyCustomers().Result.Last();
+                var companyCustomer = _unitOfWork.CompanyCustomers.GetAllCompanyCustomers().Result.Last();
                 if (companyCustomer == null)
                 {
                     _logger.LogWarning("No company customer found.");
@@ -328,7 +328,7 @@ namespace SU.Backend.Services
 
                 // Fetch the last risk zone
                 _logger.LogInformation("Attempting to fetch a risk zone...");
-                var riskZone = _unitOfWork.Riskzones.GetRiskZones().Result.Last();
+                var riskZone = _unitOfWork.Riskzones.GetAllRiskZones().Result.Last();
                 if (riskZone == null)
                 {
                     _logger.LogWarning("No risk zone found.");
@@ -412,7 +412,7 @@ namespace SU.Backend.Services
 
                 // Fetch the last company customer
                 _logger.LogInformation("Attempting to fetch a test company customer...");
-                var companyCustomer = _unitOfWork.CompanyCustomers.GetCompanyCustomers().Result.Last();
+                var companyCustomer = _unitOfWork.CompanyCustomers.GetAllCompanyCustomers().Result.Last();
                 if (companyCustomer == null)
                 {
                     _logger.LogWarning("No company customer found.");
@@ -485,7 +485,7 @@ namespace SU.Backend.Services
             {
                 // Fetch the last company customer
                 _logger.LogInformation("Attempting to fetch a test company customer...");
-                var companyCustomer = _unitOfWork.CompanyCustomers.GetCompanyCustomers().Result.Last();
+                var companyCustomer = _unitOfWork.CompanyCustomers.GetAllCompanyCustomers().Result.Last();
                 if (companyCustomer == null)
                 {
                     _logger.LogWarning("No company customer found.");
@@ -494,7 +494,7 @@ namespace SU.Backend.Services
                 _logger.LogInformation("Company customer found: {Org Nr} - {CompanyName}", companyCustomer.OrganizationNumber, companyCustomer.CompanyName);
 
                 _logger.LogInformation("Creating liability insurance coverage option...");
-                var liabiltiyCoverageOption = _unitOfWork.LiabilityCoverageOptions.GetLiabilityCoverage().Result.First();
+                var liabiltiyCoverageOption = _unitOfWork.LiabilityCoverageOptions.GetLiabilityCoverageOptions().Result.First();
                 if (liabiltiyCoverageOption == null)
                 {
                     return (false, "No liability coverage option found.");
@@ -578,7 +578,7 @@ namespace SU.Backend.Services
 
                 _logger.LogInformation("Finding test customer.");
                 // Hämta PrivateCustomer för InsurancePolicyHolder
-                var privateCustomer = _unitOfWork.PrivateCustomers.GetPrivateCustomers().Result.Last();
+                var privateCustomer = _unitOfWork.PrivateCustomers.GetAllPrivateCustomers().Result.Last();
                 if (privateCustomer == null)
                 {
                     return (false, "No private customer found.");
@@ -751,9 +751,193 @@ namespace SU.Backend.Services
             }
         }
 
+        public async Task<(bool Success, string Message, List<InsurancePolicyHolder> InsurancePolicyHolders)> GetAllInsurancePolicyHolders()
+        {
+            _logger.LogInformation("Controller activated to list all insurance policy holders...");
 
+            try
+            {
+                var insurancePolicyHolders = _unitOfWork.InsurancePolicyHolders.GetAllInsurancePolicyHolders();
+                _logger.LogInformation("Insurance policy holders retrieved succesfully: {InsurancePolicyHolderCount}", insurancePolicyHolders.Result.Count);
 
+                return (true , "Insurance policy holders retrieved successfully.", insurancePolicyHolders.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching insurance policy holders.");
+                return (false, "An error occurred while fetching the insurance policy holders.", new List<InsurancePolicyHolder>());
+            }
+        }
 
+        public async Task<(bool Success, string Message, List<InsuranceAddon> InsuranceAddons)> GetAllInsuranceAddons()
+        {
+            _logger.LogInformation("Controller activated to get all insurance addons...");
+
+            try
+            {
+                var insuranceaddons = _unitOfWork.InsuranceAddons.GetAllInsuranceAddons();
+                _logger.LogInformation("Insurance addons found: {InsuranceAddonCount}", insuranceaddons.Result.Count);
+
+                return (true, "Insurance addons found", insuranceaddons.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching insurance addons.");
+                return (false, "An error occurred while fetching the insurance addons.", new List<InsuranceAddon>());
+            }
+        }
+
+        public async Task<(bool Success, string Message, List<Insurance> Insurances)> GetAllInsurances()
+        {
+            _logger.LogInformation("Controller activated to get all insurances...");
+
+            try
+            {
+                var insurances = _unitOfWork.Insurances.GetAllInsurances();
+                _logger.LogInformation("Insurances found: {InsuranceCount}", insurances.Result.Count);
+
+                return (true, "Insurances found", insurances.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching insurances.");
+                return (false, "An error occurred while fetching the insurances.", new List<Insurance>());
+            }
+        }
+
+        public async Task<(bool Success, string Message, List<InsuranceCoverage> InsuranceCoverages)> GetAllInsuranceCoverages()
+        {
+            _logger.LogInformation("Controller activated to get all insurance coverages...");
+
+            try
+            {
+                var insuranceCoverage = _unitOfWork.InsuranceCoverages.GetAllInsuranceCoverages();
+                _logger.LogInformation("Insurance coverages found: {InsuranceCoverageCount}", insuranceCoverage.Result.Count);
+
+                return (true, "Insurance coverages found", insuranceCoverage.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching insurance coverages.");
+                return (false, "An error occurred while fetching the insurance coverages.", new List<InsuranceCoverage>());
+            }
+        }
+
+        public async Task<(bool Success, string Message, List<VehicleInsuranceCoverage> VehicleInsuranceCoverages)> GetAllVehicleInsuranceCoverages()
+        {
+            _logger.LogInformation("Controller activated to list all vehicle insurance coverages...");
+
+            try
+            {
+                var vehicleInsuranceCoverages = _unitOfWork.VehicleInsuranceCoverages.GetAllVehicleInsuranceCoverages();
+                _logger.LogInformation("Vehicle insurance coverages retrieved succesfully: {VehicleInsuranceCoveragesCount}",
+                    vehicleInsuranceCoverages.Result.Count);
+
+                return (true, "Vehicle insurance coverages retrieved successfully.", vehicleInsuranceCoverages.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching vehicle insurance coverages.");
+                return (false, "An error occurred while fetching the vehicle insurance coverages.", new List<VehicleInsuranceCoverage>());
+            }
+        }
+
+        public async Task<(bool Success, string Message, List<VehicleInsuranceOption> VehicleInsuranceCoverages)> GetAllVehicleInsuranceOptions()
+        {
+            _logger.LogInformation("Controller activated to list all vehicle insurance coverage options...");
+
+            try
+            {
+                var vehicleInsuranceOptions = _unitOfWork.VehicleInsuranceOptions.GetVehicleInsuranceOptions();
+                _logger.LogInformation("Vehicle insurance options retrieved succesfully: {VehicleInsuranceOptionsCount}",
+                                       vehicleInsuranceOptions.Result.Count);
+
+                return (true, "Vehicle insurance options retrieved successfully.", vehicleInsuranceOptions.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching vehicle insurance options.");
+                return (false, "An error occurred while fetching the vehicle insurance options.", new List<VehicleInsuranceOption>());
+            }
+        }
+
+        public async Task<(bool Success, string Message, List<Riskzone> Riskzones)> GetAllRiskzones()
+        {
+            _logger.LogInformation("Controller activated to list all riskzones...");
+
+            try
+            {
+                var riskzones = _unitOfWork.Riskzones.GetAllRiskZones();
+                _logger.LogInformation("Riskzones retrieved succesfully: {RiskzonesCount}",
+                                                          riskzones.Result.Count);
+
+                return (true, "Riskzones retrieved successfully.", riskzones.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching riskzones.");
+                return (false, "An error occurred while fetching the riskzones.", new List<Riskzone>());
+            }
+        }
+
+        public async Task<(bool Success, string Message, List<LiabilityCoverageOption> LiabilityCoverageOptions)> GetAllLiabilityCoverageOptions()
+        {
+            _logger.LogInformation("Controller activated to list all liability coverage options...");
+
+            try
+            {
+                var liabilityCoverageOptions = _unitOfWork.LiabilityCoverageOptions.GetLiabilityCoverageOptions();
+                _logger.LogInformation("Liability coverage options retrieved succesfully: {LiabilityCoverageOptionsCount}",
+                                                          liabilityCoverageOptions.Result.Count);
+
+                return (true, "Liability coverage options retrieved successfully.", liabilityCoverageOptions.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching liability coverage options.");
+                return (false, "An error occurred while fetching the liability coverage options.", new List<LiabilityCoverageOption>());
+            }
+        }
+
+        public async Task<(bool Success, string Message, List<LiabilityCoverage> LiabilityCoverages)> GetAllLiabilityCoverages()
+        {
+            _logger.LogInformation("Controller activated to list all liability coverages...");
+
+            try
+            {
+                var liabilityCoverages = _unitOfWork.LiabilityCoverages.GetLiabilityCoverage();
+                _logger.LogInformation("Liability coverages retrieved succesfully: {LiabilityCoveragesCount}",
+                                       liabilityCoverages.Result.Count);
+
+                return (true, "Liability coverages retrieved successfully.", liabilityCoverages.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching liability coverages.");
+                return (false, "An error occurred while fetching the liability coverages.", new List<LiabilityCoverage>());
+            }
+
+        }
+
+        public async Task<(bool Success, string Message, List<PropertyAndInventoryCoverage> 
+            PropertyAndInventoryCoverages)> GetAllPropertyAndInventoryCoverages()
+        {
+            _logger.LogInformation("Controller activated to list all property and inventory coverages...");
+
+            try
+            {
+                var propertyAndInventoryCoverages = _unitOfWork.PropertyAndInventoryCoverages.GetAllPropertyAndInventoryCoverages();
+                _logger.LogInformation("Property and inventory coverages retrieved succesfully: {PropertyAndInventoryCoveragesCount}",
+                                                          propertyAndInventoryCoverages.Result.Count);
+
+                return (true, "Property and inventory coverages retrieved successfully.", propertyAndInventoryCoverages.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching property and inventory coverages.");
+                return (false, "An error occurred while fetching the property and inventory coverages.", new List<PropertyAndInventoryCoverage>());
+            }
+        }
 
         #endregion
 

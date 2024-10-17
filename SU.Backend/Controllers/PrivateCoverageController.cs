@@ -38,20 +38,37 @@ namespace SU.Backend.Controllers
             }
         }
 
-        public async Task<(List<PrivateCoverageOption>, string Message)> GetAllOptions()
+        public async Task<(List<PrivateCoverageOption>, string Message)> GetAllPrivateCoverageOptions()
         {
             _logger.LogInformation("Controller activated to get all private coverage options...");
-            var result = await _privateCoverageService.GetAllPrivateCoverageOption();
+            var result = await _privateCoverageService.GetAllPrivateCoverageOptions();
 
             if (result.Success)
             {
                 _logger.LogInformation($"Private coverage options found:\n{result.Message}");
-                return (result.Options, result.Message);
+                return (result.PrivateCoverageOptions, result.Message);
             }
             else
             {
                 _logger.LogWarning($"Error getting private coverage options: {result.Message}");
                 return (new List<PrivateCoverageOption>(), result.Message);
+            }
+        }
+
+        public async Task<(List<PrivateCoverage>, string Message)> GetAllPrivateCoverages()
+        {
+            _logger.LogInformation("Controller activated to get all private coverages...");
+            var result = await _privateCoverageService.GetAllPrivateCoverages();
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"Private coverages found:\n{result.Message}");
+                return (result.PrivateCoverages, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"Error getting private coverages: {result.Message}");
+                return (new List<PrivateCoverage>(), result.Message);
             }
         }
     }
