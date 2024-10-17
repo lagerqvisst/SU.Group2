@@ -223,6 +223,23 @@ namespace SU.Backend.Controllers
                 return (new List<LiabilityCoverage>(), result.Message);
             }
         }
+
+        public async Task<(List<LiabilityCoverageOption> LiabilityCoverageOptions, string Message)> GetAllLiabilityCoverageOptions()
+        {
+            _logger.LogInformation("Controller activated to list all liability coverages...");
+            var result = await _insuranceService.GetAllLiabilityCoverageOptions();
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"Liability coverages retrieved succesfully:\n{result.Message}");
+                return (result.LiabilityCoverageOptions, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"Error retrieving liability coverages: {result.Message}");
+                return (new List<LiabilityCoverageOption>(), result.Message);
+            }
+        }
     }
 }
 
