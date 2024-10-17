@@ -1,5 +1,6 @@
 ﻿using SU.Backend.Models.Enums.Insurance;
 using SU.Backend.Models.Insurances;
+using SU.Backend.Models.Invoices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,11 +30,11 @@ namespace SU.Backend.Helper
             }
         }
 
-        public static object CreateInvoiceEntry(Insurance insurance)
+        public static InvoiceEntry CreateInvoiceEntry(Insurance insurance)
         {
             if (insurance.InsurancePolicyHolder.PrivateCustomer != null)
             {
-                return new
+                return new InvoiceEntry
                 {
                     Type = "Privat",
                     CustomerName = $"{insurance.InsurancePolicyHolder.PrivateCustomer.FirstName} {insurance.InsurancePolicyHolder.PrivateCustomer.LastName}",
@@ -45,18 +46,21 @@ namespace SU.Backend.Helper
             }
             else if (insurance.InsurancePolicyHolder.CompanyCustomer != null)
             {
-                return new
+                return new InvoiceEntry
                 {
                     Type = "Företag",
                     CompanyName = insurance.InsurancePolicyHolder.CompanyCustomer.CompanyName,
                     OrganizationNumber = insurance.InsurancePolicyHolder.CompanyCustomer.OrganizationNumber,
                     ContactPerson = insurance.InsurancePolicyHolder.CompanyCustomer.ContactPerson,
                     Address = insurance.InsurancePolicyHolder.CompanyCustomer.CompanyAdress,
+                    PostalCode = insurance.InsurancePolicyHolder.CompanyCustomer.CompanyAdress,
                     Premium = insurance.Premium
                 };
             }
             return null;
         }
+
+
 
     }
 }

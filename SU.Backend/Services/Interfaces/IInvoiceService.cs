@@ -1,4 +1,5 @@
 ﻿using SU.Backend.Models.Comissions;
+using SU.Backend.Models.Invoices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,6 @@ namespace SU.Backend.Services.Interfaces
 {
     public interface IInvoiceService
     {
-        Task<(bool Success, string Message, List<object> InvoiceData)> GenerateInvoiceData();
-
+        Task<(bool Success, string Message, List<InvoiceEntry> InvoiceData)> GenerateInvoiceData();
     }
 }

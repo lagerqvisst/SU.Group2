@@ -115,14 +115,12 @@ class Program
         
         var dataexportservice = host.Services.GetRequiredService<IDataExportService>();
         var comissionService = host.Services.GetRequiredService<ICommissionService>();
+        var invoiceService = host.Services.GetRequiredService<IInvoiceService>();
 
-        var commissions = await commissionService.GetAllCommissions(
-            new DateTime(2020, 1, 1),  // Startdatum: 1 januari 2020
-            new DateTime(2030, 1, 1)   // Slutdatum: 1 januari 2030
-        );
+        var invoices = await invoiceService.GenerateInvoiceData();
 
+        await dataexportservice.ExportInvoicesToExcel(invoices.InvoiceData);
 
-        await dataexportservice.ExportCommissionsToExcel(commissions.Commissions);
 
     }
 

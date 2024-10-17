@@ -17,14 +17,19 @@ namespace SU.Backend.Database.Repositories
         {
         }
 
-        
+
         public async Task<List<Insurance>> GetAllActiveInsurances()
         {
             return await _context.Insurances
                 .Include(s => s.Seller)
+                .Include(c => c.InsurancePolicyHolder)
+                    .ThenInclude(p => p.PrivateCustomer)  // Inkludera privatkunder
+                .Include(c => c.InsurancePolicyHolder)
+                    .ThenInclude(c => c.CompanyCustomer)  // Inkludera företagskunder
                 .Where(i => i.InsuranceStatus == InsuranceStatus.Active)
                 .ToListAsync();
         }
+
 
         public async Task<List<Insurance>> GetActiveInsurancesInDateRange(DateTime startDate, DateTime endDate)
         {
