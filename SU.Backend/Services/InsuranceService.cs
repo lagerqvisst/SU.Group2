@@ -868,7 +868,21 @@ namespace SU.Backend.Services
 
         public async Task<(bool Success, string Message, List<LiabilityCoverageOption> LiabilityCoverageOptions)> GetAllLiabilityCoverageOptions()
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("Controller activated to list all liability coverage options...");
+
+            try
+            {
+                var liabilityCoverageOptions = _unitOfWork.LiabilityCoverageOptions.GetLiabilityCoverageOptions();
+                _logger.LogInformation("Liability coverage options retrieved succesfully: {LiabilityCoverageOptionsCount}",
+                                                          liabilityCoverageOptions.Result.Count);
+
+                return (true, "Liability coverage options retrieved successfully.", liabilityCoverageOptions.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching liability coverage options.");
+                return (false, "An error occurred while fetching the liability coverage options.", new List<LiabilityCoverageOption>());
+            }
         }
 
         public async Task<(bool Success, string Message, List<LiabilityCoverage> LiabilityCoverages)> GetAllLiabilityCoverages()
