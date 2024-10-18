@@ -12,6 +12,11 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Controllers
 {
+    /// <summary>
+    /// This class is responsible for handling the employee controller.
+    /// Makes logic available in the Viewmodel
+    /// More info about the logic for each method can be found in the Service function each controller method uses.
+    /// </summary>
     public class EmployeeController
     {
         private readonly IEmployeeService _employeeService;
@@ -23,6 +28,7 @@ namespace SU.Backend.Controllers
             _logger = logger;
         }
 
+        //Only for testing purposes
         public async Task CreateRandomNewEmployee(EmployeeType Role)
         {
             _logger.LogInformation($"Controller activated to create new random {Role.ToString()}...");

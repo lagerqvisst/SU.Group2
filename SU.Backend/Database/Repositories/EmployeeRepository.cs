@@ -10,26 +10,38 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Database.Repositories
 {
+    /// <summary>
+    /// This class is responsible for implementing the methods defined in the IEmployeeRepository interface.
+    /// </summary>
     public class EmployeeRepository : Repository<Employee>, IEmployeeRepository
     {
         public EmployeeRepository(Context context) : base(context)
         {
         }
 
+        // This method is responsible for checking if the agent number is unique.
+        // Random agent numbers are generated for each employee.
+        // It returns true if the agent number is unique, otherwise it returns false.
         public async Task<bool> IsAgentNumberUnique(string agentNumber)
         {
             return !await _context.Employees.AnyAsync(e => e.AgentNumber == agentNumber);
 
         }
 
+        // This method returns the employee with the given a role.
         public async Task<Employee?> GetEmployeeByRole(EmployeeType role)
         {
             return await _context.Employees
-                .Include(e => e.RoleAssignments) // Inkludera rolltilldelningar
-                .Where(e => e.RoleAssignments.Any(ra => ra.Role == role && ra.Percentage > 0)) // Kontrollera att anställda har den angivna rollen
-                .FirstOrDefaultAsync(); // Hämta den första matchande anställda
+                .Include(e => e.RoleAssignments) 
+                .Where(e => e.RoleAssignments.Any(ra => ra.Role == role && ra.Percentage > 0)) 
+                .OrderByDescending(e => e.RoleAssignments
+                    .Where(ra => ra.Role == role && ra.Percentage > 0)
+                    .Max(ra => ra.Percentage)) 
+                .FirstOrDefaultAsync(); 
         }
 
+        // This method returns the employee with the given username and password.
+        // Used for authenticating users in the login page.
         public async Task<Employee?> GetEmployeeByUserCredentials(string Username, string Password)
         {
             return await _context.Employees

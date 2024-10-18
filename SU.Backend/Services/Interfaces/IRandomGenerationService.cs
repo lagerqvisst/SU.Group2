@@ -9,6 +9,10 @@ using static SU.Backend.Services.RandomGenerationService;
 
 namespace SU.Backend.Services.Interfaces
 {
+    /// <summary>
+    /// This interface is responsible for defining the methods that the RandomGenerationService class must implement.
+    /// Only used for testing purposes.
+    /// </summary>
     public interface IRandomGenerationService
     {
         Task<(bool Success, RandomUserApiResponse RandomUserInfo)> GenerateSingleRandomUser();

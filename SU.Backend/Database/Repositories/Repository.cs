@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Database.Repositories
 {
+    /// <summary>
+    /// This class is an abstract class that is responsible for implementing the methods that the Repository class must implement.
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
     public abstract class Repository<TEntity> where TEntity : class
     {
         public readonly Context _context;

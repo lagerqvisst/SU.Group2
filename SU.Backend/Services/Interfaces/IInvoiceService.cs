@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Services.Interfaces
 {
+    /// <summary>
+    /// This interface is responsible for defining the methods that the InvoiceService class must implement.
+    /// </summary>
     public interface IInvoiceService
     {
         Task<(bool Success, string Message, List<InvoiceEntry> InvoiceData)> GenerateInvoiceData();

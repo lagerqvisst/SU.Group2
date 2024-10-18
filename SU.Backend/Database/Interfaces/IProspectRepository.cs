@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Database.Interfaces
 {
+    /// <summary>
+    /// This interface is responsible for defining the methods that the ProspectRepository class must implement.
+    /// </summary>
     public interface IProspectRepository
     {
         Task<List<Prospect>> GetAllProspects();

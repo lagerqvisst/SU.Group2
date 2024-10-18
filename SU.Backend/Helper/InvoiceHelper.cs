@@ -9,8 +9,15 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Helper
 {
+    /// <summary>
+    /// This class contains helper methods for the invoice.
+    /// It was created to improve readability in the invoice service methods
+    /// </summary>
     public static class InvoiceHelper
     {
+
+        // This method determines if an insurance should be invoiced this month.
+        // Its based on the logic from the business documentation.
         public static bool ShouldInvoiceInsuranceThisMonth(Insurance insurance, DateTime currentDate)
         {
             int monthsSinceStart = ((currentDate.Year - insurance.StartDate.Year) * 12) + currentDate.Month - insurance.StartDate.Month;
@@ -18,18 +25,21 @@ namespace SU.Backend.Helper
             switch (insurance.PaymentPlan)
             {
                 case PaymentPlan.Monthly:
-                    return true; // Fakturera varje månad
+                    return true; // Invoice every month
                 case PaymentPlan.Quarterly:
-                    return monthsSinceStart % 3 == 0; // Fakturera var tredje månad
+                    return monthsSinceStart % 3 == 0; // Invoice every third month
                 case PaymentPlan.SemiAnnual:
-                    return monthsSinceStart % 6 == 0; // Fakturera var sjätte månad
+                    return monthsSinceStart % 6 == 0; // Invoice every sixth month
                 case PaymentPlan.Annual:
-                    return monthsSinceStart % 12 == 0; // Fakturera varje år
+                    return monthsSinceStart % 12 == 0; // Invoice every twelfth month
                 default:
                     return false;
             }
         }
 
+        // This method creates an invoice entry based on the insurance data.
+        // Its called after logic such as the method above has been applied.
+        // Used for exporting invoice data to external systems.
         public static InvoiceEntry CreateInvoiceEntry(Insurance insurance)
         {
             if (insurance.InsurancePolicyHolder.PrivateCustomer != null)

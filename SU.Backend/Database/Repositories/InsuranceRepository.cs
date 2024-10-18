@@ -11,26 +11,30 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Database.Repositories
 {
+    /// <summary>
+    /// This class is responsible for implementing the methods defined in the IInsuranceRepository interface.
+    /// </summary>
     public class InsuranceRepository : Repository<Insurance>, IIunsuranceRepository
     {
         public InsuranceRepository(Context context) : base(context)
         {
         }
 
-
+        //This method is used to get all active insurances
+        //Used in multiple services methods
         public async Task<List<Insurance>> GetAllActiveInsurances()
         {
             return await _context.Insurances
                 .Include(s => s.Seller)
                 .Include(c => c.InsurancePolicyHolder)
-                    .ThenInclude(p => p.PrivateCustomer)  // Inkludera privatkunder
+                    .ThenInclude(p => p.PrivateCustomer)  
                 .Include(c => c.InsurancePolicyHolder)
-                    .ThenInclude(c => c.CompanyCustomer)  // Inkludera företagskunder
+                    .ThenInclude(c => c.CompanyCustomer)  
                 .Where(i => i.InsuranceStatus == InsuranceStatus.Active)
                 .ToListAsync();
         }
 
-
+        //This method is used to get all active insurances within a specific date range
         public async Task<List<Insurance>> GetActiveInsurancesInDateRange(DateTime startDate, DateTime endDate)
         {
             return await _context.Insurances
@@ -89,6 +93,7 @@ namespace SU.Backend.Database.Repositories
                 .ToListAsync();
         }
 
+        //Not sure if this is or will be used anywhere
         public async Task<Insurance> GetInsuranceById(int id)
         {
             return await _context.Insurances
@@ -96,7 +101,7 @@ namespace SU.Backend.Database.Repositories
                     .ThenInclude(p => p.PrivateCustomer)
                 .Include(i => i.InsuranceCoverage)
                     .ThenInclude(ic => ic.PrivateCoverage)
-                        .ThenInclude(pc => pc.PrivateCoverageOption) // Inkludera PrivateCoverageOption
+                        .ThenInclude(pc => pc.PrivateCoverageOption) 
                 .Include(i => i.InsuranceCoverage)
                     .ThenInclude(ic => ic.PrivateCoverage)
                 .Include(i => i.InsuranceAddons)

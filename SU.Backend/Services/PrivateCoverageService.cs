@@ -11,18 +11,21 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Services
 {
+    /// <summary>
+    /// This class is responsible for handling the business logic for private coverages.
+    /// </summary>
     public class PrivateCoverageService : IPrivateCoverageService
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly ILogger<PrivateCoverageService> _logger;
 
-        // Injicera UnitOfWork och Logger i konstruktorn
         public PrivateCoverageService(UnitOfWork unitOfWork, ILogger<PrivateCoverageService> logger)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
 
+        // Method to get all private coverage options
         public async Task<(bool Success, string Message, List<PrivateCoverageOption> PrivateCoverageOptions)> GetAllPrivateCoverageOptions()
         {
             _logger.LogInformation("Controller activated to get all private coverage options...");
@@ -41,6 +44,7 @@ namespace SU.Backend.Services
             }
         }
 
+        // Method to get all private coverages
         public Task<(bool Success, string Message, List<PrivateCoverage> PrivateCoverages)> GetAllPrivateCoverages()
         {
             _logger.LogInformation("Controller activated to get all private coverages...");
@@ -59,7 +63,7 @@ namespace SU.Backend.Services
             }
         }
 
-        // Metod för att hämta en specifik PrivateCoverageOption
+        // Method to get a specific private coverage option
         public async Task<(bool Success, PrivateCoverageOption? CoverageOption, string Message)> GetPrivateCoverageOptionAsync(decimal coverageAmount, InsuranceType insuranceType)
         {
             try

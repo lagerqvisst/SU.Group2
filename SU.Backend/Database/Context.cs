@@ -11,6 +11,11 @@ using SU.Backend.Models.Insurances.Prospects;
 
 namespace SU.Backend.Database
 {
+    /// <summary>
+    /// This class is responsible for handling the database context for the application.
+    /// Entity Framework Core is used to handle the database operations.
+    /// OnModelCreating is used to define relationships between entities.
+    /// </summary>
     public class Context : DbContext
     {
         private readonly IConfiguration _configuration;
@@ -41,6 +46,7 @@ namespace SU.Backend.Database
         public DbSet<PropertyAndInventoryCoverage> PropertyAndInventoryCoverages { get; set; }
 
 
+        // We store the connection string in appsettings.json
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -56,7 +62,8 @@ namespace SU.Backend.Database
         {
             base.OnModelCreating(modelBuilder);
 
-            // Använda den generiska konverteraren för enums & decimalvärden.
+            // We created a utility class to improve readability.
+            // See Utility folder for more information.
             modelBuilder.ConfigureEnumsAsStrings();
             modelBuilder.ConfigureDecimals();
             modelBuilder.SeedRiskzones();
@@ -65,133 +72,138 @@ namespace SU.Backend.Database
             modelBuilder.SeedVehicleCoverageOptions();
             modelBuilder.SeedLiabilityCoverageOptions();
 
-            // Definiera relationer
+
+            // This is where we define the relationships between the entities.
             #region Insurance
-            /*
-            modelBuilder.Entity<InsurancePolicyHolder>()
-                .HasOne(i => i.Insurance)
-                .WithOne(i => i.InsurancePolicyHolder)
-                .HasForeignKey<Insurance>(ic => ic.InsurancePolicyHolderId)
-                .OnDelete(DeleteBehavior.Cascade); */
 
+            //Configure the relationship between Insurance and InsurancePolicyHolder
             modelBuilder.Entity<Insurance>()
-                .HasOne(i => i.InsurancePolicyHolder)  // En Insurance har en InsurancePolicyHolder
-                .WithOne(iph => iph.Insurance)         // En InsurancePolicyHolder har en Insurance
-                .HasForeignKey<InsurancePolicyHolder>(iph => iph.InsuranceId)  // FK i InsurancePolicyHolder
-                .OnDelete(DeleteBehavior.Cascade);     // Radera InsurancePolicyHolder när Insurance tas bort
+                .HasOne(i => i.InsurancePolicyHolder)  // An Insurance has an InsurancePolicyHolder
+                .WithOne(iph => iph.Insurance)         // An InsurancePolicyHolder has one Insurance
+                .HasForeignKey<InsurancePolicyHolder>(iph => iph.InsuranceId)  // FK in InsurancePolicyHolder
+                .OnDelete(DeleteBehavior.Cascade);     // Delete the InsurancePolicyHolder if the Insurance is deleted
 
+            //Configure the relationship between Insurance and Seller
             modelBuilder.Entity<Insurance>()
-               .HasOne(e => e.Seller)
-               .WithMany(i => i.Insurances)
-               .HasForeignKey(e => e.SellerId)
-               .OnDelete(DeleteBehavior.Cascade);
+               .HasOne(e => e.Seller) // An Insurance has a Seller
+               .WithMany(i => i.Insurances) // A Seller can have many Insurances (can sell many Insurances)
+               .HasForeignKey(e => e.SellerId) // FK in Insurance
+               .OnDelete(DeleteBehavior.Cascade); // Delete the Seller if the Insurance is deleted
 
+            //Configure the relationship between Insurance and InsuranceAddons
             modelBuilder.Entity<Insurance>()
-               .HasMany(pi => pi.InsuranceAddons)
-               .WithOne(ia => ia.Insurance)
-               .HasForeignKey(ia => ia.InsuranceId)
-               .OnDelete(DeleteBehavior.Cascade);
+               .HasMany(pi => pi.InsuranceAddons) // An Insurance can have many InsuranceAddons (not limited to any type of insurnace)
+               .WithOne(ia => ia.Insurance) // Each InsuranceAddon has one Insurance
+               .HasForeignKey(ia => ia.InsuranceId) // FK in InsuranceAddon
+               .OnDelete(DeleteBehavior.Cascade); // Delete the InsuranceAddon if the Insurance is deleted
 
+            //Configure the relationship between Insurance and InsuranceCoverage
             modelBuilder.Entity<Insurance>()
-                .HasOne(i => i.InsuranceCoverage)
-                .WithOne(ic => ic.Insurance) // Assuming InsuranceCoverage has a reference back to Insurance
-                .HasForeignKey<InsuranceCoverage>(ic => ic.InsuranceId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasOne(i => i.InsuranceCoverage) // An Insurance has an InsuranceCoverage
+                .WithOne(ic => ic.Insurance) // An InsuranceCoverage has one Insurance (this is a bridge to the differnt types of insurances)
+                .HasForeignKey<InsuranceCoverage>(ic => ic.InsuranceId) // FK in InsuranceCoverage
+                .OnDelete(DeleteBehavior.Cascade); // Delete the InsuranceCoverage if the Insurance is deleted
 
             #endregion
 
-            #region InsurancePolicyHolder
-           
-            #endregion
 
             #region Employee
 
+            //Configure the relationship between Employee and an Employee (manager/employee relationship (recursive))
             modelBuilder.Entity<Employee>()
-                .HasOne(e => e.Manager)
-                .WithMany()
-                .HasForeignKey(e => e.ManagerId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(e => e.Manager) // An Employee has a Manager
+                .WithMany() // A Manager can have many Employees
+                .HasForeignKey(e => e.ManagerId) // FK in Employee
+                .OnDelete(DeleteBehavior.Restrict); // Prevent cascading deletion of Manager. If a Manager is deleted, the Employee will still exist.
 
             #endregion
 
             #region Private Customer
 
+            //Configure the relationship between PrivateCustomer and InsurancePolicyHolder
             modelBuilder.Entity<PrivateCustomer>()
             .HasMany(pc => pc.InsurancePolicyHolders) // A PrivateCustomer can have many InsurancePolicyHolders
             .WithOne(iph => iph.PrivateCustomer) // Each InsurancePolicyHolder has one PrivateCustomer
             .HasForeignKey(iph => iph.PrivateCustomerId) // Foreign key in InsurancePolicyHolder
-            .OnDelete(DeleteBehavior.Restrict); // Förhindra kaskadradering vid borttagning av PrivateCustomer
+            .OnDelete(DeleteBehavior.Restrict); // Prevent deletion of PrivateCustomer if there are related InsurancePolicyHolders
 
             #endregion
 
             #region Company Customer
+
+            //Configure the relationship between CompanyCustomer and InsurancePolicyHolder
             modelBuilder.Entity<CompanyCustomer>()
-                .HasMany(cc => cc.InsurancePolicyHolders)
-                .WithOne(iph => iph.CompanyCustomer)
-                .HasForeignKey(iph => iph.CompanyCustomerId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasMany(cc => cc.InsurancePolicyHolders) // A CompanyCustomer can have many InsurancePolicyHolders
+                .WithOne(iph => iph.CompanyCustomer) // Each InsurancePolicyHolder has one CompanyCustomer
+                .HasForeignKey(iph => iph.CompanyCustomerId) // Foreign key in InsurancePolicyHolder
+                .OnDelete(DeleteBehavior.Restrict); // Prevent deletion of CompanyCustomer if there are related InsurancePolicyHolders
             #endregion
 
             #region Insurance Addon
 
-            //Ett tillägg har olika typer, de olika typerna har olika uträkningar.
-            //Delade upp så det inte blir overcroweden med nullvärden i databasen. 
+            //Configure the relationship between InsuranceAddon and InsuranceAddonType
             modelBuilder.Entity<InsuranceAddon>()
-                .HasOne(ia => ia.InsuranceAddonType) // Definiera relationen
-                .WithMany() // Anta att det inte finns en navigationsproperty på InsuranceAddonType
-                .HasForeignKey(ia => ia.InsuranceAddonTypeId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(ia => ia.InsuranceAddonType) // An InsuranceAddon has one InsuranceAddonType
+                .WithMany() // An InsuranceAddonType can have many InsuranceAddons
+                .HasForeignKey(ia => ia.InsuranceAddonTypeId) // FK in InsuranceAddon
+                .OnDelete(DeleteBehavior.Restrict); // Prevent deletion of InsuranceAddonType
 
             #endregion
 
             #region Insurance Coverage
-            // En försäkring har en InsuranceCoverage
+            //Configure the relationship between InsuranceCoverage and Insurance
             modelBuilder.Entity<InsuranceCoverage>()
-                .HasOne(ic => ic.Insurance)
-                .WithOne(i => i.InsuranceCoverage)
-                .HasForeignKey<InsuranceCoverage>(ic => ic.InsuranceId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasOne(ic => ic.Insurance) // An InsuranceCoverage has an Insurance
+                .WithOne(i => i.InsuranceCoverage) // An Insurance has one InsuranceCoverage
+                .HasForeignKey<InsuranceCoverage>(ic => ic.InsuranceId) // FK in InsuranceCoverage
+                .OnDelete(DeleteBehavior.Cascade); // Delete the InsuranceCoverage if the Insurance is deleted
 
-            //Insurance Coverage. Har frivilligt deltagande till de olika försäkringstyperna.
-            modelBuilder.Entity<InsuranceCoverage>()
-                .HasOne(ic => ic.LiabilityCoverage)
-                .WithOne(lc => lc.InsuranceCoverage)
-                .HasForeignKey<LiabilityCoverage>(lc => lc.InsuranceCoverageId)
-                .OnDelete(DeleteBehavior.Cascade);
+            //Configure the relationship between InsuranceCoverage and InsuranceCoverage
+            modelBuilder.Entity<InsuranceCoverage>() // An InsuranceCoverage can have one of each type of coverage
+                .HasOne(ic => ic.LiabilityCoverage) // An InsuranceCoverage has a LiabilityCoverage
+                .WithOne(lc => lc.InsuranceCoverage) // A LiabilityCoverage has one InsuranceCoverage
+                .HasForeignKey<LiabilityCoverage>(lc => lc.InsuranceCoverageId) // FK in LiabilityCoverage
+                .OnDelete(DeleteBehavior.Cascade); // Delete the LiabilityCoverage if the InsuranceCoverage is deleted
 
+            //Configure the relationship between InsuranceCoverage and InsuranceCoverage
             modelBuilder.Entity<InsuranceCoverage>()
-                .HasOne(ic => ic.PrivateCoverage)
-                .WithOne(pc => pc.InsuranceCoverage)
-                .HasForeignKey<PrivateCoverage>(pc => pc.InsuranceCoverageId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasOne(ic => ic.PrivateCoverage) // An InsuranceCoverage has a PrivateCoverage
+                .WithOne(pc => pc.InsuranceCoverage) // A PrivateCoverage has one InsuranceCoverage
+                .HasForeignKey<PrivateCoverage>(pc => pc.InsuranceCoverageId) // FK in PrivateCoverage
+                .OnDelete(DeleteBehavior.Cascade); // Delete the PrivateCoverage if the InsuranceCoverage is deleted
 
+            //Configure the relationship between InsuranceCoverage and InsuranceCoverage
             modelBuilder.Entity<InsuranceCoverage>()
-                .HasOne(ic => ic.PropertyAndInventoryCoverage)
-                .WithOne(pic => pic.InsuranceCoverage)
-                .HasForeignKey<PropertyAndInventoryCoverage>(pic => pic.InsuranceCoverageId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasOne(ic => ic.PropertyAndInventoryCoverage) // An InsuranceCoverage has a PropertyAndInventoryCoverage
+                .WithOne(pic => pic.InsuranceCoverage) // A PropertyAndInventoryCoverage has one InsuranceCoverage
+                .HasForeignKey<PropertyAndInventoryCoverage>(pic => pic.InsuranceCoverageId) // FK in PropertyAndInventoryCoverage
+                .OnDelete(DeleteBehavior.Cascade); // Delete the PropertyAndInventoryCoverage if the InsuranceCoverage is deleted
 
+            //Configure the relationship between InsuranceCoverage and InsuranceCoverage
             modelBuilder.Entity<InsuranceCoverage>()
-                .HasOne(ic => ic.VehicleInsuranceCoverage)
-                .WithOne(vic => vic.InsuranceCoverage)
-                .HasForeignKey<VehicleInsuranceCoverage>(vic => vic.InsuranceCoverageId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasOne(ic => ic.VehicleInsuranceCoverage) // An InsuranceCoverage has a VehicleInsuranceCoverage
+                .WithOne(vic => vic.InsuranceCoverage) // A VehicleInsuranceCoverage has one InsuranceCoverage
+                .HasForeignKey<VehicleInsuranceCoverage>(vic => vic.InsuranceCoverageId) // FK in VehicleInsuranceCoverage
+                .OnDelete(DeleteBehavior.Cascade); // Delete the VehicleInsuranceCoverage if the InsuranceCoverage is deleted
 
             #endregion
 
             #region Private Coverage
+            // Configure PrivateCoverage -> PrivateCoverageOption relationship
             modelBuilder.Entity<PrivateCoverage>()
-                .HasOne(pc => pc.PrivateCoverageOption) // En PrivateCoverage har en PrivateCoverageOption
-                .WithMany(pco => pco.PrivateCoverages)  // En PrivateCoverageOption kan ha många PrivateCoverages
-                .HasForeignKey(pc => pc.PrivateCoverageOptionId)
-                .OnDelete(DeleteBehavior.Restrict);     // Statisk data ska inte tas bort
+                .HasOne(pc => pc.PrivateCoverageOption) // A PrivateCoverage has a PrivateCoverageOption
+                .WithMany(pco => pco.PrivateCoverages)  // A PrivateCoverageOption can have many PrivateCoverages
+                .HasForeignKey(pc => pc.PrivateCoverageOptionId) // FK in PrivateCoverage
+                .OnDelete(DeleteBehavior.Restrict); // Prevent deletion of PrivateCoverageOption
 
 
             #endregion
 
+            //Created due to some relational issues. 
             modelBuilder.Entity<Riskzone>()
             .HasKey(x => x.RiskzoneId);
 
+            //Created due to some relational issues
             modelBuilder.Entity<VehicleInsuranceOption>()
                 .HasKey(x => x.VehicleInsuranceOptionId);
             #region Vehicle Coverage
@@ -201,43 +213,47 @@ namespace SU.Backend.Database
                 .HasOne(vic => vic.Riskzone) // Navigation to Riskzone
                 .WithMany(rz => rz.VehicleInsuranceCoverages) // Riskzone has many VehicleInsuranceCoverages
                 .HasForeignKey(vic => vic.RiskzoneId) // FK on VehicleInsuranceCoverage
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict); // Prevent deletion of Riskzone
 
             // Configure VehicleInsuranceCoverage -> VehicleInsuranceOption relationship
             modelBuilder.Entity<VehicleInsuranceCoverage>()
                 .HasOne(vic => vic.VehicleInsuranceOption) // Navigation to VehicleInsuranceOption
                 .WithMany(vo => vo.VehicleInsuranceCoverages) // VehicleInsuranceOption has many VehicleInsuranceCoverages
                 .HasForeignKey(vic => vic.VehicleInsuranceOptionId) // FK on VehicleInsuranceCoverage
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict); // Prevent deletion of VehicleInsuranceOption
 
             #endregion
 
-#region LiabilityOption
+            #region LiabilityOption
+            // Configure LiabilityCoverage -> LiabilityCoverageOption relationship
             modelBuilder.Entity<LiabilityCoverage>()
-                .HasOne(lc => lc.LiabilityCoverageOption)
-                .WithMany(l => l.LiabilityCoverages)
-                .HasForeignKey(lc => lc.LiabilityCoverageOptionId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(lc => lc.LiabilityCoverageOption) // Navigation to LiabilityCoverageOption
+                .WithMany(l => l.LiabilityCoverages) // LiabilityCoverageOption has many LiabilityCoverages
+                .HasForeignKey(lc => lc.LiabilityCoverageOptionId) // FK on LiabilityCoverage
+                .OnDelete(DeleteBehavior.Restrict); // Prevent deletion of LiabilityCoverageOption
             #endregion
+
             #region Prospect
+            //Configure the relationship between Prospect and PrivateCustomer
             modelBuilder.Entity<Prospect>()
-                .HasOne(p => p.PrivateCustomer)
-                .WithMany()
-                .HasForeignKey(p => p.PrivateCustomerId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(p => p.PrivateCustomer) // A Prospect has a PrivateCustomer
+                .WithMany() // A PrivateCustomer can be related to many Prospects (hmm vill vi verkligen detta?)
+                .HasForeignKey(p => p.PrivateCustomerId) // FK in Prospect
+                .OnDelete(DeleteBehavior.Restrict); // Prevent deletion of PrivateCustomer
 
+            //Configure the relationship between Prospect and CompanyCustomer
             modelBuilder.Entity<Prospect>()
-                .HasOne(p => p.CompanyCustomer)
-                .WithMany()
-                .HasForeignKey(p => p.CompanyCustomerId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(p => p.CompanyCustomer) // A Prospect has a CompanyCustomer
+                .WithMany() // A CompanyCustomer can be related to many Prospects (hmm vill vi verkligen detta?)
+                .HasForeignKey(p => p.CompanyCustomerId) // FK in Prospect
+                .OnDelete(DeleteBehavior.Restrict); // Prevent deletion of CompanyCustomer
 
-            //En säljare kan bli assignad flera prospects
+            // Configure the relationship between Prospect and Employee
             modelBuilder.Entity<Prospect>()
-                .HasOne(p => p.Seller)
-                .WithMany()
-                .HasForeignKey(p => p.SellerId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(p => p.Seller) // A Prospect has (can have) a Seller
+                .WithMany() // A Seller can be related to many Prospects
+                .HasForeignKey(p => p.SellerId) // FK in Prospect
+                .OnDelete(DeleteBehavior.Restrict); // Prevent deletion of Seller if there are related Prospects
             #endregion
 
 

@@ -6,6 +6,11 @@ using SU.Backend.Models.Insurances.Coverage;
 
 namespace SU.Backend.Database
 {
+    /// <summary>
+    /// This class is responsible for handling the database context and the repositories.
+    /// We are using unit of work pattern to handle the database context and repositories.
+    /// All service classes uses instances of this class to make CRUD against the DB.
+    /// </summary>
     public class UnitOfWork : IDisposable
     {
         private readonly Context _context;
@@ -18,21 +23,14 @@ namespace SU.Backend.Database
         public InsuranceCoverageRepository InsuranceCoverages { get; }
         public InsuranceRepository Insurances { get; }
         public InsuranceAddonTypeRepository InsuranceAddonTypes { get; }
-
         public InsuranceAddonRepository InsuranceAddons { get; }
         public ProspectRepository Prospects { get; }
-
         public VehicleInsuranceOptionRepository VehicleInsuranceOptions { get; }
-
         public RiskzoneRepository Riskzones { get; }
-
         public LiabilityCoverageOptionRepository LiabilityCoverageOptions { get; }
-
         public VehicleInsuranceCoverageRepository VehicleInsuranceCoverages { get; }
-
         public LiabilityCoverageRepository LiabilityCoverages { get; }
         public PropertyAndInventoryCoverageRepository PropertyAndInventoryCoverages { get; }
-
 
         public UnitOfWork(Context context)
         {

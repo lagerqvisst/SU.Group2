@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Services.Interfaces
 {
+    /// <summary>
+    /// This interface is responsible for defining the methods that the PrivateCoverageService class must implement.
+    /// </summary>
     public interface IPrivateCoverageService
     {
         Task<(bool Success, PrivateCoverageOption? CoverageOption, string Message)> GetPrivateCoverageOptionAsync(decimal coverageAmount, InsuranceType insuranceType);

@@ -18,6 +18,8 @@ namespace SU.Backend.Models.Customers
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
 
+        // Navigation property
+        // A private customer can have many insurances, and therefor "be many insurance policy holders".
         public ICollection<InsurancePolicyHolder> InsurancePolicyHolders { get; set; }
 
     }

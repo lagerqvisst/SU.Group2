@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Services
 {
+    /// <summary>
+    /// This class is responsible for handling all the business logic for the PrivateCustomer model.
+    /// </summary>
     public class PrivateCustomerService : IPrivateCustomerService
     {
         private ILogger<PrivateCustomerService> _logger; 
@@ -95,6 +98,11 @@ namespace SU.Backend.Services
 
         }
 
+        /// <summary>
+        /// This method generates a random private customer and saves it to the database.
+        /// Only used for testing purposes to quickly seed the database with test data.
+        /// </summary>
+        /// <returns></returns>
         public async Task<(bool Success, string Message, PrivateCustomer Customer)> GenerateRandomPrivateCustomer()
         {
             try
@@ -135,6 +143,7 @@ namespace SU.Backend.Services
             }
         }
 
+        // method to get a private customer by id
         public async Task<(bool Success, string Message, PrivateCustomer Customer)> GetPrivateCustomerById(PrivateCustomer privateCustomer)
         {
             try
@@ -148,7 +157,7 @@ namespace SU.Backend.Services
             }
         }
 
-
+        // method to get all private customers
         public async Task<(bool Success, string Message, List<PrivateCustomer> PrivateCustomers)> GetAllPrivateCustomers()
         {
             _logger.LogInformation("Controller activated to get all private customers...");

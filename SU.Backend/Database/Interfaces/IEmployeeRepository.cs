@@ -9,6 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SU.Backend.Database.Interfaces
 {
+    /// <summary>
+    /// This interface is responsible for defining the methods that the EmployeeRepository class must implement.
+    /// </summary>
     public interface IEmployeeRepository
     {
         Task<bool> IsAgentNumberUnique(string agentNumber);

@@ -12,6 +12,11 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Services
 {
+    /// <summary>
+    /// This service class is responsible for fetching and aggregating statistics 
+    /// related to sellers and insurances, including premium calculations and sales performance. 
+    /// It communicates with the repository layer to query necessary data.
+    /// </summary
     public class StatisticsService : IStatisticsService
     {
         private readonly ILogger<StatisticsService> _logger;
@@ -83,17 +88,17 @@ namespace SU.Backend.Services
 
             try
             {
-                // Steg 1: Hämta alla aktiva försäkringar
+                // Step 1: Fetch all active insurances
                 var activeInsurances = await _unitOfWork.Insurances.GetAllActiveInsurances();
 
-                // Kontrollera om det finns några försäkringar
+                // If no active insurances are found, return an error message
                 if (activeInsurances == null || !activeInsurances.Any())
                 {
                     _logger.LogInformation("No active insurances found");
                     return (false, "No active insurances found", new List<InsuranceStatistics>());
                 }
 
-                // Steg 2: Grupper försäkringar efter försäkringstyp och månad
+                // Step 2: Group insurances by type and month, and calculate total policies and premium
                 var statistics = activeInsurances
                     .GroupBy(i => new { i.InsuranceType, Month = i.StartDate.Month })
                     .Select(g => new InsuranceStatistics
@@ -103,10 +108,10 @@ namespace SU.Backend.Services
                         TotalPolicies = g.Count(),
                         TotalPremium = g.Sum(i => i.Premium)
                     })
-                    .OrderBy(stat => stat.Month)  // Sortera efter månad
+                    .OrderBy(stat => stat.Month)  // Sort by month
                     .ToList();
 
-                // Steg 3: Returnera resultat
+                // Return the statistics
                 return (true, "Success", statistics);
             }
             catch (Exception ex)

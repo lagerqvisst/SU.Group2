@@ -9,6 +9,11 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Controllers
 {
+    /// <summary>
+    /// This class is responsible for handling the business logic of the commissions.
+    /// Makes logic available in the frontend.
+    /// More info about the logic for each method can be found in the Service function each controller method uses.
+    /// </summary>
     public class ComissionController
     {
         ICommissionService _commissionService;
@@ -20,6 +25,7 @@ namespace SU.Backend.Controllers
             _logger = logger;
         }
 
+        // This method is responsible for getting all commissions for a given year.
         public async Task<(string Message, List<Commission>)> GetCommissions(DateTime startDate, DateTime endDate)
         {
             _logger.LogInformation("Getting commissions for year {year}");

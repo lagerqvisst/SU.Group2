@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Models.Enums
 {
+    //Not a representation of any business documentation, we took the liberty to create this enum/attribute.
     public enum Salary
     {
         SalesAssistant = 28000,

@@ -13,6 +13,10 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Services
 {
+    /// <summary>
+    /// This class is responsible for handling the business logic for database testing.
+    /// Not used for final application, only for testing purposes.
+    /// </summary>
     public class DatabaseTestServices : IDatabaseTestService
     {
         private readonly ILogger<DatabaseTestServices> _logger;
@@ -29,6 +33,7 @@ namespace SU.Backend.Services
             _context = context;
             _employeeService = employeeService;
         }
+
 
         public async Task<(bool Success, string Message)> RecreateDb()
         {

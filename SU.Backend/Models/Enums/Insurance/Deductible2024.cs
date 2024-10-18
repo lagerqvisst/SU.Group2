@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Models.Enums.Insurance
 {
-    //Prisbasbelopp 2024
+    //Represents "Prisbasbelopp 2024 in Sweden".
     public enum Deductible
     {
         Full = 57300,

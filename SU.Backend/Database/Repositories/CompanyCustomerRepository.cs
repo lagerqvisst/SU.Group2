@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Database.Repositories
 {
+    /// <summary>
+    /// This class is responsible for implementing the methods defined in the IPrivateCustomerRepository interface.
+    /// </summary>
     public class CompanyCustomerRepository : Repository<CompanyCustomer>, ICompanyCustomerRepository
     {
         public CompanyCustomerRepository(Context context) : base(context)
@@ -23,6 +26,8 @@ namespace SU.Backend.Database.Repositories
             return await _context.CompanyCustomers.ToListAsync(); 
         }
 
+        //Used for getting all company customers that have only one insurance policy holder.
+        //Used in logic for getting prospect data for company customers.
         public async Task<List<CompanyCustomer>> GetProspectDataForCompanyCustomers()
         {
             return await _context.CompanyCustomers

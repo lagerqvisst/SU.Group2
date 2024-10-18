@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Helper
 {
+    /// <summary>
+    /// This class is used to store the response from the Random User API.
+    /// Not essential for the project, but it is used to store the response from the API in a structured way.
+    /// Only used for testing purposes.
+    /// </summary>
     public class RandomUserApiResponse
     {
         public List<Result> Results { get; set; }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Models.Statistics
 {
+    /// <summary>
+    /// This class represents the statistics for the insurance. Reflects the business documentation.
+    /// </summary>
     public class InsuranceStatistics
     {
         public string InsuranceType { get; set; }
