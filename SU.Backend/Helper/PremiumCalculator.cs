@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Helper
 {
+    /// <summary>
+    /// This class is responsible for calculating the insurance premiums. Reflects the business documentation.
+    /// It collects all the different calculations provided in the business documentation.
+    /// It was moved here to improve readability in the insurance create method.
+    /// </summary>
     public class PremiumCalculator
     {
 

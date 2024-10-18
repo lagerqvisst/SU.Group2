@@ -20,6 +20,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Services
 {
+    /// <summary>
+    /// This class contains methods for creating different types of insurances.
+    /// </summary>
     public class InsuranceService : IInsuranceService
     {
         private readonly UnitOfWork _unitOfWork;
@@ -30,6 +33,12 @@ namespace SU.Backend.Services
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
+
+        /// <summary>
+        /// This method creates a private insurance based on the provided input data.
+        /// Many inputs are required to create a private insurance, such as a private customer, insurance type, coverage option, seller, etc.
+        /// This is due to the insurance object having a lot of related entities in the database
+        /// </summary>
 
         public async Task<(bool Success, string Message)> CreatePrivateInsurance(
             PrivateCustomer privateCustomer,
@@ -47,7 +56,7 @@ namespace SU.Backend.Services
 
             try
             {
-                // Validera indata
+                // Validating inputs
                 if (privateCustomer == null) return (false, "No private customer provided.");
                 if (privateCoverageOption == null) return (false, "No private coverage option provided.");
                 if (!isPolicyHolderInsured && (insuredPerson == null ||
@@ -58,7 +67,7 @@ namespace SU.Backend.Services
                 }
                 if (seller == null) return (false, "No seller found.");
 
-                // Skapa försäkringen
+                // Creating the insurance object
                 var insurance = new Insurance
                 {
                     InsuranceType = insuranceType,
@@ -79,7 +88,7 @@ namespace SU.Backend.Services
                         {
                             PrivateCoverageOption = privateCoverageOption,
 
-                            // Om försäkringstagaren är försäkrad, använd försäkringstagarens uppgifter, annars ta ny input.
+                            // If the policy holder is the same as insured person, the insured person is the same as the policy holder
                             InsuredPersonName = isPolicyHolderInsured
                                 ? $"{privateCustomer.FirstName} {privateCustomer.LastName}"
                                 : insuredPerson?.InsuredPersonName,
@@ -94,10 +103,10 @@ namespace SU.Backend.Services
                     Seller = seller
                 };
 
-                // Använd helper-metoden för att hantera tillägg och uppdatera premie
+                // Adding addons to the insurance
                 InsuranceBuilder.ApplyAddons(insurance, addons);
 
-                // Spara försäkringen i databasen
+                // Saving the insurance to the database
                 await _unitOfWork.Insurances.AddAsync(insurance);
                 await _unitOfWork.SaveChangesAsync();
 
@@ -111,7 +120,8 @@ namespace SU.Backend.Services
             }
         }
 
-         public async Task<(bool Success, string Message, List<InsuranceAddonType> InsuranceAddonTypes)> GetAllInsuranceAddonTypes()
+        // This method fetches all insurance addon types from the database. The list of data will be used in the view for creating a new insurance if a customer wants to add addons.
+        public async Task<(bool Success, string Message, List<InsuranceAddonType> InsuranceAddonTypes)> GetAllInsuranceAddonTypes()
          {
             _logger.LogInformation("Controller activated to get all insurance addon types...");
 
@@ -129,6 +139,7 @@ namespace SU.Backend.Services
             }
          }
 
+        // This method is similar to private insurance creation, but for a specific company insurances.
         public async Task<(bool Success, string Message)> CreatePropertyInventoryInsurance(
             CompanyCustomer companyCustomer,
             PropertyAndInventoryCoverage propertyAndInventoryCoverage,
@@ -192,6 +203,7 @@ namespace SU.Backend.Services
             }
         }
 
+        // This method is similar to private insurance creation, but for a specific company insurances.
         public async Task<(bool Success, string Message)> CreateLiabilityInsurance(
            CompanyCustomer companyCustomer,
            LiabilityCoverage liabilityCoverage,
@@ -266,7 +278,7 @@ namespace SU.Backend.Services
         }
 
 
-
+        // Deletes an insurance from the database
         public async Task<(bool Success, string Message)> DeleteInsurance(Insurance insurance)
         {
             _logger.LogInformation("Deleting insurance...");

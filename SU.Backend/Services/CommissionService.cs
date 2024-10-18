@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Services
 {
+    /// <summary>
+    /// This class is responsible for handling the business logic for commissions.
+    /// </summary>
     public class CommissionService : ICommissionService
     {
         private readonly ILogger<CommissionService> _logger;
@@ -20,6 +23,8 @@ namespace SU.Backend.Services
             _logger = logger;
             _unitOfWork = unitOfWork;
         }
+
+        // Method to get all commissions, most of the heavy lifting is done in the repoisitory method.
         public async Task<(bool Success, string Message, List<Commission> Commissions)> GetAllCommissions(DateTime startDate, DateTime endDate)
         {
             _logger.LogInformation("Getting all commissions");

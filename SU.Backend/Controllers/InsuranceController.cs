@@ -13,6 +13,11 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Controllers
 {
+    /// <summary>
+    /// This class is responsible for handling the insurance controller.
+    /// Makes logic available in the Viewmodel
+    /// More info about the logic for each method can be found in the Service function each controller method uses.
+    /// </summary>
     public class InsuranceController
     {
         private readonly IInsuranceService _insuranceService; 

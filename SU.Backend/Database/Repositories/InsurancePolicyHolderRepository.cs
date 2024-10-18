@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Database.Repositories
 {
+    /// <summary>
+    /// This class is responsible for implementing the methods defined in the IInsurancePolicyHolderRepository interface.
+    /// </summary>
     public class InsurancePolicyHolderRepository : Repository<InsurancePolicyHolder>, IInsurancePolicyHolderRepository
     {
         public InsurancePolicyHolderRepository(Context context) : base(context)
@@ -20,10 +23,6 @@ namespace SU.Backend.Database.Repositories
             return await _context.InsurancePolicyHolders.FindAsync(insurancePolicyHolder);
         }
 
-        public  Task<List<InsurancePolicyHolder>> IdentifyProspects()
-        {
-            return null;
-        }
 
         public async Task<List<InsurancePolicyHolder>> GetAllInsurancePolicyHolders()
         {

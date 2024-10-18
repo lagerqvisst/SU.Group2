@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Models.Enums
 {
+    /// <summary>
+    /// Represents the different risk zones found in the business documentation for vehicle insurances
+    /// </summary>
     public enum RiskzoneLevel
     {
         Zone1, // Zon 1 high risk

@@ -11,17 +11,13 @@ namespace SU.Backend.Configuration
     {
         public static void AddBackendServices(this IServiceCollection services)
         {
-            // Registrera tjänster och deras beroenden här
+            // Registers all services and controllers for the backend
 
             //DB Service 
             services.AddDbContext<Context>();
             services.AddScoped<UnitOfWork>();
 
-
-            //Test Service
-            services.AddScoped<IDatabaseTestService, DatabaseTestServices>();
-
-            //API Service
+            //API Service (only used for testing)
             services.AddHttpClient<IRandomGenerationService, RandomGenerationService>();
 
             //Controllers
@@ -36,7 +32,8 @@ namespace SU.Backend.Configuration
             services.AddTransient<ComissionController>();
             services.AddTransient<InvoiceController>();
 
-            // Lägg till fler tjänster här
+            // Services 
+            services.AddScoped<IDatabaseTestService, DatabaseTestServices>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IPrivateCustomerService, PrivateCustomerService>();
             services.AddScoped<ICompanyCustomerService, CompanyCustomerService>();

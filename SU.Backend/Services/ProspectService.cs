@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Services
 {
+    /// <summary>
+    /// This class is responsible for handling the logic for identifying prospects and assigning sellers to them
+    /// </summary>
     public class ProspectService : IProspectService
     {
         private readonly UnitOfWork _unitOfWork;
@@ -23,12 +26,19 @@ namespace SU.Backend.Services
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
+
+        /// <summary>
+        /// This method identifies prospects based on specific criteria and adds them to the database
+        /// Identification is based on the number of insurances the customer has which aligns with the business documentation.
+        /// A prospect is considered a customer with 1 insurance only.
+        /// </summary>
+        /// <returns></returns>
         public async Task<(bool Success, string Message, List<Prospect> prospects)> IdentifyProspects()
         {
             _logger.LogInformation("Identifying prospects");
             try
             {
-                // Hämta privata kunder
+                // Get private customers
                 _logger.LogInformation("Getting private customers with >0 && <2 insurance (1 insurance only)");
                 var privateCustomers = await _unitOfWork.PrivateCustomers.GetProspectDataForPrivateCustomers();
                 if (privateCustomers == null || !privateCustomers.Any())
@@ -37,7 +47,7 @@ namespace SU.Backend.Services
                 }
                 _logger.LogInformation($"Found {privateCustomers.Count} private customer prospects");
 
-                // Hämta företagskunder
+                // Get company customers
                 _logger.LogInformation("Getting company customers with >0 && <2 insurance (1 insurance only)");
                 var companyCustomers = await _unitOfWork.CompanyCustomers.GetProspectDataForCompanyCustomers();
                 if (companyCustomers == null || !companyCustomers.Any())
@@ -46,10 +56,10 @@ namespace SU.Backend.Services
                 }
                 _logger.LogInformation($"Found {companyCustomers.Count} company customer prospects");
 
-                // Kombinera prospektlistor
+                // Combine prospect lists
                 List<Prospect> prospects = new List<Prospect>();
 
-                // Behandla privata kunder
+                // Handle private customers
                 foreach (var privateCustomer in privateCustomers)
                 {
                     _logger.LogInformation($"Checking if prospect for PrivateCustomer ID {privateCustomer.PrivateCustomerId} already exists in the database");
@@ -69,7 +79,7 @@ namespace SU.Backend.Services
                     }
                 }
 
-                // Behandla företagskunder
+                // Handle company customers
                 foreach (var companyCustomer in companyCustomers)
                 {
                     _logger.LogInformation($"Checking if prospect for CompanyCustomer ID {companyCustomer.CompanyCustomerId} already exists in the database");
@@ -88,7 +98,7 @@ namespace SU.Backend.Services
                     }
                 }
 
-                // Spara prospekt till databasen
+                // Check if there are any prospects to add to the database
                 if (prospects.Any())
                 {
                     _logger.LogInformation($"Adding {prospects.Count} prospect(s) to the database");
@@ -111,6 +121,10 @@ namespace SU.Backend.Services
         }
 
 
+        /// <summary>
+        /// This method assigns a seller to a specific prospect.
+        /// Since prospects are by default not assigned to any seller, this method can be used to assign a seller to a specific prospect.
+        /// </summary>
         public async Task<(bool Success, string Message)> AssignSellerToSpecificProspect(Employee employee, Prospect prospect)
         {
             _logger.LogInformation("Checking if employee has the correct role assignments");
@@ -156,6 +170,9 @@ namespace SU.Backend.Services
             }
         }
 
+        /// <summary>
+        /// This method returns all current prospects in the database.
+        /// </summary>
         public async Task<(bool Success, string Message, List<Prospect> prospects)> GetAllCurrentProspects()
         {
             _logger.LogInformation("Getting all current prospects");

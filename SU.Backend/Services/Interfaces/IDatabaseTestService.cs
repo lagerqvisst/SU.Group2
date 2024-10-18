@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Services.Interfaces
 {
+    /// <summary>
+    /// This interface is responsible for defining the methods that the DatabaseTestService class must implement.
+    /// </summary>
     public interface IDatabaseTestService
     {
         Task<(bool Success, string Message)> TestDbConnection();

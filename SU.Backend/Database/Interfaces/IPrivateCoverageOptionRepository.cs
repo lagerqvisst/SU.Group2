@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Database.Interfaces
 {
+    /// <summary>
+    /// This interface is responsible for defining the methods that the PrivateCoverageOptionRepository class must implement.
+    /// </summary>
     public interface IPrivateCoverageOptionRepository
     {
         Task<List<PrivateCoverageOption>> GetAllPrivateCoverageOptions();

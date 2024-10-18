@@ -12,12 +12,15 @@ using SU.Backend.Models.Employees;
 
 namespace SU.Backend.Services.Interfaces
 {
+    /// <summary>
+    /// This interface is responsible for defining the methods that the InsuranceService class must implement.
+    /// </summary>
     public interface IInsuranceService
     {
 
         //Implementation 
 
-        //Privatförsäkring
+        //Private Insurance
         Task<(bool Success, string Message)> CreatePrivateInsurance(
             PrivateCustomer privateCustomer,
             InsuranceType insuranceType,
@@ -30,7 +33,7 @@ namespace SU.Backend.Services.Interfaces
             List<InsuranceAddonType>? addons = null, // Nullable lista med addons
             InsuredPerson? insuredPerson = null);
 
-        //Företagsförsäkring: Fastighet & Inventarie
+        //Company Insurance: Property and Inventory
         Task<(bool Success, string Message)> CreatePropertyInventoryInsurance(
                     CompanyCustomer companyCustomer,
                     PropertyAndInventoryCoverage propertyAndInventoryCoverage,
@@ -40,7 +43,7 @@ namespace SU.Backend.Services.Interfaces
                     DateTime? endDate = null    
         );
 
-        //Företagsförsäkring: Ansvar
+        // Company Insurance: Liability
         Task<(bool Success, string Message)> CreateLiabilityInsurance(
                     CompanyCustomer companyCustomer,
                     LiabilityCoverage liabilityCoverage,
@@ -50,7 +53,7 @@ namespace SU.Backend.Services.Interfaces
                     DateTime? endDate = null
         );
 
-        //Företagsförsäkring: Fordon
+        // Company Insurance: Vehicle
         Task<(bool Success, string Message)> CreateVehicleInsurance(
                     CompanyCustomer companyCustomer,
                     VehicleInsuranceCoverage vehicleCoverage,
@@ -63,6 +66,8 @@ namespace SU.Backend.Services.Interfaces
         Task<(bool Success, string Message)> DeleteInsurance(
            Insurance insurance);
 
+        //Add update method for insurance
+
         //Tests
         Task<(bool Success, string Message)> CreateTestPrivateInsurance();
 
@@ -72,7 +77,7 @@ namespace SU.Backend.Services.Interfaces
 
         Task<(bool Success, string Message)> CreateTestCompanyLiability();
 
-        //Lists
+        //Lists: Might be worthwhile to move these to a separate service?
         Task<(bool Success, string Message, List<InsuranceAddonType> InsuranceAddonTypes)> GetAllInsuranceAddonTypes();
 
         Task<(bool Success, string Message, List<InsuranceAddon> InsuranceAddons)> GetAllInsuranceAddons();

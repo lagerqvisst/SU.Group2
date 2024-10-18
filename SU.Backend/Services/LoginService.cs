@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Services
 {
+    /// <summary>
+    /// This class is responsible for handling the business logic for logging in.
+    /// Used to authenticate users in the intial view (login page).
+    /// </summary>
     public class LoginService : ILoginService
     {
         private readonly UnitOfWork _unitOfWork;
@@ -21,6 +25,12 @@ namespace SU.Backend.Services
             _logger = logger;
         }
 
+        /// <summary>
+        /// Method to authenticate a user based on the provided username and password.
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <returns></returns>
         public async Task<(bool Success, string Message, Employee Employee)> Authentication(string Username, string Password)
         {
             _logger.LogInformation("Authenticating user");

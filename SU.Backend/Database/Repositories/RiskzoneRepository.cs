@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Database.Repositories
 {
+    /// <summary>
+    /// This class is responsible for implementing the methods defined in the IRiskzoneRepository interface.
+    /// </summary>
     public class RiskzoneRepository : Repository<Riskzone>, IRiskzoneRepository
     {
         public RiskzoneRepository(Context context) : base(context)

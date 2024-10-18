@@ -11,6 +11,11 @@ using SU.Backend.Services.Interfaces;
 
 namespace SU.Backend.Services
 {
+    /// <summary>
+    /// This service class is responsible for generating random user data by calling the RandomUser API.
+    /// Only used for testing purposes to quickly seed the database with test data.
+    /// Not used in final application.
+    /// </summary>
     public class RandomGenerationService : IRandomGenerationService
     {
         private readonly HttpClient _httpClient;

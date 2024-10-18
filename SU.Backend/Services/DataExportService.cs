@@ -6,6 +6,11 @@ using SU.Backend.Models.Invoices;
 
 namespace SU.Backend.Services
 {
+    /// <summary>
+    /// This class is responsible for handling the business logic for exporting data to Excel.
+    /// It is using EPPPlus library to create Excel files.
+    /// By using this we can make any of our entitie lists to Excel files.
+    /// </summary>
     public class DataExportService : IDataExportService
     {
         private readonly ILogger<DataExportService> _logger;
@@ -15,6 +20,7 @@ namespace SU.Backend.Services
             _logger = logger;
         }
 
+        // Method to export a list of commissions to an Excel file.
         public async Task<(bool Success, string Message)> ExportCommissionsToExcel(List<Commission> commissions)
         {
             try
@@ -76,6 +82,7 @@ namespace SU.Backend.Services
             }
         }
 
+        // Method to export a list of invoices to an Excel file.
         public async Task<(bool Success, string Message)> ExportInvoicesToExcel(List<InvoiceEntry> invoices)
         {
             try

@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Database.Repositories
 {
+    /// <summary>
+    /// This class is responsible for implementing the methods defined in the IInsuranceAddonRepository interface.
+    /// </summary>
     public class InsuranceAddonRepository : Repository<InsuranceAddon>, IInsuranceAddonRepository
     {
         public InsuranceAddonRepository(Context context) : base(context)

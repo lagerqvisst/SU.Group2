@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Services
 {
+    /// <summary>
+    /// This class is responsible for handling all the business logic for the CompanyCustomer model.
+    /// </summary>
     public class CompanyCustomerService : ICompanyCustomerService
     {
         private ILogger<CompanyCustomerService> _logger;
@@ -20,6 +23,8 @@ namespace SU.Backend.Services
             _logger = logger;
             _unitOfWork = unitOfWork;
         }
+
+        // Method to generate a test company customer, only used for testing purposes
         public async Task<(bool Success, string Message, CompanyCustomer Customer)> GenerateTestCompanyCustomer()
         {
             _logger.LogInformation("Generating test company customer");
@@ -55,7 +60,7 @@ namespace SU.Backend.Services
             }
         }
 
-        //Create a new company customer
+        // Method to create a new company customer
         public async Task<(bool Success, string Message)> CreateCompanyCustomer(CompanyCustomer newCompanyCustomer)
         {
             _logger.LogInformation("Creating new company customer...");
@@ -79,7 +84,7 @@ namespace SU.Backend.Services
             }
         }
 
-        //Update an existing company customer
+        // Method to update an existing company customer
         public async Task<(bool Success, string Message)> UpdateCompanyCustomer(CompanyCustomer companyCustomer)
         {
             _logger.LogInformation("Updating company customer...");
@@ -103,6 +108,7 @@ namespace SU.Backend.Services
             }
         }
 
+        // Method to delete an existing company customer
         public async Task<(bool Success, string Message)> DeleteCompanyCustomer(CompanyCustomer companyCustomer)
         {
 
@@ -127,7 +133,8 @@ namespace SU.Backend.Services
             }
 
         }
-        // Used for updating and deleting specific company customer.
+
+        // Method to get a company customer by ID
         public async Task<(bool Success, string Message, CompanyCustomer? Customer)> GetCompanyCustomerById(int id)
         {
             try
@@ -141,6 +148,7 @@ namespace SU.Backend.Services
             }
         }
 
+        // Method to get all company customers
         public async Task<(bool Success, string Message, List<CompanyCustomer> CompanyCustomers)> GetAllCompanyCustomers()
         {
             _logger.LogInformation("Controller activated to get all company customers...");

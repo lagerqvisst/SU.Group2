@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Services
 {
+    /// <summary>
+    /// This class is responsible for handling the business logic for invoice generation.
+    /// </summary>
     public class InvoiceService : IInvoiceService
     {
         private readonly ILogger<InvoiceService> _logger;
@@ -22,6 +25,11 @@ namespace SU.Backend.Services
             _unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        /// Method to generate invoice data for all active insurances that should be invoiced this month.
+        /// Uses helper functions to determine which insurances to invoice and to create the invoice data.
+        /// </summary>
+        /// <returns></returns>
         public async Task<(bool Success, string Message, List<InvoiceEntry> InvoiceData)> GenerateInvoiceData()
         {
             _logger.LogInformation("Starting the invoice data generation process...");
@@ -30,10 +38,10 @@ namespace SU.Backend.Services
             {
                 DateTime currentDate = DateTime.Now; // Alltid aktuell månad
 
-                // Hämta alla aktiva försäkringar
+                // Get all active insurances
                 var activeInsurances = await _unitOfWork.Insurances.GetAllActiveInsurances();
 
-                // Filtrera försäkringar som ska faktureras denna månad
+                // Filter insurances to be invoiced this month
                 var insurancesToInvoice = activeInsurances
                     .Where(i => InvoiceHelper.ShouldInvoiceInsuranceThisMonth(i, currentDate)) // Använd den statiska hjälpfunktionen
                     .ToList();
@@ -44,7 +52,7 @@ namespace SU.Backend.Services
                     return (false, "No insurances to invoice for this month.", new List<InvoiceEntry>());
                 }
 
-                // Generera fakturadata
+                // Generate invoice data
                 var invoiceData = insurancesToInvoice
                     .Select(i => InvoiceHelper.CreateInvoiceEntry(i)) // Använd den uppdaterade hjälpfunktionen
                     .ToList();

@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Database.Repositories
 {
+    /// <summary>
+    /// This class is responsible for implementing the methods defined in the IProspectRepository interface.
+    /// </summary>
     public class ProspectRepository : Repository<Prospect>, IProspectRepository
     {
         public ProspectRepository(Context context) : base(context)
@@ -25,9 +28,11 @@ namespace SU.Backend.Database.Repositories
                 .ToListAsync();
         }
 
+        // This method checks if a prospect exists in the database
+        // Used in Prospect service to prevent duplicates
         public async Task<bool> ProspectExists(int? privateCustomerId, int? companyCustomerId)
         {
-            // Om båda är null, finns ingen prospect
+            // If both privateCustomerId and companyCustomerId are null, return false
             if (privateCustomerId == null && companyCustomerId == null)
             {
                 return false;

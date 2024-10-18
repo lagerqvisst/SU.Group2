@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Services.Interfaces
 {
+    /// <summary>
+    /// This interface is responsible for defining the methods that the CompanyCustomerService class must implement.
+    /// </summary>
     public interface ICompanyCustomerService
     {
         Task<(bool Success, string Message, CompanyCustomer Customer)> GenerateTestCompanyCustomer();

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Helper
 {
+    /// <summary>
+    /// This static class is not really essential for the application, but it helps to generate a complete personal number for a private customer.
+    /// </summary>
     public class PrivateCustomerHelper
     {
         

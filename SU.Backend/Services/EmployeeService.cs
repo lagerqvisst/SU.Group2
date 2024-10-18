@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Services
 {
+    /// <summary>
+    /// This class is responsible for handling all operations related to employees.
+    /// </summary>
     public class EmployeeService : IEmployeeService
     {
         private ILogger<EmployeeService> _logger;
@@ -24,6 +27,7 @@ namespace SU.Backend.Services
             _unitOfWork = unitOfWork; // Injicera UnitOfWork
         }
 
+        // This method generates a random employee based on the provided role. Used for testing purposes.
         public async Task<(bool Success, string Message, Employee Employee)> GenerateRandomEmployee(EmployeeType Role)
         {
             _logger.LogInformation("Generating random employee");
@@ -84,20 +88,18 @@ namespace SU.Backend.Services
             }
         }
 
-        //Auto assign manager based on role
-        //Kanske kan bli knas när vi har anställda som har fler roller såsom Sales Assistant & Sales för fallet Karin.
-        //Kanske skapa en service metod för employeeservice där vi bygger en repositoryklass mot EmployeeRoleAssignments. 
-        //Då kan göra ett case där om en anställd har fler än 1 roll, så tar man den rollen som har högst procent och sätter som manager.
+        //Auto assign manager based on role. In case an employee has multiple roles the highest role will be used (highest = highest %) 
         public async Task<Employee?> GetManagerForRole(EmployeeType role)
         {
             switch (role)
             {
+                // These roles report to Sales Manager
                 case EmployeeType.OutsideSales:
                 case EmployeeType.InsideSales:
                 case EmployeeType.SalesAssistant:
                     return await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.SalesManager); //Iren Panik
 
-                //Dessa två svarar till VD Stenhård
+                // These roles report to CEO
                 case EmployeeType.FinancialAssistant:
                 case EmployeeType.SalesManager:
                     return await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.CEO);
@@ -107,6 +109,7 @@ namespace SU.Backend.Services
             }
         }
 
+        //Method to get all employees
         public async Task<(bool Success, string Message, List<Employee> Employees)> GetAllEmployees()
         {
             _logger.LogInformation("Controller activated to get all employees");
@@ -123,8 +126,8 @@ namespace SU.Backend.Services
                 return (false, "An error occurred while fetching the employees", new List<Employee>());
             }
         }
-        //method to add new Emplyee
 
+        //Method to add new Emplyee
         public async Task<(bool Success, string Message)> CreateNewEmployee(Employee employee)
         {
             _logger.LogInformation("Creating new Employee...");
@@ -146,6 +149,7 @@ namespace SU.Backend.Services
             }
 
         }
+
         //method to update new Employee
         public async Task<(bool Success, string Message)> UpdateEmployee(Employee employee)
         {
@@ -168,6 +172,7 @@ namespace SU.Backend.Services
                 return (false, $"An error has occurred while updating the employee: {e.Message.ToString()}");
             }
         }
+
         //Method to delete employee
         public async Task<(bool Success, string Message)> DeleteEmployee(Employee employee)
         {
@@ -192,6 +197,7 @@ namespace SU.Backend.Services
             }
         }
 
+        //Method to get employee by id
         public async Task<(bool Success, string Message, Employee? Employee)> GetEmployeeById(int id)
         {
             _logger.LogInformation("Getting employee by id");
@@ -216,6 +222,7 @@ namespace SU.Backend.Services
             }
         }
 
+        //Method to get all employee role assignments
         public async Task<(bool Success, string Message, List<EmployeeRoleAssignment> EmployeeRoleAssignments)> GetAllEmployeeRoleAssignments()
         {
             _logger.LogInformation("Controller activated to get all employee role assignments...");

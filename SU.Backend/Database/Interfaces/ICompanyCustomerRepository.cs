@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Database.Interfaces
 {
+    /// <summary>
+    /// This interface is responsible for defining the methods that the CompanyCustomerRepository class must implement.
+    /// </summary>
     public interface ICompanyCustomerRepository
-
-        //All query definitions for CompanyCustomer
     {
         Task<List<CompanyCustomer>> GetProspectDataForCompanyCustomers();
 

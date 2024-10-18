@@ -12,6 +12,12 @@ namespace SU.Backend.Helper
 {
     public static class EnumService
     {
+        /// <summary>
+        /// This class is used to get the different enum values for the different enums in the project.
+        /// It was created to easily fetch information in the same way we do in our service classes but for enums which are are not stored in the database.
+        /// You can see references in Viewmodels in the frontend project. Many of these enums are used in dropdowns / comboboxes.
+        /// </summary>
+        /// <returns></returns>
         public static List<RiskzoneLevel> RiskzoneLevels()
         {
             return Enum.GetValues(typeof(RiskzoneLevel)).Cast<RiskzoneLevel>().ToList();

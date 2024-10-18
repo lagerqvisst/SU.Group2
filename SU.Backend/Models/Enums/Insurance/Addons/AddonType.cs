@@ -8,7 +8,7 @@ namespace SU.Backend.Models.Enums.Insurance.Addons
 {
     public enum AddonType
     {
-        SicknessAccident,  // För Sjuk- och olycksfall
-        LongTermSickness   // För Långtidssjukdom
+        SicknessAccident,  // Represents addon option "Sjuk- och olycksfall"
+        LongTermSickness   // Represents addon option "För Långtidssjukdom"
     }
 }

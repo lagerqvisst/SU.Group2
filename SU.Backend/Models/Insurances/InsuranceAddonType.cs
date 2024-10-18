@@ -8,11 +8,15 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Models.Insurances
 {
+    /// <summary>
+    /// This class represents the different types of addons that can be added to an insurance.
+    /// Options reflect the available types of addons in the business documentation.
+    /// </summary>
     public class InsuranceAddonType
     {
         public int InsuranceAddonTypeId { get; set; } // PK
-        // Specifika egenskaper för tilläggstypen
-        public AddonType Description { get; set; } // En beskrivning av tillägget
+       
+        public AddonType Description { get; set; } // Description of the addon
         public decimal CoverageAmount { get; set; } // Grundbelopp
         public decimal BaseExtraPremium { get; set; } // Grundkostnad för tillägget
 

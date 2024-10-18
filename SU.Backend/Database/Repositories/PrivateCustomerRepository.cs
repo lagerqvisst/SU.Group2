@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Database.Repositories
 {
+    /// <summary>
+    /// This class is responsible for implementing the methods defined in the IPrivateCustomerRepository interface.
+    /// </summary>
     public class PrivateCustomerRepository : Repository<PrivateCustomer>, IPrivateCustomerRepository
     {
         public PrivateCustomerRepository(Context context) : base(context)
@@ -21,6 +24,8 @@ namespace SU.Backend.Database.Repositories
             return await _context.PrivateCustomers.FirstOrDefaultAsync(x => x.PrivateCustomerId == privateCustomer.PrivateCustomerId);
         }
 
+        // This method is used to get the data of the private customers who have only one insurance policy.
+        // This is the definition of a prospect according to the business documentation.
         public async Task<List<PrivateCustomer>> GetProspectDataForPrivateCustomers()
         {
             return await _context.PrivateCustomers

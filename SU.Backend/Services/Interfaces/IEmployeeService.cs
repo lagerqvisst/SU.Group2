@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Services.Interfaces
 {
+    /// <summary>
+    /// This interface is responsible for defining the methods that the EmployeeService class must implement.
+    /// </summary>
     public interface IEmployeeService
     {
         Task<(bool Success, string Message, Employee Employee)> GenerateRandomEmployee(EmployeeType Role);

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Models.Statistics
 {
+    /// <summary>
+    /// Create to store the monthly sales data for each insurance type.
+    /// </summary>
     public class MonthlySalesData
     {
         public int Month { get; set; } // 1 = January, 2 = February, ..., 12 = December

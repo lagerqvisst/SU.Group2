@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Database.Repositories
 {
+    /// <summary>
+    /// This class is responsible for implementing the methods defined in the ILiabilityCoverageRepository interface.
+    /// </summary>
     public class LiabilityCoverageRepository : Repository<LiabilityCoverage>, ILiabilityCoverageRepository
     {
         public LiabilityCoverageRepository(Context context) : base(context)
