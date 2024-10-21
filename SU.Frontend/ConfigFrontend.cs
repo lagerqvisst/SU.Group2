@@ -12,7 +12,6 @@ using SU.Frontend.Helper.Navigation;
 using SU.Frontend.Helper.User;
 using SU.Frontend.ViewModels.UserControls;
 using SU.Frontend.ViewModels;
-using SU.Frontend.Views.UserControls;
 using SU.Frontend.Views;
 
 namespace SU.Frontend
@@ -25,11 +24,8 @@ namespace SU.Frontend
 
             // Registrera både LoginWindow och LoginViewModel
             services.AddTransient<TaskbarViewModel>();
-            services.AddTransient<TaskbarView>();
             services.AddTransient<LoginViewModel>();
             services.AddTransient<LoginWindow>();
-            services.AddTransient<StatisticsViewModel>();
-            services.AddTransient<Statistics>();
 
             //Frontend services
             services.AddScoped<INavigationService, NavigationService>();

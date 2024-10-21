@@ -7,7 +7,6 @@ using SU.Frontend.Helper.User;
 using SU.Frontend.ViewModels;
 using SU.Frontend.ViewModels.UserControls;
 using SU.Frontend.Views;
-using SU.Frontend.Views.UserControls;
 using System;
 using System.Windows;
 

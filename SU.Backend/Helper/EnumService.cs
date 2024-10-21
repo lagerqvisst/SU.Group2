@@ -45,7 +45,7 @@ namespace SU.Backend.Helper
             return Enum.GetValues(typeof(ProspectStatus)).Cast<ProspectStatus>().ToList();
         }
 
-        public static List<PaymentPlan> paymentPlans()
+        public static List<PaymentPlan> PaymentPlans()
         {
             return Enum.GetValues(typeof(PaymentPlan)).Cast<PaymentPlan>().ToList();
         }
