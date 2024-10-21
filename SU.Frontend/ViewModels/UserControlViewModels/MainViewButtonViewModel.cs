@@ -14,11 +14,11 @@ namespace SU.Frontend.ViewModels.UserControlViewModels
     public class MainViewButtonViewModel
     {
 
-        public ICommand MainViewCommand { get; }
+        public ICommand ReturnToMainViewCommand { get; }
 
-        public  MainViewButtonViewModel(Employee employee, INavigationService navigationService)
+        public MainViewButtonViewModel(Employee employee, INavigationService navigationService)
         {
-            ReturnToMainViewCommand = new RelayCommand(navigationService.ReturnToMain(employee, navigationService));
+            ReturnToMainViewCommand = new RelayCommand(() => navigationService.ReturnToMain(employee, navigationService));
         }
     }
 }
