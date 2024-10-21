@@ -120,24 +120,8 @@ namespace SU.Backend.Services
             }
         }
 
-        // This method fetches all insurance addon types from the database. The list of data will be used in the view for creating a new insurance if a customer wants to add addons.
-        public async Task<(bool Success, string Message, List<InsuranceAddonType> InsuranceAddonTypes)> GetAllInsuranceAddonTypes()
-         {
-            _logger.LogInformation("Controller activated to get all insurance addon types...");
-
-            try
-            {
-                var insuranceAddonTypes = _unitOfWork.InsuranceAddonTypes.GetAllInsuranceAddonTypes();
-                _logger.LogInformation("Insurance addon types found: {InsuranceAddonTypeCount}", insuranceAddonTypes.Result.Count);
-
-                return (true, "Insurance addon types found", insuranceAddonTypes.Result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred while fetching insurance addont types.");
-                return (false, "An error occurred while fetching the insurance addon types.", new List<InsuranceAddonType>());
-            }
-         }
+        
+      
 
         // This method is similar to private insurance creation, but for a specific company insurances.
         public async Task<(bool Success, string Message)> CreatePropertyInventoryInsurance(
