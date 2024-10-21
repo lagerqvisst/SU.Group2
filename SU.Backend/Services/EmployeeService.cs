@@ -240,5 +240,32 @@ namespace SU.Backend.Services
                 return (false, "An error occurred while fetching the employee role assignments.", new List<EmployeeRoleAssignment>());
             }
         }
+
+        public async Task<(bool Success, string Message, Employee Employee)> GetEmployeeByRole(EmployeeType role)
+        {
+            _logger.LogInformation("Getting employee by role");
+
+            try
+            {
+                var employee = _unitOfWork.Employees.GetEmployeeByRole(role);
+                if (employee == null)
+                {
+                    _logger.LogInformation("No employee found");
+                    return (false, "No employee found", null);
+                }
+
+                _logger.LogInformation("Employee found");
+
+                return (true, "Employee found", employee.Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting employee");
+                return (false, "Error getting employee", null);
+
+            }
+
+
+        }
     }
 }

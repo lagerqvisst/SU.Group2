@@ -128,5 +128,22 @@ namespace SU.Backend.Controllers
                 return (new List <EmployeeRoleAssignment>(), result.Message);
             }
         }
+
+        public async Task<(bool Success, string Message, Employee Employee)> GetEmployeeByRole(EmployeeType role)
+        {
+            _logger.LogInformation("Controller activated to get employee by role...");
+            var result = await _employeeService.GetEmployeeByRole(role);
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"Employee found:\n{result.Employee}");
+                return (result.Success, result.Message, result.Employee);
+            }
+            else
+            {
+                _logger.LogWarning($"Error retrieving employee: {result.Message}");
+                return (result.Success, result.Message, null);
+            }
+        }
     }
 }
