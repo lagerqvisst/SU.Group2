@@ -3,6 +3,7 @@ using SU.Backend.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -29,7 +30,7 @@ namespace SU.Frontend.Helper.Navigation
             }
         }
 
-        public void NavigateBasedOnRole(Employee employee, INavigationService navigationService)
+        public void NavigateToMainViewBasedOnRole(Employee employee, INavigationService navigationService)
         {
             if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.CEO))
             {
@@ -86,6 +87,30 @@ namespace SU.Frontend.Helper.Navigation
             }
         }
 
+        public void ReturnToMain(Employee employee, INavigationService navigationService)
+        {
+            NavigateToMainViewBasedOnRole(employee, navigationService);
 
+            Window currentWindow = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+
+            // Check if window is current
+            if (currentWindow != null)
+            {
+                // Map current window to string 
+                string windowName = currentWindow.Title;
+
+                CloseAllExcept(windowName);
+
+                // Show window as string 
+                Console.WriteLine($"Current window: {windowName}");
+            }
+            else
+            {
+                Console.WriteLine("No active window found.");
+            }
+
+            
+
+        }
     }
 }
