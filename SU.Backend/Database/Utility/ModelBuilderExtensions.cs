@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SU.Backend.Helper;
+using SU.Backend.Models.Employees;
 using SU.Backend.Models.Enums;
 using SU.Backend.Models.Enums.Insurance;
 using SU.Backend.Models.Enums.Insurance.Addons;
@@ -337,6 +338,291 @@ namespace SU.Backend.Database.Utility
             #endregion
 
         }
+
+        public static void SeedOrganization(this ModelBuilder modelBuilder)
+        {
+            var employees = new List<Employee>();
+
+            // VD
+            var stenHard = new Employee
+            {
+                FirstName = "Sten",
+                LastName = "Hård",
+                Username = EmployeeHelper.GenerateEmployeeUsername(new Name { First = "Sten", Last = "Hård" }),
+                Password = EmployeeHelper.GenerateEmployeePassword("Sten", "Hård"),
+                Email = EmployeeHelper.GenerateEmployeeEmail("Sten", "Hård"),
+                Manager = null,
+                PersonalNumber = "19700101-0000",
+                BaseSalary = EmployeeHelper.GetSalaryForEmployeeType(EmployeeType.CEO),
+                AgentNumber = null,
+                RoleAssignments = new List<EmployeeRoleAssignment>
+                {
+                    new EmployeeRoleAssignment
+                    {
+                        Role = EmployeeType.CEO,
+                        Percentage = 100
+                    }
+                }
+            };
+            employees.Add(stenHard);
+
+            // Ekonomiassistent
+            var annSofieLarsson = new Employee
+            {
+                FirstName = "Ann-Sofie",
+                LastName = "Larsson",
+                Username = EmployeeHelper.GenerateEmployeeUsername(new Name { First = "Ann-Sofie", Last = "Larsson" }),
+                Password = EmployeeHelper.GenerateEmployeePassword("Ann-Sofie", "Larsson"),
+                Email = EmployeeHelper.GenerateEmployeeEmail("Ann-Sofie", "Larsson"),
+                Manager = stenHard, // Ann-Sofie rapporterar till VD
+                PersonalNumber = "19850101-0000",
+                BaseSalary = EmployeeHelper.GetSalaryForEmployeeType(EmployeeType.FinancialAssistant),
+                AgentNumber = null,
+                RoleAssignments = new List<EmployeeRoleAssignment>
+                {
+                    new EmployeeRoleAssignment
+                    {
+                        Role = EmployeeType.FinancialAssistant,
+                        Percentage = 100
+                    }
+                }
+            };
+            employees.Add(annSofieLarsson);
+
+            // Försäljningschef
+            var irenPanik = new Employee
+            {
+                FirstName = "Iren",
+                LastName = "Panik",
+                Username = EmployeeHelper.GenerateEmployeeUsername(new Name { First = "Iren", Last = "Panik" }),
+                Password = EmployeeHelper.GenerateEmployeePassword("Iren", "Panik"),
+                Email = EmployeeHelper.GenerateEmployeeEmail("Iren", "Panik"),
+                Manager = stenHard, // Iren rapporterar till VD
+                PersonalNumber = "19820101-0000",
+                BaseSalary = EmployeeHelper.GetSalaryForEmployeeType(EmployeeType.SalesManager),
+                AgentNumber = null,
+                RoleAssignments = new List<EmployeeRoleAssignment>
+                {
+                    new EmployeeRoleAssignment
+                    {
+                        Role = EmployeeType.SalesManager,
+                        Percentage = 100
+                    }
+                }
+            };
+            employees.Add(irenPanik);
+
+            // Innesäljare och Utesäljare
+            var ireneJohansson = new Employee
+            {
+                FirstName = "Irene",
+                LastName = "Johansson",
+                Username = EmployeeHelper.GenerateEmployeeUsername(new Name { First = "Irene", Last = "Johansson" }),
+                Password = EmployeeHelper.GenerateEmployeePassword("Irene", "Johansson"),
+                Email = EmployeeHelper.GenerateEmployeeEmail("Irene", "Johansson"),
+                Manager = irenPanik,
+                PersonalNumber = "19810101-0000",
+                BaseSalary = EmployeeHelper.GetSalaryForEmployeeType(EmployeeType.InsideSales),
+                AgentNumber = "2547",
+                RoleAssignments = new List<EmployeeRoleAssignment>
+                {
+                    new EmployeeRoleAssignment
+                    {
+                        Role = EmployeeType.InsideSales,
+                        Percentage = 100
+                    }
+                }
+            };
+            employees.Add(ireneJohansson);
+
+            var karinSundberg = new Employee
+            {
+                FirstName = "Karin",
+                LastName = "Sundberg",
+                Username = EmployeeHelper.GenerateEmployeeUsername(new Name { First = "Karin", Last = "Sundberg" }),
+                Password = EmployeeHelper.GenerateEmployeePassword("Karin", "Sundberg"),
+                Email = EmployeeHelper.GenerateEmployeeEmail("Karin", "Sundberg"),
+                Manager = irenPanik,
+                PersonalNumber = "19890101-0000",
+                BaseSalary = EmployeeHelper.GetSalaryForEmployeeType(EmployeeType.SalesAssistant),
+                AgentNumber = "6423",
+                RoleAssignments = new List<EmployeeRoleAssignment>
+                {
+                    new EmployeeRoleAssignment
+                    {
+                        Role = EmployeeType.InsideSales,
+                        Percentage = 75
+                    },
+                    new EmployeeRoleAssignment
+                    {
+                        Role = EmployeeType.SalesAssistant,
+                        Percentage = 25 // Justera enligt vad som passar bäst
+                    }
+                }
+            };
+            employees.Add(karinSundberg);
+
+            var vigoPersson = new Employee
+            {
+                FirstName = "Vigo",
+                LastName = "Persson",
+                Username = EmployeeHelper.GenerateEmployeeUsername(new Name { First = "Vigo", Last = "Persson" }),
+                Password = EmployeeHelper.GenerateEmployeePassword("Vigo", "Persson"),
+                Email = EmployeeHelper.GenerateEmployeeEmail("Vigo", "Persson"),
+                Manager = irenPanik,
+                PersonalNumber = "19900101-0000",
+                BaseSalary = EmployeeHelper.GetSalaryForEmployeeType(EmployeeType.InsideSales),
+                AgentNumber = "2447",
+                RoleAssignments = new List<EmployeeRoleAssignment>
+                {
+                    new EmployeeRoleAssignment
+                    {
+                        Role = EmployeeType.InsideSales,
+                        Percentage = 100
+                    }
+                }
+            };
+            employees.Add(vigoPersson);
+
+            // Utesäljare
+            var birgittaFrisk = new Employee
+            {
+                FirstName = "Birgitta",
+                LastName = "Frisk",
+                Username = EmployeeHelper.GenerateEmployeeUsername(new Name { First = "Birgitta", Last = "Frisk" }),
+                Password = EmployeeHelper.GenerateEmployeePassword("Birgitta", "Frisk"),
+                Email = EmployeeHelper.GenerateEmployeeEmail("Birgitta", "Frisk"),
+                Manager = irenPanik,
+                PersonalNumber = "19830101-0000",
+                BaseSalary = EmployeeHelper.GetSalaryForEmployeeType(EmployeeType.OutsideSales),
+                AgentNumber = "5836",
+                RoleAssignments = new List<EmployeeRoleAssignment>
+                {
+                    new EmployeeRoleAssignment
+                    {
+                        Role = EmployeeType.OutsideSales,
+                        Percentage = 100
+                    }
+                }
+            };
+            employees.Add(birgittaFrisk);
+
+            var borisAlm = new Employee
+            {
+                FirstName = "Boris",
+                LastName = "Alm",
+                Username = EmployeeHelper.GenerateEmployeeUsername(new Name { First = "Boris", Last = "Alm" }),
+                Password = EmployeeHelper.GenerateEmployeePassword("Boris", "Alm"),
+                Email = EmployeeHelper.GenerateEmployeeEmail("Boris", "Alm"),
+                Manager = irenPanik,
+                PersonalNumber = "19750101-0000",
+                BaseSalary = EmployeeHelper.GetSalaryForEmployeeType(EmployeeType.OutsideSales),
+                AgentNumber = "2264",
+                RoleAssignments = new List<EmployeeRoleAssignment>
+                {
+                    new EmployeeRoleAssignment
+                    {
+                        Role = EmployeeType.OutsideSales,
+                        Percentage = 100
+                    }
+                }
+            };
+            employees.Add(borisAlm);
+
+            var lindaJonsson = new Employee
+            {
+                FirstName = "Linda",
+                LastName = "Jonsson",
+                Username = EmployeeHelper.GenerateEmployeeUsername(new Name { First = "Linda", Last = "Jonsson" }),
+                Password = EmployeeHelper.GenerateEmployeePassword("Linda", "Jonsson"),
+                Email = EmployeeHelper.GenerateEmployeeEmail("Linda", "Jonsson"),
+                Manager = irenPanik,
+                PersonalNumber = "19850101-0000",
+                BaseSalary = EmployeeHelper.GetSalaryForEmployeeType(EmployeeType.OutsideSales),
+                AgentNumber = "1153",
+                RoleAssignments = new List<EmployeeRoleAssignment>
+                {
+                    new EmployeeRoleAssignment
+                    {
+                        Role = EmployeeType.OutsideSales,
+                        Percentage = 100
+                    }
+                }
+            };
+            employees.Add(lindaJonsson);
+
+            var malinNilsdotter = new Employee
+            {
+                FirstName = "Malin",
+                LastName = "Nilsdotter",
+                Username = EmployeeHelper.GenerateEmployeeUsername(new Name { First = "Malin", Last = "Nilsdotter" }),
+                Password = EmployeeHelper.GenerateEmployeePassword("Malin", "Nilsdotter"),
+                Email = EmployeeHelper.GenerateEmployeeEmail("Malin", "Nilsdotter"),
+                Manager = irenPanik,
+                PersonalNumber = "19860101-0000",
+                BaseSalary = EmployeeHelper.GetSalaryForEmployeeType(EmployeeType.OutsideSales),
+                AgentNumber = "7473",
+                RoleAssignments = new List<EmployeeRoleAssignment>
+                {
+                    new EmployeeRoleAssignment
+                    {
+                        Role = EmployeeType.OutsideSales,
+                        Percentage = 100
+                    }
+                }
+            };
+            employees.Add(malinNilsdotter);
+
+            var mikaelLund = new Employee
+            {
+                FirstName = "Mikael",
+                LastName = "Lund",
+                Username = EmployeeHelper.GenerateEmployeeUsername(new Name { First = "Mikael", Last = "Lund" }),
+                Password = EmployeeHelper.GenerateEmployeePassword("Mikael", "Lund"),
+                Email = EmployeeHelper.GenerateEmployeeEmail("Mikael", "Lund"),
+                Manager = irenPanik,
+                PersonalNumber = "19870101-0000",
+                BaseSalary = EmployeeHelper.GetSalaryForEmployeeType(EmployeeType.OutsideSales),
+                AgentNumber = "4331",
+                RoleAssignments = new List<EmployeeRoleAssignment>
+                {
+                    new EmployeeRoleAssignment
+                    {
+                        Role = EmployeeType.OutsideSales,
+                        Percentage = 100
+                    }
+                }
+            };
+            employees.Add(mikaelLund);
+
+            var patrikHedman = new Employee
+            {
+                FirstName = "Patrik",
+                LastName = "Hedman",
+                Username = EmployeeHelper.GenerateEmployeeUsername(new Name { First = "Patrik", Last = "Hedman" }),
+                Password = EmployeeHelper.GenerateEmployeePassword("Patrik", "Hedman"),
+                Email = EmployeeHelper.GenerateEmployeeEmail("Patrik", "Hedman"),
+                Manager = irenPanik,
+                PersonalNumber = "19880101-0000",
+                BaseSalary = EmployeeHelper.GetSalaryForEmployeeType(EmployeeType.OutsideSales),
+                AgentNumber = "7337",
+                RoleAssignments = new List<EmployeeRoleAssignment>
+                {
+                    new EmployeeRoleAssignment
+                    {
+                        Role = EmployeeType.OutsideSales,
+                        Percentage = 100
+                    }
+                }
+            };
+            employees.Add(patrikHedman);
+
+            // Seed employees to the database
+            modelBuilder.Entity<Employee>().HasData(employees);
+
+
+        }
+
 
     }
 }
