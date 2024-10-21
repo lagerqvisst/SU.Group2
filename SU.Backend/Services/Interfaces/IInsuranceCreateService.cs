@@ -13,9 +13,9 @@ using SU.Backend.Models.Employees;
 namespace SU.Backend.Services.Interfaces
 {
     /// <summary>
-    /// This interface is responsible for defining the methods that the InsuranceService class must implement.
+    /// This interface is responsible for defining the methods that the InsuranceCreateService class must implement.
     /// </summary>
-    public interface IInsuranceService
+    public interface IInsuranceCreateService
     {
 
         //Implementation 
@@ -77,28 +77,7 @@ namespace SU.Backend.Services.Interfaces
 
         Task<(bool Success, string Message)> CreateTestCompanyLiability();
 
-        //Lists: Might be worthwhile to move these to a separate service?
+      
 
-        Task<(bool Success, string Message, List<Insurance> Insurances)> GetAllInsurances();
-
-        Task<(bool Success, string Message, List<InsuranceAddon> InsuranceAddons)> GetAllInsuranceAddons();
-
-        Task<(bool Success, string Message, List<InsuranceAddonType> InsuranceAddonTypes)> GetAllInsuranceAddonTypes();
-
-        Task<(bool Success, string Message, List<InsurancePolicyHolder> InsurancePolicyHolders)> GetAllInsurancePolicyHolders();
-
-        Task<(bool Success, string Message, List<InsuranceCoverage> InsuranceCoverages)> GetAllInsuranceCoverages();
-
-        Task<(bool Success, string Message, List<VehicleInsuranceCoverage> VehicleInsuranceCoverages)> GetAllVehicleInsuranceCoverages();
-
-        Task<(bool Success, string Message, List<VehicleInsuranceOption> VehicleInsuranceCoverages)> GetAllVehicleInsuranceOptions();
-
-        Task<(bool Success, string Message, List<Riskzone> Riskzones)> GetAllRiskzones();
-
-        Task<(bool Success, string Message, List<LiabilityCoverage> LiabilityCoverages)> GetAllLiabilityCoverages();
-
-        Task<(bool Success, string Message, List<LiabilityCoverageOption> LiabilityCoverageOptions)> GetAllLiabilityCoverageOptions();
-
-        Task<(bool Success, string Message, List<PropertyAndInventoryCoverage> PropertyAndInventoryCoverages)> GetAllPropertyAndInventoryCoverages();
     }
 }

@@ -95,9 +95,9 @@ class Program
         #endregion
 
         #region Insurance tests
-        ///Test InsuranceService
-        var insuranceService = host.Services.GetRequiredService<IInsuranceService>();
-        var insuranceController = host.Services.GetRequiredService<InsuranceController>();
+        ///Test InsuranceCreateService
+        var InsuranceCreateService = host.Services.GetRequiredService<IInsuranceCreateService>();
+        var InsuranceCreateController = host.Services.GetRequiredService<InsuranceCreateController>();
         var privateCoverageService = host.Services.GetRequiredService<IPrivateCoverageService>();
 
         #endregion
