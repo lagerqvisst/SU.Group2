@@ -15,6 +15,7 @@ namespace SU.Backend.Models.Employees
     /// </summary>
     public class EmployeeRoleAssignment
     {
+
         public int EmployeeRoleAssignmentId { get; set; }
         public EmployeeType Role { get; set; }
         public double Percentage { get; set; }

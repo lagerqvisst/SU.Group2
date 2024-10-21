@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 namespace SU.Backend.Helper
 {
     /// <summary>
-    /// Class that generates a unique four digit agent number.
-    /// Checks if the generated number is unique in the database.
-    /// Continues to generate a new number until a unique one is found.
+    /// This static class contains helper methods for generating info easier for the Employee attributes
     /// </summary>
     public static class EmployeeHelper
     {
@@ -81,6 +79,40 @@ namespace SU.Backend.Helper
 
             return password;
         }
+
+        public static string GenerateLastFourDigits(bool isMale)
+        {
+            Random random = new Random();
+            // De första tre siffrorna kan vara vilka som helst
+            int firstThreeDigits = random.Next(100, 999);
+
+            // Om personen är man ska den sista siffran vara udda, annars jämn för kvinnor
+            int lastDigit = isMale ? GenerateOddDigit(random) : GenerateEvenDigit(random);
+
+            return $"{firstThreeDigits}{lastDigit}";
+        }
+
+        private static int GenerateOddDigit(Random random)
+        {
+            int digit;
+            do
+            {
+                digit = random.Next(0, 10);
+            } while (digit % 2 == 0);
+            return digit;
+        }
+
+        private static int GenerateEvenDigit(Random random)
+        {
+            int digit;
+            do
+            {
+                digit = random.Next(0, 10);
+            } while (digit % 2 != 0);
+            return digit;
+        }
+
+
 
 
     }
