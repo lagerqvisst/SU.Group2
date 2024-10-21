@@ -6,6 +6,13 @@
     <Application.Resources>
         <!-- Registrera ViewModelLocator -->
         <helper:ViewModelLocator x:Key="Locator" />
+
+        <Style x:Key="MainButtonStyle" TargetType="Button">
+            <Setter Property="Padding" Value="10 5"/>
+            <Setter Property="Background" Value="LightGray"/>
+            <!-- 10 Left and Right and 5 Top and Bottom-->
+            <Setter Property="FontFamily" Value="Times New Roman"/>
+        </Style>
     </Application.Resources>
 </Application>
 
