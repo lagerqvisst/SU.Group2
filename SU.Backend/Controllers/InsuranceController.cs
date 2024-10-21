@@ -21,6 +21,7 @@ namespace SU.Backend.Controllers
     public class InsuranceController
     {
         private readonly IInsuranceService _insuranceService; 
+        private readonly IInsuranceListingService _insuranceListingService;
         private readonly ILogger<InsuranceController> _logger;
 
         public InsuranceController(IInsuranceService insuranceService, ILogger<InsuranceController> logger)
@@ -29,10 +30,16 @@ namespace SU.Backend.Controllers
             _logger = logger;
         }
 
+        public InsuranceController(IInsuranceListingService insuranceListingService, ILogger<InsuranceController> logger)
+        {
+            _insuranceService = insuranceListingService;
+            _logger = logger;
+        }
+
         public async Task<(List<Insurance> insurances, string Message)> GetAllInsurances()
         {
             _logger.LogInformation("Controller activated to list all insurances...");
-            var result = await _insuranceService.GetAllInsurances();
+            var result = await _insuranceListingService.GetAllInsurances();
 
             if (result.Success)
             {
@@ -49,7 +56,7 @@ namespace SU.Backend.Controllers
         public async Task<(List<InsuranceAddonType> insuranceAddonTypes, string Message)> GetAllInsuranceAddonTypes()
         {
             _logger.LogInformation("Controller activated to list all insurance addon types...");
-            var result = await _insuranceService.GetAllInsuranceAddonTypes();
+            var result = await _insuranceListingService.GetAllInsuranceAddonTypes();
 
             if (result.Success) 
             {
@@ -66,7 +73,7 @@ namespace SU.Backend.Controllers
         public async Task<(List<InsuranceAddon> InsuranceAddons, string Message)> GetAllInsuranceAddons()
         {
             _logger.LogInformation("Controller activated to list all insurance addons...");
-            var result = await _insuranceService.GetAllInsuranceAddons();
+            var result = await _insuranceListingService.GetAllInsuranceAddons();
 
             if (result.Success)
             {
@@ -163,7 +170,7 @@ namespace SU.Backend.Controllers
         public async Task<(List<VehicleInsuranceCoverage> VehicleInsuranceCoverages, string Message)> GetAllVehicleInsuranceCoverages()
         {
             _logger.LogInformation("Controller activated to list all vehicle insurance coverages...");
-            var result = await _insuranceService.GetAllVehicleInsuranceCoverages();
+            var result = await _insuranceListingService.GetAllVehicleInsuranceCoverages();
 
             if (result.Success)
             {
@@ -181,7 +188,7 @@ namespace SU.Backend.Controllers
         public async Task<(List<InsurancePolicyHolder> InsurancePolicyHolders, string Message)> GetAllInsurancePolicyHolders()
         {
             _logger.LogInformation("Controller activated to list all insurance policy holders...");
-            var result = await _insuranceService.GetAllInsurancePolicyHolders();
+            var result = await _insuranceListingService.GetAllInsurancePolicyHolders();
 
             if (result.Success)
             {
@@ -198,7 +205,7 @@ namespace SU.Backend.Controllers
         public async Task<(List<InsuranceCoverage> InsuranceCoverages, string Message)> GetAllInsuranceCoverages()
         {
             _logger.LogInformation("Controller activated to list all insurance coverages...");
-            var result = await _insuranceService.GetAllInsuranceCoverages();
+            var result = await _insuranceListingService.GetAllInsuranceCoverages();
 
             if (result.Success)
             {
@@ -215,7 +222,7 @@ namespace SU.Backend.Controllers
         public async Task<(List<LiabilityCoverage> LiabilityCoverages, string Message)> GetAllLiabilityCoverages()
         {
             _logger.LogInformation("Controller activated to list all liability coverages...");
-            var result = await _insuranceService.GetAllLiabilityCoverages();
+            var result = await _insuranceListingService.GetAllLiabilityCoverages();
 
             if (result.Success)
             {
@@ -232,7 +239,7 @@ namespace SU.Backend.Controllers
         public async Task<(List<LiabilityCoverageOption> LiabilityCoverageOptions, string Message)> GetAllLiabilityCoverageOptions()
         {
             _logger.LogInformation("Controller activated to list all liability coverages...");
-            var result = await _insuranceService.GetAllLiabilityCoverageOptions();
+            var result = await _insuranceListingService.GetAllLiabilityCoverageOptions();
 
             if (result.Success)
             {
@@ -249,7 +256,7 @@ namespace SU.Backend.Controllers
         public async Task<(List<Riskzone> Riskzones, string Message)> GetAllRiskZones()
         {
             _logger.LogInformation("Controller activated to list all riskzones...");
-            var result = await _insuranceService.GetAllRiskzones();
+            var result = await _insuranceListingService.GetAllRiskzones();
 
             if (result.Success)
             {
@@ -266,7 +273,7 @@ namespace SU.Backend.Controllers
         public async Task<(List<PropertyAndInventoryCoverage> PropertyAndInventoryCoverages, string Message)> GetAllPropertyAndInventoryCoverages()
         {
             _logger.LogInformation("Controller activated to list all property and inventory coverages...");
-            var result = await _insuranceService.GetAllPropertyAndInventoryCoverages();
+            var result = await _insuranceListingService.GetAllPropertyAndInventoryCoverages();
 
             if (result.Success)
             {
