@@ -8,7 +8,7 @@
     </UserControl.Resources>
 
     <Grid DataContext="{Binding MainViewButtonViewModel, Source={StaticResource Locator}}">
-        <Button Content="Log out" Command="{Binding ReturnToMainViewCommand}" Width="100" Height="30" />
+        <Button Content="Main view" Command="{Binding ReturnToMainViewCommand}" Width="100" Height="30" />
     </Grid>
     
 </UserControl>
