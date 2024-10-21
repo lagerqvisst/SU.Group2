@@ -23,12 +23,12 @@ namespace SU.Backend.Services
     /// <summary>
     /// This class contains methods for creating different types of insurances.
     /// </summary>
-    public class InsuranceService : IInsuranceService
+    public class InsuranceCreateService : IInsuranceCreateService
     {
         private readonly UnitOfWork _unitOfWork;
-        private readonly ILogger<InsuranceService> _logger;
+        private readonly ILogger<InsuranceCreateService> _logger;
 
-        public InsuranceService(UnitOfWork unitOfWork, ILogger<InsuranceService> logger)
+        public InsuranceCreateService(UnitOfWork unitOfWork, ILogger<InsuranceCreateService> logger)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;

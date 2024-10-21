@@ -25,7 +25,7 @@ namespace SU.Backend.Configuration
             services.AddTransient<PrivateCustomerController>(); 
             services.AddTransient<LoginController>();
             services.AddTransient<CompanyCustomerController>();
-            services.AddTransient<InsuranceController>();
+            services.AddTransient<InsuranceCreateController>();
             services.AddTransient<PrivateCoverageController>();
             services.AddTransient<ProspectController>();
             services.AddTransient<StatisticsController>();
@@ -38,7 +38,7 @@ namespace SU.Backend.Configuration
             services.AddScoped<IPrivateCustomerService, PrivateCustomerService>();
             services.AddScoped<ICompanyCustomerService, CompanyCustomerService>();
             services.AddScoped<ILoginService, LoginService>();
-            services.AddScoped<IInsuranceService, InsuranceService>();
+            services.AddScoped<IInsuranceCreateService, InsuranceCreateService>();
             services.AddScoped<IProspectService, ProspectService>();
             services.AddScoped<ICommissionService, CommissionService>();
             services.AddScoped<IStatisticsService, StatisticsService>();

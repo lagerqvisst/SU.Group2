@@ -18,15 +18,15 @@ namespace SU.Backend.Controllers
     /// Makes logic available in the Viewmodel
     /// More info about the logic for each method can be found in the Service function each controller method uses.
     /// </summary>
-    public class InsuranceController
+    public class InsuranceCreateController
     {
-        private readonly IInsuranceService _insuranceService; 
+        private readonly IInsuranceCreateService _InsuranceCreateService; 
         private readonly IInsuranceListingService _insuranceListingService;
-        private readonly ILogger<InsuranceController> _logger;
+        private readonly ILogger<InsuranceCreateController> _logger;
 
-        public InsuranceController(IInsuranceService insuranceService, ILogger<InsuranceController> logger)
+        public InsuranceCreateController(IInsuranceCreateService InsuranceCreateService, ILogger<InsuranceCreateController> logger)
         {
-            _insuranceService = insuranceService;
+            _InsuranceCreateService = InsuranceCreateService;
             _logger = logger;
         }
 
@@ -42,7 +42,7 @@ namespace SU.Backend.Controllers
             InsuredPerson? insuredPerson = null)
         {
             _logger.LogInformation("Controller activated to create new private insurance...");
-            var result = await _insuranceService.CreatePrivateInsurance(privateCustomer, insuranceType, privateCoverageOption, seller, isPolicyHolderInsured, note, startDate, endDate, addons, insuredPerson);
+            var result = await _InsuranceCreateService.CreatePrivateInsurance(privateCustomer, insuranceType, privateCoverageOption, seller, isPolicyHolderInsured, note, startDate, endDate, addons, insuredPerson);
 
             if (result.Success)
             {
@@ -60,7 +60,7 @@ namespace SU.Backend.Controllers
             PropertyAndInventoryCoverage propertyAndInventoryCoverage, Employee seller, string note)
         {
             _logger.LogInformation("Controller activated to create new property and inventory insurance...");
-            var result = await _insuranceService.CreatePropertyInventoryInsurance(companyCustomer, propertyAndInventoryCoverage, seller, note);
+            var result = await _InsuranceCreateService.CreatePropertyInventoryInsurance(companyCustomer, propertyAndInventoryCoverage, seller, note);
 
             if (result.Success)
             {
@@ -78,7 +78,7 @@ namespace SU.Backend.Controllers
             LiabilityCoverage liabilityCoverage, Employee seller, string note)
         {
             _logger.LogInformation("Controller activated to create new liability insurance...");
-            var result = await _insuranceService.CreateLiabilityInsurance(companyCustomer, liabilityCoverage, seller, note);
+            var result = await _InsuranceCreateService.CreateLiabilityInsurance(companyCustomer, liabilityCoverage, seller, note);
 
             if (result.Success)
             {
@@ -96,7 +96,7 @@ namespace SU.Backend.Controllers
             VehicleInsuranceCoverage vehicleCoverage, Employee seller, string note)
         {
             _logger.LogInformation("Controller activated to create new vehicle insurance...");
-            var result = await _insuranceService.CreateVehicleInsurance(companyCustomer, vehicleCoverage, seller, note);
+            var result = await _InsuranceCreateService.CreateVehicleInsurance(companyCustomer, vehicleCoverage, seller, note);
 
             if (result.Success)
             {

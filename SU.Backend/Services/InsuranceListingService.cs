@@ -16,9 +16,9 @@ namespace SU.Backend.Services
 
      
             private readonly UnitOfWork _unitOfWork;
-            private readonly ILogger<InsuranceService> _logger;
+            private readonly ILogger<InsuranceCreateService> _logger;
 
-            public InsuranceListingService(UnitOfWork unitOfWork, ILogger<InsuranceService> logger)
+            public InsuranceListingService(UnitOfWork unitOfWork, ILogger<InsuranceCreateService> logger)
             {
                 _unitOfWork = unitOfWork;
                 _logger = logger;

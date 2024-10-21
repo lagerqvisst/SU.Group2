@@ -13,9 +13,9 @@ using SU.Backend.Models.Employees;
 namespace SU.Backend.Services.Interfaces
 {
     /// <summary>
-    /// This interface is responsible for defining the methods that the InsuranceService class must implement.
+    /// This interface is responsible for defining the methods that the InsuranceCreateService class must implement.
     /// </summary>
-    public interface IInsuranceService
+    public interface IInsuranceCreateService
     {
 
         //Implementation 
