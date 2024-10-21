@@ -14,6 +14,9 @@ namespace SU.Frontend.Helper
         {
             public LogoutButtonViewModel LogoutButtonViewModel =>
                 App.AppHost?.Services.GetService<LogoutButtonViewModel>();
+
+            public MainViewButtonViewModel MainViewButtonViewModel =>
+                App.AppHost?.Services.GetService<MainViewButtonViewModel>();
         }
     }
 

@@ -25,12 +25,14 @@ namespace SU.Frontend
             // Registrera alla ViewModels
             services.AddTransient<TaskbarViewModel>();
             services.AddTransient<LoginViewModel>();
-            services.AddTransient<LogoutButtonViewModel>();  // ViewModel för knappen
+            services.AddTransient<LogoutButtonViewModel>(); // ViewModel for Log Out button
+            services.AddTransient<MainViewButtonViewModel>(); //ViewModel for MainView button
 
             // Registrera Views och UserControls
             services.AddTransient<LoginWindow>();
             services.AddTransient<TestView>();
-            services.AddTransient<LogoutButtonControl>();  // UserControl för knappen
+            services.AddTransient<LogoutButtonControl>(); // UserControl for Log Out button
+            services.AddTransient<MainViewButtonControl>(); // UserControl for MainView button
 
             // Registrera andra tjänster
             services.AddScoped<INavigationService, NavigationService>();

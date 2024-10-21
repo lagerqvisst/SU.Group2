@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SU.Frontend.Helper.Return
 {
-    internal interface IReturnService
+    public interface IReturnService
     {
+        void ReturnToMain();
     }
 }
