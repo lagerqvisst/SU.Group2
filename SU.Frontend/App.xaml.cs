@@ -35,13 +35,6 @@ namespace SU.Frontend
             await AppHost!.StartAsync();
 
 
-            // Hämta LoginViewModel och sätt DataContext
-
-            //Test charts
-            
-            //var statViewModel = AppHost.Services.GetRequiredService<StatisticsViewModel>();
-            // var statisticsWindow = AppHost.Services.GetRequiredService<Statistics>();
-            //statisticsWindow.Show();
 
             var loginViewModel = AppHost.Services.GetRequiredService<LoginViewModel>();
             var startupWindow = AppHost.Services.GetRequiredService<LoginWindow>();

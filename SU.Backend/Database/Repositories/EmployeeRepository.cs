@@ -45,6 +45,7 @@ namespace SU.Backend.Database.Repositories
         public async Task<Employee?> GetEmployeeByUserCredentials(string Username, string Password)
         {
             return await _context.Employees
+                .Include(e => e.RoleAssignments)
                 .Where(e => e.Username == Username && e.Password == Password)
                 .FirstOrDefaultAsync();
         }

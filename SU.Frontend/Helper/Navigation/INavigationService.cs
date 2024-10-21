@@ -11,5 +11,7 @@ namespace SU.Frontend.Helper.Navigation
     {
         void NavigateTo(string viewName, object parameter = null);
         void NavigateBasedOnRole(Employee employee, INavigationService navigationService);
+
+        void CloseAllExcept(string viewName);
     }
 }
