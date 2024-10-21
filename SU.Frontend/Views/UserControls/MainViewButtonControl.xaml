@@ -6,7 +6,14 @@
              xmlns:local="clr-namespace:SU.Frontend.Views.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+
+    <UserControl.Resources>
+        <helper:ViewModelLocator x:Key="Locator"/>
+    </UserControl.Resources>
+
+    <Grid DataContext="{Binding MainViewButtonViewModel, Source={StaticResource Locator}}">
+        <Button Content="Main view" Command="{Binding ReturnToMain}"/>
     </Grid>
+    
+    
 </UserControl>

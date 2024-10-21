@@ -10,8 +10,10 @@ namespace SU.Frontend.Helper.Navigation
     public interface INavigationService
     {
         void NavigateTo(string viewName, object parameter = null);
-        void NavigateBasedOnRole(Employee employee, INavigationService navigationService);
+        void NavigateToMainViewBasedOnRole(Employee employee, INavigationService navigationService);
 
         void CloseAllExcept(string viewName);
+
+        void ReturnToMain(Employee employee, INavigationService navigationService);
     }
 }

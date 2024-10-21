@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using SU.Frontend.Helper.Navigation;
+using SU.Backend.Models.Employees;
 
 namespace SU.Frontend.ViewModels.UserControlViewModels
 {
@@ -14,9 +16,9 @@ namespace SU.Frontend.ViewModels.UserControlViewModels
 
         public ICommand MainViewCommand { get; }
 
-        public MainViewButtonViewModel(IAuthenticationService authenticationService)
+        public  MainViewButtonViewModel(Employee employee, INavigationService navigationService)
         {
-            LogoutCommand = new RelayCommand(authenticationService.);
+            ReturnToMainViewCommand = new RelayCommand(navigationService.ReturnToMain(employee, navigationService));
         }
     }
 }
