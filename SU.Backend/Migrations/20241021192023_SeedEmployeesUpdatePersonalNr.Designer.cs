@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SU.Backend.Database;
 
@@ -11,9 +12,10 @@ using SU.Backend.Database;
 namespace SU.Backend.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20241021192023_SeedEmployeesUpdatePersonalNr")]
+    partial class SeedEmployeesUpdatePersonalNr
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -159,8 +161,8 @@ namespace SU.Backend.Migrations
                             Email = "sten.hård@toppinsurance.se",
                             FirstName = "Sten",
                             LastName = "Hård",
-                            Password = "sthå8310H",
-                            PersonalNumber = "19700518-9117",
+                            Password = "sthå8963H",
+                            PersonalNumber = "19700101-3061",
                             Username = "sthå"
                         },
                         new
@@ -171,8 +173,8 @@ namespace SU.Backend.Migrations
                             FirstName = "Ann-Sofie",
                             LastName = "Larsson",
                             ManagerId = 1,
-                            Password = "anla1067L",
-                            PersonalNumber = "19851103-1650",
+                            Password = "anla1884L",
+                            PersonalNumber = "19850101-1852",
                             Username = "anla"
                         },
                         new
@@ -183,8 +185,8 @@ namespace SU.Backend.Migrations
                             FirstName = "Iren",
                             LastName = "Panik",
                             ManagerId = 1,
-                            Password = "irpa4972P",
-                            PersonalNumber = "19821014-8598",
+                            Password = "irpa7758P",
+                            PersonalNumber = "19820101-5628",
                             Username = "irpa"
                         },
                         new
@@ -196,8 +198,8 @@ namespace SU.Backend.Migrations
                             FirstName = "Irene",
                             LastName = "Johansson",
                             ManagerId = 3,
-                            Password = "irjo5364J",
-                            PersonalNumber = "19810205-8546",
+                            Password = "irjo6781J",
+                            PersonalNumber = "19810101-7252",
                             Username = "irjo"
                         },
                         new
@@ -209,8 +211,8 @@ namespace SU.Backend.Migrations
                             FirstName = "Karin",
                             LastName = "Sundberg",
                             ManagerId = 3,
-                            Password = "kasu2891S",
-                            PersonalNumber = "197302014-8094",
+                            Password = "kasu9341S",
+                            PersonalNumber = "197302014-1768",
                             Username = "kasu"
                         },
                         new
@@ -222,8 +224,8 @@ namespace SU.Backend.Migrations
                             FirstName = "Vigo",
                             LastName = "Persson",
                             ManagerId = 3,
-                            Password = "vipe6938P",
-                            PersonalNumber = "198406011-9665",
+                            Password = "vipe2035P",
+                            PersonalNumber = "198406011-2561",
                             Username = "vipe"
                         },
                         new
@@ -235,8 +237,8 @@ namespace SU.Backend.Migrations
                             FirstName = "Birgitta",
                             LastName = "Frisk",
                             ManagerId = 3,
-                            Password = "bifr6063F",
-                            PersonalNumber = "19930106-2952",
+                            Password = "bifr4016F",
+                            PersonalNumber = "19930106-8138",
                             Username = "bifr"
                         },
                         new
@@ -248,8 +250,8 @@ namespace SU.Backend.Migrations
                             FirstName = "Boris",
                             LastName = "Alm",
                             ManagerId = 3,
-                            Password = "boal2944A",
-                            PersonalNumber = "19750413-2503",
+                            Password = "boal8789A",
+                            PersonalNumber = "19750101-5357",
                             Username = "boal"
                         },
                         new
@@ -261,8 +263,8 @@ namespace SU.Backend.Migrations
                             FirstName = "Linda",
                             LastName = "Jonsson",
                             ManagerId = 3,
-                            Password = "lijo4077J",
-                            PersonalNumber = "19850911-6090",
+                            Password = "lijo9871J",
+                            PersonalNumber = "19850101-7784",
                             Username = "lijo"
                         },
                         new
@@ -274,8 +276,8 @@ namespace SU.Backend.Migrations
                             FirstName = "Malin",
                             LastName = "Nilsdotter",
                             ManagerId = 3,
-                            Password = "mani6243N",
-                            PersonalNumber = "19860307-4876",
+                            Password = "mani2196N",
+                            PersonalNumber = "19860101-2842",
                             Username = "mani"
                         },
                         new
@@ -287,8 +289,8 @@ namespace SU.Backend.Migrations
                             FirstName = "Mikael",
                             LastName = "Lund",
                             ManagerId = 3,
-                            Password = "milu3240L",
-                            PersonalNumber = "19870717-7290",
+                            Password = "milu1406L",
+                            PersonalNumber = "19870101-7708",
                             Username = "milu"
                         },
                         new
@@ -300,8 +302,8 @@ namespace SU.Backend.Migrations
                             FirstName = "Patrik",
                             LastName = "Hedman",
                             ManagerId = 3,
-                            Password = "pahe5740H",
-                            PersonalNumber = "19880704-3961",
+                            Password = "pahe6340H",
+                            PersonalNumber = "19880101-6979",
                             Username = "pahe"
                         });
                 });

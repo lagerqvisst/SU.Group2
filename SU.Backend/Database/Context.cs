@@ -71,7 +71,8 @@ namespace SU.Backend.Database
             modelBuilder.SeedIsuranceAddonTypes();
             modelBuilder.SeedVehicleCoverageOptions();
             modelBuilder.SeedLiabilityCoverageOptions();
-            modelBuilder.SeedOrganization();
+            modelBuilder.SeedEmployees();
+            modelBuilder.SeedEmployeeRoleAssignments();
 
 
             // This is where we define the relationships between the entities.
