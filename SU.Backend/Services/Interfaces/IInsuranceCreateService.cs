@@ -17,7 +17,6 @@ namespace SU.Backend.Services.Interfaces
     /// </summary>
     public interface IInsuranceCreateService
     {
-
         //Implementation 
 
         //Private Insurance

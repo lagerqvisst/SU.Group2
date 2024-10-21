@@ -242,7 +242,7 @@ namespace SU.Backend.Services
                 };
                 _logger.LogInformation("Insurance object created successfully.");
 
-                // Spara ändringarna till databasen
+                // Save changes to the database
                 _logger.LogInformation("Saving the new company insurance to the database...");
                 await _unitOfWork.Insurances.AddAsync(insurance);
                 await _unitOfWork.SaveChangesAsync();
@@ -545,18 +545,14 @@ namespace SU.Backend.Services
             }
         }
 
+        //Create private insurance
         public async Task<(bool Success, string Message)> CreateTestPrivateInsurance()
         {
-
-            // test hakuna matata tarea
-            await Console.Out.WriteLineAsync("hola");
-
             _logger.LogInformation("Creating private insurance...");
-
 
             try
             {
-                // Skapa huvudobjektet - Insurance
+                // Create main insurance object
                 var insurance = new Insurance
                 {
                     InsuranceType = InsuranceType.ChildAccidentAndHealthInsurance,
@@ -569,7 +565,7 @@ namespace SU.Backend.Services
                 };
 
                 _logger.LogInformation("Finding test customer.");
-                // Hämta PrivateCustomer för InsurancePolicyHolder
+                // Get the last private customer from the database
                 var privateCustomer = _unitOfWork.PrivateCustomers.GetAllPrivateCustomers().Result.Last();
                 if (privateCustomer == null)
                 {
@@ -594,8 +590,7 @@ namespace SU.Backend.Services
 
                 _logger.LogInformation("Assigned fetched customer as insurance policy holder of insurance");
 
-                // Skapa InsuranceCoverage
-               
+                // Create InsuranceCoverage
 
                 var currentYear = DateTime.Now.Year;
                 var privateCoverageOption = await _unitOfWork.PrivateCoverageOptions
@@ -628,7 +623,7 @@ namespace SU.Backend.Services
 
                 _logger.LogInformation("Premium calculated: {CalculatedPremium}", insurance.Premium);
 
-                // Skapa PrivateCoverage
+                // Create PrivateCoverage
                 var insuranceCoverage = new InsuranceCoverage();
                 var privateCoverage = new PrivateCoverage
                 {
@@ -636,16 +631,16 @@ namespace SU.Backend.Services
                     PrivateCoverageOption = privateCoverageOption,
                 };
 
-                // Koppla navigationsobjekten
+                // Connect the private coverage to the insurance coverage
                 insuranceCoverage.PrivateCoverage = privateCoverage;
                 insurance.InsuranceCoverage = insuranceCoverage;
-                // Lägg till vem som sålde försäkringen.
+                // Add who the seller is
                 _logger.LogInformation("Adding seller to insurance");
 
-                // Hämta säljaren med angiven roll.
+                // Get seller with role
                 var seller = await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.InsideSales);
 
-                // Logga information om säljaren.
+                // Log information about the seller
                 if (seller != null)
                 {
                     insurance.Seller = seller;
@@ -656,7 +651,7 @@ namespace SU.Backend.Services
                     _logger.LogWarning($"No seller found.");
                 }
 
-                // Lägg till Insurance till databasen
+                // Add Insurance to the database
                 await _unitOfWork.Insurances.AddAsync(insurance);
                 await _unitOfWork.SaveChangesAsync();
 
@@ -682,7 +677,7 @@ namespace SU.Backend.Services
 
             try
             {
-                // Validera inputdata
+                // Validate input data
                 if (companyCustomer == null)
                 {
                     _logger.LogWarning("No company customer provided.");
@@ -702,7 +697,7 @@ namespace SU.Backend.Services
                     return (false, "No seller provided.");
                 }
 
-                // Skapa försäkringsobjektet
+                // Create the insurance object
                 var insurance = new Insurance
                 {
                     InsuranceType = InsuranceType.VehicleInsurance,

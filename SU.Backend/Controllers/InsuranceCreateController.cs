@@ -37,7 +37,7 @@ namespace SU.Backend.Controllers
             string? note,
             DateTime? startDate = null,
             DateTime? endDate = null,
-            List<InsuranceAddonType>? addons = null, // Nullable lista med addons
+            List<InsuranceAddonType>? addons = null, // Nullable list with addons
             InsuredPerson? insuredPerson = null)
         {
             _logger.LogInformation("Controller activated to create new private insurance...");

@@ -8,10 +8,13 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Services.Interfaces
 {
+
+    /// <summary>
+    /// This interface is responsible for defining the methods that the InsuranceListingService class must implement.
+    /// </summary>
     public interface IInsuranceListingService
 
     {
-
         Task<(bool Success, string Message, List<Insurance> Insurances)> GetAllInsurances();
 
         Task<(bool Success, string Message, List<InsuranceAddon> InsuranceAddons)> GetAllInsuranceAddons();

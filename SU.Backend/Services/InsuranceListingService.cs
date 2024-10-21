@@ -11,7 +11,6 @@ using Microsoft.Extensions.Logging;
 
 namespace SU.Backend.Services
 {
-
     /// <summary>
     /// This class contains methods for listing different types of insurances.
     /// </summary>
