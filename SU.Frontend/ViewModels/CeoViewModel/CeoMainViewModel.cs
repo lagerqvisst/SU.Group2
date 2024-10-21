@@ -2,7 +2,5 @@
 
 public class CeoMainViewModel
 {
-	public class CeoMainViewModel()
-	{
-	}
+
 }

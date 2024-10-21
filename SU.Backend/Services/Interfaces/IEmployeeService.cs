@@ -18,6 +18,7 @@ namespace SU.Backend.Services.Interfaces
         Task<(bool Success, string Message, Employee Employee)> GenerateRandomEmployee(EmployeeType Role);
         Task<Employee?> GetManagerForRole(EmployeeType role);
 
+        Task<(bool Success, string Message, Employee Employee)> GetEmployeeByRole(EmployeeType role);
         Task<(bool Success, string Message, List<Employee> Employees)> GetAllEmployees();
 
         Task<(bool Success, string Message, Employee? Employee)> GetEmployeeById(int id);

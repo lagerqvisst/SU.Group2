@@ -31,13 +31,13 @@ namespace SU.Backend.Database.Repositories
         // This method returns the employee with the given a role.
         public async Task<Employee?> GetEmployeeByRole(EmployeeType role)
         {
-            return await _context.Employees
+            return  _context.Employees
                 .Include(e => e.RoleAssignments) 
                 .Where(e => e.RoleAssignments.Any(ra => ra.Role == role && ra.Percentage > 0)) 
                 .OrderByDescending(e => e.RoleAssignments
                     .Where(ra => ra.Role == role && ra.Percentage > 0)
                     .Max(ra => ra.Percentage)) 
-                .FirstOrDefaultAsync(); 
+                .FirstOrDefault(); 
         }
 
         // This method returns the employee with the given username and password.

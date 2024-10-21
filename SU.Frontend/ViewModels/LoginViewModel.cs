@@ -1,4 +1,6 @@
 ﻿using SU.Backend.Controllers;
+using SU.Backend.Helper;
+using SU.Backend.Models.Enums;
 using SU.Frontend.Helper;
 using SU.Frontend.Helper.Navigation;
 using SU.Frontend.Helper.User;
@@ -10,20 +12,27 @@ namespace SU.Frontend.ViewModels
     public class LoginViewModel : ObservableObject
     {
         private readonly LoginController _loginController;
+        private readonly EmployeeController _employeeController;
         private readonly INavigationService _navigationService;
         private readonly ILoggedInUserService _loggedInUserService;
 
+        public List<EmployeeType> employeeTypes = EnumService.EmployeeType();
+        public EmployeeType selectedEmployeeType { get; set; }
 
-        public LoginViewModel(LoginController loginController, INavigationService navigationService, ILoggedInUserService loggedInUserService)
+
+        public LoginViewModel(LoginController loginController,  INavigationService navigationService, ILoggedInUserService loggedInUserService, EmployeeController employeeController)
         {
             _loginController = loginController;
             _navigationService = navigationService;
             _loggedInUserService = loggedInUserService;
 
             LoginCommand = new RelayCommand(OnLogin, CanLogin);
+            FetchEmployeeCommand = new RelayCommand(OnFetchEmployee, CanFetchEmployee); // Nytt kommando
+
             _userName = string.Empty;
             _password = string.Empty;
             ButtonContent = "Logga in";
+            _employeeController = employeeController;
         }
 
         private string _userName;
@@ -104,6 +113,53 @@ namespace SU.Frontend.ViewModels
                 IsLoading = false;
             }
         }
+
+        public List<EmployeeType> EmployeeTypes { get; set; } = EnumService.EmployeeType();
+
+        private EmployeeType _selectedEmployeeType;
+        public EmployeeType SelectedEmployeeType
+        {
+            get => _selectedEmployeeType;
+            set
+            {
+                _selectedEmployeeType = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        public RelayCommand FetchEmployeeCommand { get; }
+
+
+        private bool CanFetchEmployee()
+        {
+            return SelectedEmployeeType != null; // Tillåt endast om roll är vald
+        }
+
+        private async void OnFetchEmployee()
+        {
+            if (SelectedEmployeeType != null)
+            {
+                try
+                {
+                    var employeeInfo = await _employeeController.GetEmployeeByRole(SelectedEmployeeType);
+                    if (employeeInfo.Success)
+                    {
+                        UserName = employeeInfo.Employee.Username;
+                        Password = employeeInfo.Employee.Password;
+                    }
+                    else
+                    {
+                        MessageBox.Show($"{employeeInfo.Message}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ett oväntat fel inträffade: {ex.Message}");
+                }
+            }
+        }
+
 
     }
 }
