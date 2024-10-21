@@ -120,9 +120,6 @@ namespace SU.Backend.Services
             }
         }
 
-        
-      
-
         // This method is similar to private insurance creation, but for a specific company insurances.
         public async Task<(bool Success, string Message)> CreatePropertyInventoryInsurance(
             CompanyCustomer companyCustomer,
@@ -200,7 +197,7 @@ namespace SU.Backend.Services
 
             try
             {
-                // Validera inputdata
+                // Validate input data
                 if (companyCustomer == null)
                 {
                     _logger.LogWarning("No company customer provided.");
@@ -220,7 +217,7 @@ namespace SU.Backend.Services
                     return (false, "No seller provided.");
                 }
 
-                // Skapa försäkringsobjektet
+                // Create the insurance object
                 var insurance = new Insurance
                 {
                     InsuranceType = InsuranceType.LiabilityInsurance,
@@ -245,7 +242,7 @@ namespace SU.Backend.Services
                 };
                 _logger.LogInformation("Insurance object created successfully.");
 
-                // Spara ändringarna till databasen
+                // Save changes to the database
                 _logger.LogInformation("Saving the new company insurance to the database...");
                 await _unitOfWork.Insurances.AddAsync(insurance);
                 await _unitOfWork.SaveChangesAsync();
@@ -260,7 +257,6 @@ namespace SU.Backend.Services
                 return (false, "An error occurred while creating the insurance.");
             }
         }
-
 
         // Deletes an insurance from the database
         public async Task<(bool Success, string Message)> DeleteInsurance(Insurance insurance)
@@ -549,18 +545,14 @@ namespace SU.Backend.Services
             }
         }
 
+        //Create private insurance
         public async Task<(bool Success, string Message)> CreateTestPrivateInsurance()
         {
-
-            // test hakuna matata tarea
-            await Console.Out.WriteLineAsync("hola");
-
             _logger.LogInformation("Creating private insurance...");
-
 
             try
             {
-                // Skapa huvudobjektet - Insurance
+                // Create main insurance object
                 var insurance = new Insurance
                 {
                     InsuranceType = InsuranceType.ChildAccidentAndHealthInsurance,
@@ -573,7 +565,7 @@ namespace SU.Backend.Services
                 };
 
                 _logger.LogInformation("Finding test customer.");
-                // Hämta PrivateCustomer för InsurancePolicyHolder
+                // Get the last private customer from the database
                 var privateCustomer = _unitOfWork.PrivateCustomers.GetAllPrivateCustomers().Result.Last();
                 if (privateCustomer == null)
                 {
@@ -598,8 +590,7 @@ namespace SU.Backend.Services
 
                 _logger.LogInformation("Assigned fetched customer as insurance policy holder of insurance");
 
-                // Skapa InsuranceCoverage
-               
+                // Create InsuranceCoverage
 
                 var currentYear = DateTime.Now.Year;
                 var privateCoverageOption = await _unitOfWork.PrivateCoverageOptions
@@ -632,7 +623,7 @@ namespace SU.Backend.Services
 
                 _logger.LogInformation("Premium calculated: {CalculatedPremium}", insurance.Premium);
 
-                // Skapa PrivateCoverage
+                // Create PrivateCoverage
                 var insuranceCoverage = new InsuranceCoverage();
                 var privateCoverage = new PrivateCoverage
                 {
@@ -640,16 +631,16 @@ namespace SU.Backend.Services
                     PrivateCoverageOption = privateCoverageOption,
                 };
 
-                // Koppla navigationsobjekten
+                // Connect the private coverage to the insurance coverage
                 insuranceCoverage.PrivateCoverage = privateCoverage;
                 insurance.InsuranceCoverage = insuranceCoverage;
-                // Lägg till vem som sålde försäkringen.
+                // Add who the seller is
                 _logger.LogInformation("Adding seller to insurance");
 
-                // Hämta säljaren med angiven roll.
+                // Get seller with role
                 var seller = await _unitOfWork.Employees.GetEmployeeByRole(EmployeeType.InsideSales);
 
-                // Logga information om säljaren.
+                // Log information about the seller
                 if (seller != null)
                 {
                     insurance.Seller = seller;
@@ -660,7 +651,7 @@ namespace SU.Backend.Services
                     _logger.LogWarning($"No seller found.");
                 }
 
-                // Lägg till Insurance till databasen
+                // Add Insurance to the database
                 await _unitOfWork.Insurances.AddAsync(insurance);
                 await _unitOfWork.SaveChangesAsync();
 
@@ -686,7 +677,7 @@ namespace SU.Backend.Services
 
             try
             {
-                // Validera inputdata
+                // Validate input data
                 if (companyCustomer == null)
                 {
                     _logger.LogWarning("No company customer provided.");
@@ -706,7 +697,7 @@ namespace SU.Backend.Services
                     return (false, "No seller provided.");
                 }
 
-                // Skapa försäkringsobjektet
+                // Create the insurance object
                 var insurance = new Insurance
                 {
                     InsuranceType = InsuranceType.VehicleInsurance,
@@ -746,202 +737,6 @@ namespace SU.Backend.Services
                 return (false, "An error occurred while creating the company vehicle insurance.");
             }
         }
-
-        public async Task<(bool Success, string Message, List<InsurancePolicyHolder> InsurancePolicyHolders)> GetAllInsurancePolicyHolders()
-        {
-            _logger.LogInformation("Controller activated to list all insurance policy holders...");
-
-            try
-            {
-                var insurancePolicyHolders = _unitOfWork.InsurancePolicyHolders.GetAllInsurancePolicyHolders();
-                _logger.LogInformation("Insurance policy holders retrieved succesfully: {InsurancePolicyHolderCount}", insurancePolicyHolders.Result.Count);
-
-                return (true , "Insurance policy holders retrieved successfully.", insurancePolicyHolders.Result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred while fetching insurance policy holders.");
-                return (false, "An error occurred while fetching the insurance policy holders.", new List<InsurancePolicyHolder>());
-            }
-        }
-
-        public async Task<(bool Success, string Message, List<InsuranceAddon> InsuranceAddons)> GetAllInsuranceAddons()
-        {
-            _logger.LogInformation("Controller activated to get all insurance addons...");
-
-            try
-            {
-                var insuranceaddons = _unitOfWork.InsuranceAddons.GetAllInsuranceAddons();
-                _logger.LogInformation("Insurance addons found: {InsuranceAddonCount}", insuranceaddons.Result.Count);
-
-                return (true, "Insurance addons found", insuranceaddons.Result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred while fetching insurance addons.");
-                return (false, "An error occurred while fetching the insurance addons.", new List<InsuranceAddon>());
-            }
-        }
-
-        public async Task<(bool Success, string Message, List<Insurance> Insurances)> GetAllInsurances()
-        {
-            _logger.LogInformation("Controller activated to get all insurances...");
-
-            try
-            {
-                var insurances = _unitOfWork.Insurances.GetAllInsurances();
-                _logger.LogInformation("Insurances found: {InsuranceCount}", insurances.Result.Count);
-
-                return (true, "Insurances found", insurances.Result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred while fetching insurances.");
-                return (false, "An error occurred while fetching the insurances.", new List<Insurance>());
-            }
-        }
-
-        public async Task<(bool Success, string Message, List<InsuranceCoverage> InsuranceCoverages)> GetAllInsuranceCoverages()
-        {
-            _logger.LogInformation("Controller activated to get all insurance coverages...");
-
-            try
-            {
-                var insuranceCoverage = _unitOfWork.InsuranceCoverages.GetAllInsuranceCoverages();
-                _logger.LogInformation("Insurance coverages found: {InsuranceCoverageCount}", insuranceCoverage.Result.Count);
-
-                return (true, "Insurance coverages found", insuranceCoverage.Result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred while fetching insurance coverages.");
-                return (false, "An error occurred while fetching the insurance coverages.", new List<InsuranceCoverage>());
-            }
-        }
-
-        public async Task<(bool Success, string Message, List<VehicleInsuranceCoverage> VehicleInsuranceCoverages)> GetAllVehicleInsuranceCoverages()
-        {
-            _logger.LogInformation("Controller activated to list all vehicle insurance coverages...");
-
-            try
-            {
-                var vehicleInsuranceCoverages = _unitOfWork.VehicleInsuranceCoverages.GetAllVehicleInsuranceCoverages();
-                _logger.LogInformation("Vehicle insurance coverages retrieved succesfully: {VehicleInsuranceCoveragesCount}",
-                    vehicleInsuranceCoverages.Result.Count);
-
-                return (true, "Vehicle insurance coverages retrieved successfully.", vehicleInsuranceCoverages.Result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred while fetching vehicle insurance coverages.");
-                return (false, "An error occurred while fetching the vehicle insurance coverages.", new List<VehicleInsuranceCoverage>());
-            }
-        }
-
-        public async Task<(bool Success, string Message, List<VehicleInsuranceOption> VehicleInsuranceCoverages)> GetAllVehicleInsuranceOptions()
-        {
-            _logger.LogInformation("Controller activated to list all vehicle insurance coverage options...");
-
-            try
-            {
-                var vehicleInsuranceOptions = _unitOfWork.VehicleInsuranceOptions.GetVehicleInsuranceOptions();
-                _logger.LogInformation("Vehicle insurance options retrieved succesfully: {VehicleInsuranceOptionsCount}",
-                                       vehicleInsuranceOptions.Result.Count);
-
-                return (true, "Vehicle insurance options retrieved successfully.", vehicleInsuranceOptions.Result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred while fetching vehicle insurance options.");
-                return (false, "An error occurred while fetching the vehicle insurance options.", new List<VehicleInsuranceOption>());
-            }
-        }
-
-        public async Task<(bool Success, string Message, List<Riskzone> Riskzones)> GetAllRiskzones()
-        {
-            _logger.LogInformation("Controller activated to list all riskzones...");
-
-            try
-            {
-                var riskzones = _unitOfWork.Riskzones.GetAllRiskZones();
-                _logger.LogInformation("Riskzones retrieved succesfully: {RiskzonesCount}",
-                                                          riskzones.Result.Count);
-
-                return (true, "Riskzones retrieved successfully.", riskzones.Result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred while fetching riskzones.");
-                return (false, "An error occurred while fetching the riskzones.", new List<Riskzone>());
-            }
-        }
-
-        public async Task<(bool Success, string Message, List<LiabilityCoverageOption> LiabilityCoverageOptions)> GetAllLiabilityCoverageOptions()
-        {
-            _logger.LogInformation("Controller activated to list all liability coverage options...");
-
-            try
-            {
-                var liabilityCoverageOptions = _unitOfWork.LiabilityCoverageOptions.GetLiabilityCoverageOptions();
-                _logger.LogInformation("Liability coverage options retrieved succesfully: {LiabilityCoverageOptionsCount}",
-                                                          liabilityCoverageOptions.Result.Count);
-
-                return (true, "Liability coverage options retrieved successfully.", liabilityCoverageOptions.Result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred while fetching liability coverage options.");
-                return (false, "An error occurred while fetching the liability coverage options.", new List<LiabilityCoverageOption>());
-            }
-        }
-
-        public async Task<(bool Success, string Message, List<LiabilityCoverage> LiabilityCoverages)> GetAllLiabilityCoverages()
-        {
-            _logger.LogInformation("Controller activated to list all liability coverages...");
-
-            try
-            {
-                var liabilityCoverages = _unitOfWork.LiabilityCoverages.GetLiabilityCoverage();
-                _logger.LogInformation("Liability coverages retrieved succesfully: {LiabilityCoveragesCount}",
-                                       liabilityCoverages.Result.Count);
-
-                return (true, "Liability coverages retrieved successfully.", liabilityCoverages.Result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred while fetching liability coverages.");
-                return (false, "An error occurred while fetching the liability coverages.", new List<LiabilityCoverage>());
-            }
-
-        }
-
-        public async Task<(bool Success, string Message, List<PropertyAndInventoryCoverage> 
-            PropertyAndInventoryCoverages)> GetAllPropertyAndInventoryCoverages()
-        {
-            _logger.LogInformation("Controller activated to list all property and inventory coverages...");
-
-            try
-            {
-                var propertyAndInventoryCoverages = _unitOfWork.PropertyAndInventoryCoverages.GetAllPropertyAndInventoryCoverages();
-                _logger.LogInformation("Property and inventory coverages retrieved succesfully: {PropertyAndInventoryCoveragesCount}",
-                                                          propertyAndInventoryCoverages.Result.Count);
-
-                return (true, "Property and inventory coverages retrieved successfully.", propertyAndInventoryCoverages.Result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred while fetching property and inventory coverages.");
-                return (false, "An error occurred while fetching the property and inventory coverages.", new List<PropertyAndInventoryCoverage>());
-            }
-        }
-
         #endregion
-
-
-
-
-
-
-
     }
 }
