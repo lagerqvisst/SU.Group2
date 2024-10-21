@@ -21,7 +21,6 @@ namespace SU.Backend.Controllers
     public class InsuranceCreateController
     {
         private readonly IInsuranceCreateService _InsuranceCreateService; 
-        private readonly IInsuranceListingService _insuranceListingService;
         private readonly ILogger<InsuranceCreateController> _logger;
 
         public InsuranceCreateController(IInsuranceCreateService InsuranceCreateService, ILogger<InsuranceCreateController> logger)
