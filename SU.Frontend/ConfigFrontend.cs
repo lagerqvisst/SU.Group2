@@ -10,9 +10,11 @@ using System.Text;
 using System.Threading.Tasks;
 using SU.Frontend.Helper.Navigation;
 using SU.Frontend.Helper.User;
-using SU.Frontend.ViewModels.UserControls;
 using SU.Frontend.ViewModels;
 using SU.Frontend.Views;
+using SU.Frontend.Helper.Authentication;
+using SU.Frontend.ViewModels.UserControlViewModels;
+using SU.Frontend.Views.UserControls;
 
 namespace SU.Frontend
 {
@@ -20,19 +22,21 @@ namespace SU.Frontend
     {
         public static void AddFrontendServices(this IServiceCollection services)
         {
-            // Registrera tjänster och deras beroenden här
-
-            // Registrera både LoginWindow och LoginViewModel
+            // Registrera alla ViewModels
             services.AddTransient<TaskbarViewModel>();
             services.AddTransient<LoginViewModel>();
-            services.AddTransient<LoginWindow>();
+            services.AddTransient<LogoutButtonViewModel>();  // ViewModel för knappen
 
-            //Frontend services
+            // Registrera Views och UserControls
+            services.AddTransient<LoginWindow>();
+            services.AddTransient<TestView>();
+            services.AddTransient<LogoutButtonControl>();  // UserControl för knappen
+
+            // Registrera andra tjänster
             services.AddScoped<INavigationService, NavigationService>();
             services.AddSingleton<ILoggedInUserService, LoggedInUserService>();
-            
-
-
+            services.AddTransient<IAuthenticationService, AuthenticationService>();
         }
     }
 }
+

@@ -18,6 +18,17 @@ namespace SU.Frontend.Helper.Navigation
             _serviceProvider = serviceProvider;
         }
 
+        public void CloseAllExcept(string viewName)
+        {
+            foreach (var window in Application.Current.Windows.OfType<Window>())
+            {
+                if (window.GetType().Name != viewName)
+                {
+                    window.Close();
+                }
+            }
+        }
+
         public void NavigateBasedOnRole(Employee employee, INavigationService navigationService)
         {
             if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.CEO))
@@ -30,7 +41,7 @@ namespace SU.Frontend.Helper.Navigation
             }
             else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.OutsideSales))
             {
-                navigationService.NavigateTo("OutsideSalesView");
+                navigationService.NavigateTo("TestView");
             }
             else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.InsideSales))
             {
@@ -44,13 +55,37 @@ namespace SU.Frontend.Helper.Navigation
 
         public void NavigateTo(string viewName, object parameter = null)
         {
-            // Logic to resolve view and show it
-            var view = (Window)_serviceProvider.GetService(Type.GetType(viewName));
+            if (string.IsNullOrEmpty(viewName))
+            {
+                throw new ArgumentNullException(nameof(viewName), "View name cannot be null or empty.");
+            }
+
+            // Hämta typen baserat på dess fullständiga namn
+            var viewType = Type.GetType($"SU.Frontend.Views.{viewName}");
+            if (viewType == null)
+            {
+                throw new ArgumentException($"View type '{viewName}' not found.", nameof(viewName));
+            }
+
+            // Hämta vyn från DI-behållaren
+            var view = (Window)_serviceProvider.GetService(viewType);
             if (view != null)
             {
-                view.DataContext = parameter;
+                // Om parameter skickas med, sätt DataContext till det
+                if (parameter != null)
+                {
+                    view.DataContext = parameter;
+                }
+
+                // Visa vyn
                 view.Show();
             }
+            else
+            {
+                throw new Exception($"View '{viewName}' could not be resolved.");
+            }
         }
+
+
     }
 }

@@ -4,7 +4,7 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 
-namespace SU.Frontend.ViewModels.UserControls
+namespace SU.Frontend.ViewModels.UserControlViewModels
 {
     public class TaskbarViewModel
     {
@@ -27,6 +27,6 @@ namespace SU.Frontend.ViewModels.UserControls
             Application.Current.Shutdown();
         }
 
-        
+
     }
 }

@@ -9,13 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SU.Backend\SU.Backend.csproj" />
+    <Compile Remove="Helper\Locator\**" />
+    <EmbeddedResource Remove="Helper\Locator\**" />
+    <None Remove="Helper\Locator\**" />
+    <Page Remove="Helper\Locator\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Helper\Locator\" />
-    <Folder Include="UserControls\" />
-    <Folder Include="Views\UserControls\" />
+    <ProjectReference Include="..\SU.Backend\SU.Backend.csproj" />
   </ItemGroup>
 
   <ItemGroup>
