@@ -15,5 +15,6 @@ namespace SU.Frontend.Helper.Navigation
         void CloseAllExcept(string viewName);
 
         void ReturnToMain(Employee employee, INavigationService navigationService);
+
     }
 }

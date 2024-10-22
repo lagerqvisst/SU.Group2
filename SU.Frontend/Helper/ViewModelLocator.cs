@@ -17,6 +17,9 @@ namespace SU.Frontend.Helper
 
             public MainViewButtonViewModel MainViewButtonViewModel =>
                 App.AppHost?.Services.GetService<MainViewButtonViewModel>();
+
+            public SignedInUserViewModel SignedInUserViewModel =>
+                App.AppHost?.Services.GetService<SignedInUserViewModel>();
         }
     }
 

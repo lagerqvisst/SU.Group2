@@ -19,10 +19,10 @@
             <!-- Vänsterkolumn: Inloggningsfälten -->
             <StackPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="20">
                 <!-- Titel och beskrivning -->
-                <TextBlock FontSize="24" FontWeight="Bold" HorizontalAlignment="Center">
+                <TextBlock>
                     <TextBlock.Inlines>
-                        <Run Text="TOPP" Foreground="Green"/>
-                        <Run Text="FÖRSÄKRINGAR" Foreground="Black"/>
+                        <TextBlock Style="{StaticResource ToppFont}" Text="TOPP"/>
+                        <TextBlock Style="{StaticResource FörsäkringarFont}" Text="FÖRSÄKRINGAR AB"/>
                     </TextBlock.Inlines>
                 </TextBlock>
                 <Line X1="0" Y1="0" X2="1" Y2="0" Stroke="Black" StrokeThickness="2" Margin="0,5"/>

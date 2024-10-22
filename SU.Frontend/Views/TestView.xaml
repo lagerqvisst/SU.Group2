@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SU.Frontend.Views"
         xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
         mc:Ignorable="d"
-        Title="TestView" Height="450" Width="800">
+        Title="TestView" Height="700" Width="1200">
     <DockPanel>
         <Grid x:Name="MainGrid">
 
@@ -17,6 +17,7 @@
                 </TextBlock.Inlines>
             </TextBlock>
             <controls:LogoutButtonControl HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10,10,50" />
+            <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top"/>
 
         </Grid>
     </DockPanel>
