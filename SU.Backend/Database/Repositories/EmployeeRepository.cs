@@ -76,5 +76,15 @@ namespace SU.Backend.Database.Repositories
         {
             return await _context.EmployeeRoleAssignments.ToListAsync();
         }
+
+        public async Task<EmployeeType> GetRoleByEmployee(Employee employee)
+        {
+            return _context.EmployeeRoleAssignments
+                .Where(ra => ra.EmployeeId == employee.EmployeeId)
+                .OrderByDescending(ra => ra.Percentage)
+                .Select(ra => ra.Role)
+                .FirstOrDefault();
+        }
+
     }
 }

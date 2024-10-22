@@ -1,4 +1,5 @@
 ﻿using SU.Backend.Database.Interfaces;
+using SU.Backend.Models.Employees;
 using SU.Backend.Models.Enums;
 using System;
 using System.Threading.Tasks;
@@ -112,6 +113,13 @@ namespace SU.Backend.Helper
             return digit;
         }
 
+        public static EmployeeType GetHighestPercentageRole(List<EmployeeRoleAssignment> roleAssignments)
+        {
+            return roleAssignments
+                .OrderByDescending(ra => ra.Percentage)
+                .Select(ra => ra.Role)
+                .FirstOrDefault();
+        }
 
 
 

@@ -23,4 +23,9 @@
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-rc2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\SalesAssistantView\" />
+    <Folder Include="Views\SalesManagerView\" />
+  </ItemGroup>
+
 </Project>

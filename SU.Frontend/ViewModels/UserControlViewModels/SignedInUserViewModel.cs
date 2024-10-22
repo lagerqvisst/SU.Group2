@@ -1,4 +1,5 @@
-﻿using SU.Backend.Models.Employees;
+﻿using SU.Backend.Helper;
+using SU.Backend.Models.Employees;
 using SU.Frontend.Helper;
 using SU.Frontend.Helper.User;
 using System.Collections.ObjectModel;
@@ -32,9 +33,10 @@ public class SignedInUserViewModel : ObservableObject
     {
         get
         {
-            var roleAssignment = _loggedInEmployee?.RoleAssignments?.FirstOrDefault(x => x.Role != null);
-            return roleAssignment != null ? $"User role: {roleAssignment.Role.ToString()}" : "User role: None";
+            var role = EmployeeHelper.GetHighestPercentageRole(_loggedInEmployee.RoleAssignments.ToList());
+            return role != null ? $"User role: {role}" : "User role: None";
         }
     }
+
 
 }
