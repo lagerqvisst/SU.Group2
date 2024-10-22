@@ -17,6 +17,7 @@
                 </TextBlock.Inlines>
             </TextBlock>
             <controls:LogoutButtonControl HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10,10,50" />
+            <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top"/>
 
         </Grid>
     </DockPanel>
