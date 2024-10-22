@@ -22,29 +22,19 @@ public class SignedInUserViewModel : ObservableObject
         get => $"User logged in: {_loggedInEmployee.FirstName} {_loggedInEmployee.LastName}";
     }
 
-    private string _signedInUserId;
-
     public string SignedInUserId
     {
-        get => $" User ID: {_loggedInEmployee.EmployeeId}";
-        set
-        {
-            _signedInUserId = value;
-            OnPropertyChanged();
-        }
+        get => $"User ID: {_loggedInEmployee.EmployeeId}";
+  
     }
-
-    private string _signedInUserRole;
 
     public string SignedInUserRole
     {
-        get => $" User role: {_loggedInEmployee.RoleAssignments.FirstOrDefault(x => x.Role != null).ToString()}";
-        set
+        get
         {
-            _signedInUserRole = value;
-            OnPropertyChanged();
+            var roleAssignment = _loggedInEmployee?.RoleAssignments?.FirstOrDefault(x => x.Role != null);
+            return roleAssignment != null ? $"User role: {roleAssignment.Role.ToString()}" : "User role: None";
         }
     }
-
 
 }

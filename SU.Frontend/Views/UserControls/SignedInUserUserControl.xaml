@@ -12,11 +12,18 @@
     </UserControl.Resources>
 
     <StackPanel DataContext="{Binding SignedInUserViewModel, Source={StaticResource Locator}}" 
-                VerticalAlignment="Top" HorizontalAlignment="Right" Background="AliceBlue" >
-         <TextBlock Text="ToppFörsäkringar" FontSize="22" Margin="0,0,0,10" />
-         <TextBlock Text="{Binding SignedInUserName}" FontSize="16" />
-         <TextBlock Text="{Binding SignedInUserId}" FontSize="16" />
-         <TextBlock Text="{Binding SignedInUserRole}" FontSize="16" />
+                VerticalAlignment="Top" HorizontalAlignment="Right" Background="LightGray" Margin="0,0,10,10">
+
+        <TextBlock>
+            <TextBlock.Inlines>
+                <TextBlock Style="{StaticResource ToppFont}" Text="TOPP"/>
+                <TextBlock Style="{StaticResource FörsäkringarFont}" Text="FÖRSÄKRINGAR AB"/>
+            </TextBlock.Inlines>
+        </TextBlock>
+        
+        <TextBlock Text="{Binding SignedInUserName}" FontSize="16" Padding="10, 0, 10, 0"/>
+        <TextBlock Text="{Binding SignedInUserId}" FontSize="16" Padding="10, 0, 10, 0"/>
+        <TextBlock Text="{Binding SignedInUserRole}" FontSize="16" Padding="10, 0, 10, 0"/>
     </StackPanel>
 
 </UserControl>
