@@ -12,6 +12,6 @@ namespace SU.Backend.Services.Interfaces
     /// </summary>
     public interface ICommissionService
     {
-        Task<(bool Success, string Message, List<Commission> Commissions)> GetAllCommissions(DateTime StartDate, DateTime EndDate);
+        Task<(bool success, string message, List<Commission> commissions)> GetAllCommissions(DateTime startDate, DateTime endDate);
     }
 }
