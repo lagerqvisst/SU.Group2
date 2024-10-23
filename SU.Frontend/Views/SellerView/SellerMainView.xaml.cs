@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 namespace SU.Frontend.Views.SellerView
 {
     /// <summary>
-    /// Interaction logic for SellerWindow.xaml
+    /// Interaction logic for SellerMainView.xaml
     /// </summary>
     public partial class SellerMainView : Window
     {

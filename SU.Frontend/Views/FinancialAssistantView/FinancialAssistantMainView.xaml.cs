@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 namespace SU.Frontend.Views.FinancialAssistantView
 {
     /// <summary>
-    /// Interaction logic for FinancialAssistantWindow.xaml
+    /// Interaction logic for FinancialAssistantMainView.xaml
     /// </summary>
     public partial class FinancialAssistantMainView : Window
     {
