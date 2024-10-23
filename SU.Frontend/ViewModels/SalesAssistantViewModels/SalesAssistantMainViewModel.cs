@@ -36,12 +36,12 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
         }
 
         //Methods for navigating to unique views
-        public void RegisterNewSeller()
+        public void ToRegisterNewSeller()
         {
             _navigationService.NavigateTo("RegisterNewSellerView", "SalesAssistantView");
         }
 
-        public void EditDeleteSeller()
+        public void ToEditDeleteSeller()
         {
             _navigationService.NavigateTo("EditDeleteSellerView", "SalesAssistantView");
         }
