@@ -18,7 +18,7 @@ namespace SU.Backend.Database.Interfaces
 
         Task<Employee?> GetEmployeeByRole(EmployeeType role);
 
-        Task<Employee?> GetEmployeeByUserCredentials(string Username, string Password);
+        Task<Employee?> GetEmployeeByUserCredentials(string usersUsername, string usersPassword);
 
         Task<List<Employee>> GetSalesEmployees();
 
