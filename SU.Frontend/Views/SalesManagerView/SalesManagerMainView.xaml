@@ -8,7 +8,28 @@
         mc:Ignorable="d"
         Title="SalesManagerMainView" Height="450" Width="800">
     <Grid>
-        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,10,10,10" />
-        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,10,10,10" Grid.Column="3" Grid.Row="3"/>
+        <controls:SignedInUserUserControl HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.ColumnSpan="2" Margin="36,0,0,0" Width="364"/>
+
+        <TextBlock Style="{StaticResource FörsäkringarFont}" Text="Sales Manager Main View" HorizontalAlignment="Left" Margin="63,5,0,103" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search Customers" Command="{Binding ToShowCustomer}" Grid.Row="1"/>
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search Insurances" Command="{Binding ToShowInsurances}" Grid.Row="2"/>
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Create/ Export Selling statistics" Command="{Binding ToCreateExportStatistics}" Grid.Row="3"/>
+
     </Grid>
 </Window>

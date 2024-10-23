@@ -7,6 +7,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Navigation;
 
 namespace SU.Frontend.Helper.Navigation
 {
@@ -34,7 +35,7 @@ namespace SU.Frontend.Helper.Navigation
         {
             if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.CEO))
             {
-                navigationService.NavigateTo("CEODashboardView");
+                navigationService.NavigateTo("CeoMainView");
             }
             else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.SalesManager))
             {
@@ -108,9 +109,46 @@ namespace SU.Frontend.Helper.Navigation
             {
                 Console.WriteLine("No active window found.");
             }
+        }
 
-            
+        public void NavigateToCreateExportStatistics(INavigationService navigationService)
+        {
+            navigationService.NavigateTo("CreateExportSellStatView");
+        }
 
+        public void NavigateToShowInsurances(INavigationService navigationService)
+        {
+            navigationService.NavigateTo("ShowInsurancesView");
+        }
+
+        public void NavigateToShowCustomers (INavigationService navigationService)
+        {
+            navigationService.NavigateTo("ShowCustomersView");
+        }
+
+        public void NavigateToEditDeleteCustomer(INavigationService navigationService)
+        {
+            navigationService.NavigateTo("EditDeleteCustomerView");
+        }
+
+        public void NavigateToEditDeleteInsurance(INavigationService navigationService)
+        {
+            navigationService.NavigateTo("EditDeleteInsuranceView");
+        }
+
+        public void NavigateToRegisterNewCustomer(INavigationService navigationService)
+        {
+            navigationService.NavigateTo("RegisterNewCustomerView");
+        }
+
+        public void NavigateToRegisterNewInsurance(INavigationService navigationService)
+        {
+            navigationService.NavigateTo("RegisterNewInsuranceView");
+        }
+
+        public void NavigateToShowCustomerProspects(INavigationService navigationService)
+        {
+            navigationService.NavigateTo("ShowCustomerProspectsView");
         }
     }
 }

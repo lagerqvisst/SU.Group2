@@ -16,5 +16,20 @@ namespace SU.Frontend.Helper.Navigation
 
         void ReturnToMain(Employee employee, INavigationService navigationService);
 
+        void NavigateToCreateExportStatistics(INavigationService navigationService);
+
+        void NavigateToShowInsurances(INavigationService navigationService);
+
+        void NavigateToShowCustomers(INavigationService navigationService);
+
+        void NavigateToEditDeleteCustomer(INavigationService navigationService);
+
+        void NavigateToEditDeleteInsurance(INavigationService navigationService);
+
+        void NavigateToRegisterNewCustomer(INavigationService navigationService);
+
+        void NavigateToRegisterNewInsurance(INavigationService navigationService);
+
+        void NavigateToShowCustomerProspects(INavigationService navigationService);
     }
 }

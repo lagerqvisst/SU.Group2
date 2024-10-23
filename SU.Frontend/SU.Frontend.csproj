@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\SalesAssistantView\" />
     <Folder Include="Views\SalesManagerView\" />
   </ItemGroup>
 
