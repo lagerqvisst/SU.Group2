@@ -17,9 +17,9 @@ namespace SU.Frontend.Views.SellerView
     /// <summary>
     /// Interaction logic for SellerWindow.xaml
     /// </summary>
-    public partial class SellerWindow : Window
+    public partial class SellerMainView : Window
     {
-        public SellerWindow()
+        public SellerMainView()
         {
             InitializeComponent();
         }

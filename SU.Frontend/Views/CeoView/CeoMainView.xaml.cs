@@ -17,9 +17,9 @@ namespace SU.Frontend.Views.Ceo
     /// <summary>
     /// Interaction logic for CeoWindow.xaml
     /// </summary>
-    public partial class CeoWindow : Window
+    public partial class CeoMainView : Window
     {
-        public CeoWindow()
+        public CeoMainView()
         {
             InitializeComponent();
         }

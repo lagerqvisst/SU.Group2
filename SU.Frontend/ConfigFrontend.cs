@@ -15,6 +15,16 @@ using SU.Frontend.Views;
 using SU.Frontend.Helper.Authentication;
 using SU.Frontend.ViewModels.UserControlViewModels;
 using SU.Frontend.Views.UserControls;
+using SU.Frontend.ViewModels.FinancialAssistantViewModels;
+using SU.Frontend.ViewModels.CeoMainViewModel;
+using SU.Frontend.ViewModels.SalesAssistantViewModels;
+using SU.Frontend.ViewModels.SellerViewModels;
+using SU.Frontend.ViewModels.SalesManagerViewModels;
+using SU.Frontend.Views.Ceo;
+using SU.Frontend.Views.FinancialAssistantView;
+using SU.Frontend.Views.SalesAssistantView;
+using SU.Frontend.Views.SalesManagerView;
+using SU.Frontend.Views.SellerView;
 
 namespace SU.Frontend
 {
@@ -29,8 +39,9 @@ namespace SU.Frontend
             services.AddTransient<MainViewButtonViewModel>(); //ViewModel for MainView button
             services.AddTransient<SignedInUserViewModel>(); // ViewModel for Signed in user
             services.AddTransient<CeoMainViewModel>(); // ViewModel for CeoMainView
-            services.AddTransient<FinancialAss>
+            services.AddTransient<FinancialAssistantMainViewModel>();
             services.AddTransient<SalesAssistantMainViewModel>(); // ViewModel for SalesAssistantMainView
+            services.AddTransient<SalesManagerMainViewModel>(); // ViewModel for SalesManagerMainView
             services.AddTransient<SellerMainViewModel>(); // ViewModel for SellerMainView
 
 
@@ -40,6 +51,11 @@ namespace SU.Frontend
             services.AddTransient<LogoutButtonControl>(); // UserControl for Log Out button
             services.AddTransient<MainViewButtonControl>(); // UserControl for MainView button
             services.AddTransient<SignedInUserUserControl>(); // UserControl for Signed in user
+            services.AddTransient<CeoWindow>(); // View for CeoMainView
+            services.AddTransient<FinancialAssistantWindow>();
+            services.AddTransient<SalesAssistantMainView>(); // View for SalesAssistantMainView
+            services.AddTransient<SalesManagerMainView>(); // View for SalesManagerMainView
+            services.AddTransient<SellerWindow>(); // View for SellerMainView
 
             // Registrera andra tjänster
             services.AddScoped<INavigationService, NavigationService>();

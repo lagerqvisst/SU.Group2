@@ -17,9 +17,9 @@ namespace SU.Frontend.Views.FinancialAssistantView
     /// <summary>
     /// Interaction logic for FinancialAssistantWindow.xaml
     /// </summary>
-    public partial class FinancialAssistantWindow : Window
+    public partial class FinancialAssistantMainView : Window
     {
-        public FinancialAssistantWindow()
+        public FinancialAssistantMainView()
         {
             InitializeComponent();
         }
