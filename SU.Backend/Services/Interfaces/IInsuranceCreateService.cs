@@ -72,14 +72,7 @@ namespace SU.Backend.Services.Interfaces
 
         //Add update method for insurance
 
-        //Tests
-        Task<(bool Success, string Message)> CreateTestPrivateInsurance();
-
-        Task<(bool Success, string Message)> CreateTestCompanyInsurance();
-
-        Task<(bool Success, string Message)> CreateTestCompanyInsuranceProperty();
-
-        Task<(bool Success, string Message)> CreateTestCompanyLiability();
+       
 
       
 
