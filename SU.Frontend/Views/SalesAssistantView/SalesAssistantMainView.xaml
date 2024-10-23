@@ -8,7 +8,53 @@
         mc:Ignorable="d"
         Title="SalesAssistantMainView" Height="450" Width="800">
     <Grid>
-        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,10,10,10" />
-        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,10,10,10" Grid.Column="3" Grid.Row="4"/>
+        <controls:SignedInUserUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Grid.ColumnSpan="2" Margin="50,0,0,0" Width="350" Height="180" Grid.RowSpan="2"/>
+
+        <TextBlock Style="{StaticResource FörsäkringarFont}" Text="Sales Assistant Main View" HorizontalAlignment="Left"
+           Margin="51,5,0,102" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Register new customer" Command="{Binding ToRegisterNewCustomer}" 
+        Margin="25,25,180,25" Grid.Row="1" Grid.ColumnSpan="2"/>
+
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Register new seller" Command="{Binding ToRegisterNewSeller}" 
+        Margin="50,25,155,25" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"/>
+
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Edit/ Delete customer" Command="{Binding ToEditDeleteCustomer}" 
+        Margin="25,0,180,50" Grid.Row="2" Grid.ColumnSpan="2"/>
+
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Edit/ Delete seller" Command="{Binding ToEditDeleteSeller}" 
+        Margin="50,0,155,50" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"/>
+
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Register new insurance" Command="{Binding ToRegisterNewInsurance}" 
+        Margin="25,64,180,72" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Edit/ Delete insurance" Command="{Binding ToEditDeleteInsurance}" 
+        Margin="50,64,155,72" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="1"/>
+
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search insurance" Command="{Binding ToShowInsurance}" 
+        Margin="25,47,180,2" Grid.Row="3" Grid.ColumnSpan="2"/>
+
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search customers" Command="{Binding ToShowCustomers}" 
+        Margin="50,47,155,2" Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="1"/>
+
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Show customer prospects" Command="{Binding ToShowProspects}" 
+        Margin="135,21,70,29" Grid.Row="4" Grid.ColumnSpan="2"/>
+
     </Grid>
 </Window>
