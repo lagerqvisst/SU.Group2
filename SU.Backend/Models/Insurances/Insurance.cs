@@ -28,6 +28,7 @@ namespace SU.Backend.Models.Insurances
 
         // Insurance-specific fields
 
+        public InsuranceCategory InsuranceCategory { get; set; } // Private/Company
         public decimal Premium { get; set; } // Premie
         public InsuranceType InsuranceType { get; set; } // Enum for insurance type
         public InsuranceStatus InsuranceStatus { get; set; } // Enum for insurance status

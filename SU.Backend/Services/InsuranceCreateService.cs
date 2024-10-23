@@ -76,6 +76,7 @@ namespace SU.Backend.Services
                     StartDate = startDate ?? DateTime.Now,
                     EndDate = endDate ?? DateTime.Now.AddYears(1),
                     Note = note,
+                    InsuranceCategory = InsuranceCategory.Private,
 
                     InsurancePolicyHolder = new InsurancePolicyHolder
                     {
@@ -148,6 +149,7 @@ namespace SU.Backend.Services
                     StartDate = startDate ?? DateTime.Now,  // Om inget startdatum skickas in används nuvarande tidpunkt
                     EndDate = endDate ?? DateTime.Now.AddYears(1), // Om inget slutdatum skickas in används ett år framåt
                     Note = note ?? "No note provided.", // Sätter default note om ingen skickas in
+                    InsuranceCategory = InsuranceCategory.Company,
 
                     InsurancePolicyHolder = new InsurancePolicyHolder
                     {
@@ -226,6 +228,7 @@ namespace SU.Backend.Services
                     StartDate = startDate ?? DateTime.Now,  // Använd inskickat startdatum, annars nuvarande tid
                     EndDate = endDate ?? DateTime.Now.AddYears(1),  // Använd inskickat slutdatum, annars ett år framåt
                     Note = note,
+                    InsuranceCategory = InsuranceCategory.Company,
 
                     InsurancePolicyHolder = new InsurancePolicyHolder
                     {
