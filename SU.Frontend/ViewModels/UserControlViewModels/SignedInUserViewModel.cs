@@ -38,7 +38,7 @@ public class SignedInUserViewModel : ObservableObject
     {
         get
         {
-            var role = EmployeeHelper.GetHighestPercentageRole(_loggedInEmployee.RoleAssignments.ToList());
+            var role = EmployeeHelper.GetLowestPercentageRole(_loggedInEmployee.RoleAssignments.ToList());
             return role != null ? $"User role: {role}" : "User role: None";
         }
     }

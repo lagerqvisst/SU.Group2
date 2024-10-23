@@ -37,9 +37,13 @@ namespace SU.Frontend.Helper.Navigation
             {
                 navigationService.NavigateTo("CeoMainView", "CeoView");
             }
+            else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.SalesAssistant))
+            {
+                navigationService.NavigateTo("SalesAssistantMainView", "SalesAssistantView");
+            }
             else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.SalesManager))
             {
-                navigationService.NavigateTo("SalesManagerView", "SalesManagerView");
+                navigationService.NavigateTo("SalesManagerMainView", "SalesManagerView");
             }
             else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.OutsideSales))
             {
@@ -47,7 +51,11 @@ namespace SU.Frontend.Helper.Navigation
             }
             else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.InsideSales))
             {
-                navigationService.NavigateTo("InsideSalesView", "SellerView");
+                navigationService.NavigateTo("SellerMainView", "SellerView");
+            }
+            else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.FinancialAssistant))
+            {
+                navigationService.NavigateTo("FinancialAssistantMainView", "FinancialAssistantView");
             }
             else
             {
