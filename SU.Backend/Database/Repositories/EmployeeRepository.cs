@@ -31,7 +31,7 @@ namespace SU.Backend.Database.Repositories
         // This method returns the employee with the given a role.
         public async Task<Employee?> GetEmployeeByRole(EmployeeType role)
         {
-            return  _context.Employees
+            return _context.Employees
                 .Include(e => e.RoleAssignments) 
                 .Where(e => e.RoleAssignments.Any(ra => ra.Role == role && ra.Percentage > 0)) 
                 .OrderByDescending(e => e.RoleAssignments
@@ -42,11 +42,11 @@ namespace SU.Backend.Database.Repositories
 
         // This method returns the employee with the given username and password.
         // Used for authenticating users in the login page.
-        public async Task<Employee?> GetEmployeeByUserCredentials(string Username, string Password)
+        public async Task<Employee?> GetEmployeeByUserCredentials(string usersUsername, string usersPassword)
         {
             return await _context.Employees
                 .Include(e => e.RoleAssignments)
-                .Where(e => e.Username == Username && e.Password == Password)
+                .Where(e => e.Username == usersUsername && e.Password == usersPassword)
                 .FirstOrDefaultAsync();
         }
 

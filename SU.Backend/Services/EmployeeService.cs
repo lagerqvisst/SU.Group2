@@ -28,7 +28,7 @@ namespace SU.Backend.Services
         }
 
         // This method generates a random employee based on the provided role. Used for testing purposes.
-        public async Task<(bool Success, string Message, Employee Employee)> GenerateRandomEmployee(EmployeeType Role)
+        public async Task<(bool success, string message, Employee employee)> GenerateRandomEmployee(EmployeeType role)
         {
             _logger.LogInformation("Generating random employee");
             try
@@ -51,9 +51,9 @@ namespace SU.Backend.Services
                         Email = info.Email,
                         Username = EmployeeHelper.GenerateEmployeeUsername(info.Name),
                         Password = info.Login.Password,
-                        Manager = await GetManagerForRole(Role),
-                        BaseSalary = EmployeeHelper.GetSalaryForEmployeeType(Role),
-                        AgentNumber = (Role == EmployeeType.OutsideSales || Role == EmployeeType.InsideSales) ? EmployeeHelper.GenerateFourDigitCode() : null,
+                        Manager = await GetManagerForRole(role),
+                        BaseSalary = EmployeeHelper.GetSalaryForEmployeeType(role),
+                        AgentNumber = (role == EmployeeType.OutsideSales || role == EmployeeType.InsideSales) ? EmployeeHelper.GenerateFourDigitCode() : null,
 
                     };
 
@@ -61,7 +61,7 @@ namespace SU.Backend.Services
                     var roleAssignment = new EmployeeRoleAssignment
                     {
                         Employee = employee,
-                        Role = Role,
+                        Role = role,
                         Percentage = 10
                     };
 
@@ -110,7 +110,7 @@ namespace SU.Backend.Services
         }
 
         //Method to get all employees
-        public async Task<(bool Success, string Message, List<Employee> Employees)> GetAllEmployees()
+        public async Task<(bool success, string message, List<Employee> employees)> GetAllEmployees()
         {
             _logger.LogInformation("Controller activated to get all employees");
             try
@@ -128,7 +128,7 @@ namespace SU.Backend.Services
         }
 
         //Method to add new Emplyee
-        public async Task<(bool Success, string Message)> CreateNewEmployee(Employee employee)
+        public async Task<(bool success, string message)> CreateNewEmployee(Employee employee)
         {
             _logger.LogInformation("Creating new Employee...");
 
@@ -151,7 +151,7 @@ namespace SU.Backend.Services
         }
 
         //method to update new Employee
-        public async Task<(bool Success, string Message)> UpdateEmployee(Employee employee)
+        public async Task<(bool success, string message)> UpdateEmployee(Employee employee)
         {
             _logger.LogInformation("Updating Employee...");
 
@@ -174,7 +174,7 @@ namespace SU.Backend.Services
         }
 
         //Method to delete employee
-        public async Task<(bool Success, string Message)> DeleteEmployee(Employee employee)
+        public async Task<(bool success, string message)> DeleteEmployee(Employee employee)
         {
             _logger.LogInformation("Deleting employee...");
 
@@ -198,7 +198,7 @@ namespace SU.Backend.Services
         }
 
         //Method to get employee by id
-        public async Task<(bool Success, string Message, Employee? Employee)> GetEmployeeById(int id)
+        public async Task<(bool success, string message, Employee? employee)> GetEmployeeById(int id)
         {
             _logger.LogInformation("Getting employee by id");
 
@@ -223,7 +223,7 @@ namespace SU.Backend.Services
         }
 
         //Method to get all employee role assignments
-        public async Task<(bool Success, string Message, List<EmployeeRoleAssignment> EmployeeRoleAssignments)> GetAllEmployeeRoleAssignments()
+        public async Task<(bool success, string message, List<EmployeeRoleAssignment> employeeRoleAssignments)> GetAllEmployeeRoleAssignments()
         {
             _logger.LogInformation("Controller activated to get all employee role assignments...");
 
@@ -241,7 +241,7 @@ namespace SU.Backend.Services
             }
         }
 
-        public async Task<(bool Success, string Message, Employee Employee)> GetEmployeeByRole(EmployeeType role)
+        public async Task<(bool success, string message, Employee employee)> GetEmployeeByRole(EmployeeType role)
         {
             _logger.LogInformation("Getting employee by role");
 
