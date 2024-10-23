@@ -20,7 +20,7 @@ namespace SU.Backend.Services.Interfaces
         //Implementation 
 
         //Private Insurance
-        Task<(bool Success, string Message)> CreatePrivateInsurance(
+        Task<(bool success, string message)> CreatePrivateInsurance(
             PrivateCustomer privateCustomer,
             InsuranceType insuranceType,
             PrivateCoverageOption privateCoverageOption,
@@ -35,7 +35,7 @@ namespace SU.Backend.Services.Interfaces
             );
 
         //Company Insurance: Property and Inventory
-        Task<(bool Success, string Message)> CreatePropertyInventoryInsurance(
+        Task<(bool success, string message)> CreatePropertyInventoryInsurance(
                     CompanyCustomer companyCustomer,
                     PropertyAndInventoryCoverage propertyAndInventoryCoverage,
                     Employee seller,
@@ -46,7 +46,7 @@ namespace SU.Backend.Services.Interfaces
         );
 
         // Company Insurance: Liability
-        Task<(bool Success, string Message)> CreateLiabilityInsurance(
+        Task<(bool success, string message)> CreateLiabilityInsurance(
                     CompanyCustomer companyCustomer,
                     LiabilityCoverage liabilityCoverage,
                     Employee seller,
@@ -57,7 +57,7 @@ namespace SU.Backend.Services.Interfaces
         );
 
         // Company Insurance: Vehicle
-        Task<(bool Success, string Message)> CreateVehicleInsurance(
+        Task<(bool success, string message)> CreateVehicleInsurance(
                     CompanyCustomer companyCustomer,
                     VehicleInsuranceCoverage vehicleCoverage,
                     Employee seller,
@@ -67,10 +67,10 @@ namespace SU.Backend.Services.Interfaces
                     DateTime? endDate = null
         );
 
-        Task<(bool Success, string Message)> DeleteInsurance(
+        Task<(bool success, string message)> DeleteInsurance(
            Insurance insurance);
 
-        Task<(bool Success, string Message)> UpdateInsurance(
+        Task<(bool success, string message)> UpdateInsurance(
            Insurance insurance);
 
 
