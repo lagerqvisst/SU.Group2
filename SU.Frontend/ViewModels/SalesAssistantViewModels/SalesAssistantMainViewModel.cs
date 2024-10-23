@@ -1,5 +1,6 @@
 using SU.Frontend.Helper;
 using SU.Frontend.Helper.Navigation;
+using SU.Frontend.Views.SalesAssistantView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,6 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
 {
     public class SalesAssistantMainViewModel : ObservableObject
     {
-        //Lägg till Register seller och edit/delete seller
-
         public ICommand ToRegisterNewCustomer;
         public ICommand ToRegisterNewInsurance;
         public ICommand ToEditDeleteCustomer;
@@ -31,6 +30,16 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
             ToShowInsurances = new RelayCommand(() => _navigationService.NavigateToShowInsurances(_navigationService));
             ToShowCustomers = new RelayCommand(() => _navigationService.NavigateToShowCustomers(_navigationService));
             ToShowCustomerProspects = new RelayCommand(() => _navigationService.NavigateToShowCustomerProspects(_navigationService));
+        }
+
+        public void RegisterNewSeller()
+        {
+            _navigationService.NavigateTo("RegisterNewSellerView");
+        }
+
+        public void EditDeleteSeller()
+        {
+            _navigationService.NavigateTo("EditDeleteSellerView");
         }
     }
 }

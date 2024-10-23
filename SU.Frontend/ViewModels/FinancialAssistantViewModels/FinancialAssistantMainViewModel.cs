@@ -23,5 +23,20 @@ namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
             ToShowInsurances = new RelayCommand(() => _navigationService.NavigateToShowInsurances(_navigationService));
             ToShowCustomers = new RelayCommand(() => _navigationService.NavigateToShowCustomers(_navigationService));
         }
+
+        public void RegisterExportBillingInfo()
+        {
+            _navigationService.NavigateTo("RegisterExportBillingInfoView");
+        }
+
+        public void RegisterProvisionSeller()
+        {
+            _navigationService.NavigateTo("RegisterProvisionSellerView");
+        }
+
+        public void ShowSellingStatistics()
+        {
+            _navigationService.NavigateTo("ShowSellingStatisticsView");
+        }
     }
 }
