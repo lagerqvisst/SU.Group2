@@ -77,36 +77,36 @@ namespace SU.Backend.Controllers
             }
         }
 
-        public async Task<(bool Success, string Message, CompanyCustomer? Customer)> GetCompanyCustomerById(int id)
+        public async Task<(bool success, string message, CompanyCustomer? customer)> GetCompanyCustomerById(int id)
         {
             _logger.LogInformation("Controller activated to retrieve company customer by ID...");
             var result = await _companyCustomerService.GetCompanyCustomerById(id);
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"{result.Message}");
-                return (result.Success, result.Message, result.Customer);
+                _logger.LogInformation($"{result.message}");
+                return (result.success, result.message, result.customer);
             }
             else
             {
-                _logger.LogWarning($"{result.Message}");
-                return (result.Success, result.Message, result.Customer);
+                _logger.LogWarning($"{result.message}");
+                return (result.success, result.message, result.customer);
             }
         }
 
-        public async Task<(List<CompanyCustomer> CompanyCustomers, string Message)> GetAllCompanyCustomers()
+        public async Task<(List<CompanyCustomer> companyCustomers, string message)> GetAllCompanyCustomers()
         {
             _logger.LogInformation("Controller activated to list all company customers...");
             var result = await _companyCustomerService.GetAllCompanyCustomers();
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Company customers retrieved successfully:\n{result.Message}");
-                return (result.CompanyCustomers, result.Message);
+                _logger.LogInformation($"Company customers retrieved successfully:\n{result.message}");
+                return (result.companyCustomers, result.message);
             }
             else
             {
-                _logger.LogWarning($"Error retrieving company customers: {result.Message}");
-                return (new List<CompanyCustomer>(), result.Message);
+                _logger.LogWarning($"Error retrieving company customers: {result.message}");
+                return (new List<CompanyCustomer>(), result.message);
             }
         }
 
