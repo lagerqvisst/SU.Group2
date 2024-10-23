@@ -28,9 +28,10 @@
 
         <TextBlock Style="{StaticResource FörsäkringarFont}" Text="CEO Main View" HorizontalAlignment="Left" Grid.Column="1" Margin="0,0,0,108" Grid.RowSpan="2"/>
 
-        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search Customers" Command="{Binding ToShowCustomer}" Grid.Row="1"/>
-        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search Insurances" Command="{Binding ToShowInsurances}" Grid.Row="2"/>
-        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Create/ Export Selling statistics" Command="{Binding ToCreateExportStatistics}" Grid.Row="3"/>
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search Customers" Command="{Binding ToShowCustomer}" Margin="25,25,25,25" Grid.Row="1" Grid.Column="1"/>
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search Insurances" Command="{Binding ToShowInsurances}" Margin="25,25,25,25" Grid.Row="2" Grid.Column="1"/>
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Create/ Export Selling statistics" Command="{Binding ToCreateExportStatistics}"
+                Margin="25,25,25,25" Grid.Row="3" Grid.Column="1"/>
 
     </Grid>
 </Window>
