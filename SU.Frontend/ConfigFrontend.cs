@@ -28,6 +28,11 @@ namespace SU.Frontend
             services.AddTransient<LogoutButtonViewModel>(); // ViewModel for Log Out button
             services.AddTransient<MainViewButtonViewModel>(); //ViewModel for MainView button
             services.AddTransient<SignedInUserViewModel>(); // ViewModel for Signed in user
+            services.AddTransient<CeoMainViewModel>(); // ViewModel for CeoMainView
+            services.AddTransient<FinancialAss>
+            services.AddTransient<SalesAssistantMainViewModel>(); // ViewModel for SalesAssistantMainView
+            services.AddTransient<SellerMainViewModel>(); // ViewModel for SellerMainView
+
 
             // Registrera Views och UserControls
             services.AddTransient<LoginWindow>();

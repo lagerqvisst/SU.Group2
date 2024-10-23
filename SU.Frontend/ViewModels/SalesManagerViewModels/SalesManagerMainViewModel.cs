@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SU.Frontend.ViewModels.SalesManagerViewModels
 {
-    internal class SalesManagerLogIn
+    public class SalesManagerMainViewModel
     {
+
     }
 }
