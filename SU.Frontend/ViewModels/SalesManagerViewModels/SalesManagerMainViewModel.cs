@@ -18,9 +18,10 @@ namespace SU.Frontend.ViewModels.SalesManagerViewModels
         public SalesManagerMainViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            ToCreateExportStatistics = new RelayCommand(() => _navigationService.NavigateToCreateExportStatistics(_navigationService));
-            ToShowInsurances = new RelayCommand(() => _navigationService.NavigateToShowInsurances(_navigationService));
-            ToShowCustomers = new RelayCommand(() => _navigationService.NavigateToShowCustomers(_navigationService));
+            //Shared views are navigated through the navigation service
+            ToCreateExportStatistics = new RelayCommand(() => _navigationService.NavigateToCreateExportStatistics());
+            ToShowInsurances = new RelayCommand(() => _navigationService.NavigateToShowInsurances());
+            ToShowCustomers = new RelayCommand(() => _navigationService.NavigateToShowCustomers());
         }
     }
 }

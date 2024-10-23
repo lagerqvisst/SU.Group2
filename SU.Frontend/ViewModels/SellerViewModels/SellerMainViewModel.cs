@@ -22,13 +22,14 @@ namespace SU.Frontend.ViewModels.SellerViewModels
         public SellerMainViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            ToRegisterNewCustomer = new RelayCommand(() => _navigationService.NavigateToRegisterNewCustomer(_navigationService));
-            ToRegisterNewInsurance = new RelayCommand(() => _navigationService.NavigateToRegisterNewInsurance(_navigationService));
-            ToEditDeleteCustomer = new RelayCommand(() => _navigationService.NavigateToEditDeleteCustomer(_navigationService));
-            ToEditDeleteInsurance = new RelayCommand(() => _navigationService.NavigateToEditDeleteInsurance(_navigationService));
-            ToShowInsurances = new RelayCommand(() => _navigationService.NavigateToShowInsurances(_navigationService));
-            ToShowCustomers = new RelayCommand(() => _navigationService.NavigateToShowCustomers(_navigationService));
-            ToShowCustomerProspects = new RelayCommand(() => _navigationService.NavigateToShowCustomerProspects(_navigationService));
+            //Shared views are navigated through the navigation service
+            ToRegisterNewCustomer = new RelayCommand(() => _navigationService.NavigateToRegisterNewCustomer());
+            ToRegisterNewInsurance = new RelayCommand(() => _navigationService.NavigateToRegisterNewInsurance());
+            ToEditDeleteCustomer = new RelayCommand(() => _navigationService.NavigateToEditDeleteCustomer());
+            ToEditDeleteInsurance = new RelayCommand(() => _navigationService.NavigateToEditDeleteInsurance());
+            ToShowInsurances = new RelayCommand(() => _navigationService.NavigateToShowInsurances());
+            ToShowCustomers = new RelayCommand(() => _navigationService.NavigateToShowCustomers());
+            ToShowCustomerProspects = new RelayCommand(() => _navigationService.NavigateToShowCustomerProspects());
         }
     }
 }

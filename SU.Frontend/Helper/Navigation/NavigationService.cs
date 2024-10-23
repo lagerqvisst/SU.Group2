@@ -31,35 +31,35 @@ namespace SU.Frontend.Helper.Navigation
             }
         }
 
-        public void NavigateToMainViewBasedOnRole(Employee employee, INavigationService navigationService)
+        public void NavigateToMainViewBasedOnRole(Employee employee)
         {
             if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.CEO))
             {
-                navigationService.NavigateTo("CeoMainView", "CeoView");
+                NavigateTo("CeoMainView", "CeoView");
             }
             else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.SalesAssistant))
             {
-                navigationService.NavigateTo("SalesAssistantMainView", "SalesAssistantView");
+                NavigateTo("SalesAssistantMainView", "SalesAssistantView");
             }
             else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.SalesManager))
             {
-                navigationService.NavigateTo("SalesManagerMainView", "SalesManagerView");
+                NavigateTo("SalesManagerMainView", "SalesManagerView");
             }
             else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.OutsideSales))
             {
-                navigationService.NavigateTo("TestView", null);
+                NavigateTo("TestView", null);
             }
             else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.InsideSales))
             {
-                navigationService.NavigateTo("SellerMainView", "SellerView");
+                NavigateTo("SellerMainView", "SellerView");
             }
             else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.FinancialAssistant))
             {
-                navigationService.NavigateTo("FinancialAssistantMainView", "FinancialAssistantView");
+                NavigateTo("FinancialAssistantMainView", "FinancialAssistantView");
             }
             else
             {
-                navigationService.NavigateTo("DefaultDashboardView", null);
+                NavigateTo("DefaultDashboardView", null);
             }
         }
 
@@ -102,9 +102,9 @@ namespace SU.Frontend.Helper.Navigation
         }
 
 
-        public void ReturnToMain(Employee employee, INavigationService navigationService)
+        public void ReturnToMain(Employee employee)
         {
-            NavigateToMainViewBasedOnRole(employee, navigationService);
+            NavigateToMainViewBasedOnRole(employee);
 
             Window currentWindow = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
 
@@ -125,44 +125,44 @@ namespace SU.Frontend.Helper.Navigation
             }
         }
 
-        public void NavigateToCreateExportStatistics(INavigationService navigationService)
+        public void NavigateToCreateExportStatistics()
         {
-            navigationService.NavigateTo("CreateExportSellStatView", "CommonViews");
+            NavigateTo("CreateExportSellStatView", "CommonViews");
         }
 
-        public void NavigateToShowInsurances(INavigationService navigationService)
+        public void NavigateToShowInsurances()
         {
-            navigationService.NavigateTo("ShowInsurancesView", "CommonViews");
+            NavigateTo("ShowInsurancesView", "CommonViews");
         }
 
-        public void NavigateToShowCustomers (INavigationService navigationService)
+        public void NavigateToShowCustomers ()
         {
-            navigationService.NavigateTo("ShowCustomersView", "CommonViews");
+            NavigateTo("ShowCustomersView", "CommonViews");
         }
 
-        public void NavigateToEditDeleteCustomer(INavigationService navigationService)
+        public void NavigateToEditDeleteCustomer()
         {
-            navigationService.NavigateTo("EditDeleteCustomerView", "CommonViews");
+            NavigateTo("EditDeleteCustomerView", "CommonViews");
         }
 
-        public void NavigateToEditDeleteInsurance(INavigationService navigationService)
+        public void NavigateToEditDeleteInsurance()
         {
-            navigationService.NavigateTo("EditDeleteInsuranceView", "CommonViews");
+            NavigateTo("EditDeleteInsuranceView", "CommonViews");
         }
 
-        public void NavigateToRegisterNewCustomer(INavigationService navigationService)
+        public void NavigateToRegisterNewCustomer()
         {
-            navigationService.NavigateTo("RegisterNewCustomerView", "CommonViews");
+            NavigateTo("RegisterNewCustomerView", "CommonViews");
         }
 
-        public void NavigateToRegisterNewInsurance(INavigationService navigationService)
+        public void NavigateToRegisterNewInsurance()
         {
-            navigationService.NavigateTo("RegisterNewInsuranceView", "CommonViews");
+            NavigateTo("RegisterNewInsuranceView", "CommonViews");
         }
 
-        public void NavigateToShowCustomerProspects(INavigationService navigationService)
+        public void NavigateToShowCustomerProspects()
         {
-            navigationService.NavigateTo("ShowCustomerProspectsView", "CommonViews");
+            NavigateTo("ShowCustomerProspectsView", "CommonViews");
         }
     }
 }
