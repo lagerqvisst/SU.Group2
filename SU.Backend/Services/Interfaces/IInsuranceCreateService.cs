@@ -27,10 +27,12 @@ namespace SU.Backend.Services.Interfaces
             Employee seller,
             bool isPolicyHolderInsured,
             string? note,
+            PaymentPlan paymentPlan,
             DateTime? startDate = null,
             DateTime? endDate = null,
             List<InsuranceAddonType>? addons = null, // Nullable lista med addons
-            InsuredPerson? insuredPerson = null);
+            InsuredPerson? insuredPerson = null
+            );
 
         //Company Insurance: Property and Inventory
         Task<(bool Success, string Message)> CreatePropertyInventoryInsurance(
@@ -38,6 +40,7 @@ namespace SU.Backend.Services.Interfaces
                     PropertyAndInventoryCoverage propertyAndInventoryCoverage,
                     Employee seller,
                     string note,
+                    PaymentPlan paymentPlan,
                     DateTime? startDate = null, 
                     DateTime? endDate = null    
         );
@@ -48,6 +51,7 @@ namespace SU.Backend.Services.Interfaces
                     LiabilityCoverage liabilityCoverage,
                     Employee seller,
                     string note,
+                    PaymentPlan paymentPlan,
                     DateTime? startDate = null,
                     DateTime? endDate = null
         );
@@ -58,6 +62,7 @@ namespace SU.Backend.Services.Interfaces
                     VehicleInsuranceCoverage vehicleCoverage,
                     Employee seller,
                     string note,
+                    PaymentPlan paymentPlan,
                     DateTime? startDate = null,
                     DateTime? endDate = null
         );
