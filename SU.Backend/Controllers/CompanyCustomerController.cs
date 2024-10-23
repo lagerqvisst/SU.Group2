@@ -77,20 +77,20 @@ namespace SU.Backend.Controllers
             }
         }
 
-        public async Task<(bool Success, string Message, CompanyCustomer? Customer)> GetCompanyCustomerById(int id)
+        public async Task<(bool success, string message, CompanyCustomer? customer)> GetCompanyCustomerById(int id)
         {
             _logger.LogInformation("Controller activated to retrieve company customer by ID...");
             var result = await _companyCustomerService.GetCompanyCustomerById(id);
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"{result.Message}");
-                return (result.Success, result.Message, result.Customer);
+                _logger.LogInformation($"{result.message}");
+                return (result.success, result.message, result.customer);
             }
             else
             {
-                _logger.LogWarning($"{result.Message}");
-                return (result.Success, result.Message, result.Customer);
+                _logger.LogWarning($"{result.message}");
+                return (result.success, result.message, result.customer);
             }
         }
 

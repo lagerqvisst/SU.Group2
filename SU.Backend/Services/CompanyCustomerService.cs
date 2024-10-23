@@ -135,7 +135,7 @@ namespace SU.Backend.Services
         }
 
         // Method to get a company customer by ID
-        public async Task<(bool Success, string Message, CompanyCustomer? Customer)> GetCompanyCustomerById(int id)
+        public async Task<(bool success, string message, CompanyCustomer? customer)> GetCompanyCustomerById(int id)
         {
             try
             {
