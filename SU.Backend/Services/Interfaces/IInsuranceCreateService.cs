@@ -70,11 +70,13 @@ namespace SU.Backend.Services.Interfaces
         Task<(bool Success, string Message)> DeleteInsurance(
            Insurance insurance);
 
-        //Add update method for insurance
+        Task<(bool Success, string Message)> UpdateInsurance(
+           Insurance insurance);
 
-       
 
-      
+
+
+
 
     }
 }
