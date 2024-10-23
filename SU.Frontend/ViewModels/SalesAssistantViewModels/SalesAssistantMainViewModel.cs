@@ -34,12 +34,12 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
 
         public void RegisterNewSeller()
         {
-            _navigationService.NavigateTo("RegisterNewSellerView");
+            _navigationService.NavigateTo("RegisterNewSellerView", "SalesAssistantView");
         }
 
         public void EditDeleteSeller()
         {
-            _navigationService.NavigateTo("EditDeleteSellerView");
+            _navigationService.NavigateTo("EditDeleteSellerView", "SalesAssistantView");
         }
     }
 }

@@ -26,17 +26,17 @@ namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
 
         public void RegisterExportBillingInfo()
         {
-            _navigationService.NavigateTo("RegisterExportBillingInfoView");
+            _navigationService.NavigateTo("RegisterExportBillingInfoView", "FinancialAssistantView");
         }
 
         public void RegisterProvisionSeller()
         {
-            _navigationService.NavigateTo("RegisterProvisionSellerView");
+            _navigationService.NavigateTo("RegisterProvisionSellerView", "FinancialAssistantView");
         }
 
         public void ShowSellingStatistics()
         {
-            _navigationService.NavigateTo("ShowSellingStatisticsView");
+            _navigationService.NavigateTo("ShowSellingStatisticsView", "FinancialAssistantView");
         }
     }
 }

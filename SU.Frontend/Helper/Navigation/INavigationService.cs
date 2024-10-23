@@ -9,7 +9,7 @@ namespace SU.Frontend.Helper.Navigation
 {
     public interface INavigationService
     {
-        void NavigateTo(string viewName, object parameter = null);
+        void NavigateTo(string viewName, string folderName, object parameter = null);
         void NavigateToMainViewBasedOnRole(Employee employee, INavigationService navigationService);
 
         void CloseAllExcept(string viewName);
