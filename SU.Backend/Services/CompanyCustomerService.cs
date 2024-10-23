@@ -149,7 +149,7 @@ namespace SU.Backend.Services
         }
 
         // Method to get all company customers
-        public async Task<(bool Success, string Message, List<CompanyCustomer> CompanyCustomers)> GetAllCompanyCustomers()
+        public async Task<(bool success, string message, List<CompanyCustomer> companyCustomers)> GetAllCompanyCustomers()
         {
             _logger.LogInformation("Controller activated to get all company customers...");
 

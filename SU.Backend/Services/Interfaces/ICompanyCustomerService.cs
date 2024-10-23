@@ -24,7 +24,7 @@ namespace SU.Backend.Services.Interfaces
         //Used for updating and deleting specific company customer.
         Task<(bool success, string message, CompanyCustomer? customer)> GetCompanyCustomerById(int id);
 
-        Task<(bool Success, string Message, List<CompanyCustomer> CompanyCustomers)> GetAllCompanyCustomers();
+        Task<(bool success, string message, List<CompanyCustomer> companyCustomers)> GetAllCompanyCustomers();
 
     }
 
