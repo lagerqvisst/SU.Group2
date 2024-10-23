@@ -99,7 +99,7 @@ namespace SU.Frontend.ViewModels
                 {
                     _loggedInUserService.LoggedInEmployee = result.Employee;
 
-                    _navigationService.NavigateToMainViewBasedOnRole(result.Employee, _navigationService);
+                    _navigationService.NavigateToMainViewBasedOnRole(result.Employee);
                 }
 
                 //MessageBox.Show($"{result.Message}");

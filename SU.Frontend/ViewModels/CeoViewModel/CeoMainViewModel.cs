@@ -19,9 +19,9 @@ namespace SU.Frontend.ViewModels.CeoMainViewModel
         public CeoMainViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            ToCreateExportStatistics = new RelayCommand(() => _navigationService.NavigateToCreateExportStatistics(_navigationService));
-            ToShowInsurances = new RelayCommand(() => _navigationService.NavigateToShowInsurances(_navigationService));
-            ToShowCustomers = new RelayCommand(() => _navigationService.NavigateToShowCustomers(_navigationService));
+            ToCreateExportStatistics = new RelayCommand(() => _navigationService.NavigateToCreateExportStatistics());
+            ToShowInsurances = new RelayCommand(() => _navigationService.NavigateToShowInsurances());
+            ToShowCustomers = new RelayCommand(() =>_navigationService.NavigateToShowCustomers());
         }
 
     }

@@ -10,26 +10,26 @@ namespace SU.Frontend.Helper.Navigation
     public interface INavigationService
     {
         void NavigateTo(string viewName, string folderName, object parameter = null);
-        void NavigateToMainViewBasedOnRole(Employee employee, INavigationService navigationService);
+        void NavigateToMainViewBasedOnRole(Employee employee);
 
         void CloseAllExcept(string viewName);
 
-        void ReturnToMain(Employee employee, INavigationService navigationService);
+        void ReturnToMain(Employee employee);
 
-        void NavigateToCreateExportStatistics(INavigationService navigationService);
+        void NavigateToCreateExportStatistics();
 
-        void NavigateToShowInsurances(INavigationService navigationService);
+        void NavigateToShowInsurances();
 
-        void NavigateToShowCustomers(INavigationService navigationService);
+        void NavigateToShowCustomers();
 
-        void NavigateToEditDeleteCustomer(INavigationService navigationService);
+        void NavigateToEditDeleteCustomer();
 
-        void NavigateToEditDeleteInsurance(INavigationService navigationService);
+        void NavigateToEditDeleteInsurance();
 
-        void NavigateToRegisterNewCustomer(INavigationService navigationService);
+        void NavigateToRegisterNewCustomer();
 
-        void NavigateToRegisterNewInsurance(INavigationService navigationService);
+        void NavigateToRegisterNewInsurance();
 
-        void NavigateToShowCustomerProspects(INavigationService navigationService);
+        void NavigateToShowCustomerProspects();
     }
 }

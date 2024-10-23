@@ -18,7 +18,7 @@ namespace SU.Frontend.ViewModels.UserControlViewModels
 
         public MainViewButtonViewModel(Employee employee, INavigationService navigationService)
         {
-            ReturnToMainViewCommand = new RelayCommand(() => navigationService.ReturnToMain(employee, navigationService));
+            ReturnToMainViewCommand = new RelayCommand(() => navigationService.ReturnToMain(employee));
         }
     }
 }
