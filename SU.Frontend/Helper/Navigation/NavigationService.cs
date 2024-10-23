@@ -113,7 +113,7 @@ namespace SU.Frontend.Helper.Navigation
 
         public void NavigateToCreateExportStatistics(INavigationService navigationService)
         {
-            navigationService.NavigateTo("CreateExportStatisticsView");
+            navigationService.NavigateTo("CreateExportSellStatView");
         }
 
         public void NavigateToShowInsurances(INavigationService navigationService)
