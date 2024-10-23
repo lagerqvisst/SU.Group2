@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SU.Frontend.Views.Ceo
+namespace SU.Frontend.Views.CeoView
 {
     /// <summary>
-    /// Interaction logic for CeoWindow.xaml
+    /// Interaction logic for CeoMainView.xaml
     /// </summary>
-    public partial class CeoWindow : Window
+    public partial class CeoMainView : Window
     {
-        public CeoWindow()
+        public CeoMainView()
         {
             InitializeComponent();
         }

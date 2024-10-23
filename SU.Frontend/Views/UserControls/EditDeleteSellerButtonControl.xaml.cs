@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SU.Frontend.Views.FinancialAssistantView
+namespace SU.Frontend.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for FinancialAssistantMainView.xaml
+    /// Interaction logic for EditDeleteSellerButtonControl.xaml
     /// </summary>
-    public partial class FinancialAssistantMainView : Window
+    public partial class EditDeleteSellerButtonControl : UserControl
     {
-        public FinancialAssistantMainView()
+        public EditDeleteSellerButtonControl()
         {
             InitializeComponent();
         }

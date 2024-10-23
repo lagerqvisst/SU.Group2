@@ -3,28 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
              mc:Ignorable="d" 
+             xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
         <helper:ViewModelLocator x:Key="Locator"/>
     </UserControl.Resources>
 
-    <StackPanel DataContext="{Binding SignedInUserViewModel, Source={StaticResource Locator}}" 
-                VerticalAlignment="Top" HorizontalAlignment="Right" Background="LightGray" Margin="0,0,10,10">
+    <Border>
+        <StackPanel DataContext="{Binding SignedInUserViewModel, Source={StaticResource Locator}}" 
+            VerticalAlignment="Top" HorizontalAlignment="Right" Background="LightGray" Margin="5,5,5,5">
 
-        <TextBlock>
-            <TextBlock.Inlines>
-                <TextBlock Style="{StaticResource ToppFont}" Text="TOPP"/>
-                <TextBlock Style="{StaticResource FörsäkringarFont}" Text="FÖRSÄKRINGAR AB"/>
-            </TextBlock.Inlines>
-        </TextBlock>
-        
-        <TextBlock Text="{Binding SignedInUserName}" FontSize="16" Padding="10, 0, 10, 0"/>
-        <TextBlock Text="{Binding SignedInUserId}" FontSize="16" Padding="10, 0, 10, 0"/>
-        <TextBlock Text="{Binding SignedInUserRole}" FontSize="16" Padding="10, 0, 10, 0"/>
-    </StackPanel>
+            <TextBlock Padding="10,3,10,3">
+                <TextBlock.Inlines>
+                    <TextBlock Style="{StaticResource ToppFont}" Text="TOPP"/>
+                    <TextBlock Style="{StaticResource FörsäkringarFont}" Text="FÖRSÄKRINGAR AB"/>
+                </TextBlock.Inlines>
+            </TextBlock>
+
+            <TextBlock Text="{Binding SignedInUserName}" FontSize="16" Padding="10, 3, 10, 3"/>
+            <TextBlock Text="{Binding SignedInUserId}" FontSize="16" Padding="10, 3, 10, 3"/>
+            <TextBlock Text="{Binding SignedInUserRole}" FontSize="16" Padding="10, 3, 10, 3"/>
+        </StackPanel>
+    </Border>
+    
 
 </UserControl>
 

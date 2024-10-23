@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SU.Frontend.ViewModels.SalesManagerViewModels
+namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
 {
-    public class SalesManagerMainViewModel
+    public class FinancialAssistantMainViewModel
     {
 
     }

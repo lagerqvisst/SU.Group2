@@ -4,9 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SU.Frontend.Views.SalesManagerView"
+        xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
         mc:Ignorable="d"
         Title="SalesManagerMainView" Height="450" Width="800">
     <Grid>
-        
+        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,10,10,10" />
+        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top"/>
     </Grid>
 </Window>

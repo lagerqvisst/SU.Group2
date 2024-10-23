@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SU.Frontend.ViewModels.FInancialAssistenViewModels
+namespace SU.Frontend.ViewModels.UserControlViewModels
 {
-    internal class FInancialAssistentLogIn
+    public class ShowSearchCustomerButtonViewModel
     {
     }
 }
