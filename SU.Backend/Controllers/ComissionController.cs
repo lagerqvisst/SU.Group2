@@ -17,11 +17,13 @@ namespace SU.Backend.Controllers
     public class ComissionController
     {
         ICommissionService _commissionService;
+        IDataExportService _dataExportService;
         ILogger<ComissionController> _logger;
 
-        public ComissionController(ICommissionService commissionService, ILogger<ComissionController> logger)
+        public ComissionController(ICommissionService commissionService, IDataExportService dataExportService, ILogger<ComissionController> logger)
         {
             _commissionService = commissionService;
+            _dataExportService = dataExportService;
             _logger = logger;
         }
 
@@ -42,5 +44,23 @@ namespace SU.Backend.Controllers
             }
             return (result.Message, result.Commissions);
         }
+
+        public async Task<(bool Success, string Message)> ExportCommissionsToExcel(List<Commission> commissions)
+        {
+            _logger.LogInformation("Exporting commissions to Excel...");
+
+            var result = await _dataExportService.ExportCommissionsToExcel(commissions);
+
+            if(result.Success) {
+                _logger.LogInformation("Commissions exported successfully");
+            }
+            else
+            {
+                _logger.LogWarning("Error exporting commissions: {result.Message}");
+            }
+
+            return (result.Success, result.Message);
+        }
     }
+
 }

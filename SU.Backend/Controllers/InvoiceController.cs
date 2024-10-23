@@ -17,11 +17,13 @@ namespace SU.Backend.Controllers
     public class InvoiceController
     {
         IInvoiceService _invoiceService;
+        IDataExportService _dataExportService;
         ILogger<InvoiceController> _logger;
 
-        public InvoiceController(IInvoiceService invoiceService, ILogger<InvoiceController> logger)
+        public InvoiceController(IInvoiceService invoiceService, IDataExportService dataExportService, ILogger<InvoiceController> logger)
         {
             _invoiceService = invoiceService;
+            _dataExportService = dataExportService;
             _logger = logger;
         }
 
@@ -42,5 +44,22 @@ namespace SU.Backend.Controllers
                 return (result.Success, result.Message, new List<InvoiceEntry>());
             }
         }
-    }
+
+        public async Task<(bool Success, string Message)> ExportInvoicesToExcel(List<InvoiceEntry> invoices)
+        {
+            _logger.LogInformation("Exporting invoices to Excel...");
+
+            var result = await _dataExportService.ExportInvoicesToExcel(invoices);
+
+            if (result.Success)
+            {
+                _logger.LogInformation("Invoices exported successfully");
+            }
+            else
+            {
+                _logger.LogWarning("Error exporting invoices: {result.Message}");
+            }
+            return (result.Success, result.Message);
+        }
 }
+    }
