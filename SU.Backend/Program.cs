@@ -113,13 +113,14 @@ class Program
 
         //Export testing
         
+        /*
         var dataexportservice = host.Services.GetRequiredService<IDataExportService>();
         var comissionService = host.Services.GetRequiredService<ICommissionService>();
         var invoiceService = host.Services.GetRequiredService<IInvoiceService>();
 
         var invoices = await invoiceService.GenerateInvoiceData();
 
-        await dataexportservice.ExportInvoicesToExcel(invoices.InvoiceData);
+        await dataexportservice.ExportInvoicesToExcel(invoices.InvoiceData);*/
 
 
     }
