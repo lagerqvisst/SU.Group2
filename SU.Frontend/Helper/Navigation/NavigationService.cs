@@ -7,6 +7,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Navigation;
 
 namespace SU.Frontend.Helper.Navigation
 {
@@ -62,7 +63,7 @@ namespace SU.Frontend.Helper.Navigation
             }
 
             // Hämta typen baserat på dess fullständiga namn
-            var viewType = Type.GetType($"SU.Frontend.Views.CeoView.{viewName}");
+            var viewType = Type.GetType($"SU.Frontend.Views.{viewName}");
             if (viewType == null)
             {
                 throw new ArgumentException($"View type '{viewName}' not found.", nameof(viewName));
@@ -108,6 +109,11 @@ namespace SU.Frontend.Helper.Navigation
             {
                 Console.WriteLine("No active window found.");
             }
+        }
+
+        public void NavigateToCreateExportStatistics(INavigationService navigationService)
+        {
+            navigationService.NavigateTo("CreateExportStatisticsView");
         }
 
         public void NavigateToShowInsurances(INavigationService navigationService)
