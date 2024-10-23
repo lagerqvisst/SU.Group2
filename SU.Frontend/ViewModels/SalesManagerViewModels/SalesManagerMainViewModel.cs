@@ -9,13 +9,13 @@ using System.Windows.Input;
 
 namespace SU.Frontend.ViewModels.SalesManagerViewModels
 {
-    public class SalesManagerViewModel : ObservableObject
+    public class SalesManagerMainViewModel : ObservableObject
     {
         public ICommand ToCreateExportStatistics;
         public ICommand ToShowInsurances;
         public ICommand ToShowCustomers;
         public INavigationService _navigationService;
-        public SalesManagerViewModel(INavigationService navigationService)
+        public SalesManagerMainViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
             ToCreateExportStatistics = new RelayCommand(() => _navigationService.NavigateToCreateExportStatistics(_navigationService));

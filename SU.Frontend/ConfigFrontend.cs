@@ -43,7 +43,7 @@ namespace SU.Frontend
             services.AddTransient<CeoMainViewModel>(); // ViewModel for CeoMainView
             services.AddTransient<FinancialAssistantMainViewModel>(); // ViewModel for FinancialAssistantMainView
             services.AddTransient<SalesAssistantMainViewModel>(); // ViewModel for SalesAssistantMainView
-            services.AddTransient<SalesManagerViewModel>(); // ViewModel for SalesManagerMainView
+            services.AddTransient<SalesManagerMainViewModel>(); // ViewModel for SalesManagerMainView
             services.AddTransient<SellerMainViewModel>(); // ViewModel for SellerMainView
 
 

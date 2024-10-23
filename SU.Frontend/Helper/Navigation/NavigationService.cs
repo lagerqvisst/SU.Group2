@@ -125,5 +125,30 @@ namespace SU.Frontend.Helper.Navigation
         {
             navigationService.NavigateTo("ShowCustomersView");
         }
+
+        public void NavigateToEditDeleteCustomer(INavigationService navigationService)
+        {
+            navigationService.NavigateTo("EditDeleteCustomerView");
+        }
+
+        public void NavigateToEditDeleteInsurance(INavigationService navigationService)
+        {
+            navigationService.NavigateTo("EditDeleteInsuranceView");
+        }
+
+        public void NavigateToRegisterNewCustomer(INavigationService navigationService)
+        {
+            navigationService.NavigateTo("RegisterNewCustomerView");
+        }
+
+        public void NavigateToRegisterNewInsurance(INavigationService navigationService)
+        {
+            navigationService.NavigateTo("RegisterNewInsuranceView");
+        }
+
+        public void NavigateToShowCustomerProspects(INavigationService navigationService)
+        {
+            navigationService.NavigateTo("ShowCustomerProspectsView");
+        }
     }
 }
