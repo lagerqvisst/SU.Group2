@@ -35,13 +35,14 @@ namespace SU.Backend.Controllers
             Employee seller,
             bool isPolicyHolderInsured,
             string? note,
+            PaymentPlan paymentPlan,
             DateTime? startDate = null,
             DateTime? endDate = null,
             List<InsuranceAddonType>? addons = null, // Nullable list with addons
             InsuredPerson? insuredPerson = null)
         {
             _logger.LogInformation("Controller activated to create new private insurance...");
-            var result = await _InsuranceCreateService.CreatePrivateInsurance(privateCustomer, insuranceType, privateCoverageOption, seller, isPolicyHolderInsured, note, startDate, endDate, addons, insuredPerson);
+            var result = await _InsuranceCreateService.CreatePrivateInsurance(privateCustomer, insuranceType, privateCoverageOption, seller, isPolicyHolderInsured, note, paymentPlan, startDate, endDate, addons, insuredPerson);
 
             if (result.Success)
             {
@@ -56,10 +57,10 @@ namespace SU.Backend.Controllers
         }
 
         public async Task<(bool Success, string Message)> CreatePropertyInventoryInsurance(CompanyCustomer companyCustomer,
-            PropertyAndInventoryCoverage propertyAndInventoryCoverage, Employee seller, string note)
+            PropertyAndInventoryCoverage propertyAndInventoryCoverage, Employee seller, string note, PaymentPlan paymentPlan)
         {
             _logger.LogInformation("Controller activated to create new property and inventory insurance...");
-            var result = await _InsuranceCreateService.CreatePropertyInventoryInsurance(companyCustomer, propertyAndInventoryCoverage, seller, note);
+            var result = await _InsuranceCreateService.CreatePropertyInventoryInsurance(companyCustomer, propertyAndInventoryCoverage, seller, note, paymentPlan);
 
             if (result.Success)
             {
@@ -74,10 +75,10 @@ namespace SU.Backend.Controllers
         }
 
         public async Task<(bool Success, string Message)> CreateLiabilityInsurance(CompanyCustomer companyCustomer,
-            LiabilityCoverage liabilityCoverage, Employee seller, string note)
+            LiabilityCoverage liabilityCoverage, Employee seller, string note, PaymentPlan paymentPlan)
         {
             _logger.LogInformation("Controller activated to create new liability insurance...");
-            var result = await _InsuranceCreateService.CreateLiabilityInsurance(companyCustomer, liabilityCoverage, seller, note);
+            var result = await _InsuranceCreateService.CreateLiabilityInsurance(companyCustomer, liabilityCoverage, seller, note, paymentPlan);
 
             if (result.Success)
             {
@@ -92,10 +93,10 @@ namespace SU.Backend.Controllers
         }
 
         public async Task<(bool Success, string Message)> CreateVehicleInsurance(CompanyCustomer companyCustomer,
-            VehicleInsuranceCoverage vehicleCoverage, Employee seller, string note)
+            VehicleInsuranceCoverage vehicleCoverage, Employee seller, string note, PaymentPlan paymentPlan)
         {
             _logger.LogInformation("Controller activated to create new vehicle insurance...");
-            var result = await _InsuranceCreateService.CreateVehicleInsurance(companyCustomer, vehicleCoverage, seller, note);
+            var result = await _InsuranceCreateService.CreateVehicleInsurance(companyCustomer, vehicleCoverage, seller, note, paymentPlan);
 
             if (result.Success)
             {
