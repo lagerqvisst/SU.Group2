@@ -109,7 +109,7 @@ namespace SU.Backend.Services
         }
 
         // Method to delete an existing company customer
-        public async Task<(bool Success, string Message)> DeleteCompanyCustomer(CompanyCustomer companyCustomer)
+        public async Task<(bool success, string message)> DeleteCompanyCustomer(CompanyCustomer companyCustomer)
         {
 
             _logger.LogInformation("Deleting company customer...");
