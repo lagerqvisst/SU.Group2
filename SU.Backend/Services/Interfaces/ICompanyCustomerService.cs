@@ -13,13 +13,13 @@ namespace SU.Backend.Services.Interfaces
     /// </summary>
     public interface ICompanyCustomerService
     {
-        Task<(bool Success, string Message, CompanyCustomer Customer)> GenerateTestCompanyCustomer();
+        Task<(bool success, string message, CompanyCustomer customer)> GenerateTestCompanyCustomer();
 
-        Task<(bool Success, string Message)> CreateCompanyCustomer(CompanyCustomer newCompanyCustomer);
+        Task<(bool success, string message)> CreateCompanyCustomer(CompanyCustomer newCompanyCustomer);
 
-        Task<(bool Success, string Message)> UpdateCompanyCustomer(CompanyCustomer companyCustomer);
+        Task<(bool success, string message)> UpdateCompanyCustomer(CompanyCustomer companyCustomer);
 
-        Task<(bool Success, string Message)> DeleteCompanyCustomer(CompanyCustomer companyCustomer);
+        Task<(bool success, string message)> DeleteCompanyCustomer(CompanyCustomer companyCustomer);
 
         //Used for updating and deleting specific company customer.
         Task<(bool Success, string Message, CompanyCustomer? Customer)> GetCompanyCustomerById(int id);

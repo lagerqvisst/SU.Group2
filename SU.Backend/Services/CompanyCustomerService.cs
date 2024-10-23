@@ -25,7 +25,7 @@ namespace SU.Backend.Services
         }
 
         // Method to generate a test company customer, only used for testing purposes
-        public async Task<(bool Success, string Message, CompanyCustomer Customer)> GenerateTestCompanyCustomer()
+        public async Task<(bool success, string message, CompanyCustomer customer)> GenerateTestCompanyCustomer()
         {
             _logger.LogInformation("Generating test company customer");
 
@@ -61,7 +61,7 @@ namespace SU.Backend.Services
         }
 
         // Method to create a new company customer
-        public async Task<(bool Success, string Message)> CreateCompanyCustomer(CompanyCustomer newCompanyCustomer)
+        public async Task<(bool success, string message)> CreateCompanyCustomer(CompanyCustomer newCompanyCustomer)
         {
             _logger.LogInformation("Creating new company customer...");
 
@@ -85,7 +85,7 @@ namespace SU.Backend.Services
         }
 
         // Method to update an existing company customer
-        public async Task<(bool Success, string Message)> UpdateCompanyCustomer(CompanyCustomer companyCustomer)
+        public async Task<(bool success, string message)> UpdateCompanyCustomer(CompanyCustomer companyCustomer)
         {
             _logger.LogInformation("Updating company customer...");
 
@@ -109,7 +109,7 @@ namespace SU.Backend.Services
         }
 
         // Method to delete an existing company customer
-        public async Task<(bool Success, string Message)> DeleteCompanyCustomer(CompanyCustomer companyCustomer)
+        public async Task<(bool success, string message)> DeleteCompanyCustomer(CompanyCustomer companyCustomer)
         {
 
             _logger.LogInformation("Deleting company customer...");

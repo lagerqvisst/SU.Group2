@@ -26,54 +26,54 @@ namespace SU.Backend.Controllers
             _logger = logger;
         }
 
-        public async Task<(bool Success, string Message)> CreateCompanyCustomer(CompanyCustomer companyCustomer)
+        public async Task<(bool success, string message)> CreateCompanyCustomer(CompanyCustomer companyCustomer)
         {
             _logger.LogInformation("Controller activated to create new company customer...");
             var result = await _companyCustomerService.CreateCompanyCustomer(companyCustomer);
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogInformation($"{result.message}");
+                return (result.success, result.message);
             }
             else
             {
-                _logger.LogWarning($"{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogWarning($"{result.message}");
+                return (result.success, result.message);
             }
         }
 
-        public async Task<(bool Success, string Message)> UpdateCompanyCustomer(CompanyCustomer companyCustomer)
+        public async Task<(bool success, string message)> UpdateCompanyCustomer(CompanyCustomer companyCustomer)
         {
             _logger.LogInformation("Controller activated to update company customer...");
             var result = await _companyCustomerService.UpdateCompanyCustomer(companyCustomer);
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogInformation($"{result.message}");
+                return (result.success, result.message);
             }
             else
             {
-                _logger.LogWarning($"{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogWarning($"{result.message}");
+                return (result.success, result.message);
             }
         }
 
-        public async Task<(bool Success, string Message)> DeleteCompanyCustomer(CompanyCustomer companyCustomer)
+        public async Task<(bool success, string message)> DeleteCompanyCustomer(CompanyCustomer companyCustomer)
         {
             _logger.LogInformation("Controller activated to delete company customer...");
             var result = await _companyCustomerService.DeleteCompanyCustomer(companyCustomer);
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogInformation($"{result.message}");
+                return (result.success, result.message);
             }
             else
             {
-                _logger.LogWarning($"{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogWarning($"{result.message}");
+                return (result.success, result.message);
             }
         }
 
