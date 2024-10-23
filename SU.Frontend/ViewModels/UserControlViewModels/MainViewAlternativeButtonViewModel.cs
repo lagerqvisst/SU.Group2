@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SU.Frontend.ViewModels.UserControlViewModels
 {
-    public class ShowSearchCustomerButtonViewModel
+    public class MainViewAlternativeButtonViewModel
     {
+
     }
 }

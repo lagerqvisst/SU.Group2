@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace SU.Frontend.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for RegisterNewCustomerButtonControl.xaml
+    /// Interaction logic for MainViewAlternativeButtonControl.xaml
     /// </summary>
-    public partial class RegisterNewCustomerButtonControl : UserControl
+    public partial class MainViewAlternativeButtonControl : UserControl
     {
-        public RegisterNewCustomerButtonControl()
+        public MainViewAlternativeButtonControl()
         {
             InitializeComponent();
         }

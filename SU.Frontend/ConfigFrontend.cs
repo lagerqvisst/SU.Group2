@@ -38,19 +38,7 @@ namespace SU.Frontend
             services.AddTransient<LogoutButtonViewModel>(); // ViewModel for Log Out button
             services.AddTransient<MainViewButtonViewModel>(); //ViewModel for MainView button
             services.AddTransient<SignedInUserViewModel>(); // ViewModel for Signed in user
-            services.AddTransient<EditDeleteCustomerButtonViewModel>(); // ViewModel for EditDeleteCustomerButton
-            services.AddTransient<EditDeleteInsuranceButtonViewModel>(); // ViewModel for EditDeleteInsuranceButton
-            services.AddTransient<EditDeleteSellerButtonViewModel>(); // ViewModel for EditDeleteSellerButton
-            services.AddTransient<RegisterNewCustomerButtonViewModel>(); // ViewModel for RegisterNewCustomerButton
-            services.AddTransient<RegisterNewInsuranceButtonViewModel>(); // ViewModel for RegisterNewInsuranceButton
-            services.AddTransient<RegisterNewSellerButtonViewModel>(); // ViewModel for RegisterNewSellerButton
-            services.AddTransient<RegShowExportBillingInfoButtonViewModel>(); // ViewModel for RegShowExportBillingInfoButton
-            services.AddTransient<RegShowProvisionForSellerButtonViewModel>(); // ViewModel for RegShowProvisionForSellerButton
-            services.AddTransient<ShowCreateExportSellStatButtonViewModel>(); // ViewModel for ShowCreateExportSellStatButton
-            services.AddTransient<ShowCustomerProspectButtonViewModel>(); // ViewModel for ShowCustomerProspectButton
-            services.AddTransient<ShowSearchCustomerButtonViewModel>(); // ViewModel for ShowSearchCustomerButton
-            services.AddTransient<ShowSearchInsuranceButtonViewModel>(); // ViewModel for ShowSearchInsuranceButton
-            services.AddTransient<ShowSellingStatButtonViewModel>(); // ViewModel for ShowSellingStatButton
+
 
             services.AddTransient<CeoMainViewModel>(); // ViewModel for CeoMainView
             services.AddTransient<FinancialAssistantMainViewModel>(); // ViewModel for FinancialAssistantMainView
@@ -65,19 +53,7 @@ namespace SU.Frontend
             services.AddTransient<LogoutButtonControl>(); // UserControl for Log Out button
             services.AddTransient<MainViewButtonControl>(); // UserControl for MainView button
             services.AddTransient<SignedInUserUserControl>(); // UserControl for Signed in user
-            services.AddTransient<EditDeleteCustomerButtonControl>(); // UserControl for EditDeleteCustomerButton
-            services.AddTransient<EditDeleteInsuranceButtonControl>(); // UserControl for EditDeleteInsuranceButton
-            services.AddTransient<EditDeleteSellerButtonControl>(); // UserControl for EditDeleteSellerButton
-            services.AddTransient<RegisterNewCustomerButtonControl>(); // UserControl for RegisterNewCustomerButton
-            services.AddTransient<RegisterNewInsuranceButtonControl>(); // UserControl for RegisterNewInsuranceButton
-            services.AddTransient<RegisterNewSellerButtonControl>(); // UserControl for RegisterNewSellerButton
-            services.AddTransient<RegShowExportBillingInfoButtonControl>(); // UserControl for RegShowExportBillingInfoButton
-            services.AddTransient<RegShowProvisionForSellerButtonControl>(); // UserControl for RegShowProvisionForSellerButton
-            services.AddTransient<ShowCreateExportSellStatButtonControl>(); // UserControl for ShowCreateExportSellStatButton
-            services.AddTransient<ShowCustomerProspectButtonControl>(); // UserControl for ShowCustomerProspectButton
-            services.AddTransient<ShowSearchCustomerButtonControl>(); // UserControl for ShowSearchCustomerButton
-            services.AddTransient<ShowSearchInsuranceButtonControl>(); // UserControl for ShowSearchInsuranceButton
-            services.AddTransient<ShowSellingStatButtonControl>(); // UserControl for ShowSellingStatButton
+
 
             services.AddTransient<CeoMainView>(); // View for CeoMainView
             services.AddTransient<FinancialAssistantMainView>();

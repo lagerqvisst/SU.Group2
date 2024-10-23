@@ -34,7 +34,7 @@ namespace SU.Frontend.Helper.Navigation
         {
             if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.CEO))
             {
-                navigationService.NavigateTo("CEODashboardView");
+                navigationService.NavigateTo("CeoMainView");
             }
             else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.SalesManager))
             {
@@ -62,7 +62,7 @@ namespace SU.Frontend.Helper.Navigation
             }
 
             // Hämta typen baserat på dess fullständiga namn
-            var viewType = Type.GetType($"SU.Frontend.Views.{viewName}");
+            var viewType = Type.GetType($"SU.Frontend.Views.CeoView.{viewName}");
             if (viewType == null)
             {
                 throw new ArgumentException($"View type '{viewName}' not found.", nameof(viewName));
@@ -108,9 +108,16 @@ namespace SU.Frontend.Helper.Navigation
             {
                 Console.WriteLine("No active window found.");
             }
+        }
 
-            
+        public void NavigateToShowInsurances(INavigationService navigationService)
+        {
+            navigationService.NavigateTo("ShowInsurancesView");
+        }
 
+        public void NavigateToShowCustomers (INavigationService navigationService)
+        {
+            navigationService.NavigateTo("ShowCustomersView");
         }
     }
 }

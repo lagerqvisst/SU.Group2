@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SU.Frontend.Views.UserControls
+namespace SU.Frontend.Views.CommonViews
 {
     /// <summary>
-    /// Interaction logic for EditDeleteCustomerButtonControl.xaml
+    /// Interaction logic for ShowCustomersView.xaml
     /// </summary>
-    public partial class EditDeleteCustomerButtonControl : UserControl
+    public partial class ShowCustomersView : Window
     {
-        public EditDeleteCustomerButtonControl()
+        public ShowCustomersView()
         {
             InitializeComponent();
         }

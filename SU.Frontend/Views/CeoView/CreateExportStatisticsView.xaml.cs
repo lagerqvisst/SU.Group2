@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SU.Frontend.Views.UserControls
+namespace SU.Frontend.Views.CeoView
 {
     /// <summary>
-    /// Interaction logic for RegShowExportBillingInfoButtonControl.xaml
+    /// Interaction logic for CreateExportStatisticsView.xaml
     /// </summary>
-    public partial class RegShowExportBillingInfoButtonControl : UserControl
+    public partial class CreateExportStatisticsView : Window
     {
-        public RegShowExportBillingInfoButtonControl()
+        public CreateExportStatisticsView()
         {
             InitializeComponent();
         }

@@ -28,6 +28,12 @@
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
 
+        <Style x:Key="MainViewAlternatives" TargetType="Button">
+            <Setter Property="Padding" Value="10 5"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="FontFamily" Value="Times New Roman"/>
+        </Style>
+
     </Application.Resources>
 </Application>
 

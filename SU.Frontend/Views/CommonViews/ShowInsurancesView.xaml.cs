@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SU.Frontend.Views.UserControls
+namespace SU.Frontend.Views.CommonViews
 {
     /// <summary>
-    /// Interaction logic for RegisterNewSellerButtonControl.xaml
+    /// Interaction logic for ShowInsurancesView.xaml
     /// </summary>
-    public partial class RegisterNewSellerButtonControl : UserControl
+    public partial class ShowInsurancesView : Window
     {
-        public RegisterNewSellerButtonControl()
+        public ShowInsurancesView()
         {
             InitializeComponent();
         }
