@@ -113,10 +113,10 @@ namespace SU.Backend.Helper
             return digit;
         }
 
-        public static EmployeeType GetHighestPercentageRole(List<EmployeeRoleAssignment> roleAssignments)
+        public static EmployeeType GetLowestPercentageRole(List<EmployeeRoleAssignment> roleAssignments)
         {
             return roleAssignments
-                .OrderByDescending(ra => ra.Percentage)
+                .OrderBy(ra => ra.Percentage)
                 .Select(ra => ra.Role)
                 .FirstOrDefault();
         }
