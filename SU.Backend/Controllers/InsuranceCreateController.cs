@@ -110,7 +110,39 @@ namespace SU.Backend.Controllers
             }
         }
 
-       
+       public async Task<(bool Success, string Message)> DeleteInsurance(Insurance insurance)
+        {
+            _logger.LogInformation("Controller activated to delete insurance...");
+            var result = await _InsuranceCreateService.DeleteInsurance(insurance);
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"Insurance deleted successfully:\n{result.Message}");
+                return (result.Success, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"Error deleting insurance: {result.Message}");
+                return (result.Success, result.Message);
+            }
+        }
+
+        public async Task<(bool Success, string Message)> UpdateInsurance(Insurance insurance)
+        {
+            _logger.LogInformation("Controller activated to update insurance...");
+            var result = await _InsuranceCreateService.UpdateInsurance(insurance);
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"Insurance updated successfully:\n{result.Message}");
+                return (result.Success, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"Error updating insurance: {result.Message}");
+                return (result.Success, result.Message);
+            }
+        }
     }
 }
 

@@ -361,5 +361,25 @@ namespace SU.Backend.Services
             }
         }
 
+        public async Task<(bool Success, string Message)> UpdateInsurance(Insurance insurance)
+        {
+            _logger.LogInformation("Updating insurance...");
+
+            try
+            {
+                await _unitOfWork.Insurances.UpdateAsync(insurance);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Insurance was successfully updated.");
+
+                return (true, "Insurance was updated in the database.");
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogWarning(ex.ToString());
+                return (false, $"An error occurred while updating the insurance: {ex.Message.ToString()}");
+            }
+        }
     }
 }
