@@ -29,173 +29,173 @@ namespace SU.Backend.Controllers
             _logger = logger;
         }
 
-        public async Task<(List<VehicleInsuranceCoverage> VehicleInsuranceCoverages, string Message)> GetAllVehicleInsuranceCoverages()
+        public async Task<(List<VehicleInsuranceCoverage> vehicleInsuranceCoverages, string message)> GetAllVehicleInsuranceCoverages()
         {
             _logger.LogInformation("Controller activated to list all vehicle insurance coverages...");
             var result = await _insuranceListingService.GetAllVehicleInsuranceCoverages();
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Vehicle insurance coverages retrieved succesfully:\n{result.Message}");
-                return (result.VehicleInsuranceCoverages, result.Message);
+                _logger.LogInformation($"Vehicle insurance coverages retrieved succesfully:\n{result.message}");
+                return (result.vehicleInsuranceCoverages, result.message);
             }
             else
             {
-                _logger.LogWarning($"Error retrieving vehicle insurance coverages: {result.Message}");
-                return (new List<VehicleInsuranceCoverage>(), result.Message);
+                _logger.LogWarning($"Error retrieving vehicle insurance coverages: {result.message}");
+                return (new List<VehicleInsuranceCoverage>(), result.message);
             }
         }
 
-        public async Task<(List<Insurance> insurances, string Message)> GetAllInsurances()
+        public async Task<(List<Insurance> insurances, string message)> GetAllInsurances()
         {
             _logger.LogInformation("Controller activated to list all insurances...");
             var result = await _insuranceListingService.GetAllInsurances();
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Insurances retrieved successfully:\n{result.Message}");
-                return (result.Insurances, result.Message);
+                _logger.LogInformation($"Insurances retrieved successfully:\n{result.message}");
+                return (result.insurances, result.message);
             }
             else
             {
-                _logger.LogWarning($"Error retrieving insurances: {result.Message}");
-                return (new List<Insurance>(), result.Message);
+                _logger.LogWarning($"Error retrieving insurances: {result.message}");
+                return (new List<Insurance>(), result.message);
             }
         }
 
-        public async Task<(List<InsuranceAddonType> insuranceAddonTypes, string Message)> GetAllInsuranceAddonTypes()
+        public async Task<(List<InsuranceAddonType> insuranceAddonTypes, string message)> GetAllInsuranceAddonTypes()
         {
             _logger.LogInformation("Controller activated to list all insurance addon types...");
             var result = await _insuranceListingService.GetAllInsuranceAddonTypes();
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Insurance addon types retrieved succesfully:\n{result.Message}");
-                return (result.InsuranceAddonTypes, result.Message);
+                _logger.LogInformation($"Insurance addon types retrieved succesfully:\n{result.message}");
+                return (result.insuranceAddonTypes, result.message);
             }
             else
             {
-                _logger.LogWarning($"Error retrieving insurance addon types: {result.Message}");
-                return (new List<InsuranceAddonType>(), result.Message);
+                _logger.LogWarning($"Error retrieving insurance addon types: {result.message}");
+                return (new List<InsuranceAddonType>(), result.message);
             }
         }
 
-        public async Task<(List<InsuranceAddon> InsuranceAddons, string Message)> GetAllInsuranceAddons()
+        public async Task<(List<InsuranceAddon> insuranceAddons, string message)> GetAllInsuranceAddons()
         {
             _logger.LogInformation("Controller activated to list all insurance addons...");
             var result = await _insuranceListingService.GetAllInsuranceAddons();
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Insurance addons retrieved succesfully:\n{result.Message}");
-                return (result.InsuranceAddons, result.Message);
+                _logger.LogInformation($"Insurance addons retrieved succesfully:\n{result.message}");
+                return (result.insuranceAddons, result.message);
             }
             else
             {
-                _logger.LogWarning($"Error retrieving insurance addons: {result.Message}");
-                return (new List<InsuranceAddon>(), result.Message);
+                _logger.LogWarning($"Error retrieving insurance addons: {result.message}");
+                return (new List<InsuranceAddon>(), result.message);
             }
         }
 
-        public async Task<(List<InsurancePolicyHolder> InsurancePolicyHolders, string Message)> GetAllInsurancePolicyHolders()
+        public async Task<(List<InsurancePolicyHolder> insurancePolicyHolders, string message)> GetAllInsurancePolicyHolders()
         {
             _logger.LogInformation("Controller activated to list all insurance policy holders...");
             var result = await _insuranceListingService.GetAllInsurancePolicyHolders();
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Insurance policy holders retrieved succesfully:\n{result.Message}");
-                return (result.InsurancePolicyHolders, result.Message);
+                _logger.LogInformation($"Insurance policy holders retrieved succesfully:\n{result.message}");
+                return (result.insurancePolicyHolders, result.message);
             }
             else
             {
-                _logger.LogWarning($"Error retrieving insurance policy holders: {result.Message}");
-                return (new List<InsurancePolicyHolder>(), result.Message);
+                _logger.LogWarning($"Error retrieving insurance policy holders: {result.message}");
+                return (new List<InsurancePolicyHolder>(), result.message);
             }
         }
 
-        public async Task<(List<InsuranceCoverage> InsuranceCoverages, string Message)> GetAllInsuranceCoverages()
+        public async Task<(List<InsuranceCoverage> insuranceCoverages, string message)> GetAllInsuranceCoverages()
         {
             _logger.LogInformation("Controller activated to list all insurance coverages...");
             var result = await _insuranceListingService.GetAllInsuranceCoverages();
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Insurance coverages retrieved succesfully:\n{result.Message}");
-                return (result.InsuranceCoverages, result.Message);
+                _logger.LogInformation($"Insurance coverages retrieved succesfully:\n{result.message}");
+                return (result.insuranceCoverages, result.message);
             }
             else
             {
-                _logger.LogWarning($"Error retrieving insurance coverages: {result.Message}");
-                return (new List<InsuranceCoverage>(), result.Message);
+                _logger.LogWarning($"Error retrieving insurance coverages: {result.message}");
+                return (new List<InsuranceCoverage>(), result.message);
             }
         }
 
-        public async Task<(List<LiabilityCoverage> LiabilityCoverages, string Message)> GetAllLiabilityCoverages()
+        public async Task<(List<LiabilityCoverage> liabilityCoverages, string message)> GetAllLiabilityCoverages()
         {
             _logger.LogInformation("Controller activated to list all liability coverages...");
             var result = await _insuranceListingService.GetAllLiabilityCoverages();
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Liability coverages retrieved succesfully:\n{result.Message}");
-                return (result.LiabilityCoverages, result.Message);
+                _logger.LogInformation($"Liability coverages retrieved succesfully:\n{result.message}");
+                return (result.liabilityCoverages, result.message);
             }
             else
             {
-                _logger.LogWarning($"Error retrieving liability coverages: {result.Message}");
-                return (new List<LiabilityCoverage>(), result.Message);
+                _logger.LogWarning($"Error retrieving liability coverages: {result.message}");
+                return (new List<LiabilityCoverage>(), result.message);
             }
         }
 
-        public async Task<(List<LiabilityCoverageOption> LiabilityCoverageOptions, string Message)> GetAllLiabilityCoverageOptions()
+        public async Task<(List<LiabilityCoverageOption> liabilityCoverageOptions, string message)> GetAllLiabilityCoverageOptions()
         {
             _logger.LogInformation("Controller activated to list all liability coverages...");
             var result = await _insuranceListingService.GetAllLiabilityCoverageOptions();
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Liability coverages retrieved succesfully:\n{result.Message}");
-                return (result.LiabilityCoverageOptions, result.Message);
+                _logger.LogInformation($"Liability coverages retrieved succesfully:\n{result.message}");
+                return (result.liabilityCoverageOptions, result.message);
             }
             else
             {
-                _logger.LogWarning($"Error retrieving liability coverages: {result.Message}");
-                return (new List<LiabilityCoverageOption>(), result.Message);
+                _logger.LogWarning($"Error retrieving liability coverages: {result.message}");
+                return (new List<LiabilityCoverageOption>(), result.message);
             }
         }
 
-        public async Task<(List<Riskzone> Riskzones, string Message)> GetAllRiskZones()
+        public async Task<(List<Riskzone> riskzones, string message)> GetAllRiskZones()
         {
             _logger.LogInformation("Controller activated to list all riskzones...");
             var result = await _insuranceListingService.GetAllRiskzones();
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Riskzones retrieved succesfully:\n{result.Message}");
-                return (result.Riskzones, result.Message);
+                _logger.LogInformation($"Riskzones retrieved succesfully:\n{result.message}");
+                return (result.riskzones, result.message);
             }
             else
             {
-                _logger.LogWarning($"Error retrieving riskzones: {result.Message}");
-                return (new List<Riskzone>(), result.Message);
+                _logger.LogWarning($"Error retrieving riskzones: {result.message}");
+                return (new List<Riskzone>(), result.message);
             }
         }
 
-        public async Task<(List<PropertyAndInventoryCoverage> PropertyAndInventoryCoverages, string Message)> GetAllPropertyAndInventoryCoverages()
+        public async Task<(List<PropertyAndInventoryCoverage> propertyAndInventoryCoverages, string message)> GetAllPropertyAndInventoryCoverages()
         {
             _logger.LogInformation("Controller activated to list all property and inventory coverages...");
             var result = await _insuranceListingService.GetAllPropertyAndInventoryCoverages();
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Property and inventory coverages retrieved succesfully:\n{result.Message}");
-                return (result.PropertyAndInventoryCoverages, result.Message);
+                _logger.LogInformation($"Property and inventory coverages retrieved succesfully:\n{result.message}");
+                return (result.propertyAndInventoryCoverages, result.message);
             }
             else
             {
-                _logger.LogWarning($"Error retrieving property and inventory coverages: {result.Message}");
-                return (new List<PropertyAndInventoryCoverage>(), result.Message);
+                _logger.LogWarning($"Error retrieving property and inventory coverages: {result.message}");
+                return (new List<PropertyAndInventoryCoverage>(), result.message);
             }
         }
     }
