@@ -15,6 +15,13 @@ namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
 
         public ICommand ToShowInsurances { get; set; }
         public ICommand ToShowCustomers { get; set; }
+
+        public ICommand ToRegisterBillingInfo { get; set; }
+
+        public ICommand ToRegisterProvision { get; set; }
+
+        public ICommand ToShowSellingStat { get; set; }
+
         public INavigationService _navigationService;
 
         public FinancialAssistantMainViewModel(INavigationService navigationService)
@@ -22,19 +29,22 @@ namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
             _navigationService = navigationService;
             ToShowInsurances = new RelayCommand(() => _navigationService.NavigateToShowInsurances());
             ToShowCustomers = new RelayCommand(() => _navigationService.NavigateToShowCustomers());
+            ToRegisterBillingInfo = new RelayCommand(() => NavigateToShowBillingInfo());
+            ToRegisterProvision = new RelayCommand(() => NavigateToShowProvision());
+            ToShowSellingStat = new RelayCommand(() => NavigateToShowSellingStat());
         }
 
-        public void ToShowBillingInfo()
+        public void NavigateToShowBillingInfo()
         {
             _navigationService.NavigateTo("RegisterExportBillingInfoView", "FinancialAssistantView");
         }
 
-        public void ToShowProvision()
+        public void NavigateToShowProvision()
         {
             _navigationService.NavigateTo("RegisterProvisionSellerView", "FinancialAssistantView");
         }
 
-        public void ToShowSellingStat()
+        public void NavigateToShowSellingStat()
         {
             _navigationService.NavigateTo("ShowSellingStatisticsView", "FinancialAssistantView");
         }
