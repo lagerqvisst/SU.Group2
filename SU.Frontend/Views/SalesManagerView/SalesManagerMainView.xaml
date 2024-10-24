@@ -5,9 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SU.Frontend.Views.SalesManagerView"
         xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
+        xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         mc:Ignorable="d"
         Title="SalesManagerMainView" Height="450" Width="800">
-    <Grid>
+
+    <Window.Resources>
+        <helper:ViewModelLocator x:Key="Locator" />
+    </Window.Resources>
+    
+    
+    <Grid DataContext="{Binding SalesManagerMainViewModel, Source={StaticResource Locator}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>

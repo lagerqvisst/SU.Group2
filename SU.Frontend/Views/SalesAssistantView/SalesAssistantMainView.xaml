@@ -5,9 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SU.Frontend.Views.SalesAssistantView"
         xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
+        xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         mc:Ignorable="d"
         Title="SalesAssistantMainView" Height="450" Width="800">
-    <Grid>
+
+    <Window.Resources>
+        <helper:ViewModelLocator x:Key="Locator" />
+    </Window.Resources>
+    
+    <Grid DataContext="{Binding SalesAssistantMainViewModel, Source={StaticResource Locator}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -47,13 +53,13 @@
         <Button Style="{StaticResource MainViewAlternatives}" Content="Edit/ Delete insurance" Command="{Binding ToEditDeleteInsurance}" 
         Margin="50,64,155,72" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="1"/>
 
-        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search insurance" Command="{Binding ToShowInsurance}" 
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search insurance" Command="{Binding ToShowInsurances}" 
         Margin="25,47,180,2" Grid.Row="3" Grid.ColumnSpan="2"/>
 
         <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search customers" Command="{Binding ToShowCustomers}" 
         Margin="50,47,155,2" Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="1"/>
 
-        <Button Style="{StaticResource MainViewAlternatives}" Content="Show customer prospects" Command="{Binding ToShowProspects}" 
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Show customer prospects" Command="{Binding ToShowCustomerProspects}" 
         Margin="135,21,70,29" Grid.Row="4" Grid.ColumnSpan="2"/>
 
     </Grid>

@@ -4,11 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SU.Frontend.Views.CeoView"
-        xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
+        xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls" 
+        xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         mc:Ignorable="d"
         Title="CeoMainView" Height="450" Width="800">
 
-    <Grid DataContext="">
+    <Window.Resources>
+        <helper:ViewModelLocator x:Key="Locator" />
+    </Window.Resources>
+
+    <Grid DataContext="{Binding CeoMainViewModel, Source={StaticResource Locator}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -28,10 +33,9 @@
 
         <TextBlock Style="{StaticResource FörsäkringarFont}" Text="CEO Main View" HorizontalAlignment="Left" Grid.Column="1" Margin="0,0,0,108" Grid.RowSpan="2"/>
 
-        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search Customers" Command="{Binding ToShowCustomer}" Margin="25,25,25,25" Grid.Row="1" Grid.Column="1"/>
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search Customers" Command="{Binding ToShowCustomers}" Margin="25,25,25,25" Grid.Row="1" Grid.Column="1"/>
         <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search Insurances" Command="{Binding ToShowInsurances}" Margin="25,25,25,25" Grid.Row="2" Grid.Column="1"/>
-        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Create/ Export Selling statistics" Command="{Binding ToCreateExportStatistics}"
-                Margin="25,25,25,25" Grid.Row="3" Grid.Column="1"/>
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Create/ Export Selling statistics" Command="{Binding ToCreateExportStatistics}" Margin="25,25,25,25" Grid.Row="3" Grid.Column="1"/>
 
     </Grid>
 </Window>

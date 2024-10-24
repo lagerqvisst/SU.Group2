@@ -5,9 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SU.Frontend.Views.FinancialAssistantView"
         xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
+        xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         mc:Ignorable="d"
-        Title="FinancialAssistantWindow" Height="450" Width="800">
-    <Grid>
+        Title="FinancialAssistantMainView" Height="450" Width="800">
+
+    <Window.Resources>
+        <helper:ViewModelLocator x:Key="Locator" />
+    </Window.Resources>
+
+    <Grid DataContext="{Binding FinancialAssistantMainViewModel, Source={StaticResource Locator}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -36,7 +42,7 @@
                 Grid.Row="2" Margin="25,25,180,25" Grid.ColumnSpan="2"/>
         <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search insurances" Command="{Binding ToShowInsurances}"
                 Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Margin="50,25,155,25" />
-        <Button Style="{StaticResource MainViewAlternatives}" Content="Show selling statistics" Command="{Binding ToShowSellingStat}"
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Show selling statistics" Command="{Binding ToShowSellingStats}"
                 Grid.Row="3" Grid.ColumnSpan="2" Margin="137,20,68,29" />
 
     </Grid>

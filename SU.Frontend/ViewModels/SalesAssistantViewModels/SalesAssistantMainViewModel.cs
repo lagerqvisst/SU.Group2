@@ -12,13 +12,16 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
 {
     public class SalesAssistantMainViewModel : ObservableObject
     {
-        public ICommand ToRegisterNewCustomer;
-        public ICommand ToRegisterNewInsurance;
-        public ICommand ToEditDeleteCustomer;
-        public ICommand ToEditDeleteInsurance;
-        public ICommand ToShowInsurances;
-        public ICommand ToShowCustomers;
-        public ICommand ToShowCustomerProspects;
+        public ICommand ToRegisterNewCustomer { get; set; }
+        public ICommand ToRegisterNewInsurance { get; set; }
+        public ICommand ToEditDeleteCustomer { get; set; }
+        public ICommand ToEditDeleteInsurance { get; set; }
+        public ICommand ToShowInsurances { get; set; }
+        public ICommand ToShowCustomers { get; set; }
+        public ICommand ToShowCustomerProspects { get; set; }
+
+        public ICommand ToRegisterNewSeller { get; set; }
+        public ICommand ToEditDeleteSeller { get; set; }
 
         public INavigationService _navigationService;
         public SalesAssistantMainViewModel(INavigationService navigationService)
@@ -33,15 +36,19 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
             ToShowInsurances = new RelayCommand(() => _navigationService.NavigateToShowInsurances());
             ToShowCustomers = new RelayCommand(() => _navigationService.NavigateToShowCustomers());
             ToShowCustomerProspects = new RelayCommand(() => _navigationService.NavigateToShowCustomerProspects());
+
+            ToRegisterNewSeller = new RelayCommand(() => NavigateToRegisterNewSeller());
+            ToEditDeleteSeller = new RelayCommand(() => NavigateToEditDeleteSeller());
+
         }
 
         //Methods for navigating to unique views
-        public void ToRegisterNewSeller()
+        public void NavigateToRegisterNewSeller()
         {
             _navigationService.NavigateTo("RegisterNewSellerView", "SalesAssistantView");
         }
 
-        public void ToEditDeleteSeller()
+        public void NavigateToEditDeleteSeller()
         {
             _navigationService.NavigateTo("EditDeleteSellerView", "SalesAssistantView");
         }
