@@ -33,13 +33,13 @@ namespace SU.Backend.Controllers
             _logger.LogInformation("Controller activated to create new random private customer...");
             var result = await _privateCustomerService.GenerateRandomPrivateCustomer();
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Customer created successfully:\n{result.Customer}");
+                _logger.LogInformation($"Customer created successfully:\n{result.customer}");
             }
             else
             {
-                _logger.LogWarning($"Error creating customer: {result.Message}");
+                _logger.LogWarning($"Error creating customer: {result.message}");
             }
         }
 
@@ -49,15 +49,15 @@ namespace SU.Backend.Controllers
             _logger.LogInformation("Private Customer object added via GUI");
             var result = await _privateCustomerService.CreateNewPrivateCustomer(privateCustomer);
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogInformation($"{result.message}");
+                return (result.success, result.message);
             }
             else
             {
-                _logger.LogWarning($"{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogWarning($"{result.message}");
+                return (result.success, result.message);
             }
 
         }
@@ -68,15 +68,15 @@ namespace SU.Backend.Controllers
             _logger.LogInformation("Private Customer object updated via GUI");
             var result = await _privateCustomerService.UpdatePrivateCustomer(privateCustomer);
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogInformation($"{result.message}");
+                return (result.success, result.message);
             }
             else
             {
-                _logger.LogWarning($"{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogWarning($"{result.message}");
+                return (result.success, result.message);
             }
         }
 
@@ -86,15 +86,15 @@ namespace SU.Backend.Controllers
             _logger.LogInformation("Private Customer deleted via GUI");
             var result = await _privateCustomerService.DeletePrivateCustomer(privateCustomer);
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogInformation($"{result.message}");
+                return (result.success, result.message);
             }
             else
             {
-                _logger.LogWarning($"{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogWarning($"{result.message}");
+                return (result.success, result.message);
             }
         }
 
@@ -103,15 +103,15 @@ namespace SU.Backend.Controllers
         {
             _logger.LogInformation("Controller activated to list all private customers...");
             var result = await _privateCustomerService.GetAllPrivateCustomers();
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Private customers retrieved successfully:\n{result.Message}");
-                return (result.PrivateCustomers, result.Message);
+                _logger.LogInformation($"Private customers retrieved successfully:\n{result.message}");
+                return (result.privateCustomers, result.message);
             }
             else
             {
-                _logger.LogWarning($"Error retrieving private customers: {result.Message}");
-                return (new List<PrivateCustomer>(), result.Message);
+                _logger.LogWarning($"Error retrieving private customers: {result.message}");
+                return (new List<PrivateCustomer>(), result.message);
             }
         }
     }
