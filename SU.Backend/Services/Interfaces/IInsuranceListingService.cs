@@ -29,7 +29,7 @@ namespace SU.Backend.Services.Interfaces
 
         Task<(bool success, string message, List<VehicleInsuranceOption> vehicleInsuranceOptions)> GetAllVehicleInsuranceOptions();
 
-        Task<(bool success, string message, List<Riskzone> riskzones)> GetAllRiskzones();
+        Task<(bool success, string message, List<RiskZone> riskZones)> GetAllRiskZones();
 
         Task<(bool success, string message, List<LiabilityCoverage> liabilityCoverages)> GetAllLiabilityCoverages();
 
