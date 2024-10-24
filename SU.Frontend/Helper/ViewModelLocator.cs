@@ -26,9 +26,8 @@ namespace SU.Frontend.Helper
             public SignedInUserViewModel SignedInUserViewModel =>
                 App.AppHost?.Services.GetService<SignedInUserViewModel>();
 
-
-           /* public CeoMainViewModel CeoMainViewModel =>
-                App.AppHost?.Services.GetService<CeoMainViewModel>();
+           public CeoMainViewModel CeoMainViewModel =>
+                App.AppHost?.Services.GetService<CeoMainViewModel>(); /*
 
             public FinancialAssistantMainViewModel FinancialAssistantMainViewModel =>
                 App.AppHost?.Services.GetService<FinancialAssistantMainViewModel>();

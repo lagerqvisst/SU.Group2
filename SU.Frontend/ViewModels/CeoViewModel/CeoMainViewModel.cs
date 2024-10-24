@@ -12,9 +12,11 @@ namespace SU.Frontend.ViewModels.CeoMainViewModel
 {    
     public class CeoMainViewModel : ObservableObject
     {
-        public ICommand ToCreateExportStatistics;
-        public ICommand ToShowInsurances;
-        public ICommand ToShowCustomers;
+        // Gör kommandon till offentliga egenskaper
+        public ICommand ToCreateExportStatistics { get; set; }
+        public ICommand ToShowInsurances { get; set; }
+        public ICommand ToShowCustomers { get; set; }
+
         public INavigationService _navigationService;
         public CeoMainViewModel(INavigationService navigationService)
         {

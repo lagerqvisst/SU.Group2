@@ -25,6 +25,7 @@ using SU.Frontend.Views.FinancialAssistantView;
 using SU.Frontend.Views.SalesAssistantView;
 using SU.Frontend.Views.SalesManagerView;
 using SU.Frontend.Views.SellerView;
+using SU.Frontend.Views.CommonViews;
 
 namespace SU.Frontend
 {
@@ -54,12 +55,17 @@ namespace SU.Frontend
             services.AddTransient<MainViewButtonControl>(); // UserControl for MainView button
             services.AddTransient<SignedInUserUserControl>(); // UserControl for Signed in user
 
-
+            // Main Views
             services.AddTransient<CeoMainView>(); // View for CeoMainView
             services.AddTransient<FinancialAssistantMainView>();
             services.AddTransient<SalesAssistantMainView>(); // View for SalesAssistantMainView
             services.AddTransient<SalesManagerMainView>(); // View for SalesManagerMainView
             services.AddTransient<SellerMainView>(); // View for SellerMainView
+
+            // Common Views
+            services.AddTransient<ShowCustomersView>();
+            services.AddTransient<ShowInsurancesView>();
+            services.AddTransient<CreateExportSellStatView>();
 
             // Registrera andra tjänster
             services.AddScoped<INavigationService, NavigationService>();
