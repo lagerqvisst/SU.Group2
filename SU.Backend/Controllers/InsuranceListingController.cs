@@ -165,20 +165,20 @@ namespace SU.Backend.Controllers
             }
         }
 
-        public async Task<(List<Riskzone> riskzones, string message)> GetAllRiskZones()
+        public async Task<(List<RiskZone> riskzones, string message)> GetAllRiskZones()
         {
             _logger.LogInformation("Controller activated to list all riskzones...");
-            var result = await _insuranceListingService.GetAllRiskzones();
+            var result = await _insuranceListingService.GetAllRiskZones();
 
             if (result.success)
             {
                 _logger.LogInformation($"Riskzones retrieved succesfully:\n{result.message}");
-                return (result.riskzones, result.message);
+                return (result.riskZones, result.message);
             }
             else
             {
                 _logger.LogWarning($"Error retrieving riskzones: {result.message}");
-                return (new List<Riskzone>(), result.message);
+                return (new List<RiskZone>(), result.message);
             }
         }
 
