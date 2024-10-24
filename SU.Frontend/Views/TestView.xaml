@@ -8,6 +8,8 @@
         mc:Ignorable="d"
         Title="TestView" Height="450" Width="900">
     <DockPanel>
+        <controls:Taskbar DockPanel.Dock="Top" />
+
         <Grid x:Name="MainGrid">
 
             <TextBlock FontSize="24" FontWeight="Bold" HorizontalAlignment="Center">

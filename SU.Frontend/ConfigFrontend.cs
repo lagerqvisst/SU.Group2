@@ -35,10 +35,12 @@ namespace SU.Frontend
         {
             // Registrera alla ViewModels
             services.AddTransient<TaskbarViewModel>();
-            services.AddTransient<LoginViewModel>();
+            services.AddSingleton<LoginViewModel>(); // Registrerar LoginViewModel som singleton
             services.AddTransient<LogoutButtonViewModel>(); // ViewModel for Log Out button
             services.AddTransient<MainViewButtonViewModel>(); //ViewModel for MainView button
             services.AddTransient<SignedInUserViewModel>(); // ViewModel for Signed in user
+            services.AddTransient<TaskbarViewModel>(); // View for TaskbarView
+
 
             //MainView ViewModels
             services.AddTransient<CeoMainViewModel>(); // ViewModel for CeoMainView
@@ -54,6 +56,7 @@ namespace SU.Frontend
             services.AddTransient<LogoutButtonControl>(); // UserControl for Log Out button
             services.AddTransient<MainViewButtonControl>(); // UserControl for MainView button
             services.AddTransient<SignedInUserUserControl>(); // UserControl for Signed in user
+            services.AddTransient<Taskbar>(); // UserControl for TaskbarView
 
             // Main Views
             services.AddTransient<CeoMainView>(); // View for CeoMainView

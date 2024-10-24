@@ -1,32 +1,84 @@
-﻿using SU.Frontend.Helper;
+﻿using SU.Backend.Controllers;
+using SU.Backend.Helper;
+using SU.Backend.Models.Enums;
+using SU.Frontend.Helper;
+using SU.Frontend.Helper.Authentication;
+using SU.Frontend.Helper.Navigation;
 using SU.Frontend.Helper.User;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
 namespace SU.Frontend.ViewModels.UserControlViewModels
 {
-    public class TaskbarViewModel
+    public class TaskbarViewModel : ObservableObject
     {
+        private readonly IAuthenticationService _authenticationService;
+        private readonly LoginController _loginController;
+        private readonly EmployeeController _employeeController;
+        private readonly LoginViewModel _loginViewModel;
 
-        // Commands
-        public ICommand ShutDownCommand { get; }
+        public ICommand ExitApplicationCommand { get; set; }
+        public ICommand LogOutCommand { get; set; }
+        public ICommand FetchDemoCredentialsCommand { get; set; }
 
-        // Konstruktor
-        public TaskbarViewModel()
+        public TaskbarViewModel(IAuthenticationService authenticationService, LoginController loginController, EmployeeController employeeController, LoginViewModel loginViewModel)
         {
 
-            // Initiera kommandon
-            ShutDownCommand = new RelayCommand(ExecuteShutDown);
+            _loginController = loginController;
+            _employeeController = employeeController;
+            _loginViewModel = loginViewModel;
+
+            FetchDemoCredentialsCommand = new RelayCommand(OnFetchDemoCredentials);
+            ExitApplicationCommand = new RelayCommand(() => Application.Current.Shutdown());
+            LogOutCommand = new RelayCommand(authenticationService.Logout);
+
 
         }
 
-        // Stäng ner applikationen
-        private void ExecuteShutDown()
+        public List<EmployeeType> EmployeeTypes { get; set; } = EnumService.EmployeeType();
+        private EmployeeType _selectedEmployeeType;
+        public EmployeeType SelectedEmployeeType
         {
-            Application.Current.Shutdown();
+            get => _selectedEmployeeType;
+            set
+            {
+                _selectedEmployeeType = value;
+                OnPropertyChanged();
+            }
         }
+
+
+        private async void OnFetchDemoCredentials()
+        {
+            if (SelectedEmployeeType != null)
+            {
+                try
+                {
+                    var employeeInfo = await _employeeController.GetEmployeeByRole(SelectedEmployeeType);
+                    if (employeeInfo.Success)
+                    {
+                        // Updates the viewmodel with the fetched credentials
+                        _loginViewModel.UserName = employeeInfo.Employee.Username;
+                        _loginViewModel.Password = employeeInfo.Employee.Password;
+                    }
+                    else
+                    {
+                        MessageBox.Show($"{employeeInfo.Message}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ett oväntat fel inträffade: {ex.Message}");
+                }
+            }
+        }
+
+
 
 
     }
+
+
 }

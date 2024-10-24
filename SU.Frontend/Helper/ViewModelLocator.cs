@@ -40,6 +40,9 @@ namespace SU.Frontend.Helper
 
             public SalesAssistantMainViewModel SalesAssistantMainViewModel =>
                 App.AppHost?.Services.GetService<SalesAssistantMainViewModel>();
+
+            public TaskbarViewModel TaskbarViewModel =>
+                App.AppHost?.Services.GetService<TaskbarViewModel>();
         }
     }
 
