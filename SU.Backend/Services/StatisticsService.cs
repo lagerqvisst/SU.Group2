@@ -82,7 +82,7 @@ namespace SU.Backend.Services
 
         }
 
-        public async Task<(bool Success, string Message, List<InsuranceStatistics> Statistics)> GetMonthlyInsuranceStatistics()
+        public async Task<(bool success, string message, List<InsuranceStatistics> statistics)> GetMonthlyInsuranceStatistics()
         {
             _logger.LogInformation("Fetching monthly insurance statistics");
 

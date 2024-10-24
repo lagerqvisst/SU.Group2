@@ -43,13 +43,13 @@ namespace SU.Backend.Controllers
             return (result.message, result.statistics);
         }
 
-        public async Task<(List<InsuranceStatistics>, string Message)> GetMonthlyInsuranceStats()
+        public async Task<(List<InsuranceStatistics>, string message)> GetMonthlyInsuranceStats()
         {
             _logger.LogInformation("Getting monthly insurance statistics...");
 
             var result = await _statisticsService.GetMonthlyInsuranceStatistics();
 
-            if (result.Success)
+            if (result.success)
             {
                 _logger.LogInformation("Monthly insurance statistics retrieved successfully");
             }
@@ -57,7 +57,7 @@ namespace SU.Backend.Controllers
             {
                 _logger.LogWarning("Error retrieving monthly insurance statistics: {result.Message}");
             }
-            return (result.Statistics, result.Message);
+            return (result.statistics, result.message);
         }
     }
 }
