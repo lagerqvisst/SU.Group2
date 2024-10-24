@@ -22,9 +22,9 @@ namespace SU.Backend.Database.Repositories
         // This method is responsible for checking if the agent number is unique.
         // Random agent numbers are generated for each employee.
         // It returns true if the agent number is unique, otherwise it returns false.
-        public async Task<bool> IsAgentNumberUnique(string agentNumber)
+        public async Task<bool> IsAgentNumberUnique(string givenAgentNumber)
         {
-            return !await _context.Employees.AnyAsync(e => e.AgentNumber == agentNumber);
+            return !await _context.Employees.AnyAsync(e => e.AgentNumber == givenAgentNumber);
 
         }
 
@@ -46,7 +46,7 @@ namespace SU.Backend.Database.Repositories
         {
             return await _context.Employees
                 .Include(e => e.RoleAssignments)
-                .Where(e => e.Username == usersUsername && e.Password == usersPassword)
+                .Where(e => e.UserName == usersUsername && e.Password == usersPassword)
                 .FirstOrDefaultAsync();
         }
 

@@ -112,7 +112,7 @@ namespace SU.Backend.Controllers
             }
         }
 
-        public async Task<(List<EmployeeRoleAssignment> EmployeeRoleAssignments, string message)> GetAllEmployeeRoleAssignments()
+        public async Task<(List<EmployeeRoleAssignment> employeeRoleAssignments, string message)> GetAllEmployeeRoleAssignments()
         {
             _logger.LogInformation("Controller activated to list all employee role assignments...");
             var result = await _employeeService.GetAllEmployeeRoleAssignments();
@@ -129,7 +129,7 @@ namespace SU.Backend.Controllers
             }
         }
 
-        public async Task<(bool success, string message, Employee Employee)> GetEmployeeByRole(EmployeeType role)
+        public async Task<(bool success, string message, Employee employee)> GetEmployeeByRole(EmployeeType role)
         {
             _logger.LogInformation("Controller activated to get employee by role...");
             var result = await _employeeService.GetEmployeeByRole(role);
