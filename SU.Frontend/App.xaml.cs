@@ -34,8 +34,6 @@ namespace SU.Frontend
             await AppHost!.StartAsync();
 
 
-
-            var loginViewModel = AppHost.Services.GetRequiredService<LoginViewModel>();
             var startupWindow = AppHost.Services.GetRequiredService<LoginWindow>();
             startupWindow.Show();
 

@@ -20,6 +20,7 @@ namespace SU.Frontend.Helper.Navigation
             _serviceProvider = serviceProvider;
         }
 
+       
         public void CloseAllExcept(string viewName)
         {
             foreach (var window in Application.Current.Windows.OfType<Window>())

@@ -16,9 +16,6 @@ namespace SU.Frontend.ViewModels
         private readonly INavigationService _navigationService;
         private readonly ILoggedInUserService _loggedInUserService;
 
-        public List<EmployeeType> employeeTypes = EnumService.EmployeeType();
-        public EmployeeType selectedEmployeeType { get; set; }
-
 
         public LoginViewModel(LoginController loginController,  INavigationService navigationService, ILoggedInUserService loggedInUserService, EmployeeController employeeController)
         {
@@ -27,7 +24,7 @@ namespace SU.Frontend.ViewModels
             _loggedInUserService = loggedInUserService;
 
             LoginCommand = new RelayCommand(OnLogin, CanLogin);
-            FetchEmployeeCommand = new RelayCommand(OnFetchEmployee, CanFetchEmployee); // Nytt kommando
+            // replaced by taskbar FetchEmployeeCommand = new RelayCommand(OnFetchEmployee, CanFetchEmployee); // Nytt kommando
 
             _userName = string.Empty;
             _password = string.Empty;
@@ -114,51 +111,7 @@ namespace SU.Frontend.ViewModels
             }
         }
 
-        public List<EmployeeType> EmployeeTypes { get; set; } = EnumService.EmployeeType();
 
-        private EmployeeType _selectedEmployeeType;
-        public EmployeeType SelectedEmployeeType
-        {
-            get => _selectedEmployeeType;
-            set
-            {
-                _selectedEmployeeType = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-        public RelayCommand FetchEmployeeCommand { get; }
-
-
-        private bool CanFetchEmployee()
-        {
-            return SelectedEmployeeType != null; // Tillåt endast om roll är vald
-        }
-
-        private async void OnFetchEmployee()
-        {
-            if (SelectedEmployeeType != null)
-            {
-                try
-                {
-                    var employeeInfo = await _employeeController.GetEmployeeByRole(SelectedEmployeeType);
-                    if (employeeInfo.Success)
-                    {
-                        UserName = employeeInfo.Employee.Username;
-                        Password = employeeInfo.Employee.Password;
-                    }
-                    else
-                    {
-                        MessageBox.Show($"{employeeInfo.Message}");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Ett oväntat fel inträffade: {ex.Message}");
-                }
-            }
-        }
 
 
     }
