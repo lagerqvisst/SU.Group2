@@ -29,7 +29,7 @@ namespace SU.Backend.Services
             _unitOfWork = unitOfWork;
         }
         // method to update a private customer 
-        public async Task<(bool Success, string Message)> UpdatePrivateCustomer(PrivateCustomer privateCustomer)
+        public async Task<(bool success, string message)> UpdatePrivateCustomer(PrivateCustomer privateCustomer)
         {
             _logger.LogInformation("Updating private customer...");
 
@@ -52,7 +52,7 @@ namespace SU.Backend.Services
         }
 
         //method to delete an existing private customer
-        public async Task<(bool Success, string Message)> DeletePrivateCustomer(PrivateCustomer privateCustomer)
+        public async Task<(bool success, string message)> DeletePrivateCustomer(PrivateCustomer privateCustomer)
         {
             _logger.LogInformation("Deleting private customer...");
 
@@ -76,7 +76,7 @@ namespace SU.Backend.Services
         }
         
         // method to create a new private customer
-        public async Task<(bool Success, string Message)> CreateNewPrivateCustomer(PrivateCustomer privateCustomer)
+        public async Task<(bool success, string message)> CreateNewPrivateCustomer(PrivateCustomer privateCustomer)
         {
             _logger.LogInformation("Creating new Private Customer...");
 
@@ -103,7 +103,7 @@ namespace SU.Backend.Services
         /// Only used for testing purposes to quickly seed the database with test data.
         /// </summary>
         /// <returns></returns>
-        public async Task<(bool Success, string Message, PrivateCustomer Customer)> GenerateRandomPrivateCustomer()
+        public async Task<(bool success, string message, PrivateCustomer customer)> GenerateRandomPrivateCustomer()
         {
             try
             {
@@ -144,7 +144,7 @@ namespace SU.Backend.Services
         }
 
         // method to get a private customer by id
-        public async Task<(bool Success, string Message, PrivateCustomer Customer)> GetPrivateCustomerById(PrivateCustomer privateCustomer)
+        public async Task<(bool success, string message, PrivateCustomer customer)> GetPrivateCustomerById(PrivateCustomer privateCustomer)
         {
             try
             {
@@ -158,7 +158,7 @@ namespace SU.Backend.Services
         }
 
         // method to get all private customers
-        public async Task<(bool Success, string Message, List<PrivateCustomer> PrivateCustomers)> GetAllPrivateCustomers()
+        public async Task<(bool success, string message, List<PrivateCustomer> privateCustomers)> GetAllPrivateCustomers()
         {
             _logger.LogInformation("Controller activated to get all private customers...");
 
