@@ -44,7 +44,7 @@ namespace SU.Backend.Controllers
         }
 
         // controller for CreateNewPrivateCustomer method 
-        public async Task<(bool Success, String Message)> CreateNewPrivateCustomer(PrivateCustomer privateCustomer)
+        public async Task<(bool success, String message)> CreateNewPrivateCustomer(PrivateCustomer privateCustomer)
         {
             _logger.LogInformation("Private Customer object added via GUI");
             var result = await _privateCustomerService.CreateNewPrivateCustomer(privateCustomer);
@@ -63,7 +63,7 @@ namespace SU.Backend.Controllers
         }
 
         // controller for UpdatePrivateCustomer method
-        public async Task<(bool Success, string Message)> UpdatePrivateCustomer(PrivateCustomer privateCustomer)
+        public async Task<(bool success, string message)> UpdatePrivateCustomer(PrivateCustomer privateCustomer)
         {
             _logger.LogInformation("Private Customer object updated via GUI");
             var result = await _privateCustomerService.UpdatePrivateCustomer(privateCustomer);
@@ -81,7 +81,7 @@ namespace SU.Backend.Controllers
         }
 
         // controller for DeletePrivateCustomer method 
-        public async Task<(bool Success, string Message)> DeletePrivateCustomer(PrivateCustomer privateCustomer)
+        public async Task<(bool success, string message)> DeletePrivateCustomer(PrivateCustomer privateCustomer)
         {
             _logger.LogInformation("Private Customer deleted via GUI");
             var result = await _privateCustomerService.DeletePrivateCustomer(privateCustomer);
@@ -99,7 +99,7 @@ namespace SU.Backend.Controllers
         }
 
 
-        public async Task<(List<PrivateCustomer> PrivateCustomers, string Message)> GetAllPrivateCustomers()
+        public async Task<(List<PrivateCustomer> privateCustomers, string message)> GetAllPrivateCustomers()
         {
             _logger.LogInformation("Controller activated to list all private customers...");
             var result = await _privateCustomerService.GetAllPrivateCustomers();
