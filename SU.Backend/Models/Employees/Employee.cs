@@ -14,30 +14,30 @@ namespace SU.Backend.Models.Employees
     {
 
         [Key]
-        public int EmployeeId { get; set; }
-        public string PersonalNumber { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
+        public int employeeId { get; set; }
+        public string personalNumber { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string email { get; set; }
 
         // Navigation property for EmployeeRoleAssignment
         // An employee, for eg. sales assistant takes on multiple roles. Therefor we have a collection of EmployeeRoleAssignment
-        public ICollection<EmployeeRoleAssignment> RoleAssignments { get; set; } = new List<EmployeeRoleAssignment>();
-        public int BaseSalary { get; set; }
+        public ICollection<EmployeeRoleAssignment> roleAssignments { get; set; } = new List<EmployeeRoleAssignment>();
+        public int baseSalary { get; set; }
 
 
         // Manager relation, recursive relation
-        public Employee? Manager { get; set; }  // Navigation property
-        public int? ManagerId { get; set; }     // Foreign key property
+        public Employee? manager { get; set; }  // Navigation property
+        public int?managerId { get; set; }     // Foreign key property
 
         // Agent number is only relevant for sales employees
-        public string? AgentNumber { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public string? agentNumber { get; set; }
+        public string userName { get; set; }
+        public string password { get; set; }
 
         // Navigation property for sold insurances
         // This helps keep track of which employee sold which insurance for comission purposes but also prospect assignment.
-        public ICollection<Insurance>? Insurances { get; set; } = new List<Insurance>(); // Försäkringar sålda av anställd
+        public ICollection<Insurance>? insurances { get; set; } = new List<Insurance>(); // Försäkringar sålda av anställd
 
     }
 
