@@ -13,10 +13,10 @@ namespace SU.Backend.Services.Interfaces
     /// </summary>
     public interface IProspectService
     {
-        Task<(bool Success, string Message, List<Prospect> prospects)> IdentifyProspects();
+        Task<(bool success, string message, List<Prospect> prospects)> IdentifyProspects();
 
-        Task<(bool Success, string Message)> AssignSellerToSpecificProspect(Employee employee, Prospect prospect);
+        Task<(bool success, string message)> AssignSellerToSpecificProspect(Employee employee, Prospect prospect);
 
-        Task<(bool Success, string Message, List<Prospect> prospects)> GetAllCurrentProspects();
+        Task<(bool success, string message, List<Prospect> prospects)> GetAllCurrentProspects();
     }
 }
