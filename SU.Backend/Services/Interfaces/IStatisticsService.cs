@@ -13,7 +13,7 @@ namespace SU.Backend.Services.Interfaces
     /// </summary>
     public interface IStatisticsService
     {
-        Task<(bool Success, string Message, List<SellerStatistics> Statistics)> GetSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null);
+        Task<(bool success, string message, List<SellerStatistics> statistics)> GetSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null);
         Task<(bool Success, string Message, List<InsuranceStatistics> Statistics)> GetMonthlyInsuranceStatistics();
     }
 }

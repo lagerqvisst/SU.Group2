@@ -26,13 +26,13 @@ namespace SU.Backend.Controllers
             _logger = logger;
         }
 
-        public async Task<(string Message, List<SellerStatistics>)> GetSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null)
+        public async Task<(string message, List<SellerStatistics>)> GetSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null)
         {
             _logger.LogInformation("Getting seller statistics for year {year}", year);
 
             var result = await _statisticsService.GetSellerStatistics(year, insuranceTypes);
 
-            if (result.Success)
+            if (result.success)
             {
                 _logger.LogInformation("Seller statistics retrieved successfully");
             }
@@ -40,7 +40,7 @@ namespace SU.Backend.Controllers
             {
                 _logger.LogWarning("Error retrieving seller statistics: {result.Message}");
             }
-            return (result.Message, result.Statistics);
+            return (result.message, result.statistics);
         }
 
         public async Task<(List<InsuranceStatistics>, string Message)> GetMonthlyInsuranceStats()

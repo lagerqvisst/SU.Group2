@@ -28,7 +28,7 @@ namespace SU.Backend.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<(bool Success, string Message, List<SellerStatistics> Statistics)> GetSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null)
+        public async Task<(bool success, string message, List<SellerStatistics> statistics)> GetSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null)
         {
             _logger.LogInformation($"Getting seller statistics for year {year} and insurance types: {string.Join(", ", insuranceTypes)}");
 
