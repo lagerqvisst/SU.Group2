@@ -13,8 +13,8 @@ namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
     {
         // Lägg till register billing, reg provision, show selling stats
 
-        public ICommand ToShowInsurances;
-        public ICommand ToShowCustomers;
+        public ICommand ToShowInsurances { get; set; }
+        public ICommand ToShowCustomers { get; set; }
         public INavigationService _navigationService;
 
         public FinancialAssistantMainViewModel(INavigationService navigationService)

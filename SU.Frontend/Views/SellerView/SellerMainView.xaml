@@ -5,10 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
         xmlns:local="clr-namespace:SU.Frontend.Views.SellerView"
+        xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         mc:Ignorable="d"
-        Title="SellerWindow" Height="450" Width="800">
+        Title="SellerMainView" Height="450" Width="800">
 
-    <Grid>
+    <Window.Resources>
+        <helper:ViewModelLocator x:Key="Locator" />
+    </Window.Resources>
+
+    <Grid DataContext="{Binding SellerMainViewModel, Source={StaticResource Locator}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -39,9 +44,9 @@
 
         <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search Insurances" Command="{Binding ToShowInsurances}" Margin="25,25,25,25" Grid.Row="3"/>
 
-        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search Customers" Command="{Binding ToShowCustomer}" Margin="25,25,25,25" Grid.Row="3" Grid.Column="1"/>
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search Customers" Command="{Binding ToShowCustomers}" Margin="25,25,25,25" Grid.Row="3" Grid.Column="1"/>
 
-        <Button Style="{StaticResource MainViewAlternatives}" Content="Show customer prospects" Command="{Binding ToShowProspects}" Margin="110,25,110,25" Grid.Row="4" Grid.ColumnSpan="2"/>
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Show customer prospects" Command="{Binding ToShowCustomerProspects}" Margin="110,25,110,25" Grid.Row="4" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>

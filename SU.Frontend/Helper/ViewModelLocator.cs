@@ -27,7 +27,7 @@ namespace SU.Frontend.Helper
                 App.AppHost?.Services.GetService<SignedInUserViewModel>();
 
            public CeoMainViewModel CeoMainViewModel =>
-                App.AppHost?.Services.GetService<CeoMainViewModel>(); /*
+                App.AppHost?.Services.GetService<CeoMainViewModel>();
 
             public FinancialAssistantMainViewModel FinancialAssistantMainViewModel =>
                 App.AppHost?.Services.GetService<FinancialAssistantMainViewModel>();
@@ -39,7 +39,7 @@ namespace SU.Frontend.Helper
                 App.AppHost?.Services.GetService<SellerMainViewModel>();
 
             public SalesAssistantMainViewModel SalesAssistantMainViewModel =>
-                App.AppHost?.Services.GetService<SalesAssistantMainViewModel>(); */
+                App.AppHost?.Services.GetService<SalesAssistantMainViewModel>();
         }
     }
 

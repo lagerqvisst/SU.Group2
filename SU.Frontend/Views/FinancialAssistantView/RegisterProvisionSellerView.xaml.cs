@@ -17,9 +17,9 @@ namespace SU.Frontend.Views.FinancialAssistantView
     /// <summary>
     /// Interaction logic for RegisterProvisionSeller.xaml
     /// </summary>
-    public partial class RegisterProvisionSeller : Window
+    public partial class RegisterProvisionSellerView : Window
     {
-        public RegisterProvisionSeller()
+        public RegisterProvisionSellerView()
         {
             InitializeComponent();
         }

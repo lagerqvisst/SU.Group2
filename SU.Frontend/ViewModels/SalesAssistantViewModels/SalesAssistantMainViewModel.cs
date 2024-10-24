@@ -12,13 +12,13 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
 {
     public class SalesAssistantMainViewModel : ObservableObject
     {
-        public ICommand ToRegisterNewCustomer;
-        public ICommand ToRegisterNewInsurance;
-        public ICommand ToEditDeleteCustomer;
-        public ICommand ToEditDeleteInsurance;
-        public ICommand ToShowInsurances;
-        public ICommand ToShowCustomers;
-        public ICommand ToShowCustomerProspects;
+        public ICommand ToRegisterNewCustomer { get; set; }
+        public ICommand ToRegisterNewInsurance { get; set; }
+        public ICommand ToEditDeleteCustomer { get; set; }
+        public ICommand ToEditDeleteInsurance { get; set; }
+        public ICommand ToShowInsurances { get; set; }
+        public ICommand ToShowCustomers { get; set; }
+        public ICommand ToShowCustomerProspects { get; set; }
 
         public INavigationService _navigationService;
         public SalesAssistantMainViewModel(INavigationService navigationService)
