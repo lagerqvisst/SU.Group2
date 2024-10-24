@@ -12,13 +12,13 @@ namespace SU.Backend.Models.Statistics
     /// </summary>
     public class MonthlySalesData
     {
-        public int Month { get; set; } // 1 = January, 2 = February, ..., 12 = December
+        public int month { get; set; } // 1 = January, 2 = February, ..., 12 = December
 
         // Store sales count for each insurance type dynamically
-        public Dictionary<InsuranceType, int> InsuranceSalesCounts { get; set; } = new Dictionary<InsuranceType, int>();
+        public Dictionary<InsuranceType, int> insuranceSalesCounts { get; set; } = new Dictionary<InsuranceType, int>();
 
         // Convenience method to get the total sales for this month
-        public int TotalSales => InsuranceSalesCounts.Values.Sum();
+        public int totalSales => insuranceSalesCounts.Values.Sum();
     }
 
 }
