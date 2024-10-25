@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SU.Frontend.Helper.User
+namespace SU.Frontend.Helper.DI_Objects.User
 {
-    public interface ILoggedInUserService
+    public class LoggedInUserService : ILoggedInUserService
     {
-        Employee LoggedInEmployee { get; set; }
+        public Employee LoggedInEmployee { get; set; }
+
     }
 }

@@ -1,7 +1,7 @@
 ﻿using SU.Backend.Helper;
 using SU.Backend.Models.Employees;
 using SU.Frontend.Helper;
-using SU.Frontend.Helper.User;
+using SU.Frontend.Helper.DI_Objects.User;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;

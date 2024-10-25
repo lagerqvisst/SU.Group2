@@ -3,10 +3,6 @@ using SU.Backend.Helper;
 using SU.Backend.Models.Enums;
 using SU.Frontend.Helper;
 using SU.Frontend.Helper.Authentication;
-using SU.Frontend.Helper.Navigation;
-using SU.Frontend.Helper.User;
-using System;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 

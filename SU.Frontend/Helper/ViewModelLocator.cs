@@ -8,11 +8,7 @@ using SU.Frontend.ViewModels.SalesAssistantViewModels;
 using SU.Frontend.ViewModels.SalesManagerViewModels;
 using SU.Frontend.ViewModels.SellerViewModels;
 using SU.Frontend.ViewModels.UserControlViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace SU.Frontend.Helper
 {
@@ -61,6 +57,9 @@ namespace SU.Frontend.Helper
 
             public NewPrivateInsuranceViewModel NewPrivateInsuranceViewModel =>
                 App.AppHost?.Services.GetService<NewPrivateInsuranceViewModel>();
+
+            public PrivateInsuranceTypeViewModel PrivateInsuranceTypeViewModel =>
+                App.AppHost?.Services.GetService<PrivateInsuranceTypeViewModel>();
         }
     }
 

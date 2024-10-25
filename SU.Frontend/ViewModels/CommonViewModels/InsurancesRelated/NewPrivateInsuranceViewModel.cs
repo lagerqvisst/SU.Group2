@@ -2,7 +2,8 @@
 using SU.Backend.Models.Customers;
 using SU.Backend.Models.Insurances;
 using SU.Frontend.Helper;
-using SU.Frontend.Helper.InsuranceObjects;
+using SU.Frontend.Helper.DI_Objects.InsuranceObjects;
+using SU.Frontend.Helper.Navigation;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
     {
         private readonly PrivateCustomerController _privateCustomerController;
         private readonly IPolicyHolderService _policyHolderService;
-
+        private readonly INavigationService _navigationService;
 
         // ObservableCollection to store the filtered list of private customers
         public ObservableCollection<PrivateCustomer> FilteredPrivateCustomers { get; set; }
@@ -53,9 +54,10 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
         // ICommand for selecting the policy holder
         public ICommand SelectPolicyHolderCommand { get; }
 
-        public NewPrivateInsuranceViewModel(PrivateCustomerController privateCustomerController, IPolicyHolderService policyHolderService)
+        public NewPrivateInsuranceViewModel(PrivateCustomerController privateCustomerController,INavigationService navigationService , IPolicyHolderService policyHolderService)
         {
             _privateCustomerController = privateCustomerController;
+            _navigationService = navigationService;  // Injected NavigationService
             _policyHolderService = policyHolderService;  // Injected PolicyHolderService
             FilteredPrivateCustomers = new ObservableCollection<PrivateCustomer>();
 
@@ -109,11 +111,14 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
             // Logic to set the SelectedPrivateCustomer as the policy holder for the insurance
             if (SelectedPrivateCustomer != null)
             {
-                _policyHolderService.SelectedPolicyHolder = new InsurancePolicyHolder
+                _policyHolderService.InsurancePolicyHolder = new InsurancePolicyHolder
                 {
                     PrivateCustomer = SelectedPrivateCustomer
                 };
             }
+
+            _navigationService.NavigateTo("PrivateInsuranceTypeView", "CommonViews.NewInsurance");
         }
+
     }
 }

@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SU.Frontend.Helper.Navigation;
-using SU.Frontend.Helper.User;
 using SU.Frontend.ViewModels;
 using SU.Frontend.Views;
 using SU.Frontend.Helper.Authentication;
@@ -32,7 +31,8 @@ using SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated;
 using SU.Frontend.Views.CommonViews.NewInsurance;
 using SU.Frontend.ViewModels.CommonViewModels.NewInsurance;
 using Microsoft.Extensions.Logging;
-using SU.Frontend.Helper.InsuranceObjects;
+using SU.Frontend.Helper.DI_Objects.InsuranceObjects;
+using SU.Frontend.Helper.DI_Objects.User;
 
 namespace SU.Frontend
 {
@@ -52,6 +52,8 @@ namespace SU.Frontend
             services.AddTransient<NewCompanyCustomerViewModel>();
             services.AddTransient<RegisterNewInsuranceViewModel>();
             services.AddTransient<NewPrivateInsuranceViewModel>();
+            services.AddTransient<PrivateInsuranceTypeViewModel>();
+
 
 
             //MainView ViewModels
@@ -91,6 +93,8 @@ namespace SU.Frontend
             services.AddTransient<RegisterNewInsuranceView>();
             services.AddTransient<NewPrivateInsuranceView>();
 
+
+
             services.AddTransient<ShowCustomerProspectView>();
             services.AddTransient<ShowCustomersView>();
             services.AddTransient<ShowInsurancesView>();
@@ -111,6 +115,8 @@ namespace SU.Frontend
             //Singletons
             services.AddSingleton<ILoggedInUserService, LoggedInUserService>();
             services.AddSingleton<IPolicyHolderService, PolicyHolderService>();
+            services.AddSingleton<IInsuranceTypeService, InsuranceTypeService>();   
+
             services.AddTransient<IAuthenticationService, AuthenticationService>();
 
 

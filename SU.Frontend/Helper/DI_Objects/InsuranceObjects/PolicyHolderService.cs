@@ -6,11 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SU.Frontend.Helper.InsuranceObjects
+namespace SU.Frontend.Helper.DI_Objects.InsuranceObjects
 {
     public class PolicyHolderService : IPolicyHolderService
-
     {
-        public InsurancePolicyHolder SelectedPolicyHolder { get; set; }
+        public InsurancePolicyHolder InsurancePolicyHolder { get; set; }
     }
 }

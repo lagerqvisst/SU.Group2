@@ -1,6 +1,6 @@
 ﻿using SU.Backend.Models.Employees;
+using SU.Frontend.Helper.DI_Objects.User;
 using SU.Frontend.Helper.Navigation;
-using SU.Frontend.Helper.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
