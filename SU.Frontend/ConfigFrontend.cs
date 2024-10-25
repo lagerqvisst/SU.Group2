@@ -26,8 +26,13 @@ using SU.Frontend.Views.SalesAssistantView;
 using SU.Frontend.Views.SalesManagerView;
 using SU.Frontend.Views.SellerView;
 using SU.Frontend.Views.CommonViews;
-using SU.Frontend.ViewModels.CommonViewModels;
 using SU.Frontend.Views.CommonViews.NewCustomer;
+using SU.Frontend.ViewModels.CommonViewModels.Customers;
+using SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated;
+using SU.Frontend.Views.CommonViews.NewInsurance;
+using SU.Frontend.ViewModels.CommonViewModels.NewInsurance;
+using Microsoft.Extensions.Logging;
+using SU.Frontend.Helper.InsuranceObjects;
 
 namespace SU.Frontend
 {
@@ -45,6 +50,8 @@ namespace SU.Frontend
             services.AddTransient<RegisterNewCustomerViewModel>();
             services.AddTransient<NewPrivateCustomerViewModel>();
             services.AddTransient<NewCompanyCustomerViewModel>();
+            services.AddTransient<RegisterNewInsuranceViewModel>();
+            services.AddTransient<NewPrivateInsuranceViewModel>();
 
 
             //MainView ViewModels
@@ -82,6 +89,8 @@ namespace SU.Frontend
 
             //Register New Insurance Views
             services.AddTransient<RegisterNewInsuranceView>();
+            services.AddTransient<NewPrivateInsuranceView>();
+
             services.AddTransient<ShowCustomerProspectView>();
             services.AddTransient<ShowCustomersView>();
             services.AddTransient<ShowInsurancesView>();
@@ -98,8 +107,15 @@ namespace SU.Frontend
 
             // Registrera andra tjänster
             services.AddScoped<INavigationService, NavigationService>();
+
+            //Singletons
             services.AddSingleton<ILoggedInUserService, LoggedInUserService>();
+            services.AddSingleton<IPolicyHolderService, PolicyHolderService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
+
+
+            // Loggning
+            services.AddLogging(configure => configure.AddConsole());
         }
     }
 }

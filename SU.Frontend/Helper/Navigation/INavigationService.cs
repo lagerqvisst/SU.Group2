@@ -33,9 +33,12 @@ namespace SU.Frontend.Helper.Navigation
         void NavigateToShowCustomerProspects();
 
         void NavigateToNewPrivateCustomer();
+
         void NavigateToNewCompanyCustomer();
 
+        void NavigateToNewPrivateInsurance();
 
+        void NavigateToNewCompanyInsurance();
 
     }
 }

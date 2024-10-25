@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace SU.Frontend.ViewModels.CommonViewModels
+namespace SU.Frontend.ViewModels.CommonViewModels.Customers
 {
     public class RegisterNewCustomerViewModel : ObservableObject
     {

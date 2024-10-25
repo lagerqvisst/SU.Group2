@@ -81,5 +81,9 @@ namespace SU.Backend.Helper
         public static List<SicknessAccidentOption> SicknessAccidentOptions() {
             return Enum.GetValues(typeof(SicknessAccidentOption)).Cast<SicknessAccidentOption>().ToList();
         }
+
+        public static List<InsuranceCategory> InsuranceCategory() {
+            return Enum.GetValues(typeof(InsuranceCategory)).Cast<InsuranceCategory>().ToList();
+        }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SU.Frontend.ViewModels.CeoMainViewModel;
-using SU.Frontend.ViewModels.CommonViewModels;
+using SU.Frontend.ViewModels.CommonViewModels.Customers;
+using SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated;
+using SU.Frontend.ViewModels.CommonViewModels.NewInsurance;
 using SU.Frontend.ViewModels.FinancialAssistantViewModels;
 using SU.Frontend.ViewModels.SalesAssistantViewModels;
 using SU.Frontend.ViewModels.SalesManagerViewModels;
@@ -53,6 +55,12 @@ namespace SU.Frontend.Helper
 
             public NewCompanyCustomerViewModel NewCompanyCustomerViewModel =>
                 App.AppHost?.Services.GetService<NewCompanyCustomerViewModel>();
+
+            public RegisterNewInsuranceViewModel RegisterNewInsuranceViewModel =>
+                App.AppHost?.Services.GetService<RegisterNewInsuranceViewModel>();
+
+            public NewPrivateInsuranceViewModel NewPrivateInsuranceViewModel =>
+                App.AppHost?.Services.GetService<NewPrivateInsuranceViewModel>();
         }
     }
 
