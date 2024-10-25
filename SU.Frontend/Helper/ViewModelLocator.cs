@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SU.Frontend.ViewModels.CeoMainViewModel;
+using SU.Frontend.ViewModels.CommonViewModels;
 using SU.Frontend.ViewModels.FinancialAssistantViewModels;
 using SU.Frontend.ViewModels.SalesAssistantViewModels;
 using SU.Frontend.ViewModels.SalesManagerViewModels;
@@ -43,6 +44,15 @@ namespace SU.Frontend.Helper
 
             public TaskbarViewModel TaskbarViewModel =>
                 App.AppHost?.Services.GetService<TaskbarViewModel>();
+
+            public RegisterNewCustomerViewModel RegisterNewCustomerViewModel =>
+                App.AppHost?.Services.GetService<RegisterNewCustomerViewModel>();
+
+            public NewPrivateCustomerViewModel NewPrivateCustomerViewModel =>
+                App.AppHost?.Services.GetService<NewPrivateCustomerViewModel>();
+
+            public NewCompanyCustomerViewModel NewCompanyCustomerViewModel =>
+                App.AppHost?.Services.GetService<NewCompanyCustomerViewModel>();
         }
     }
 

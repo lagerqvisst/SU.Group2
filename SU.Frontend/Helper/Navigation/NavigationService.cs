@@ -1,5 +1,6 @@
 ﻿using SU.Backend.Models.Employees;
 using SU.Backend.Models.Enums;
+using SU.Frontend.Views.CommonViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -154,6 +155,7 @@ namespace SU.Frontend.Helper.Navigation
         public void NavigateToRegisterNewCustomer()
         {
             NavigateTo("RegisterNewCustomerView", "CommonViews");
+
         }
 
         public void NavigateToRegisterNewInsurance()
@@ -164,6 +166,16 @@ namespace SU.Frontend.Helper.Navigation
         public void NavigateToShowCustomerProspects()
         {
             NavigateTo("ShowCustomerProspectView", "CommonViews");
+        }
+
+        public void NavigateToNewPrivateCustomer()
+        {
+            NavigateTo("NewPrivateCustomerView", "CommonViews.NewCustomer");
+        }
+
+        public void NavigateToNewCompanyCustomer()
+        {
+            NavigateTo("NewCompanyCustomerView", "CommonViews.NewCustomer");
         }
     }
 }

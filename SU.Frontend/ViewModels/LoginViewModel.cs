@@ -80,6 +80,8 @@ namespace SU.Frontend.ViewModels
             }
         }
 
+
+
         public RelayCommand LoginCommand { get; }
 
         private bool CanLogin() => !string.IsNullOrWhiteSpace(UserName) && !string.IsNullOrWhiteSpace(Password);

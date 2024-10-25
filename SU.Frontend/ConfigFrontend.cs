@@ -26,6 +26,8 @@ using SU.Frontend.Views.SalesAssistantView;
 using SU.Frontend.Views.SalesManagerView;
 using SU.Frontend.Views.SellerView;
 using SU.Frontend.Views.CommonViews;
+using SU.Frontend.ViewModels.CommonViewModels;
+using SU.Frontend.Views.CommonViews.NewCustomer;
 
 namespace SU.Frontend
 {
@@ -40,6 +42,9 @@ namespace SU.Frontend
             services.AddTransient<MainViewButtonViewModel>(); //ViewModel for MainView button
             services.AddTransient<SignedInUserViewModel>(); // ViewModel for Signed in user
             services.AddTransient<TaskbarViewModel>(); // View for TaskbarView
+            services.AddTransient<RegisterNewCustomerViewModel>();
+            services.AddTransient<NewPrivateCustomerViewModel>();
+            services.AddTransient<NewCompanyCustomerViewModel>();
 
 
             //MainView ViewModels
@@ -69,11 +74,18 @@ namespace SU.Frontend
             services.AddTransient<CreateExportSellStatView>();
             services.AddTransient<EditDeleteCustomerView>();
             services.AddTransient<EditDeleteInsuranceView>();
-            services.AddTransient <RegisterNewCustomerView>();
+
+            //Register New Customer Views
+            services.AddTransient<RegisterNewCustomerView>();
+            services.AddTransient<NewPrivateCustomerView>();
+            services.AddTransient<NewCompanyCustomerView>();
+
+            //Register New Insurance Views
             services.AddTransient<RegisterNewInsuranceView>();
-            services.AddTransient <ShowCustomerProspectView>();
+            services.AddTransient<ShowCustomerProspectView>();
             services.AddTransient<ShowCustomersView>();
             services.AddTransient<ShowInsurancesView>();
+
 
             //Specific Views
             //Financial Assistant
