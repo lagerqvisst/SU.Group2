@@ -34,15 +34,15 @@
         <TextBlock Style="{StaticResource FörsäkringarFont}" Text="Financial Assistant Main View" HorizontalAlignment="Left"
                    Margin="51,5,0,102" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
 
-        <Button Style="{StaticResource MainViewAlternatives}" Content="Register/ Show provision for sellers" Command="{Binding ToShowProvision}" 
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Register/ Show provision for sellers" Command="{Binding ToRegisterProvision}" 
                 Margin="25,25,180,25" Grid.Row="1" Grid.ColumnSpan="2"/>
-        <Button Style="{StaticResource MainViewAlternatives}" Content="Register/ Show/ Export Billing information" Command="{Binding ToShowBillingInfo}"
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Register/ Show/ Export Billing information" Command="{Binding ToRegisterBillingInfo}"
                 Margin="50,25,100,25" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"/>
         <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search Customers" Command="{Binding ToShowCustomers}"
                 Grid.Row="2" Margin="25,25,180,25" Grid.ColumnSpan="2"/>
         <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search insurances" Command="{Binding ToShowInsurances}"
                 Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Margin="50,25,155,25" />
-        <Button Style="{StaticResource MainViewAlternatives}" Content="Show selling statistics" Command="{Binding ToShowSellingStats}"
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Show selling statistics" Command="{Binding ToShowSellingStat}"
                 Grid.Row="3" Grid.ColumnSpan="2" Margin="137,20,68,29" />
 
     </Grid>

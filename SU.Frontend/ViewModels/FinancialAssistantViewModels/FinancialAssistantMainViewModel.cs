@@ -46,7 +46,7 @@ namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
 
         public void NavigateToShowSellingStat()
         {
-            _navigationService.NavigateTo("ShowSellingStatisticsView", "FinancialAssistantView");
+            _navigationService.NavigateTo("ShowSellingStatsView", "FinancialAssistantView");
         }
     }
 }

@@ -34,7 +34,7 @@
 
         <TextBlock Style="{StaticResource FörsäkringarFont}" Text="Sales Manager Main View" HorizontalAlignment="Left" Margin="152,5,0,103" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
 
-        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search Customers" Command="{Binding ToShowCustomer}" Margin="25,25,25,25" Grid.Row="1" Grid.Column="1"/>
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search Customers" Command="{Binding ToShowCustomers}" Margin="25,25,25,25" Grid.Row="1" Grid.Column="1"/>
         <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search Insurances" Command="{Binding ToShowInsurances}" Margin="25,25,25,25" Grid.Row="2" Grid.Column="1"/>
         <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Create/ Export Selling statistics" Command="{Binding ToCreateExportStatistics}"
         Margin="25,25,25,25" Grid.Row="3" Grid.Column="1"/>
