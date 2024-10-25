@@ -162,7 +162,7 @@ namespace SU.Frontend.Helper.Navigation
 
         public void NavigateToShowCustomerProspects()
         {
-            NavigateTo("ShowCustomerProspectsView", "CommonViews");
+            NavigateTo("ShowCustomerProspectView", "CommonViews");
         }
     }
 }

@@ -18,6 +18,7 @@ namespace SU.Frontend.ViewModels.SellerViewModels
         public ICommand ToShowInsurances { get; set; }
         public ICommand ToShowCustomers { get; set; }
         public ICommand ToShowCustomerProspects { get; set; }
+
         public INavigationService _navigationService;
         public SellerMainViewModel(INavigationService navigationService)
         {
