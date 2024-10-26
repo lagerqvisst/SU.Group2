@@ -27,21 +27,21 @@ namespace SU.Backend.Controllers
             _logger = logger;
         }
 
-        public async Task<(bool Success, string Message, List<InvoiceEntry> InvoiceData)> GenerateInvoiceData()
+        public async Task<(bool success, string message, List<InvoiceEntry> invoiceData)> GenerateInvoiceData()
         {
             _logger.LogInformation("Controller activated to generate invoice data...");
 
             var result = await _invoiceService.GenerateInvoiceData();
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Invoice data generated successfully:\n{result.Message}");
-                return (result.Success, result.Message, result.InvoiceData);
+                _logger.LogInformation($"Invoice data generated successfully:\n{result.message}");
+                return (result.success, result.message, result.invoiceData);
             }
             else
             {
-                _logger.LogWarning($"Error generating invoice data: {result.Message}");
-                return (result.Success, result.Message, new List<InvoiceEntry>());
+                _logger.LogWarning($"Error generating invoice data: {result.message}");
+                return (result.success, result.message, new List<InvoiceEntry>());
             }
         }
 
@@ -51,7 +51,7 @@ namespace SU.Backend.Controllers
 
             var result = await _dataExportService.ExportInvoicesToExcel(invoices);
 
-            if (result.Success)
+            if (result.success)
             {
                 _logger.LogInformation("Invoices exported successfully");
             }
@@ -59,7 +59,7 @@ namespace SU.Backend.Controllers
             {
                 _logger.LogWarning("Error exporting invoices: {result.Message}");
             }
-            return (result.Success, result.Message);
+            return (result.success, result.message);
         }
 }
     }
