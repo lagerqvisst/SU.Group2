@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace SU.Backend.Models.Insurances.Coverage
 {
-    public class Riskzone
+    public class RiskZone
     {
 
-        [Key] public int RiskzoneId { get; set; } // PK
-        public RiskzoneLevel RiskzoneLevel { get; set; } // Riskzon
+        [Key] public int RiskZoneId { get; set; } // PK
+        public RiskzoneLevel RiskZoneLevel { get; set; } // Riskzon
         public double ZoneFactor { get; set; } // Zonfaktor
 
         // Navigation properties
