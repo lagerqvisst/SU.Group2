@@ -11,7 +11,7 @@ namespace SU.Backend.Helper
     /// </summary>
     public static class EmployeeHelper
     {
-        private static readonly Random Random = new Random();
+        private static readonly Random random = new Random();
 
         public static async Task<string> GenerateUniqueFourDigitCode(IEmployeeRepository employeeRepository)
         {
@@ -30,7 +30,7 @@ namespace SU.Backend.Helper
 
         public static string GenerateFourDigitCode()
         {
-            int code = Random.Next(1000, 10000);
+            int code = random.Next(1000, 10000);
             return code.ToString("D4");
         }
 
@@ -58,9 +58,9 @@ namespace SU.Backend.Helper
 
         }
 
-        public static string GenerateEmployeeEmail(string Firstname, string Lastname)
+        public static string GenerateEmployeeEmail(string firstName, string lastName)
         {
-            return Firstname.ToLower() + "." + Lastname.ToLower() + "@toppinsurance.se";
+            return firstName.ToLower() + "." + lastName.ToLower() + "@toppinsurance.se";
         }
 
         public static string GenerateEmployeePassword(string firstName, string lastName)
@@ -70,7 +70,7 @@ namespace SU.Backend.Helper
             string part2 = lastName.Substring(0, Math.Min(2, lastName.Length)).ToLower();
 
             // Generera ett slumpmässigt fyrsiffrigt nummer
-            string randomNumber = Random.Next(1000, 9999).ToString();
+            string randomNumber = random.Next(1000, 9999).ToString();
 
             // Kombinera förnamnsdel, efternamnsdel och slumpmässigt nummer
             string password = $"{part1}{part2}{randomNumber}";
