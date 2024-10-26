@@ -27,20 +27,20 @@ namespace SU.Backend.Controllers
 
         }
 
-        public async Task<(bool Success, string Message, Employee Employee)> Authentication(string Username, string Password)
+        public async Task<(bool success, string message, Employee employee)> Authentication(string userName, string password)
         {
             _logger.LogInformation("User input collected... starting authentication process.");
-            _logger.LogInformation($"Sending input [Username: {Username}, Password: {Password}] to LoginService...");
+            _logger.LogInformation($"Sending input [Username: {userName}, Password: {password}] to LoginService...");
 
-            var result = await _loginService.Authentication(Username, Password); // Antag att LoginResult returneras här
+            var result = await _loginService.Authentication(userName, password); // Antag att LoginResult returneras här
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Login successful for : {result.Employee.FirstName} {result.Employee.LastName}");
+                _logger.LogInformation($"Login successful for : {result.employee.FirstName} {result.employee.LastName}");
             }
             else
             {
-                _logger.LogWarning($"Login failed: {result.Message}");
+                _logger.LogWarning($"Login failed: {result.message}");
             }
 
             return result; // Returnera resultatet
