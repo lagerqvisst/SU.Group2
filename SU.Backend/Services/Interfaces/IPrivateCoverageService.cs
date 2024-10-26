@@ -13,8 +13,8 @@ namespace SU.Backend.Services.Interfaces
     /// </summary>
     public interface IPrivateCoverageService
     {
-        Task<(bool Success, PrivateCoverageOption? CoverageOption, string Message)> GetPrivateCoverageOptionAsync(decimal coverageAmount, InsuranceType insuranceType);
-        Task<(bool Success, string Message, List<PrivateCoverageOption> PrivateCoverageOptions)> GetAllPrivateCoverageOptions(); 
-        Task<(bool Success, string Message, List<PrivateCoverage> PrivateCoverages)> GetAllPrivateCoverages();
+        Task<(bool success, PrivateCoverageOption? coverageOption, string message)> GetPrivateCoverageOptionAsync(decimal coverageAmount, InsuranceType insuranceType);
+        Task<(bool success, string message, List<PrivateCoverageOption> privateCoverageOptions)> GetAllPrivateCoverageOptions(); 
+        Task<(bool success, string message, List<PrivateCoverage> privateCoverages)> GetAllPrivateCoverages();
     }
 }
