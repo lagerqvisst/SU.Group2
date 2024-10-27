@@ -29,120 +29,120 @@ namespace SU.Backend.Controllers
         }
 
         //Only for testing purposes
-        public async Task CreateRandomNewEmployee(EmployeeType Role)
+        public async Task CreateRandomNewEmployee(EmployeeType role)
         {
-            _logger.LogInformation($"Controller activated to create new random {Role.ToString()}...");
-            var result = await _employeeService.GenerateRandomEmployee(Role);
+            _logger.LogInformation($"Controller activated to create new random {role.ToString()}...");
+            var result = await _employeeService.GenerateRandomEmployee(role);
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Employee created successfully:\n{result.Employee}");
+                _logger.LogInformation($"Employee created successfully:\n{result.employee}");
             }
             else
             {
-                _logger.LogWarning($"Error creating employee: {result.Message}");
+                _logger.LogWarning($"Error creating employee: {result.message}");
             }
         }
 
-        public async Task <(bool Success, string Message, List <Employee>)> GetAllEmployees()
+        public async Task <(bool success, string message, List <Employee>)> GetAllEmployees()
         {
             _logger.LogInformation("Controller activated to list all employees...");
             var result = await _employeeService.GetAllEmployees();
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Employees retrieved successfully:\n{result.Employees.Count}");
-                return (result.Success, result.Message, result.Employees);
+                _logger.LogInformation($"Employees retrieved successfully:\n{result.employees.Count}");
+                return (result.success, result.message, result.employees);
             }
             else
             {
-                _logger.LogWarning($"Error retrieving employees: {result.Message}");
-                return (result.Success, result.Message, null);
+                _logger.LogWarning($"Error retrieving employees: {result.message}");
+                return (result.success, result.message, null);
             }
         }
         //Controller for add employee
-        public async Task<(bool Success, string Message)> CreateEmployee(Employee employee)
+        public async Task<(bool success, string message)> CreateEmployee(Employee employee)
         {
             _logger.LogInformation("Controller activated to create new employee...");
             var result = await _employeeService.CreateNewEmployee(employee);
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogInformation($"{result.message}");
+                return (result.success, result.message);
             }
             else
             {
-                _logger.LogWarning($"{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogWarning($"{result.message}");
+                return (result.success, result.message);
             }
         }
         //Controller for delete employee
-        public async Task<(bool Success, string Message)> DeleteEmployee(Employee employee)
+        public async Task<(bool success, string message)> DeleteEmployee(Employee employee)
         {
             _logger.LogInformation("Employee object updated via GUI");
             var result = await _employeeService.DeleteEmployee(employee);
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogInformation($"{result.message}");
+                return (result.success, result.message);
             }
             else
             {
-                _logger.LogWarning($"{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogWarning($"{result.message}");
+                return (result.success, result.message);
             }
         }
         //Controller for update employee
-        public async Task<(bool Success, string Message)> UpdateEmployee(Employee employee)
+        public async Task<(bool success, string message)> UpdateEmployee(Employee employee)
         {
             _logger.LogInformation("Employee object updated via GUI");
             var result = await _employeeService.UpdateEmployee(employee);
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogInformation($"{result.message}");
+                return (result.success, result.message);
             }
             else
             {
-                _logger.LogWarning($"{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogWarning($"{result.message}");
+                return (result.success, result.message);
             }
         }
 
-        public async Task<(List<EmployeeRoleAssignment> EmployeeRoleAssignments, string Message)> GetAllEmployeeRoleAssignments()
+        public async Task<(List<EmployeeRoleAssignment> employeeRoleAssignments, string message)> GetAllEmployeeRoleAssignments()
         {
             _logger.LogInformation("Controller activated to list all employee role assignments...");
             var result = await _employeeService.GetAllEmployeeRoleAssignments();
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Employee role assignments found:\n{result.Message}");
-                return (result.EmployeeRoleAssignments, result.Message);
+                _logger.LogInformation($"Employee role assignments found:\n{result.message}");
+                return (result.employeeRoleAssignments, result.message);
             }
             else
             {
-                _logger.LogWarning($"Error retrieving employee role assignments: {result.Message}");
-                return (new List <EmployeeRoleAssignment>(), result.Message);
+                _logger.LogWarning($"Error retrieving employee role assignments: {result.message}");
+                return (new List <EmployeeRoleAssignment>(), result.message);
             }
         }
 
-        public async Task<(bool Success, string Message, Employee Employee)> GetEmployeeByRole(EmployeeType role)
+        public async Task<(bool success, string message, Employee employee)> GetEmployeeByRole(EmployeeType role)
         {
             _logger.LogInformation("Controller activated to get employee by role...");
             var result = await _employeeService.GetEmployeeByRole(role);
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Employee found:\n{result.Employee}");
-                return (result.Success, result.Message, result.Employee);
+                _logger.LogInformation($"Employee found:\n{result.employee}");
+                return (result.success, result.message, result.employee);
             }
             else
             {
-                _logger.LogWarning($"Error retrieving employee: {result.Message}");
-                return (result.Success, result.Message, null);
+                _logger.LogWarning($"Error retrieving employee: {result.message}");
+                return (result.success, result.message, null);
             }
         }
     }

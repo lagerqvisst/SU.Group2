@@ -13,6 +13,6 @@ namespace SU.Backend.Services.Interfaces
     /// </summary>
     public interface IInvoiceService
     {
-        Task<(bool Success, string Message, List<InvoiceEntry> InvoiceData)> GenerateInvoiceData();
+        Task<(bool success, string message, List<InvoiceEntry> invoiceData)> GenerateInvoiceData();
     }
 }

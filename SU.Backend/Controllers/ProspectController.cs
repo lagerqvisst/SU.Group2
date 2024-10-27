@@ -27,49 +27,49 @@ namespace SU.Backend.Controllers
             _logger = logger;
         }
 
-        public async Task<(List<Prospect>, string Message)> IdentifyNewProspects()
+        public async Task<(List<Prospect>, string message)> IdentifyNewProspects()
         {
             _logger.LogInformation("Identifying new prospects...");
             var result = await prospectService.IdentifyProspects();
-            if (result.Success)
+            if (result.success)
             {
                 _logger.LogInformation("Prospects identified successfully");
             }
             else
             {
-                _logger.LogWarning($"Failed to identify prospects: {result.Message}");
+                _logger.LogWarning($"Failed to identify prospects: {result.message}");
             }
-            return (result.prospects, result.Message);
+            return (result.prospects, result.message);
         }
 
-        public async Task<(bool Success, string Message)> AssignSellerToSpecificProspect(Employee employee, Prospect prospect)
+        public async Task<(bool success, string message)> AssignSellerToSpecificProspect(Employee employee, Prospect prospect)
         {
             _logger.LogInformation($"Assigning seller {employee.FirstName} {employee.LastName} to prospect {prospect.ProspectId}");
             var result = await prospectService.AssignSellerToSpecificProspect(employee, prospect);
-            if (result.Success)
+            if (result.success)
             {
                 _logger.LogInformation($"Seller assigned to prospect successfully");
             }
             else
             {
-                _logger.LogWarning($"Failed to assign seller to prospect: {result.Message}");
+                _logger.LogWarning($"Failed to assign seller to prospect: {result.message}");
             }
-            return (result.Success, result.Message);
+            return (result.success, result.message);
         }
 
-        public async Task<(List<Prospect>, string Message)> GetAllCurrentProspects()
+        public async Task<(List<Prospect>, string message)> GetAllCurrentProspects()
         {
             _logger.LogInformation("Getting all current prospects...");
             var result = await prospectService.GetAllCurrentProspects();
-            if (result.Success)
+            if (result.success)
             {
                 _logger.LogInformation("Prospects retrieved successfully");
             }
             else
             {
-                _logger.LogWarning($"Failed to retrieve prospects: {result.Message}");
+                _logger.LogWarning($"Failed to retrieve prospects: {result.message}");
             }
-            return (result.prospects, result.Message);
+            return (result.prospects, result.message);
         }
     }
 }

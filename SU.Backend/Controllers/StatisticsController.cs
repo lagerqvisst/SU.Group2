@@ -26,13 +26,13 @@ namespace SU.Backend.Controllers
             _logger = logger;
         }
 
-        public async Task<(string Message, List<SellerStatistics>)> GetSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null)
+        public async Task<(string message, List<SellerStatistics>)> GetSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null)
         {
             _logger.LogInformation("Getting seller statistics for year {year}", year);
 
             var result = await _statisticsService.GetSellerStatistics(year, insuranceTypes);
 
-            if (result.Success)
+            if (result.success)
             {
                 _logger.LogInformation("Seller statistics retrieved successfully");
             }
@@ -40,16 +40,16 @@ namespace SU.Backend.Controllers
             {
                 _logger.LogWarning("Error retrieving seller statistics: {result.Message}");
             }
-            return (result.Message, result.Statistics);
+            return (result.message, result.statistics);
         }
 
-        public async Task<(List<InsuranceStatistics>, string Message)> GetMonthlyInsuranceStats()
+        public async Task<(List<InsuranceStatistics>, string message)> GetMonthlyInsuranceStats()
         {
             _logger.LogInformation("Getting monthly insurance statistics...");
 
             var result = await _statisticsService.GetMonthlyInsuranceStatistics();
 
-            if (result.Success)
+            if (result.success)
             {
                 _logger.LogInformation("Monthly insurance statistics retrieved successfully");
             }
@@ -57,7 +57,7 @@ namespace SU.Backend.Controllers
             {
                 _logger.LogWarning("Error retrieving monthly insurance statistics: {result.Message}");
             }
-            return (result.Statistics, result.Message);
+            return (result.statistics, result.message);
         }
     }
 }

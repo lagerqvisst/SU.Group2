@@ -12,6 +12,6 @@ namespace SU.Backend.Database.Interfaces
     /// </summary>
     public interface IRiskzoneRepository
     {
-        Task<List<Riskzone>> GetAllRiskZones();
+        Task<List<RiskZone>> GetAllRiskZones();
     }
 }

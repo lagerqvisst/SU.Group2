@@ -26,7 +26,7 @@ namespace SU.Backend.Services
         }
 
         // Method to get all private coverage options
-        public async Task<(bool Success, string Message, List<PrivateCoverageOption> PrivateCoverageOptions)> GetAllPrivateCoverageOptions()
+        public async Task<(bool success, string message, List<PrivateCoverageOption> privateCoverageOptions)> GetAllPrivateCoverageOptions()
         {
             _logger.LogInformation("Controller activated to get all private coverage options...");
 
@@ -45,7 +45,7 @@ namespace SU.Backend.Services
         }
 
         // Method to get all private coverages
-        public Task<(bool Success, string Message, List<PrivateCoverage> PrivateCoverages)> GetAllPrivateCoverages()
+        public Task<(bool success, string message, List<PrivateCoverage> privateCoverages)> GetAllPrivateCoverages()
         {
             _logger.LogInformation("Controller activated to get all private coverages...");
 
@@ -64,7 +64,7 @@ namespace SU.Backend.Services
         }
 
         // Method to get a specific private coverage option
-        public async Task<(bool Success, PrivateCoverageOption? CoverageOption, string Message)> GetPrivateCoverageOptionAsync(decimal coverageAmount, InsuranceType insuranceType)
+        public async Task<(bool success, PrivateCoverageOption? coverageOption, string message)> GetPrivateCoverageOptionAsync(decimal coverageAmount, InsuranceType insuranceType)
         {
             try
             {

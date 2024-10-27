@@ -28,16 +28,16 @@ namespace SU.Backend.Services
         /// <summary>
         /// Method to authenticate a user based on the provided username and password.
         /// </summary>
-        /// <param name="Username"></param>
-        /// <param name="Password"></param>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
         /// <returns></returns>
-        public async Task<(bool Success, string Message, Employee Employee)> Authentication(string Username, string Password)
+        public async Task<(bool success, string message, Employee employee)> Authentication(string userName, string password)
         {
             _logger.LogInformation("Authenticating user");
             try
             {
                 _logger.LogInformation("Checking user credentials");
-                var user = await _unitOfWork.Employees.GetEmployeeByUserCredentials(Username, Password); 
+                var user = await _unitOfWork.Employees.GetEmployeeByUserCredentials(userName, password); 
 
                 _logger.LogInformation("User credentials checked");
                 if (user != null)

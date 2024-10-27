@@ -25,7 +25,7 @@ namespace SU.Backend.Services
         }
 
         // Method to get all commissions, most of the heavy lifting is done in the repoisitory method.
-        public async Task<(bool Success, string Message, List<Commission> Commissions)> GetAllCommissions(DateTime startDate, DateTime endDate)
+        public async Task<(bool success, string message, List<Commission> commissions)> GetAllCommissions(DateTime startDate, DateTime endDate)
         {
             _logger.LogInformation("Getting all commissions");
             try
