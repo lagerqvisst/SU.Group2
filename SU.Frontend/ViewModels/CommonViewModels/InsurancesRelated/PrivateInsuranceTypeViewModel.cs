@@ -118,6 +118,18 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
         }
         #endregion
 
+        private bool _isAddonVisible;
+        public bool IsAddonVisible
+        {
+            get => _isAddonVisible;
+            set
+            {
+                _isAddonVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
+
 
         private List<InsuranceAddonType> _sicknessAccidentAddons;
         public List<InsuranceAddonType> SicknessAccidentAddons
@@ -187,6 +199,28 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
             }
         }
 
+        private DateTime? _startDate;
+        public DateTime? StartDate
+        {
+            get => _startDate;
+            set
+            {
+                _startDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DateTime? _endDate;
+        public DateTime? EndDate
+        {
+            get => _endDate;
+            set
+            {
+                _endDate = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string DisplayYearText => $"Available options for {SelectedInsuranceType.ToString()} & {DateTime.Now.Year}";
 
         public ICommand ContinueCommand { get; }
@@ -203,6 +237,10 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
             _loggedInSeller = loggedInUserService;
             _insuranceListingController = insuranceListingController;
             _insuranceCreateController = insuranceCreateController;
+
+            // Sätt standardvärden för start- och slutdatum
+            StartDate = DateTime.Now;
+            EndDate = StartDate.Value.AddYears(1);
 
             // Initialize the lists used in ComboBoxes
             PrivateInsuranceTypes = Enum.GetValues(typeof(InsuranceType))
@@ -238,7 +276,14 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
 
         private async Task OnSelectedInsuranceTypeChangedAsync()
         {
-            // Försäkra att LoadCoverageOptions och LoadAddonOptions körs sekventiellt och väntar på varandra
+            // Uppdatera IsAddonVisible baserat på valt försäkringstyp
+            IsAddonVisible = SelectedInsuranceType == InsuranceType.ChildAccidentAndHealthInsurance ||
+                             SelectedInsuranceType == InsuranceType.AdultAccidentAndHealthInsurance;
+
+            SelectedLongTermSicknessAddon = null;
+            SelectedSicknessAccidentAddon = null;
+            SelectedCoverageOption = null;
+            // Kör metoder för att ladda alternativ och tillägg
             await LoadCoverageOptions();
             await LoadAddonOptions();
         }
@@ -297,8 +342,8 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
             var isPolicyHolderInsured = IsInsuredPersonSameAsPolicyHolder;
             var note = Note;
             var paymentPlan = SelectedPaymentPlan;
-            var startDate = DateTime.Now;
-            var endDate = startDate.AddYears(1); // End date set one year from start date
+            var startDate = StartDate ?? DateTime.Now; // Använd valt startdatum eller nuvarande datum
+            var endDate = EndDate ?? startDate.AddYears(1); // Använd valt slutdatum eller ett år framåt som standard 
             var addons = new List<InsuranceAddonType> { SelectedSicknessAccidentAddon, SelectedLongTermSicknessAddon }
                          .Where(addon => addon != null).ToList();
             var insuredPerson = !IsInsuredPersonSameAsPolicyHolder
@@ -323,8 +368,6 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
             return SelectedInsuranceType != null
                    && SelectedCoverageOption != null
                    && SelectedPaymentPlan != null;
-
-
 
         }
     }
