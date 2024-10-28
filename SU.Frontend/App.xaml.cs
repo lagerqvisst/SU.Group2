@@ -1,12 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SU.Backend.Configuration; // Importera din backend DI-konfiguration
-using SU.Frontend.Helper;
-using SU.Frontend.Helper.Navigation;
-using SU.Frontend.Helper.User;
-using SU.Frontend.ViewModels;
+using SU.Backend.Configuration; 
 using SU.Frontend.Views;
-using System;
 using System.Windows;
 
 namespace SU.Frontend

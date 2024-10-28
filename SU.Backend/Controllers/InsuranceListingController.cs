@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using SU.Backend.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 using SU.Backend.Services;
+using SU.Backend.Models.Enums.Insurance;
 
 namespace SU.Backend.Controllers
 {
@@ -62,23 +63,23 @@ namespace SU.Backend.Controllers
                 return (new List<Insurance>(), result.message);
             }
         }
+          public async Task<(bool Success, List<InsuranceAddonType> insuranceAddonTypes, string Message)> GetAllInsuranceAddonTypes()
+          {
+              _logger.LogInformation("Controller activated to list all insurance addon types...");
+              var result = await _insuranceListingService.GetAllInsuranceAddonTypes();
 
-        public async Task<(List<InsuranceAddonType> insuranceAddonTypes, string message)> GetAllInsuranceAddonTypes()
-        {
-            _logger.LogInformation("Controller activated to list all insurance addon types...");
-            var result = await _insuranceListingService.GetAllInsuranceAddonTypes();
+              if (result.success)
+              {
+                  _logger.LogInformation($"Insurance addon types retrieved successfully:\n{result.Message}");
+                  return (true, result.InsuranceAddonTypes, result.Message);
+              }
+              else
+              {
+                  _logger.LogWarning($"Error retrieving insurance addon types: {result.Message}");
+                  return (false, new List<InsuranceAddonType>(), result.Message);
+              }
+          }
 
-            if (result.success)
-            {
-                _logger.LogInformation($"Insurance addon types retrieved succesfully:\n{result.message}");
-                return (result.insuranceAddonTypes, result.message);
-            }
-            else
-            {
-                _logger.LogWarning($"Error retrieving insurance addon types: {result.message}");
-                return (new List<InsuranceAddonType>(), result.message);
-            }
-        }
 
         public async Task<(List<InsuranceAddon> insuranceAddons, string message)> GetAllInsuranceAddons()
         {
@@ -196,6 +197,23 @@ namespace SU.Backend.Controllers
             {
                 _logger.LogWarning($"Error retrieving property and inventory coverages: {result.message}");
                 return (new List<PropertyAndInventoryCoverage>(), result.message);
+            }
+        }
+
+        public async Task<(List<PrivateCoverageOption> PrivateCoverageOptions, string Message)> GetSpecificPrivateOption(InsuranceType insuranceType)
+        {
+            _logger.LogInformation("Controller activated to get specific private option...");
+            var result = await _insuranceListingService.GetSpecificPrivateOption(insuranceType);
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"Private option found:\n{result.Message}");
+                return (result.PrivateCoverageOptions, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"Error getting private option: {result.Message}");
+                return (new List<PrivateCoverageOption>(), result.Message);
             }
         }
     }

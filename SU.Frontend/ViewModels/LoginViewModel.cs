@@ -2,8 +2,8 @@
 using SU.Backend.Helper;
 using SU.Backend.Models.Enums;
 using SU.Frontend.Helper;
+using SU.Frontend.Helper.DI_Objects.User;
 using SU.Frontend.Helper.Navigation;
-using SU.Frontend.Helper.User;
 using System.Diagnostics;
 using System.Windows;
 

@@ -6,7 +6,7 @@ using SU.Backend.Controllers;
 using SU.Backend.Models.Customers;
 using SU.Frontend.Helper;
 
-namespace SU.Frontend.ViewModels.CommonViewModels
+namespace SU.Frontend.ViewModels.CommonViewModels.Customers
 {
     public class NewPrivateCustomerViewModel : ObservableObject
     {

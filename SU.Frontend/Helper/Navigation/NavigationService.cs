@@ -177,5 +177,15 @@ namespace SU.Frontend.Helper.Navigation
         {
             NavigateTo("NewCompanyCustomerView", "CommonViews.NewCustomer");
         }
+
+        public void NavigateToNewPrivateInsurance()
+        {
+           NavigateTo("NewPrivateInsuranceView", "CommonViews.NewInsurance");
+        }
+
+        public void NavigateToNewCompanyInsurance()
+        {
+            NavigateTo("NewCompanyInsuranceView", "CommonViews.NewInsurance");
+        }
     }
 }

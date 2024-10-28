@@ -22,7 +22,7 @@ namespace SU.Backend.Database.Repositories
 
         public async Task <List<InsuranceAddonType>> GetAllInsuranceAddonTypes()
         {
-            return await _context.InsuranceAddonTypes.ToListAsync();
+            return  _context.InsuranceAddonTypes.ToList();
         }
 
         //This method is used to get a specific addon type based on the addon type and coverage amount

@@ -67,6 +67,7 @@ namespace SU.Backend.Services
                     return (false, "No insured person provided.");
                 }
                 if (seller == null) return (false, "No seller found.");
+                if(note == null) note = "No note provided.";
 
                 // Creating the insurance object
                 var insurance = new Insurance
@@ -74,8 +75,8 @@ namespace SU.Backend.Services
                     InsuranceType = insuranceType,
                     InsuranceStatus = InsuranceStatus.Requested,
                     PaymentPlan = paymentPlan,
-                    StartDate = startDate ?? DateTime.Now,
-                    EndDate = endDate ?? DateTime.Now.AddYears(1),
+                    StartDate = (startDate ?? DateTime.Today).Date,
+                    EndDate = (endDate ?? DateTime.Today.AddYears(1)).Date,
                     Note = note,
                     InsuranceCategory = InsuranceCategory.Private,
 
