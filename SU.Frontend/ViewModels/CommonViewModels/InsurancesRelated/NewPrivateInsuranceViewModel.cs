@@ -117,7 +117,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
                 };
             }
 
-            _navigationService.NavigateTo("PrivateInsuranceTypeView", "CommonViews.NewInsurance");
+            _navigationService.NavigateTo("PrivateCoverageTypeOptionView", "CommonViews.NewInsurance");
         }
 
     }

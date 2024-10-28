@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SU.Backend.Services.Interfaces;
 using Microsoft.Extensions.Logging;
+using SU.Backend.Models.Enums.Insurance;
 
 namespace SU.Backend.Services
 {
@@ -51,10 +52,10 @@ namespace SU.Backend.Services
 
             try
             {
-                var insuranceAddonTypes = _unitOfWork.InsuranceAddonTypes.GetAllInsuranceAddonTypes();
-                _logger.LogInformation("Insurance addon types found: {InsuranceAddonTypeCount}", insuranceAddonTypes.Result.Count);
+                var insuranceAddonTypes = await _unitOfWork.InsuranceAddonTypes.GetAllInsuranceAddonTypes();
+                _logger.LogInformation("Insurance addon types found: {InsuranceAddonTypeCount}", insuranceAddonTypes.Count);
 
-                return (true, "Insurance addon types found", insuranceAddonTypes.Result);
+                return (true, "Insurance addon types found", insuranceAddonTypes);
             }
             catch (Exception ex)
             {
@@ -240,6 +241,30 @@ namespace SU.Backend.Services
                 }
             }
 
-        }
+            public async Task<(bool Success, string Message, List<PrivateCoverageOption> PrivateCoverageOptions)> GetSpecificPrivateOption(InsuranceType insuranceType)
+            {
+                _logger.LogInformation("Controller activated to get specific private coverage option...");
+
+                try
+                {
+                    var result = await _unitOfWork.PrivateCoverageOptions.GetSpecificCoverageInCurrentYear(insuranceType); 
+
+                    if(result == null)
+                    {
+                        _logger.LogWarning("No private coverage option found for the specified insurance type.");
+                        return (false, "No private coverage option found for the specified insurance type.", new List<PrivateCoverageOption>());
+                    }
+
+                    _logger.LogInformation("Private coverage option found for the specified insurance type.");
+                    return (true, "Private coverage option found for the specified insurance type.", result);
+                }
+                catch (Exception ex)
+                {
+
+                    _logger.LogError(ex, "Error occurred while fetching private coverage option.");
+                    return (false, "An error occurred while fetching the private coverage option.", new List<PrivateCoverageOption>());
+                }
+            }
+    }
     
 }

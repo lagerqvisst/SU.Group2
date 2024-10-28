@@ -15,6 +15,8 @@ namespace SU.Backend.Database.Interfaces
     {
         Task<List<PrivateCoverageOption>> GetAllPrivateCoverageOptions();
 
-        Task<PrivateCoverageOption> GetSpecificPrivateCoverageOption(decimal coverageAmount, DateTime startDate, InsuranceType insuranceType); 
+        Task<PrivateCoverageOption> GetSpecificPrivateCoverageOption(decimal coverageAmount, DateTime startDate, InsuranceType insuranceType);
+
+        Task<List<PrivateCoverageOption>> GetSpecificCoverageInCurrentYear(InsuranceType insurance);
     }
 }

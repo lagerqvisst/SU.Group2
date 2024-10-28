@@ -24,10 +24,18 @@ namespace SU.Backend.Database.Repositories
             return _context.PrivateCoverageOption.ToList();
         }
 
+        public async Task<List<PrivateCoverageOption>> GetSpecificCoverageInCurrentYear(InsuranceType insurance)
+        {
+            return await _context.PrivateCoverageOption
+                .Where(x => x.StartDate.Year == DateTime.Now.Year && x.InsuranceType == insurance)
+                .ToListAsync();
+        }
+
+
         //This method is used to get a specific private coverage option based on the coverage amount, start date and insurance type.
         public async Task<PrivateCoverageOption> GetSpecificPrivateCoverageOption(decimal coverageAmount, DateTime startDate, InsuranceType insuranceType)
         {
-            int year = startDate.Year; // Få året från startdatumet
+            int year = startDate.Year; 
 
             return await _context.PrivateCoverageOption
                 .FirstOrDefaultAsync(x => x.CoverageAmount == coverageAmount && x.StartDate.Year == year && x.InsuranceType == insuranceType);

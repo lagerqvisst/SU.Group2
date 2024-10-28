@@ -67,6 +67,7 @@ namespace SU.Backend.Services
                     return (false, "No insured person provided.");
                 }
                 if (seller == null) return (false, "No seller found.");
+                if(note == null) note = "No note provided.";
 
                 // Creating the insurance object
                 var insurance = new Insurance

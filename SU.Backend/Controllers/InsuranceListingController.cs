@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using SU.Backend.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 using SU.Backend.Services;
+using SU.Backend.Models.Enums.Insurance;
 
 namespace SU.Backend.Controllers
 {
@@ -63,7 +64,7 @@ namespace SU.Backend.Controllers
             }
         }
 
-        public async Task<(List<InsuranceAddonType> insuranceAddonTypes, string Message)> GetAllInsuranceAddonTypes()
+        public async Task<(bool Success, List<InsuranceAddonType> insuranceAddonTypes, string Message)> GetAllInsuranceAddonTypes()
         {
             _logger.LogInformation("Controller activated to list all insurance addon types...");
             var result = await _insuranceListingService.GetAllInsuranceAddonTypes();
@@ -71,12 +72,12 @@ namespace SU.Backend.Controllers
             if (result.Success)
             {
                 _logger.LogInformation($"Insurance addon types retrieved succesfully:\n{result.Message}");
-                return (result.InsuranceAddonTypes, result.Message);
+                return (true, result.InsuranceAddonTypes, result.Message);
             }
             else
             {
                 _logger.LogWarning($"Error retrieving insurance addon types: {result.Message}");
-                return (new List<InsuranceAddonType>(), result.Message);
+                return (true, new List<InsuranceAddonType>(), result.Message);
             }
         }
 
@@ -196,6 +197,23 @@ namespace SU.Backend.Controllers
             {
                 _logger.LogWarning($"Error retrieving property and inventory coverages: {result.Message}");
                 return (new List<PropertyAndInventoryCoverage>(), result.Message);
+            }
+        }
+
+        public async Task<(List<PrivateCoverageOption> PrivateCoverageOptions, string Message)> GetSpecificPrivateOption(InsuranceType insuranceType)
+        {
+            _logger.LogInformation("Controller activated to get specific private option...");
+            var result = await _insuranceListingService.GetSpecificPrivateOption(insuranceType);
+
+            if (result.Success)
+            {
+                _logger.LogInformation($"Private option found:\n{result.Message}");
+                return (result.PrivateCoverageOptions, result.Message);
+            }
+            else
+            {
+                _logger.LogWarning($"Error getting private option: {result.Message}");
+                return (new List<PrivateCoverageOption>(), result.Message);
             }
         }
     }

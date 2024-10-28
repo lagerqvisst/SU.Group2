@@ -92,6 +92,7 @@ namespace SU.Frontend
             //Register New Insurance Views
             services.AddTransient<RegisterNewInsuranceView>();
             services.AddTransient<NewPrivateInsuranceView>();
+            services.AddTransient<PrivateCoverageTypeOptionView>();
 
 
 

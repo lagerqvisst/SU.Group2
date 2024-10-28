@@ -1,4 +1,5 @@
-﻿using SU.Backend.Models.Insurances.Coverage;
+﻿using SU.Backend.Models.Enums.Insurance;
+using SU.Backend.Models.Insurances.Coverage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace SU.Backend.Database.Interfaces
     public interface IPrivateCoveragesRepository
     {
         Task<List<PrivateCoverage>> GetAllPrivateCoverages();
+
     }
 }

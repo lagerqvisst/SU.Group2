@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SU.Backend.Models.Enums.Insurance;
 
 namespace SU.Backend.Services.Interfaces
 {
@@ -36,6 +37,8 @@ namespace SU.Backend.Services.Interfaces
         Task<(bool Success, string Message, List<LiabilityCoverageOption> LiabilityCoverageOptions)> GetAllLiabilityCoverageOptions();
 
         Task<(bool Success, string Message, List<PropertyAndInventoryCoverage> PropertyAndInventoryCoverages)> GetAllPropertyAndInventoryCoverages();
+
+        Task<(bool Success, string Message, List<PrivateCoverageOption> PrivateCoverageOptions)> GetSpecificPrivateOption(InsuranceType insuranceType);
 
     }
 }
