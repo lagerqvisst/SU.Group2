@@ -17,9 +17,9 @@ namespace SU.Backend.Helper
     {
 
         #region VehicleInsurance
-        public static decimal GetVehicleInsurancePremium(Riskzone riskzone, VehicleInsuranceOption vehicleInsuranceOption)
+        public static decimal GetVehicleInsurancePremium(RiskZone riskZone, VehicleInsuranceOption vehicleInsuranceOption)
         {
-            if (riskzone == null || vehicleInsuranceOption == null)
+            if (riskZone == null || vehicleInsuranceOption == null)
             {
                 throw new ArgumentNullException("Riskzone or VehicleInsuranceOption cannot be null.");
             }
@@ -28,7 +28,7 @@ namespace SU.Backend.Helper
             decimal baseCost = vehicleInsuranceOption.OptionCost;
 
             // Get the zone factor from the riskzone object
-            double zoneFactor = riskzone.ZoneFactor;
+            double zoneFactor = riskZone.ZoneFactor;
 
             // Calculate the premium
             decimal premium = baseCost * (decimal)zoneFactor;

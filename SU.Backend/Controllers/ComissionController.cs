@@ -28,13 +28,13 @@ namespace SU.Backend.Controllers
         }
 
         // This method is responsible for getting all commissions for a given year.
-        public async Task<(string Message, List<Commission>)> GetCommissions(DateTime startDate, DateTime endDate)
+        public async Task<(string message, List<Commission>)> GetCommissions(DateTime startDate, DateTime endDate)
         {
             _logger.LogInformation("Getting commissions for year {year}");
 
             var result = await _commissionService.GetAllCommissions(startDate, endDate);
 
-            if (result.Success)
+            if (result.success)
             {
                 _logger.LogInformation("Commissions retrieved successfully");
             }
@@ -42,16 +42,16 @@ namespace SU.Backend.Controllers
             {
                 _logger.LogWarning("Error retrieving commissions: {result.Message}");
             }
-            return (result.Message, result.Commissions);
+            return (result.message, result.commissions);
         }
 
-        public async Task<(bool Success, string Message)> ExportCommissionsToExcel(List<Commission> commissions)
+        public async Task<(bool success, string message)> ExportCommissionsToExcel(List<Commission> commissions)
         {
             _logger.LogInformation("Exporting commissions to Excel...");
 
             var result = await _dataExportService.ExportCommissionsToExcel(commissions);
 
-            if(result.Success) {
+            if(result.success) {
                 _logger.LogInformation("Commissions exported successfully");
             }
             else
@@ -59,7 +59,7 @@ namespace SU.Backend.Controllers
                 _logger.LogWarning("Error exporting commissions: {result.Message}");
             }
 
-            return (result.Success, result.Message);
+            return (result.success, result.message);
         }
     }
 

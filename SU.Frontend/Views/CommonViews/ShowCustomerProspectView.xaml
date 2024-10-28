@@ -4,9 +4,97 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SU.Frontend.Views.CommonViews"
+        xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
         mc:Ignorable="d"
-        Title="ShowCustomerProspectView" Height="450" Width="800">
-    <Grid>
-        
+        Title="ShowCustomerProspectView" Height="450" Width="1000">
+
+    <Grid Background="White">
+        <!-- Title -->
+        <TextBlock Text="Prospects" 
+                   FontWeight="Bold" FontSize="20" 
+                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,25,0,0"/>
+
+        <!-- Left Panel - Client List with Border -->
+        <Border BorderBrush="Green" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,70,0,0">
+            <StackPanel Width="200" Margin="10">
+                <TextBlock Text="Select a client or enter clients ID" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                <ComboBox Height="30" Margin="0,0,0,10">
+                    <!-- Placeholder for binding ItemsSource and SelectedItem -->
+                </ComboBox>
+                <TextBox Text="SearchTextBox" Width="200" Height="30" HorizontalAlignment="Left"
+                  
+                 TextChanged=""/>
+
+                <Button Content="Select" Width="80" Height="30" HorizontalAlignment="Left"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Right Panel - Client Details with Border -->
+        <Border BorderBrush="Green" BorderThickness="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,70,390,0">
+            <StackPanel Width="300" Margin="10">
+                <TextBlock Text="Client information" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
+
+                <TextBlock Text="Chosen client: Placeholder for binding" FontWeight="Bold" FontSize="14" Margin="0,0,0,10"/>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="First Name:" FontWeight="Bold" Width="120"/>
+                    <TextBlock Text="Placeholder for binding"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Last Name:" FontWeight="Bold" Width="120"/>
+                    <TextBlock Text="Placeholder for binding"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Client ID:" FontWeight="Bold" Width="120"/>
+                    <TextBlock Text="Placeholder for binding"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Address:" FontWeight="Bold" Width="120"/>
+                    <TextBlock Text="Placeholder for binding"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Postcode:" FontWeight="Bold" Width="120"/>
+                    <TextBlock Text="Placeholder for binding"/>
+                </StackPanel>
+
+                <!-- New fields for updating status, adding a comment, and changing contact date -->
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Prospect Status:" FontWeight="Bold" Width="120"/>
+                    <ComboBox Width="160" Height="30">
+                        <ComboBoxItem Content="New"/>
+                        <ComboBoxItem Content="In Progress"/>
+                        <ComboBoxItem Content="Closed"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Comment:" FontWeight="Bold" Width="120"/>
+                    <TextBox Width="160" Height="60" TextWrapping="Wrap"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Date of Contact:" FontWeight="Bold" Width="120"/>
+                    <DatePicker Width="160"/>
+                </StackPanel>
+
+                <Button Content="Save" Width="100" Height="30" HorizontalAlignment="Center" Margin="10"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Taskbar Control -->
+        <controls:Taskbar HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10"/>
+
+        <!-- Main View, Logout Button and SignedInUserUserControl -->
+        <controls:MainViewButtonControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,160,10,0"/>
+        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"/>
+        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,10,10"/>
+
     </Grid>
 </Window>
+
+

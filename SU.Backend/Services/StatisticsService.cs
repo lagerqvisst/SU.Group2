@@ -28,7 +28,7 @@ namespace SU.Backend.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<(bool Success, string Message, List<SellerStatistics> Statistics)> GetSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null)
+        public async Task<(bool success, string message, List<SellerStatistics> statistics)> GetSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null)
         {
             _logger.LogInformation($"Getting seller statistics for year {year} and insurance types: {string.Join(", ", insuranceTypes)}");
 
@@ -52,8 +52,8 @@ namespace SU.Backend.Services
                     insurance => insurance.SellerId,
                     (seller, insurances) => new
                     {
-                        Seller = seller,
-                        MonthlySales = Enumerable.Range(1, 12).Select(month => new MonthlySalesData
+                        seller1 = seller,
+                        monthlySales = Enumerable.Range(1, 12).Select(month => new MonthlySalesData
                         {
                             Month = month,
                             InsuranceSalesCounts = insurances
@@ -64,11 +64,11 @@ namespace SU.Backend.Services
                     })
                     .Select(data => new SellerStatistics
                     {
-                        SellerName = data.Seller.FirstName + " " + data.Seller.LastName,
-                        AgentNumber = data.Seller.AgentNumber,
-                        MonthlySales = data.MonthlySales,
-                        TotalYearlySales = data.MonthlySales.Sum(m => m.TotalSales),
-                        AverageMonthlySales = data.MonthlySales.Average(m => m.TotalSales)
+                        SellerName = data.seller1.FirstName + " " + data.seller1.LastName,
+                        AgentNumber = data.seller1.AgentNumber,
+                        MonthlySales = data.monthlySales,
+                        TotalYearlySales = data.monthlySales.Sum(m => m.TotalSales),
+                        AverageMonthlySales = data.monthlySales.Average(m => m.TotalSales)
                     })
                     .ToList();
 
@@ -82,7 +82,7 @@ namespace SU.Backend.Services
 
         }
 
-        public async Task<(bool Success, string Message, List<InsuranceStatistics> Statistics)> GetMonthlyInsuranceStatistics()
+        public async Task<(bool success, string message, List<InsuranceStatistics> statistics)> GetMonthlyInsuranceStatistics()
         {
             _logger.LogInformation("Fetching monthly insurance statistics");
 

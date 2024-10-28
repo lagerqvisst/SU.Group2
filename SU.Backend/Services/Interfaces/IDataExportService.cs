@@ -13,7 +13,7 @@ namespace SU.Backend.Services.Interfaces
     /// </summary>
     public interface IDataExportService
     {
-        Task<(bool Success, string Message)> ExportCommissionsToExcel(List<Commission> commissions);
-        Task<(bool Success, string Message)> ExportInvoicesToExcel(List<InvoiceEntry> invoices);
+        Task<(bool success, string message)> ExportCommissionsToExcel(List<Commission> commissions);
+        Task<(bool success, string message)> ExportInvoicesToExcel(List<InvoiceEntry> invoices);
     }
 }

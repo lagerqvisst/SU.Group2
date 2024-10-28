@@ -32,7 +32,7 @@ namespace SU.Backend.Models.Employees
 
         // Agent number is only relevant for sales employees
         public string? AgentNumber { get; set; }
-        public string Username { get; set; }
+        public string UserName { get; set; }
         public string Password { get; set; }
 
         // Navigation property for sold insurances

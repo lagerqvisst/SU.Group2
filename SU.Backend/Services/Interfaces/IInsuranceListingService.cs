@@ -16,27 +16,27 @@ namespace SU.Backend.Services.Interfaces
     public interface IInsuranceListingService
 
     {
-        Task<(bool Success, string Message, List<Insurance> Insurances)> GetAllInsurances();
+        Task<(bool success, string message, List<Insurance> insurances)> GetAllInsurances();
 
-        Task<(bool Success, string Message, List<InsuranceAddon> InsuranceAddons)> GetAllInsuranceAddons();
+        Task<(bool success, string message, List<InsuranceAddon> insuranceAddons)> GetAllInsuranceAddons();
 
-        Task<(bool Success, string Message, List<InsuranceAddonType> InsuranceAddonTypes)> GetAllInsuranceAddonTypes();
+        Task<(bool success, string message, List<InsuranceAddonType> insuranceAddonTypes)> GetAllInsuranceAddonTypes();
 
-        Task<(bool Success, string Message, List<InsurancePolicyHolder> InsurancePolicyHolders)> GetAllInsurancePolicyHolders();
+        Task<(bool success, string message, List<InsurancePolicyHolder> insurancePolicyHolders)> GetAllInsurancePolicyHolders();
 
-        Task<(bool Success, string Message, List<InsuranceCoverage> InsuranceCoverages)> GetAllInsuranceCoverages();
+        Task<(bool success, string message, List<InsuranceCoverage> insuranceCoverages)> GetAllInsuranceCoverages();
 
-        Task<(bool Success, string Message, List<VehicleInsuranceCoverage> VehicleInsuranceCoverages)> GetAllVehicleInsuranceCoverages();
+        Task<(bool success, string message, List<VehicleInsuranceCoverage> vehicleInsuranceCoverages)> GetAllVehicleInsuranceCoverages();
 
-        Task<(bool Success, string Message, List<VehicleInsuranceOption> VehicleInsuranceCoverages)> GetAllVehicleInsuranceOptions();
+        Task<(bool success, string message, List<VehicleInsuranceOption> vehicleInsuranceOptions)> GetAllVehicleInsuranceOptions();
 
-        Task<(bool Success, string Message, List<Riskzone> Riskzones)> GetAllRiskzones();
+        Task<(bool success, string message, List<RiskZone> riskZones)> GetAllRiskZones();
 
-        Task<(bool Success, string Message, List<LiabilityCoverage> LiabilityCoverages)> GetAllLiabilityCoverages();
+        Task<(bool success, string message, List<LiabilityCoverage> liabilityCoverages)> GetAllLiabilityCoverages();
 
-        Task<(bool Success, string Message, List<LiabilityCoverageOption> LiabilityCoverageOptions)> GetAllLiabilityCoverageOptions();
+        Task<(bool success, string message, List<LiabilityCoverageOption> liabilityCoverageOptions)> GetAllLiabilityCoverageOptions();
 
-        Task<(bool Success, string Message, List<PropertyAndInventoryCoverage> PropertyAndInventoryCoverages)> GetAllPropertyAndInventoryCoverages();
+        Task<(bool success, string message, List<PropertyAndInventoryCoverage> propertyAndInventoryCoverages)> GetAllPropertyAndInventoryCoverages();
 
         Task<(bool Success, string Message, List<PrivateCoverageOption> PrivateCoverageOptions)> GetSpecificPrivateOption(InsuranceType insuranceType);
 

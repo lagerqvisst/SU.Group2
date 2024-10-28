@@ -21,7 +21,7 @@ namespace SU.Backend.Services
         }
 
         // Method to export a list of commissions to an Excel file.
-        public async Task<(bool Success, string Message)> ExportCommissionsToExcel(List<Commission> commissions)
+        public async Task<(bool success, string message)> ExportCommissionsToExcel(List<Commission> commissions)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace SU.Backend.Services
         }
 
         // Method to export a list of invoices to an Excel file.
-        public async Task<(bool Success, string Message)> ExportInvoicesToExcel(List<InvoiceEntry> invoices)
+        public async Task<(bool success, string message)> ExportInvoicesToExcel(List<InvoiceEntry> invoices)
         {
             try
             {

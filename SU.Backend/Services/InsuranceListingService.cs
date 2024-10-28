@@ -27,7 +27,7 @@ namespace SU.Backend.Services
             }
             
             //This method fetches all insurance policy holders from the database. The list of data will be used in the view for listing all insurance policy holders.
-            public async Task<(bool Success, string Message, List<InsurancePolicyHolder> InsurancePolicyHolders)> GetAllInsurancePolicyHolders()
+            public async Task<(bool success, string message, List<InsurancePolicyHolder> insurancePolicyHolders)> GetAllInsurancePolicyHolders()
             {
                 _logger.LogInformation("Controller activated to list all insurance policy holders...");
 
@@ -46,7 +46,7 @@ namespace SU.Backend.Services
             }
 
         // This method fetches all insurance addon types from the database. The list of data will be used in the view for listing all insurance addon types.
-        public async Task<(bool Success, string Message, List<InsuranceAddonType> InsuranceAddonTypes)> GetAllInsuranceAddonTypes()
+        public async Task<(bool success, string message, List<InsuranceAddonType> insuranceAddonTypes)> GetAllInsuranceAddonTypes()
         {
             _logger.LogInformation("Controller activated to get all insurance addon types...");
 
@@ -64,7 +64,7 @@ namespace SU.Backend.Services
             }
         }
             // This method fetches all insurance addons from the database. The list of data will be used in the view for listing all insurance addons.
-            public async Task<(bool Success, string Message, List<InsuranceAddon> InsuranceAddons)> GetAllInsuranceAddons()
+            public async Task<(bool success, string message, List<InsuranceAddon> insuranceAddons)> GetAllInsuranceAddons()
             {
                 _logger.LogInformation("Controller activated to get all insurance addons...");
 
@@ -83,7 +83,7 @@ namespace SU.Backend.Services
             }
             
             // This method fetches all insurances from the database. The list of data will be used in the view for listing all insurances.
-            public async Task<(bool Success, string Message, List<Insurance> Insurances)> GetAllInsurances()
+            public async Task<(bool success, string message, List<Insurance> insurances)> GetAllInsurances()
             {
                 _logger.LogInformation("Controller activated to get all insurances...");
 
@@ -102,7 +102,7 @@ namespace SU.Backend.Services
             }
             
             // This method fetches all insurance coverages from the database. The list of data will be used in the view for listing all insurance coverages.
-            public async Task<(bool Success, string Message, List<InsuranceCoverage> InsuranceCoverages)> GetAllInsuranceCoverages()
+            public async Task<(bool success, string message, List<InsuranceCoverage> insuranceCoverages)> GetAllInsuranceCoverages()
             {
                 _logger.LogInformation("Controller activated to get all insurance coverages...");
 
@@ -121,7 +121,7 @@ namespace SU.Backend.Services
             }
 
             // This method fetches all vehicle insurance coverages from the database. The list of data will be used in the view for listing all vehicle insurance coverages.
-            public async Task<(bool Success, string Message, List<VehicleInsuranceCoverage> VehicleInsuranceCoverages)> GetAllVehicleInsuranceCoverages()
+            public async Task<(bool success, string message, List<VehicleInsuranceCoverage> vehicleInsuranceCoverages)> GetAllVehicleInsuranceCoverages()
             {
                 _logger.LogInformation("Controller activated to list all vehicle insurance coverages...");
 
@@ -141,7 +141,7 @@ namespace SU.Backend.Services
             }
             
             // This method fetches all vehicle insurance options from the database. The list of data will be used in the view for listing all vehicle insurance options.
-            public async Task<(bool Success, string Message, List<VehicleInsuranceOption> VehicleInsuranceCoverages)> GetAllVehicleInsuranceOptions()
+            public async Task<(bool success, string message, List<VehicleInsuranceOption> vehicleInsuranceOptions)> GetAllVehicleInsuranceOptions()
             {
                 _logger.LogInformation("Controller activated to list all vehicle insurance coverage options...");
 
@@ -161,27 +161,27 @@ namespace SU.Backend.Services
             }
 
             // This method fetches all riskzones from the database. The list of data will be used in the view for listing and choosing a riskzone.
-            public async Task<(bool Success, string Message, List<Riskzone> Riskzones)> GetAllRiskzones()
+            public async Task<(bool success, string message, List<RiskZone> riskZones)> GetAllRiskZones()
             {
                 _logger.LogInformation("Controller activated to list all riskzones...");
 
                 try
                 {
-                    var riskzones = _unitOfWork.Riskzones.GetAllRiskZones();
+                    var riskZones = _unitOfWork.Riskzones.GetAllRiskZones();
                     _logger.LogInformation("Riskzones retrieved succesfully: {RiskzonesCount}",
-                                                              riskzones.Result.Count);
+                                                              riskZones.Result.Count);
 
-                    return (true, "Riskzones retrieved successfully.", riskzones.Result);
+                    return (true, "Riskzones retrieved successfully.", riskZones.Result);
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Error occurred while fetching riskzones.");
-                    return (false, "An error occurred while fetching the riskzones.", new List<Riskzone>());
+                    return (false, "An error occurred while fetching the riskzones.", new List<RiskZone>());
                 }
             }
 
             // This method fetches all liability coverage options from the database. The list of data will be used in the view for listing all liability coverage options.
-            public async Task<(bool Success, string Message, List<LiabilityCoverageOption> LiabilityCoverageOptions)> GetAllLiabilityCoverageOptions()
+            public async Task<(bool success, string message, List<LiabilityCoverageOption> liabilityCoverageOptions)> GetAllLiabilityCoverageOptions()
             {
                 _logger.LogInformation("Controller activated to list all liability coverage options...");
 
@@ -201,7 +201,7 @@ namespace SU.Backend.Services
             }
             
             // This method fetches all liability coverages from the database. The list of data will be used in the view for listing all liability coverages.
-            public async Task<(bool Success, string Message, List<LiabilityCoverage> LiabilityCoverages)> GetAllLiabilityCoverages()
+            public async Task<(bool success, string message, List<LiabilityCoverage> liabilityCoverages)> GetAllLiabilityCoverages()
             {
                 _logger.LogInformation("Controller activated to list all liability coverages...");
 
@@ -222,7 +222,7 @@ namespace SU.Backend.Services
             }
             
             // This method fetches all property and inventory coverages from the database. The list of data will be used in the view for listing all property and inventory coverages.
-            public async Task<(bool Success, string Message, List<PropertyAndInventoryCoverage> PropertyAndInventoryCoverages)> GetAllPropertyAndInventoryCoverages()
+            public async Task<(bool success, string message, List<PropertyAndInventoryCoverage> propertyAndInventoryCoverages)> GetAllPropertyAndInventoryCoverages()
             {
                 _logger.LogInformation("Controller activated to list all property and inventory coverages...");
 

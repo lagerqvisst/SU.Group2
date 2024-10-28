@@ -20,16 +20,16 @@ namespace SU.Backend.Controllers
     /// </summary>
     public class InsuranceCreateController
     {
-        private readonly IInsuranceCreateService _InsuranceCreateService; 
+        private readonly IInsuranceCreateService _insuranceCreateService; 
         private readonly ILogger<InsuranceCreateController> _logger;
 
-        public InsuranceCreateController(IInsuranceCreateService InsuranceCreateService, ILogger<InsuranceCreateController> logger)
+        public InsuranceCreateController(IInsuranceCreateService insuranceCreateService, ILogger<InsuranceCreateController> logger)
         {
-            _InsuranceCreateService = InsuranceCreateService;
+            _insuranceCreateService = insuranceCreateService;
             _logger = logger;
         }
 
-        public async Task<(bool Success, string Message)> CreatePrivateInsurance(PrivateCustomer privateCustomer,
+        public async Task<(bool success, string message)> CreatePrivateInsurance(PrivateCustomer privateCustomer,
             InsuranceType insuranceType,
             PrivateCoverageOption privateCoverageOption,
             Employee seller,
@@ -42,105 +42,105 @@ namespace SU.Backend.Controllers
             InsuredPerson? insuredPerson = null)
         {
             _logger.LogInformation("Controller activated to create new private insurance...");
-            var result = await _InsuranceCreateService.CreatePrivateInsurance(privateCustomer, insuranceType, privateCoverageOption, seller, isPolicyHolderInsured, note, paymentPlan, startDate, endDate, addons, insuredPerson);
+            var result = await _insuranceCreateService.CreatePrivateInsurance(privateCustomer, insuranceType, privateCoverageOption, seller, isPolicyHolderInsured, note, paymentPlan, startDate, endDate, addons, insuredPerson);
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Private insurance created successfully:\n{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogInformation($"Private insurance created successfully:\n{result.message}");
+                return (result.success, result.message);
             }
             else
             {
-                _logger.LogWarning($"Error creating private insurance: {result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogWarning($"Error creating private insurance: {result.message}");
+                return (result.success, result.message);
             }
         }
 
-        public async Task<(bool Success, string Message)> CreatePropertyInventoryInsurance(CompanyCustomer companyCustomer,
+        public async Task<(bool success, string message)> CreatePropertyInventoryInsurance(CompanyCustomer companyCustomer,
             PropertyAndInventoryCoverage propertyAndInventoryCoverage, Employee seller, string note, PaymentPlan paymentPlan)
         {
             _logger.LogInformation("Controller activated to create new property and inventory insurance...");
-            var result = await _InsuranceCreateService.CreatePropertyInventoryInsurance(companyCustomer, propertyAndInventoryCoverage, seller, note, paymentPlan);
+            var result = await _insuranceCreateService.CreatePropertyInventoryInsurance(companyCustomer, propertyAndInventoryCoverage, seller, note, paymentPlan);
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Property and inventory insurance created successfully:\n{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogInformation($"Property and inventory insurance created successfully:\n{result.message}");
+                return (result.success, result.message);
             }
             else
             {
-                _logger.LogWarning($"Error creating property and inventory insurance: {result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogWarning($"Error creating property and inventory insurance: {result.message}");
+                return (result.success, result.message);
             }
         }
 
-        public async Task<(bool Success, string Message)> CreateLiabilityInsurance(CompanyCustomer companyCustomer,
+        public async Task<(bool success, string message)> CreateLiabilityInsurance(CompanyCustomer companyCustomer,
             LiabilityCoverage liabilityCoverage, Employee seller, string note, PaymentPlan paymentPlan)
         {
             _logger.LogInformation("Controller activated to create new liability insurance...");
-            var result = await _InsuranceCreateService.CreateLiabilityInsurance(companyCustomer, liabilityCoverage, seller, note, paymentPlan);
+            var result = await _insuranceCreateService.CreateLiabilityInsurance(companyCustomer, liabilityCoverage, seller, note, paymentPlan);
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Liability insurance created successfully:\n{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogInformation($"Liability insurance created successfully:\n{result.message}");
+                return (result.success, result.message);
             }
             else
             {
-                _logger.LogWarning($"Error creating liability insurance: {result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogWarning($"Error creating liability insurance: {result.message}");
+                return (result.success, result.message);
             }
         }
 
-        public async Task<(bool Success, string Message)> CreateVehicleInsurance(CompanyCustomer companyCustomer,
+        public async Task<(bool success, string message)> CreateVehicleInsurance(CompanyCustomer companyCustomer,
             VehicleInsuranceCoverage vehicleCoverage, Employee seller, string note, PaymentPlan paymentPlan)
         {
             _logger.LogInformation("Controller activated to create new vehicle insurance...");
-            var result = await _InsuranceCreateService.CreateVehicleInsurance(companyCustomer, vehicleCoverage, seller, note, paymentPlan);
+            var result = await _insuranceCreateService.CreateVehicleInsurance(companyCustomer, vehicleCoverage, seller, note, paymentPlan);
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Vehicle insurance created successfully:\n{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogInformation($"Vehicle insurance created successfully:\n{result.message}");
+                return (result.success, result.message);
             }
             else
             {
-                _logger.LogWarning($"Error creating vehicle insurance: {result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogWarning($"Error creating vehicle insurance: {result.message}");
+                return (result.success, result.message);
             }
         }
 
-       public async Task<(bool Success, string Message)> DeleteInsurance(Insurance insurance)
+       public async Task<(bool success, string message)> DeleteInsurance(Insurance insurance)
         {
             _logger.LogInformation("Controller activated to delete insurance...");
-            var result = await _InsuranceCreateService.DeleteInsurance(insurance);
+            var result = await _insuranceCreateService.DeleteInsurance(insurance);
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Insurance deleted successfully:\n{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogInformation($"Insurance deleted successfully:\n{result.message}");
+                return (result.success, result.message);
             }
             else
             {
-                _logger.LogWarning($"Error deleting insurance: {result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogWarning($"Error deleting insurance: {result.message}");
+                return (result.success, result.message);
             }
         }
 
-        public async Task<(bool Success, string Message)> UpdateInsurance(Insurance insurance)
+        public async Task<(bool success, string message)> UpdateInsurance(Insurance insurance)
         {
             _logger.LogInformation("Controller activated to update insurance...");
-            var result = await _InsuranceCreateService.UpdateInsurance(insurance);
+            var result = await _insuranceCreateService.UpdateInsurance(insurance);
 
-            if (result.Success)
+            if (result.success)
             {
-                _logger.LogInformation($"Insurance updated successfully:\n{result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogInformation($"Insurance updated successfully:\n{result.message}");
+                return (result.success, result.message);
             }
             else
             {
-                _logger.LogWarning($"Error updating insurance: {result.Message}");
-                return (result.Success, result.Message);
+                _logger.LogWarning($"Error updating insurance: {result.message}");
+                return (result.success, result.message);
             }
         }
     }

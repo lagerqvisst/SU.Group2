@@ -30,7 +30,7 @@ namespace SU.Backend.Services
         /// Uses helper functions to determine which insurances to invoice and to create the invoice data.
         /// </summary>
         /// <returns></returns>
-        public async Task<(bool Success, string Message, List<InvoiceEntry> InvoiceData)> GenerateInvoiceData()
+        public async Task<(bool success, string message, List<InvoiceEntry> invoiceData)> GenerateInvoiceData()
         {
             _logger.LogInformation("Starting the invoice data generation process...");
 

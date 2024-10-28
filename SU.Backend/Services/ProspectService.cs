@@ -33,7 +33,7 @@ namespace SU.Backend.Services
         /// A prospect is considered a customer with 1 insurance only.
         /// </summary>
         /// <returns></returns>
-        public async Task<(bool Success, string Message, List<Prospect> prospects)> IdentifyProspects()
+        public async Task<(bool success, string message, List<Prospect> prospects)> IdentifyProspects()
         {
             _logger.LogInformation("Identifying prospects");
             try
@@ -125,7 +125,7 @@ namespace SU.Backend.Services
         /// This method assigns a seller to a specific prospect.
         /// Since prospects are by default not assigned to any seller, this method can be used to assign a seller to a specific prospect.
         /// </summary>
-        public async Task<(bool Success, string Message)> AssignSellerToSpecificProspect(Employee employee, Prospect prospect)
+        public async Task<(bool success, string message)> AssignSellerToSpecificProspect(Employee employee, Prospect prospect)
         {
             _logger.LogInformation("Checking if employee has the correct role assignments");
 
@@ -173,7 +173,7 @@ namespace SU.Backend.Services
         /// <summary>
         /// This method returns all current prospects in the database.
         /// </summary>
-        public async Task<(bool Success, string Message, List<Prospect> prospects)> GetAllCurrentProspects()
+        public async Task<(bool success, string message, List<Prospect> prospects)> GetAllCurrentProspects()
         {
             _logger.LogInformation("Getting all current prospects");
 

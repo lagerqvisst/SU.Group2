@@ -15,20 +15,20 @@ namespace SU.Backend.Services.Interfaces
     /// </summary>
     public interface IEmployeeService
     {
-        Task<(bool Success, string Message, Employee Employee)> GenerateRandomEmployee(EmployeeType Role);
+        Task<(bool success, string message, Employee employee)> GenerateRandomEmployee(EmployeeType role);
         Task<Employee?> GetManagerForRole(EmployeeType role);
 
-        Task<(bool Success, string Message, Employee Employee)> GetEmployeeByRole(EmployeeType role);
-        Task<(bool Success, string Message, List<Employee> Employees)> GetAllEmployees();
+        Task<(bool success, string message, Employee employee)> GetEmployeeByRole(EmployeeType role);
+        Task<(bool success, string message, List<Employee> employees)> GetAllEmployees();
 
-        Task<(bool Success, string Message, Employee? Employee)> GetEmployeeById(int id);
+        Task<(bool success, string message, Employee? employee)> GetEmployeeById(int id);
 
-        Task<(bool Success, string Message)> CreateNewEmployee(Employee employee);
+        Task<(bool success, string message)> CreateNewEmployee(Employee employee);
 
-        Task<(bool Success, string Message)> UpdateEmployee(Employee employee);
+        Task<(bool success, string message)> UpdateEmployee(Employee employee);
 
-        Task<(bool Success, string Message)> DeleteEmployee(Employee employee);
+        Task<(bool success, string message)> DeleteEmployee(Employee employee);
 
-        Task<(bool Success, string Message, List<EmployeeRoleAssignment> EmployeeRoleAssignments)> GetAllEmployeeRoleAssignments();
+        Task<(bool success, string message, List<EmployeeRoleAssignment> employeeRoleAssignments)> GetAllEmployeeRoleAssignments();
     }
 }

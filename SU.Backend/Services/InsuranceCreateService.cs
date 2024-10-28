@@ -40,7 +40,7 @@ namespace SU.Backend.Services
         /// This is due to the insurance object having a lot of related entities in the database
         /// </summary>
 
-        public async Task<(bool Success, string Message)> CreatePrivateInsurance(
+        public async Task<(bool success, string message)> CreatePrivateInsurance(
             PrivateCustomer privateCustomer,
             InsuranceType insuranceType,
             PrivateCoverageOption privateCoverageOption,
@@ -124,7 +124,7 @@ namespace SU.Backend.Services
         }
 
         // This method is similar to private insurance creation, but for a specific company insurances.
-        public async Task<(bool Success, string Message)> CreatePropertyInventoryInsurance(
+        public async Task<(bool success, string message)> CreatePropertyInventoryInsurance(
             CompanyCustomer companyCustomer,
             PropertyAndInventoryCoverage propertyAndInventoryCoverage,
             Employee seller,
@@ -190,7 +190,7 @@ namespace SU.Backend.Services
         }
 
         // This method is similar to private insurance creation, but for a specific company insurances.
-        public async Task<(bool Success, string Message)> CreateLiabilityInsurance(
+        public async Task<(bool success, string message)> CreateLiabilityInsurance(
            CompanyCustomer companyCustomer,
            LiabilityCoverage liabilityCoverage,
            Employee seller,
@@ -265,7 +265,7 @@ namespace SU.Backend.Services
             }
         }
 
-        public async Task<(bool Success, string Message)> CreateVehicleInsurance(
+        public async Task<(bool success, string message)> CreateVehicleInsurance(
             CompanyCustomer companyCustomer,
             VehicleInsuranceCoverage vehicleCoverage,
             Employee seller,
@@ -340,7 +340,7 @@ namespace SU.Backend.Services
         }
 
         // Deletes an insurance from the database
-        public async Task<(bool Success, string Message)> DeleteInsurance(Insurance insurance)
+        public async Task<(bool success, string message)> DeleteInsurance(Insurance insurance)
         {
             _logger.LogInformation("Deleting insurance...");
 
@@ -362,7 +362,7 @@ namespace SU.Backend.Services
             }
         }
 
-        public async Task<(bool Success, string Message)> UpdateInsurance(Insurance insurance)
+        public async Task<(bool success, string message)> UpdateInsurance(Insurance insurance)
         {
             _logger.LogInformation("Updating insurance...");
 

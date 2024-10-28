@@ -12,6 +12,6 @@ namespace SU.Backend.Services.Interfaces
     /// </summary>
     public interface ILoginService
     {
-        Task<(bool Success, string Message, Employee Employee)> Authentication(string Username, string Password);
+        Task<(bool success, string message, Employee employee)> Authentication(string userName, string password);
     }
 }
