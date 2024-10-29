@@ -70,13 +70,13 @@ namespace SU.Backend.Controllers
 
               if (result.success)
               {
-                  _logger.LogInformation($"Insurance addon types retrieved successfully:\n{result.Message}");
-                  return (true, result.InsuranceAddonTypes, result.Message);
+                  _logger.LogInformation($"Insurance addon types retrieved successfully:\n{result.message}");
+                  return (true, result.insuranceAddonTypes, result.message);
               }
               else
               {
-                  _logger.LogWarning($"Error retrieving insurance addon types: {result.Message}");
-                  return (false, new List<InsuranceAddonType>(), result.Message);
+                  _logger.LogWarning($"Error retrieving insurance addon types: {result.message}");
+                  return (false, new List<InsuranceAddonType>(), result.message);
               }
           }
 
