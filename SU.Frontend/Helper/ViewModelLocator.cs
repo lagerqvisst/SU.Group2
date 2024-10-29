@@ -64,6 +64,9 @@ namespace SU.Frontend.Helper
 
             public ShowCustomerViewModel ShowCustomerViewModel =>
                 App.AppHost?.Services.GetService<ShowCustomerViewModel>();
+
+            public ShowInsuranceViewModel ShowInsuranceViewModel =>
+                App.AppHost?.Services.GetService<ShowInsuranceViewModel>();
         }
     }
 

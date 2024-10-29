@@ -55,6 +55,7 @@ namespace SU.Frontend
             services.AddTransient<NewPrivateInsuranceViewModel>();
             services.AddTransient<PrivateInsuranceTypeViewModel>();
             services.AddTransient<ShowCustomerViewModel>();
+            services.AddTransient<ShowInsuranceViewModel>();
 
 
 
