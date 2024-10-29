@@ -41,10 +41,18 @@
         </Border>
 
         <!-- Details Panel for Private Customer with Border -->
-        <Border BorderBrush="green" BorderThickness="2" Margin="268,141,242,85">
+        <Border BorderBrush="Green" BorderThickness="2" Margin="268,141,202,85">
             <StackPanel Visibility="{Binding IsPrivateCustomerVisible, Converter={StaticResource BooleanToVisibilityConverter}}" 
                         Orientation="Vertical" Margin="10">
                 <TextBlock Text="Private Customer Details:" FontWeight="Bold" FontSize="16"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Private Customer ID: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedPrivateCustomer.PrivateCustomerId}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Personal Number: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedPrivateCustomer.PersonalNumber}"/>
+                </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="First Name: " FontWeight="Bold"/>
                     <TextBlock Text="{Binding SelectedPrivateCustomer.FirstName}"/>
@@ -54,12 +62,8 @@
                     <TextBlock Text="{Binding SelectedPrivateCustomer.LastName}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Personal Number: " FontWeight="Bold"/>
-                    <TextBlock Text="{Binding SelectedPrivateCustomer.PersonalNumber}"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Customer ID: " FontWeight="Bold"/>
-                    <TextBlock Text="{Binding SelectedPrivateCustomer.PrivateCustomerId}"/>
+                    <TextBlock Text="Email: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedPrivateCustomer.Email}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Phone number: " FontWeight="Bold"/>
@@ -69,30 +73,26 @@
                     <TextBlock Text="Address: " FontWeight="Bold"/>
                     <TextBlock Text="{Binding SelectedPrivateCustomer.Address}"/>
                 </StackPanel>
-                
+
             </StackPanel>
         </Border>
 
         <!-- Details Panel for Company Customer with Border -->
-        <Border BorderBrush="green" BorderThickness="2" Margin="268,141,242,85">
+        <Border BorderBrush="Green" BorderThickness="2" Margin="268,141,202,85">
             <StackPanel Visibility="{Binding IsCompanyCustomerVisible, Converter={StaticResource BooleanToVisibilityConverter}}" 
-                        Orientation="Vertical" Margin="10,10,10,-24">
+                        Orientation="Vertical" Margin="8,10,-2,-24">
                 <TextBlock Text="Company Customer Details:" FontWeight="Bold" FontSize="16"/>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Company Name: " FontWeight="Bold"/>
-                    <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyName}"/>
+                    <TextBlock Text="Company Customer ID: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyCustomerId}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Organization Number: " FontWeight="Bold"/>
+                    <TextBlock Text="Organization number: " FontWeight="Bold"/>
                     <TextBlock Text="{Binding SelectedCompanyCustomer.OrganizationNumber}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Address: " FontWeight="Bold"/>
-                    <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyAdress}"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Company ID: " FontWeight="Bold"/>
-                    <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyCustomerId}"/>
+                    <TextBlock Text="Company name: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyName}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Contact person: " FontWeight="Bold"/>
@@ -103,15 +103,19 @@
                     <TextBlock Text="{Binding SelectedCompanyCustomer.ContactPersonPhonenumber}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Company address: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyAdress}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Company phone number: " FontWeight="Bold"/>
                     <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyPhoneNumber}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Landline number: " FontWeight="Bold"/>
+                    <TextBlock Text="Company landline number: " FontWeight="Bold"/>
                     <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyLandlineNumber}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Email: " FontWeight="Bold"/>
+                    <TextBlock Text="Company Email: " FontWeight="Bold"/>
                     <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyEmailAdress}"/>
                 </StackPanel>
             </StackPanel>
