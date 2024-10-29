@@ -94,11 +94,11 @@ namespace SU.Frontend.ViewModels
                 await Task.Delay(100); // Small delay to allow UI update
 
                 var result = await _loginController.Authentication(UserName, Password);
-                if (result.Success)
+                if (result.success)
                 {
-                    _loggedInUserService.LoggedInEmployee = result.Employee;
+                    _loggedInUserService.LoggedInEmployee = result.employee;
 
-                    _navigationService.NavigateToMainViewBasedOnRole(result.Employee);
+                    _navigationService.NavigateToMainViewBasedOnRole(result.employee);
                 }
 
                 //MessageBox.Show($"{result.Message}");

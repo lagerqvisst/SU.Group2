@@ -145,13 +145,13 @@ namespace SU.Frontend.ViewModels.CommonViewModels.Customers
 
                 var result = await _privateCustomerController.CreateNewPrivateCustomer(newCustomer);
 
-                if (result.Success)
+                if (result.success)
                 {
-                    MessageBox.Show(result.Message, "Registration Successful", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show(result.message, "Registration Successful", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    MessageBox.Show(result.Message, "Registration Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(result.message, "Registration Failed", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
