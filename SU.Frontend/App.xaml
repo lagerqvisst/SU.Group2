@@ -13,7 +13,8 @@
 
         <Style x:Key="MainButtonStyle" TargetType="Button">
             <Setter Property="Padding" Value="10 5"/>
-            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="Gray"/>
             <Setter Property="FontFamily" Value="Times New Roman"/>
         </Style>
 
