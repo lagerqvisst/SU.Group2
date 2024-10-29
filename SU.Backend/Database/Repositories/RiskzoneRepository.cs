@@ -12,13 +12,13 @@ namespace SU.Backend.Database.Repositories
     /// <summary>
     /// This class is responsible for implementing the methods defined in the IRiskzoneRepository interface.
     /// </summary>
-    public class RiskzoneRepository : Repository<Riskzone>, IRiskzoneRepository
+    public class RiskzoneRepository : Repository<RiskZone>, IRiskzoneRepository
     {
         public RiskzoneRepository(Context context) : base(context)
         {
         }
 
-        public async Task<List<Riskzone>> GetAllRiskZones()
+        public async Task<List<RiskZone>> GetAllRiskZones()
         {
             return await _context.Riskzones.ToListAsync();
         }

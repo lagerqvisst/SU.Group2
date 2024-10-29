@@ -38,7 +38,7 @@ namespace SU.Backend.Database
         public DbSet<PrivateCoverage> PrivateCoverages { get; set; }
         public DbSet<Prospect> Prospects { get; set; }
         public DbSet<CompanyCustomer> CompanyCustomers { get; set; }
-        public DbSet<Riskzone> Riskzones { get; set; }
+        public DbSet<RiskZone> Riskzones { get; set; }
         public DbSet<VehicleInsuranceOption> VehicleInsuranceOptions { get; set; }
         public DbSet<VehicleInsuranceCoverage> VehicleInsuranceCoverages { get; set; }
         public DbSet<LiabilityCoverageOption> LiabilityCoverageOption { get; set; }
@@ -202,8 +202,8 @@ namespace SU.Backend.Database
             #endregion
 
             //Created due to some relational issues. 
-            modelBuilder.Entity<Riskzone>()
-            .HasKey(x => x.RiskzoneId);
+            modelBuilder.Entity<RiskZone>()
+            .HasKey(x => x.RiskZoneId);
 
             //Created due to some relational issues
             modelBuilder.Entity<VehicleInsuranceOption>()
@@ -212,7 +212,7 @@ namespace SU.Backend.Database
 
             // Configure VehicleInsuranceCoverage -> Riskzone relationship
             modelBuilder.Entity<VehicleInsuranceCoverage>()
-                .HasOne(vic => vic.Riskzone) // Navigation to Riskzone
+                .HasOne(vic => vic.RiskZone) // Navigation to Riskzone
                 .WithMany(rz => rz.VehicleInsuranceCoverages) // Riskzone has many VehicleInsuranceCoverages
                 .HasForeignKey(vic => vic.RiskzoneId) // FK on VehicleInsuranceCoverage
                 .OnDelete(DeleteBehavior.Restrict); // Prevent deletion of Riskzone

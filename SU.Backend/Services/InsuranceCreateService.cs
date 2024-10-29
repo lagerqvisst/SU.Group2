@@ -318,7 +318,7 @@ namespace SU.Backend.Services
                         VehicleInsuranceCoverage = vehicleCoverage
                     },
 
-                    Premium = PremiumCalculator.GetVehicleInsurancePremium(vehicleCoverage.Riskzone, vehicleCoverage.VehicleInsuranceOption),
+                    Premium = PremiumCalculator.GetVehicleInsurancePremium(vehicleCoverage.RiskZone, vehicleCoverage.VehicleInsuranceOption),
                     Seller = seller
                 };
                 _logger.LogInformation("Insurance object created successfully.");
