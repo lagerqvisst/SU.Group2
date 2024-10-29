@@ -53,15 +53,15 @@ namespace SU.Frontend.ViewModels.UserControlViewModels
                 try
                 {
                     var employeeInfo = await _employeeController.GetEmployeeByRole(SelectedEmployeeType);
-                    if (employeeInfo.Success)
+                    if (employeeInfo.success)
                     {
                         // Updates the viewmodel with the fetched credentials
-                        _loginViewModel.UserName = employeeInfo.Employee.Username;
-                        _loginViewModel.Password = employeeInfo.Employee.Password;
+                        _loginViewModel.UserName = employeeInfo.employee.UserName;
+                        _loginViewModel.Password = employeeInfo.employee.Password;
                     }
                     else
                     {
-                        MessageBox.Show($"{employeeInfo.Message}");
+                        MessageBox.Show($"{employeeInfo.message}");
                     }
                 }
                 catch (Exception ex)

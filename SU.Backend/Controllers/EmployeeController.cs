@@ -145,5 +145,10 @@ namespace SU.Backend.Controllers
                 return (result.success, result.message, null);
             }
         }
+
+        public Employee GetAllEmployeeDetails(object id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -72,9 +72,9 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
         private async void LoadPrivateCustomersAsync()
         {
             var result = await _privateCustomerController.GetAllPrivateCustomers();
-            if (result.PrivateCustomers.Any())
+            if (result.privateCustomers.Any())
             {
-                _allPrivateCustomers = result.PrivateCustomers;
+                _allPrivateCustomers = result.privateCustomers;
                 FilterPrivateCustomers();
             }
         }

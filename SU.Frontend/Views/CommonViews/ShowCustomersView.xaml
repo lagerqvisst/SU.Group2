@@ -20,7 +20,22 @@
 
                 <ComboBox Height="30" Margin="0,0,0,10">
                     <!-- Placeholder for binding ItemsSource and SelectedItem -->
+
+                    <ComboBox Height="30" Margin="0,0,0,10" 
+                      ItemsSource="{Binding Employees}" 
+                      DisplayMemberPath="${FirstName} + {LastName}"
+                      SelectedItem="{Binding SelectedEmployee}" />
+
+
+
+
+
                 </ComboBox>
+
+                <TextBox Text="SearchTextBox" Width="200" Height="30" HorizontalAlignment="Left">
+                    
+                </TextBox>
+                  
 
                 <Button Content="Select" Width="80" Height="30" HorizontalAlignment="Left"/>
             </StackPanel>

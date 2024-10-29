@@ -353,13 +353,13 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
             // Call the controller method
             var result = await _insuranceCreateController.CreatePrivateInsurance(privateCustomer, insuranceType, privateCoverageOption, seller, isPolicyHolderInsured, note, paymentPlan, startDate, endDate, addons, insuredPerson);
 
-            if (result.Success)
+            if (result.success)
             {
-                MessageBox.Show($"{result.Message}");
+                MessageBox.Show($"{result.message}");
             }
             else
             {
-                MessageBox.Show($"{result.Message}");
+                MessageBox.Show($"{result.message}");
             }
         }
 
