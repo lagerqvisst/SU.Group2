@@ -155,10 +155,10 @@ namespace SU.Backend.Services
 
             try
             {
-                var companycustomers = _unitOfWork.CompanyCustomers.GetAllCompanyCustomers();
-                _logger.LogInformation("Company customers found: {CompanyCustomersCount}", companycustomers.Result.Count);
+                var companycustomers = await _unitOfWork.CompanyCustomers.GetAllCompanyCustomers();
+                _logger.LogInformation("Company customers found: {CompanyCustomersCount}", companycustomers.Count);
 
-                return (true, "Company customers found.", companycustomers.Result);
+                return (true, "Company customers found.", companycustomers);
             }
             catch (Exception ex)
             {

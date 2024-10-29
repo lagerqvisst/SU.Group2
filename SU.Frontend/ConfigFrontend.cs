@@ -33,6 +33,7 @@ using SU.Frontend.ViewModels.CommonViewModels.NewInsurance;
 using Microsoft.Extensions.Logging;
 using SU.Frontend.Helper.DI_Objects.InsuranceObjects;
 using SU.Frontend.Helper.DI_Objects.User;
+using SU.Frontend.ViewModels.CommonViewModels.CustomerRelated;
 
 namespace SU.Frontend
 {
@@ -53,6 +54,7 @@ namespace SU.Frontend
             services.AddTransient<RegisterNewInsuranceViewModel>();
             services.AddTransient<NewPrivateInsuranceViewModel>();
             services.AddTransient<PrivateInsuranceTypeViewModel>();
+            services.AddTransient<ShowCustomerViewModel>();
 
 
 
@@ -83,6 +85,7 @@ namespace SU.Frontend
             services.AddTransient<CreateExportSellStatView>();
             services.AddTransient<EditDeleteCustomerView>();
             services.AddTransient<EditDeleteInsuranceView>();
+            
 
             //Register New Customer Views
             services.AddTransient<RegisterNewCustomerView>();
@@ -93,7 +96,6 @@ namespace SU.Frontend
             services.AddTransient<RegisterNewInsuranceView>();
             services.AddTransient<NewPrivateInsuranceView>();
             services.AddTransient<PrivateCoverageTypeOptionView>();
-
 
 
             services.AddTransient<ShowCustomerProspectView>();

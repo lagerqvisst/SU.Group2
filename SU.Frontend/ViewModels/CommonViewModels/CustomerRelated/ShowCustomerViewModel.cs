@@ -17,98 +17,69 @@ namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
         private readonly PrivateCustomerController _privateCustomerController;
         private readonly CompanyCustomerController _companyCustomerController;
 
-        // Separata listor för privat- och företagskunder
-        public ObservableCollection<PrivateCustomer> PrivateCustomers { get; set; }
-        public ObservableCollection<CompanyCustomer> CompanyCustomers { get; set; }
+        // Byt från List till ObservableCollection
+        public ObservableCollection<PrivateCustomer> PrivateCustomers { get; set; } = new ObservableCollection<PrivateCustomer>();
+        public ObservableCollection<CompanyCustomer> CompanyCustomers { get; set; } = new ObservableCollection<CompanyCustomer>();
 
-        // Vald privat- eller företagskund
-        private object _selectedCustomer;
-        public object SelectedCustomer
+        private PrivateCustomer _selectedPrivateCustomer;
+        public PrivateCustomer SelectedPrivateCustomer
         {
-            get => _selectedCustomer;
+            get => _selectedPrivateCustomer;
             set
             {
-                _selectedCustomer = value;
-                OnPropertyChanged(); // Notifierar UI om förändringen
-                _ = OnSelectedCustomerChangedAsync();
+                _selectedPrivateCustomer = value;
+                OnPropertyChanged();
             }
         }
 
-        // Egenskap för att hålla de valda detaljerna, som kan vara antingen PrivateCustomer eller CompanyCustomer
-        private object _selectedCustomerDetails;
-        public object SelectedCustomerDetails
+        private CompanyCustomer _selectedCompanyCustomer;
+        public CompanyCustomer SelectedCompanyCustomer
         {
-            get => _selectedCustomerDetails;
+            get => _selectedCompanyCustomer;
             set
             {
-                _selectedCustomerDetails = value;
-                OnPropertyChanged(); // Uppdaterar UI med de nya detaljerna
+                _selectedCompanyCustomer = value;
+                OnPropertyChanged();
             }
         }
 
-        // Konstruktorn
         public ShowCustomerViewModel(PrivateCustomerController privateCustomerController, CompanyCustomerController companyCustomerController)
         {
             _privateCustomerController = privateCustomerController;
             _companyCustomerController = companyCustomerController;
 
-            // Hämta kunder från båda controllers
-            _ = LoadCustomersAsync();
+            // Kör asynkrona laddningsmetoder
+            LoadCustomersAsync();
         }
 
-        // Asynkron metod för att ladda kunder
         private async Task LoadCustomersAsync()
         {
-            // Hämta privata kunder asynkront
-            var privateCustomerResult = await _privateCustomerController.GetAllPrivateCustomers();
-            PrivateCustomers = new ObservableCollection<PrivateCustomer>(privateCustomerResult.privateCustomers);
-
-            // Hämta företagskunder asynkront
-            var companyCustomerResult = await _companyCustomerController.GetAllCompanyCustomers();
-            CompanyCustomers = new ObservableCollection<CompanyCustomer>(companyCustomerResult.companyCustomers);
+            await LoadPrivateCustomersAsync();
+            await LoadCompanyCustomersAsync();
         }
 
-        // Asynkron metod för att hantera valet av en kund
-        private async Task OnSelectedCustomerChangedAsync()
+        private async Task LoadPrivateCustomersAsync()
         {
-            if (SelectedCustomer != null)
+            // Hämta privatkunder asynkront och lägg till dem i ObservableCollection
+            var privateCustomerResult = await _privateCustomerController.GetAllPrivateCustomers();
+            PrivateCustomers.Clear();
+            foreach (var customer in privateCustomerResult.privateCustomers)
             {
-                // Ladda detaljer beroende på vilken typ av kund som valts
-                if (SelectedCustomer is PrivateCustomer privateCustomer)
-                {
-                    SelectedCustomerDetails = await LoadPrivateCustomerDetailsAsync(privateCustomer);
-                }
-                else if (SelectedCustomer is CompanyCustomer companyCustomer)
-                {
-                    SelectedCustomerDetails = await LoadCompanyCustomerDetailsAsync(companyCustomer);
-                }
+                PrivateCustomers.Add(customer);
             }
         }
 
-        // Ladda detaljer för en privatkund
-        private async Task<PrivateCustomer> LoadPrivateCustomerDetailsAsync(PrivateCustomer privateCustomer)
+        private async Task LoadCompanyCustomersAsync()
         {
-            await Task.Delay(500); // Simulera en laddningstid
-            return _privateCustomerController.GetPrivateCustomerDetails(privateCustomer);
+            // Hämta företagskunder asynkront och lägg till dem i ObservableCollection
+            var companyCustomerResult = await _companyCustomerController.GetAllCompanyCustomers();
+            CompanyCustomers.Clear();
+            foreach (var customer in companyCustomerResult.companyCustomers)
+            {
+                CompanyCustomers.Add(customer);
+            }
         }
 
-        // Ladda detaljer för en företagskund
-        private async Task<CompanyCustomer> LoadCompanyCustomerDetailsAsync(CompanyCustomer companyCustomer)
-        {
-            await Task.Delay(500); // Simulera en laddningstid
-            return _companyCustomerController.GetCompanyCustomerDetails(companyCustomer);
-        }
     }
-
-}
-
-
-
-
-
-
-
-
-
 
 }
