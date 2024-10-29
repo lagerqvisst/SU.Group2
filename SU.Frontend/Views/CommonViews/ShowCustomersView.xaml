@@ -11,13 +11,13 @@
 
     <Window.Resources>
         <helper:ViewModelLocator x:Key="Locator" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
-
 
     <Grid Background="White" DataContext="{Binding ShowCustomerViewModel, Source={StaticResource Locator}}">
         <!-- Title - Client Information -->
         <TextBlock Text="Client information" FontWeight="Bold" FontSize="20" 
-           HorizontalAlignment="Left" VerticalAlignment="Top" Margin="36,46,0,0"/>
+                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="36,46,0,0"/>
 
         <!-- Left Panel - Client List with Border -->
         <Border BorderBrush="Green" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,141,0,0" Height="183">
@@ -26,31 +26,100 @@
 
                 <!-- ComboBox for Private Customers -->
                 <ComboBox Height="30" Margin="0,0,0,10" 
-                      ItemsSource="{Binding PrivateCustomers}" 
-                      DisplayMemberPath="FirstName"
-                      SelectedItem="{Binding SelectedPrivateCustomer}"/>
+                          ItemsSource="{Binding PrivateCustomers}" 
+                          DisplayMemberPath="FirstName"
+                          SelectedItem="{Binding SelectedPrivateCustomer}"/>
 
                 <TextBlock Text="Company customers" FontWeight="Bold" Margin="0,0,0,10"/>
 
                 <!-- ComboBox for Company Customers -->
                 <ComboBox Height="30" Margin="0,0,0,10" 
-                      ItemsSource="{Binding CompanyCustomers}" 
-                      DisplayMemberPath="CompanyName"
-                      SelectedItem="{Binding SelectedCompanyCustomer}" />
+                          ItemsSource="{Binding CompanyCustomers}" 
+                          DisplayMemberPath="CompanyName"
+                          SelectedItem="{Binding SelectedCompanyCustomer}" />
             </StackPanel>
         </Border>
 
+        <!-- Details Panel for Private Customer with Border -->
+        <Border BorderBrush="green" BorderThickness="2" Margin="268,141,242,85">
+            <StackPanel Visibility="{Binding IsPrivateCustomerVisible, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                        Orientation="Vertical" Margin="10">
+                <TextBlock Text="Private Customer Details:" FontWeight="Bold" FontSize="16"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="First Name: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedPrivateCustomer.FirstName}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Last Name: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedPrivateCustomer.LastName}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Personal Number: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedPrivateCustomer.PersonalNumber}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Customer ID: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedPrivateCustomer.PrivateCustomerId}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Phone number: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedPrivateCustomer.PhoneNumber}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Address: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedPrivateCustomer.Address}"/>
+                </StackPanel>
+                
+            </StackPanel>
+        </Border>
 
-        <DataGrid ItemsSource="{Binding PrivateCustomers}" 
-         AutoGenerateColumns="True" Margin="268,141,316,117"/>
-
-        <DataGrid ItemsSource="{Binding CompanyCustomers}" 
-        AutoGenerateColumns="True" Margin="268,141,316,117"/>
-
+        <!-- Details Panel for Company Customer with Border -->
+        <Border BorderBrush="green" BorderThickness="2" Margin="268,141,242,85">
+            <StackPanel Visibility="{Binding IsCompanyCustomerVisible, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                        Orientation="Vertical" Margin="10,10,10,-24">
+                <TextBlock Text="Company Customer Details:" FontWeight="Bold" FontSize="16"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Company Name: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyName}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Organization Number: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.OrganizationNumber}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Address: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyAdress}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Company ID: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyCustomerId}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Contact person: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.ContactPerson}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Contact person phone number: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.ContactPersonPhonenumber}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Company phone number: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyPhoneNumber}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Landline number: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyLandlineNumber}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Email: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyEmailAdress}"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
 
         <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,10,10,10" Grid.Column="3" Grid.Row="4"/>
         <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="2" Grid.ColumnSpan="2" Margin="50,0,0,0" Width="350" Height="180" Grid.RowSpan="2"/>
-
     </Grid>
-
 </Window>
+
+

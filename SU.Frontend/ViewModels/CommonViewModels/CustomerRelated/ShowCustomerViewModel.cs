@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
 {
     public class ShowCustomerViewModel : ObservableObject
@@ -17,10 +18,11 @@ namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
         private readonly PrivateCustomerController _privateCustomerController;
         private readonly CompanyCustomerController _companyCustomerController;
 
-        // Byt från List till ObservableCollection
+        // ObservableCollections för kunder
         public ObservableCollection<PrivateCustomer> PrivateCustomers { get; set; } = new ObservableCollection<PrivateCustomer>();
         public ObservableCollection<CompanyCustomer> CompanyCustomers { get; set; } = new ObservableCollection<CompanyCustomer>();
 
+        // Valda kunder
         private PrivateCustomer _selectedPrivateCustomer;
         public PrivateCustomer SelectedPrivateCustomer
         {
@@ -29,6 +31,15 @@ namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
             {
                 _selectedPrivateCustomer = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(SelectedPrivateCustomerAsCollection)); // Uppdatera DataGrid
+
+                // När en privatkund väljs, döljer vi företagskunden och visar privatkunden
+                if (_selectedPrivateCustomer != null)
+                {
+                    SelectedCompanyCustomer = null; // Rensa företagskunder
+                    IsPrivateCustomerVisible = true;
+                    IsCompanyCustomerVisible = false;
+                }
             }
         }
 
@@ -40,6 +51,38 @@ namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
             {
                 _selectedCompanyCustomer = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(SelectedCompanyCustomerAsCollection)); // Uppdatera DataGrid
+
+                // När en företagskund väljs, döljer vi privatkunden och visar företagskunden
+                if (_selectedCompanyCustomer != null)
+                {
+                    SelectedPrivateCustomer = null; // Rensa privatkunder
+                    IsPrivateCustomerVisible = false;
+                    IsCompanyCustomerVisible = true;
+                }
+            }
+        }
+
+        // Visibilitetsindikatorer för DataGrid
+        private bool _isPrivateCustomerVisible;
+        public bool IsPrivateCustomerVisible
+        {
+            get => _isPrivateCustomerVisible;
+            set
+            {
+                _isPrivateCustomerVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isCompanyCustomerVisible;
+        public bool IsCompanyCustomerVisible
+        {
+            get => _isCompanyCustomerVisible;
+            set
+            {
+                _isCompanyCustomerVisible = value;
+                OnPropertyChanged();
             }
         }
 
@@ -48,10 +91,11 @@ namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
             _privateCustomerController = privateCustomerController;
             _companyCustomerController = companyCustomerController;
 
-            // Kör asynkrona laddningsmetoder
+            // Ladda kunder asynkront
             LoadCustomersAsync();
         }
 
+        // Ladda båda kundtyperna asynkront
         private async Task LoadCustomersAsync()
         {
             await LoadPrivateCustomersAsync();
@@ -80,6 +124,27 @@ namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
             }
         }
 
-    }
+        // Egenskaper som omvandlar valda kunder till samlingar så att DataGrid kan visa dem
+        public IEnumerable<PrivateCustomer> SelectedPrivateCustomerAsCollection
+        {
+            get
+            {
+                if (SelectedPrivateCustomer != null)
+                    return new List<PrivateCustomer> { SelectedPrivateCustomer };
+                return null;
+            }
+        }
 
+        public IEnumerable<CompanyCustomer> SelectedCompanyCustomerAsCollection
+        {
+            get
+            {
+                if (SelectedCompanyCustomer != null)
+                    return new List<CompanyCustomer> { SelectedCompanyCustomer };
+                return null;
+            }
+        }
+    }
 }
+
+
