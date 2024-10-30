@@ -129,7 +129,7 @@ namespace SU.Frontend.Helper.Navigation
 
         public void NavigateToCreateExportStatistics()
         {
-            NavigateTo("CreateExportSellStatView", "CommonViews");
+            NavigateTo("CreateSellStatView", "CommonViews");
         }
 
         public void NavigateToShowInsurances()
