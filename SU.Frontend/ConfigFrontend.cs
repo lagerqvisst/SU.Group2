@@ -63,6 +63,7 @@ namespace SU.Frontend
             services.AddTransient<EditDeleteInsuranceViewModel>();
             services.AddTransient<CreateSellStatViewModel>();
             services.AddTransient<CompanyInsuranceTypeViewModel>();
+            services.AddTransient<ShowCustomerProspectViewModel>();
 
             //MainView ViewModels
             services.AddTransient<CeoMainViewModel>(); // ViewModel for CeoMainView
@@ -90,6 +91,7 @@ namespace SU.Frontend
             services.AddTransient<CreateSellStatView>();
             services.AddTransient<EditDeleteCustomerView>();
             services.AddTransient<EditDeleteInsuranceView>();
+            services.AddTransient<ShowCustomerProspectView>();
             
 
             //Register New Customer Views
