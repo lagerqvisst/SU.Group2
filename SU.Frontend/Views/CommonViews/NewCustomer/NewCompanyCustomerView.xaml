@@ -9,112 +9,129 @@
     <Window.Resources>
         <helper:ViewModelLocator x:Key="Locator"/>
     </Window.Resources>
-    
-    
 
-    <Grid DataContext="{Binding NewCompanyCustomerViewModel, Source={StaticResource Locator}}" Margin="20">
-        <TextBlock Text="Register New Company Customer" FontSize="20" FontWeight="Bold" Margin="0,20,90,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        
-          
-            <StackPanel HorizontalAlignment="Left" Margin="10,50,0,-37" Width="455">
-            
 
-            <!-- Organization Number -->
-            <Grid Margin="0,5,0,15">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="2*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Organization Number:" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
-                <TextBox Text="{Binding OrganizationNumber, UpdateSourceTrigger=PropertyChanged}" Width="250" Grid.Column="1" BorderBrush="Black"/>
-            </Grid>
 
-            <!-- Company Name -->
-            <Grid Margin="0,5,0,15">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="2*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Company Name:" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
-                <TextBox Text="{Binding CompanyName, UpdateSourceTrigger=PropertyChanged}" Width="250" Grid.Column="1" BorderBrush="Black"/>
-            </Grid>
+    <Grid DataContext="{Binding NewCompanyCustomerViewModel, Source={StaticResource Locator}}" >
+        <TextBlock Text="Register New Company Customer" FontSize="25" FontWeight="Bold" Margin="20,37,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-            <!-- Contact Person -->
-            <Grid Margin="0,5,0,15">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="2*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Contact Person:" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
-                <TextBox Text="{Binding ContactPerson, UpdateSourceTrigger=PropertyChanged}" Width="250" Grid.Column="1" BorderBrush="Black"/>
-            </Grid>
+        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" Margin="15,87,0,0" Width="535" Height="387" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <StackPanel  Margin="10,10,8,10" >
 
-            <!-- Contact Person Phone Number -->
-            <Grid Margin="0,5,0,15">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="2*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Contact Person Phone #:" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
-                <TextBox Text="{Binding ContactPersonPhoneNumber, UpdateSourceTrigger=PropertyChanged}" Width="250" Grid.Column="1" BorderBrush="Black"/>
-            </Grid>
 
-            <!-- Company Address -->
-            <Grid Margin="0,5,0,15">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="2*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Company Address:" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
-                <TextBox Text="{Binding CompanyAddress, UpdateSourceTrigger=PropertyChanged}" Width="250" Grid.Column="1" BorderBrush="Black"/>
-            </Grid>
+                <!-- Organization Number -->
+                <Grid Margin="0,5,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Organization Number"  FontSize="15" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
+                    <TextBox Style="{StaticResource FillInBoxesStyle}" 
+                             Text="{Binding OrganizationNumber, UpdateSourceTrigger=PropertyChanged}" 
+                             Grid.Column="1" TextChanged="TextBox_TextChanged"/>
+                </Grid>
 
-            <!-- Company Phone Number -->
-            <Grid Margin="0,5,0,15">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="2*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Company Phone Number:" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
-                <TextBox Text="{Binding CompanyPhoneNumber, UpdateSourceTrigger=PropertyChanged}" Width="250" Grid.Column="1" BorderBrush="Black"/>
-            </Grid>
+                <!-- Company Name -->
+                <Grid Margin="0,5,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Company Name" FontSize="15" VerticalAlignment="Top" Grid.Column="0" Margin="0,0,10,0"/>
+                    <TextBox Style="{StaticResource FillInBoxesStyle}" 
+                        Text="{Binding CompanyName, UpdateSourceTrigger=PropertyChanged}"
+                        Grid.Column="1"/>
+                </Grid>
 
-            <!-- Company Landline Number -->
-            <Grid Margin="0,5,0,15">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="2*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Company Landline Number:" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
-                <TextBox Text="{Binding CompanyLandlineNumber, UpdateSourceTrigger=PropertyChanged}" Width="250" Grid.Column="1" BorderBrush="Black"/>
-            </Grid>
+                <!-- Contact Person -->
+                <Grid Margin="0,5,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Contact Person" FontSize="15" VerticalAlignment="Center" Grid.Column="0"/>
+                    <TextBox Style="{StaticResource FillInBoxesStyle}" 
+                             Text="{Binding ContactPerson, UpdateSourceTrigger=PropertyChanged}" 
+                             Grid.Column="1"/>
+                </Grid>
 
-            <!-- Company Email Address -->
-            <Grid Margin="0,5,0,15">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="2*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Company Email Address:" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
-                <TextBox Text="{Binding CompanyEmailAddress, UpdateSourceTrigger=PropertyChanged}" Width="250" Grid.Column="1" BorderBrush="Black"/>
-            </Grid>
+                <!-- Contact Person Phone Number -->
+                <Grid Margin="0,5,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Contact Person Phone" FontSize="15" VerticalAlignment="Top" Grid.Column="0" Margin="0,0,10,0"/>
+                    <TextBox Style="{StaticResource FillInBoxesStyle}" 
+                             Text="{Binding ContactPersonPhoneNumber, UpdateSourceTrigger=PropertyChanged}" 
+                             Grid.Column="1"
+                             />
+                </Grid>
 
-            <!-- Button aligned with last TextBox -->
-            <Grid Margin="10,20,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="2*" />
-                </Grid.ColumnDefinitions>
-                <Button Content="{Binding ButtonContent, UpdateSourceTrigger=PropertyChanged}" Width="150" HorizontalAlignment="Left" Grid.Column="1"
-                        Command="{Binding RegisterCompanyCustomerCommand}"/>
-            </Grid>
-        </StackPanel>
+                <!-- Company Address -->
+                <Grid Margin="0,5,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Company Address" FontSize="15" VerticalAlignment="Top" Grid.Column="0" Margin="0,0,10,0"/>
+                    <TextBox Style="{StaticResource FillInBoxesStyle}" 
+                              Text="{Binding CompanyAddress, UpdateSourceTrigger=PropertyChanged}"
+                              Grid.Column="1" />
+                </Grid>
+
+                <!-- Company Phone Number -->
+                <Grid Margin="0,5,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Company Phone Nr" FontSize="15" VerticalAlignment="Top" Grid.Column="0" Margin="0,0,10,0"/>
+                    <TextBox Style="{StaticResource FillInBoxesStyle}" 
+                             Text="{Binding CompanyPhoneNumber, UpdateSourceTrigger=PropertyChanged}" 
+                             Grid.Column="1" />
+                </Grid>
+
+                <!-- Company Landline Number -->
+                <Grid Margin="0,5,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Company Landline Nr" FontSize="15" VerticalAlignment="Top" Grid.Column="0" Margin="0,0,10,0"/>
+                    <TextBox Style="{StaticResource FillInBoxesStyle}" 
+                             Text="{Binding CompanyLandlineNumber, UpdateSourceTrigger=PropertyChanged}" 
+                             Grid.Column="1"/>
+                </Grid>
+
+                <!-- Company Email Address -->
+                <Grid Margin="0,5,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Company Email Address" FontSize="15" VerticalAlignment="Top" Grid.Column="0" Margin="0,0,10,0"/>
+                    <TextBox Style="{StaticResource FillInBoxesStyle}" 
+                             Text="{Binding CompanyEmailAddress, UpdateSourceTrigger=PropertyChanged}" 
+                             Grid.Column="1" />
+                </Grid>
+
+                <!-- Button aligned with last TextBox -->
+                <Grid>
+                    <Button Style="{StaticResource ConfirmationButtonStyle}" 
+                            Content="{Binding ButtonContent, UpdateSourceTrigger=PropertyChanged}" 
+                            Margin="7"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center" Grid.Column="1"
+                            Command="{Binding RegisterCompanyCustomerCommand}"/>
+                </Grid>
+            </StackPanel>
+        </Border>
 
         <!-- Main View, Logout Button and SignedInUserUserControl -->
-        <controls:MainViewButtonControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,160,10,0"/>
-        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,160"/>
-        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0"/>
-      
+        <controls:MainViewButtonControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,120,10,0"/>
+        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"/>
+        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,10,10"/>
 
     </Grid>
 </Window>
