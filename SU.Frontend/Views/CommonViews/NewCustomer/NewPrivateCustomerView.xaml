@@ -12,12 +12,12 @@
         <helper:ViewModelLocator x:Key="Locator"/>
     </Window.Resources>
 
-    <Grid DataContext="{Binding NewPrivateCustomerViewModel, Source={StaticResource Locator}}" Margin="20">
+    <Grid DataContext="{Binding NewPrivateCustomerViewModel, Source={StaticResource Locator}}">
         <!-- View Title -->
-        <TextBlock Text="Register New Private Customer" FontSize="20" FontWeight="Bold" Margin="0,20,390,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <TextBlock Text="Register New Private Customer" FontSize="25" FontWeight="Bold" Margin="20,37,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
         <!-- Left Panel with fields to fill in to register new private customer -->
-        <Border BorderBrush="Green" BorderThickness="2" Margin="10,-10,0,0" Width="350" Height="250" HorizontalAlignment="Left" VerticalAlignment="Center">
+        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" Margin="15,87,0,0" Width="390" Height="330" HorizontalAlignment="Left" VerticalAlignment="Top">
 
             <StackPanel Margin="10">
 
@@ -27,8 +27,13 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Personal Number" FontSize="13" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
-                    <TextBox Text="{Binding PersonalNumber,UpdateSourceTrigger=PropertyChanged}" Width="215" Grid.Column="1" BorderBrush="Black"/>
+                    <TextBlock Text="Personal Number" FontSize="15" 
+                               VerticalAlignment="Center" 
+                               Grid.Column="0" 
+                               Margin="0,0,0,0"/>
+                    <TextBox Style="{StaticResource FillInBoxesStyle}"
+                             Text="{Binding PersonalNumber,UpdateSourceTrigger=PropertyChanged}" 
+                             Grid.Column="1"/>
                 </Grid>
 
                 <!-- First Name -->
@@ -37,8 +42,10 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="First Name" FontSize="13" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
-                    <TextBox Text="{Binding FirstName,UpdateSourceTrigger=PropertyChanged}" Width="215" Grid.Column="1" BorderBrush="Black"/>
+                    <TextBlock Text="First Name" FontSize="15" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
+                    <TextBox Style="{StaticResource FillInBoxesStyle}"  
+                             Text="{Binding FirstName,UpdateSourceTrigger=PropertyChanged}" 
+                             Grid.Column="1"/>
                 </Grid>
 
                 <!-- Last Name -->
@@ -47,8 +54,10 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Last Name" FontSize="13" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
-                    <TextBox Text="{Binding LastName,UpdateSourceTrigger=PropertyChanged}" Width="215" Grid.Column="1" BorderBrush="Black"/>
+                    <TextBlock Text="Last Name" FontSize="15" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
+                    <TextBox Style="{StaticResource FillInBoxesStyle}" 
+                             Text="{Binding LastName,UpdateSourceTrigger=PropertyChanged}"
+                             Grid.Column="1"/>
                 </Grid>
 
                 <!-- Email -->
@@ -57,8 +66,10 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Email" FontSize="13" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
-                    <TextBox Text="{Binding Email,UpdateSourceTrigger=PropertyChanged}" Width="215" Grid.Column="1" BorderBrush="Black"/>
+                    <TextBlock Text="Email" FontSize="15" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
+                    <TextBox Style="{StaticResource FillInBoxesStyle}" 
+                             Text="{Binding Email,UpdateSourceTrigger=PropertyChanged}"
+                             Grid.Column="1"/>
                 </Grid>
 
                 <!-- Phone Number -->
@@ -67,8 +78,10 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Phone Number" FontSize="13" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
-                    <TextBox Text="{Binding PhoneNumber,UpdateSourceTrigger=PropertyChanged}" Width="215" Grid.Column="1" BorderBrush="Black"/>
+                    <TextBlock Text="Phone Number" FontSize="15" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
+                    <TextBox Style="{StaticResource FillInBoxesStyle}"
+                             Text="{Binding PhoneNumber,UpdateSourceTrigger=PropertyChanged}"
+                             Grid.Column="1"/>
                 </Grid>
 
                 <!-- Address -->
@@ -77,41 +90,33 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Address" FontSize="13" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
-                    <TextBox Text="{Binding Address,UpdateSourceTrigger=PropertyChanged}" Width="215" Grid.Column="1" BorderBrush="Black"/>
+                    <TextBlock Text="Address" FontSize="15" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
+                    <TextBox Style="{StaticResource FillInBoxesStyle}"
+                             Text="{Binding Address,UpdateSourceTrigger=PropertyChanged}"
+                             Grid.Column="1"/>
                 </Grid>
-
+                
+                <!-- Save button -->
+                <Grid>
+                    <Button Style="{StaticResource ConfirmationButtonStyle}"
+                            Content="{Binding ButtonContent, UpdateSourceTrigger=PropertyChanged}" 
+                            Margin="10"
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            Command="{Binding RegisterPrivateCustomerCommand}" 
+                            Click="Button_Click" 
+                            Grid.Row="1"/>
+                </Grid>
             </StackPanel>
         </Border>
 
         <!-- Left Panel -->
         <!-- Main View, Logout Button and SignedInUserUserControl -->
-        <controls:MainViewButtonControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,160,10,0"/>
-        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,160"/>
-        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0"/>
+        <controls:MainViewButtonControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,120,10,0"/>
+        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"/>
+        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,10,10"/>
 
-        <!-- Save button -->
-        <Grid Margin="0,0,0,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="283*"/>
-                <RowDefinition Height="111*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-            </Grid.ColumnDefinitions>
-            <Button Content="{Binding ButtonContent, UpdateSourceTrigger=PropertyChanged}" 
-                    Background="Green"
-                    Width="150" 
-                    Height="30" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Top" 
-                    Margin="0,56,0,0" 
-                    BorderThickness="1" 
-                    Command="{Binding RegisterPrivateCustomerCommand}" 
-                    Click="Button_Click" 
-                    Grid.Row="1"/>
-        </Grid>
+
 
 
     </Grid>
