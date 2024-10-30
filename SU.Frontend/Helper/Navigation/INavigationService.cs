@@ -40,5 +40,9 @@ namespace SU.Frontend.Helper.Navigation
 
         void NavigateToNewCompanyInsurance();
 
+        void NavigateToNewOutsideSeller();
+
+        void NavigateToNewInsideSeller();
+
     }
 }
