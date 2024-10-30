@@ -102,6 +102,9 @@ namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
 
         private async void SaveCustomer()
         {
+            var confirm = MessageBox.Show("Customer has been updated",
+                      "Confirm", MessageBoxButton.OK);
+
             if (SelectedPrivateCustomer != null)
             {
                 await _privateCustomerController.UpdatePrivateCustomer(SelectedPrivateCustomer);
