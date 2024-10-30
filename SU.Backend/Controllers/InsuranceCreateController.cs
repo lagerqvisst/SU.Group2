@@ -92,11 +92,16 @@ namespace SU.Backend.Controllers
             }
         }
 
-        public async Task<(bool success, string message)> CreateVehicleInsurance(CompanyCustomer companyCustomer,
-            VehicleInsuranceCoverage vehicleCoverage, Employee seller, string note, PaymentPlan paymentPlan)
+        public async Task<(bool success, string message)> CreateVehicleInsurance(
+            CompanyCustomer companyCustomer,
+            VehicleInsuranceCoverage vehicleCoverage,
+            RiskZone riskZone,  // Ny parameter för RiskZone
+            Employee seller,
+            string note,
+            PaymentPlan paymentPlan)
         {
             _logger.LogInformation("Controller activated to create new vehicle insurance...");
-            var result = await _insuranceCreateService.CreateVehicleInsurance(companyCustomer, vehicleCoverage, seller, note, paymentPlan);
+            var result = await _insuranceCreateService.CreateVehicleInsurance(companyCustomer, vehicleCoverage, riskZone, seller, note, paymentPlan);
 
             if (result.success)
             {
@@ -110,7 +115,8 @@ namespace SU.Backend.Controllers
             }
         }
 
-       public async Task<(bool success, string message)> DeleteInsurance(Insurance insurance)
+
+        public async Task<(bool success, string message)> DeleteInsurance(Insurance insurance)
         {
             _logger.LogInformation("Controller activated to delete insurance...");
             var result = await _insuranceCreateService.DeleteInsurance(insurance);

@@ -47,6 +47,24 @@ namespace SU.Backend.Controllers
             }
         }
 
+        public async Task<(List<VehicleInsuranceOption> vehicleInsuranceOptions, string Message)> GetAllVehicleInsuranceOptions()
+        {
+            _logger.LogInformation("Controller activated to list all vehicle insurance options...");
+
+            var result = await _insuranceListingService.GetAllVehicleInsuranceOptions();
+
+            if (result.success) {
+                _logger.LogInformation($"Vehicle insurance options retrieved successfully:\n{result.message}");
+                return (result.vehicleInsuranceOptions, result.message);
+            }
+            else
+            {
+                _logger.LogWarning($"Error retrieving vehicle insurance options: {result.message}");
+                return (new List<VehicleInsuranceOption>(), result.message);
+
+            }
+        }
+
         public async Task<(List<Insurance> insurances, string message)> GetAllInsurances()
         {
             _logger.LogInformation("Controller activated to list all insurances...");
@@ -63,7 +81,7 @@ namespace SU.Backend.Controllers
                 return (new List<Insurance>(), result.message);
             }
         }
-          public async Task<(bool Success, List<InsuranceAddonType> insuranceAddonTypes, string Message)> GetAllInsuranceAddonTypes()
+        public async Task<(bool Success, List<InsuranceAddonType> insuranceAddonTypes, string Message)> GetAllInsuranceAddonTypes()
           {
               _logger.LogInformation("Controller activated to list all insurance addon types...");
               var result = await _insuranceListingService.GetAllInsuranceAddonTypes();
@@ -216,5 +234,7 @@ namespace SU.Backend.Controllers
                 return (new List<PrivateCoverageOption>(), result.Message);
             }
         }
+
+
     }
 }

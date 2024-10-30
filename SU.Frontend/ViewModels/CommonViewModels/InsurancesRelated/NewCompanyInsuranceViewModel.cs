@@ -116,7 +116,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
                 };
             }
 
-            _navigationService.NavigateTo("CompanyCoverageTypeOptionView", "CommonViews.NewInsurance");
+            _navigationService.NavigateTo("CompanyInsuranceTypeView", "CommonViews.NewInsurance");
         }
     }
 }

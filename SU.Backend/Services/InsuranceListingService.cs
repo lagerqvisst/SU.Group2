@@ -46,7 +46,7 @@ namespace SU.Backend.Services
             }
 
         // This method fetches all insurance addon types from the database. The list of data will be used in the view for listing all insurance addon types.
-        public async Task<(bool success, string message, List<InsuranceAddonType> insuranceAddonTypes)> GetAllInsuranceAddonTypes()
+            public async Task<(bool success, string message, List<InsuranceAddonType> insuranceAddonTypes)> GetAllInsuranceAddonTypes()
         {
             _logger.LogInformation("Controller activated to get all insurance addon types...");
 
