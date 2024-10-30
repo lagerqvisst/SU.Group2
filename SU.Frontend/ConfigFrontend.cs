@@ -64,6 +64,8 @@ namespace SU.Frontend
             services.AddTransient<CreateSellStatViewModel>();
             services.AddTransient<CompanyInsuranceTypeViewModel>();
 
+            services.AddTransient<EditDeleteSellerViewModel>();
+            
             //MainView ViewModels
             services.AddTransient<CeoMainViewModel>(); // ViewModel for CeoMainView
             services.AddTransient<FinancialAssistantMainViewModel>(); // ViewModel for FinancialAssistantMainView
