@@ -35,7 +35,7 @@ namespace SU.Backend.Database.Repositories
 
         public async Task<List<PrivateCustomer>> GetAllPrivateCustomers()
         {
-            return await _context.PrivateCustomers.ToListAsync();
+            return _context.PrivateCustomers.ToList();
         }
     }
 

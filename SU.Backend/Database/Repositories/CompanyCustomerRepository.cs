@@ -43,7 +43,7 @@ namespace SU.Backend.Database.Repositories
 
         public async Task <List<CompanyCustomer>> GetAllCompanyCustomers()
         {
-            return await _context.CompanyCustomers.ToListAsync();
+            return _context.CompanyCustomers.ToList();
         }
     }
 }

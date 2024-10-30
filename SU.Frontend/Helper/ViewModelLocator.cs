@@ -60,6 +60,9 @@ namespace SU.Frontend.Helper
 
             public PrivateInsuranceTypeViewModel PrivateInsuranceTypeViewModel =>
                 App.AppHost?.Services.GetService<PrivateInsuranceTypeViewModel>();
+
+            public NewCompanyInsuranceViewModel NewCompanyInsuranceViewModel =>
+                App.AppHost?.Services.GetService<NewCompanyInsuranceViewModel>();
         }
     }
 

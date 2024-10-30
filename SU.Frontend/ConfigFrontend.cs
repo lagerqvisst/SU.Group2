@@ -52,9 +52,8 @@ namespace SU.Frontend
             services.AddTransient<NewCompanyCustomerViewModel>();
             services.AddTransient<RegisterNewInsuranceViewModel>();
             services.AddTransient<NewPrivateInsuranceViewModel>();
+            services.AddTransient<NewCompanyInsuranceViewModel>();
             services.AddTransient<PrivateInsuranceTypeViewModel>();
-
-
 
             //MainView ViewModels
             services.AddTransient<CeoMainViewModel>(); // ViewModel for CeoMainView
@@ -92,10 +91,8 @@ namespace SU.Frontend
             //Register New Insurance Views
             services.AddTransient<RegisterNewInsuranceView>();
             services.AddTransient<NewPrivateInsuranceView>();
+            services.AddTransient<NewCompanyInsuranceView>();
             services.AddTransient<PrivateCoverageTypeOptionView>();
-
-
-
             services.AddTransient<ShowCustomerProspectView>();
             services.AddTransient<ShowCustomersView>();
             services.AddTransient<ShowInsurancesView>();
