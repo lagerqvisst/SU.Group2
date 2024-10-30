@@ -23,5 +23,10 @@ namespace SU.Frontend.Views.CommonViews.NewCustomer
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

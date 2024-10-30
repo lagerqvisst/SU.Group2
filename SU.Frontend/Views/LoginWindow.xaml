@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls" 
         mc:Ignorable="d"
-        Title="LoginWindow" Height="450" Width="800">
+        Title="Login Window" Height="450" Width="800">
 
     <DockPanel>
         <!-- Taskbar added at the top -->
