@@ -33,6 +33,8 @@ using SU.Frontend.ViewModels.CommonViewModels.NewInsurance;
 using Microsoft.Extensions.Logging;
 using SU.Frontend.Helper.DI_Objects.InsuranceObjects;
 using SU.Frontend.Helper.DI_Objects.User;
+using SU.Frontend.ViewModels.CommonViewModels.CustomerRelated;
+using SU.Frontend.ViewModels.CommonViewModels;
 
 namespace SU.Frontend
 {
@@ -54,6 +56,12 @@ namespace SU.Frontend
             services.AddTransient<NewPrivateInsuranceViewModel>();
             services.AddTransient<NewCompanyInsuranceViewModel>();
             services.AddTransient<PrivateInsuranceTypeViewModel>();
+
+            services.AddTransient<ShowCustomerViewModel>();
+            services.AddTransient<ShowInsuranceViewModel>();
+            services.AddTransient<EditDeleteCustomerViewModel>();
+            services.AddTransient<EditDeleteInsuranceViewModel>();
+            services.AddTransient<CreateSellStatViewModel>();
             services.AddTransient<CompanyInsuranceTypeViewModel>();
 
             //MainView ViewModels
@@ -62,7 +70,6 @@ namespace SU.Frontend
             services.AddTransient<SalesAssistantMainViewModel>(); // ViewModel for SalesAssistantMainView
             services.AddTransient<SalesManagerMainViewModel>(); // ViewModel for SalesManagerMainView
             services.AddTransient<SellerMainViewModel>(); // ViewModel for SellerMainView
-
 
             // Registrera Views och UserControls
             services.AddTransient<LoginWindow>();
@@ -80,9 +87,10 @@ namespace SU.Frontend
             services.AddTransient<SellerMainView>(); // View for SellerMainView
 
             // Common Views
-            services.AddTransient<CreateExportSellStatView>();
+            services.AddTransient<CreateSellStatView>();
             services.AddTransient<EditDeleteCustomerView>();
             services.AddTransient<EditDeleteInsuranceView>();
+            
 
             //Register New Customer Views
             services.AddTransient<RegisterNewCustomerView>();

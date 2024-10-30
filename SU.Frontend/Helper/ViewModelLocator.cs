@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SU.Frontend.ViewModels;
 using SU.Frontend.ViewModels.CeoMainViewModel;
+using SU.Frontend.ViewModels.CommonViewModels;
+using SU.Frontend.ViewModels.CommonViewModels.CustomerRelated;
 using SU.Frontend.ViewModels.CommonViewModels.Customers;
 using SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated;
 using SU.Frontend.ViewModels.CommonViewModels.NewInsurance;
@@ -61,14 +64,30 @@ namespace SU.Frontend.Helper
             public PrivateInsuranceTypeViewModel PrivateInsuranceTypeViewModel =>
                 App.AppHost?.Services.GetService<PrivateInsuranceTypeViewModel>();
 
+
+
             public NewCompanyInsuranceViewModel NewCompanyInsuranceViewModel =>
                 App.AppHost?.Services.GetService<NewCompanyInsuranceViewModel>();
 
             public CompanyInsuranceTypeViewModel CompanyInsuranceTypeViewModel =>
                 App.AppHost?.Services.GetService<CompanyInsuranceTypeViewModel>();
+
+
+            public ShowCustomerViewModel ShowCustomerViewModel =>
+                App.AppHost?.Services.GetService<ShowCustomerViewModel>();
+
+            public ShowInsuranceViewModel ShowInsuranceViewModel =>
+                App.AppHost?.Services.GetService<ShowInsuranceViewModel>();
+
+           public EditDeleteCustomerViewModel EditDeleteCustomerViewModel =>
+                App.AppHost?.Services.GetService<EditDeleteCustomerViewModel>();
+
+            public EditDeleteInsuranceViewModel EditDeleteInsuranceViewModel =>
+              App.AppHost?.Services.GetService<EditDeleteInsuranceViewModel>();
+
+            public CreateSellStatViewModel CreateSellStatViewModel =>
+                App.AppHost?.Services.GetService<CreateSellStatViewModel>();
         }
     }
-
-
 
 }

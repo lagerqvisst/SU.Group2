@@ -164,10 +164,10 @@ namespace SU.Backend.Services
 
             try
             {
-                var privatecustomers = _unitOfWork.PrivateCustomers.GetAllPrivateCustomers();
-                _logger.LogInformation("Private customers found: {PrivateCustomersCount}", privatecustomers.Result.Count);
+                var privatecustomers =  await _unitOfWork.PrivateCustomers.GetAllPrivateCustomers();
+                _logger.LogInformation("Private customers found: {PrivateCustomersCount}", privatecustomers.Count);
 
-                return (true, "Private customers found.", privatecustomers.Result);
+                return (true, "Private customers found.", privatecustomers);
             }
             catch (Exception ex)
             {

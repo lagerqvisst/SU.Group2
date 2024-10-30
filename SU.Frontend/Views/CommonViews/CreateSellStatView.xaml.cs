@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace SU.Frontend.Views.CommonViews
 {
     /// <summary>
-    /// Interaction logic for CreateExportSellStatView.xaml
+    /// Interaction logic for CreateSellStatView.xaml
     /// </summary>
-    public partial class CreateExportSellStatView : Window
+    public partial class CreateSellStatView : Window
     {
-        public CreateExportSellStatView()
+        public CreateSellStatView()
         {
             InitializeComponent();
         }

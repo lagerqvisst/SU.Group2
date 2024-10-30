@@ -1,7 +1,5 @@
 ﻿using SU.Backend.Controllers;
 using SU.Backend.Models.Customers;
-using SU.Backend.Models.Employees;
-using SU.Backend.Models.Enums.Insurance;
 using SU.Frontend.Helper;
 using System;
 using System.Collections.Generic;
@@ -9,14 +7,18 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows;
+using System.Windows.Input;
 
 namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
 {
-    public class ShowCustomerViewModel : ObservableObject
+    public class EditDeleteCustomerViewModel : ObservableObject
     {
         private readonly PrivateCustomerController _privateCustomerController;
         private readonly CompanyCustomerController _companyCustomerController;
+
+        public ICommand SaveCustomerCommand { get; }
+        public ICommand DeleteCustomerCommand { get; }
 
         // ObservableCollections för kunder
         public ObservableCollection<PrivateCustomer> PrivateCustomers { get; set; } = new ObservableCollection<PrivateCustomer>();
@@ -86,13 +88,62 @@ namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
             }
         }
 
-        public ShowCustomerViewModel(PrivateCustomerController privateCustomerController, CompanyCustomerController companyCustomerController)
+        public EditDeleteCustomerViewModel(PrivateCustomerController privateCustomerController, CompanyCustomerController companyCustomerController)
         {
             _privateCustomerController = privateCustomerController;
             _companyCustomerController = companyCustomerController;
 
             // Ladda kunder asynkront
             LoadCustomersAsync();
+
+            SaveCustomerCommand = new RelayCommand(SaveCustomer);
+            DeleteCustomerCommand = new RelayCommand(DeleteCustomer, CanDeleteCustomer);
+        }
+
+        private async void SaveCustomer()
+        {
+            var confirm = MessageBox.Show("Customer has been updated",
+                      "Confirm", MessageBoxButton.OK);
+
+            if (SelectedPrivateCustomer != null)
+            {
+                await _privateCustomerController.UpdatePrivateCustomer(SelectedPrivateCustomer);
+            }
+            else if (SelectedCompanyCustomer != null)
+            {
+                await _companyCustomerController.UpdateCompanyCustomer(SelectedCompanyCustomer);
+            }
+        }
+
+        private bool CanDeleteCustomer()
+        {
+            return SelectedPrivateCustomer != null || SelectedCompanyCustomer != null;
+        }
+
+        private async void DeleteCustomer()
+        {
+            var confirm = MessageBox.Show("Are you sure you want to delete this customer?",
+                                  "Confirm Delete",
+                                  MessageBoxButton.YesNo);
+
+            if (confirm != MessageBoxResult.Yes) return;
+
+            // Fortsätt med att ta bort om användaren bekräftar
+            if (SelectedPrivateCustomer != null)
+            {
+                await _privateCustomerController.DeletePrivateCustomer(SelectedPrivateCustomer);
+                PrivateCustomers.Remove(SelectedPrivateCustomer);
+                SelectedPrivateCustomer = null;
+            }
+            else if (SelectedCompanyCustomer != null)
+            {
+                await _companyCustomerController.DeleteCompanyCustomer(SelectedCompanyCustomer);
+                CompanyCustomers.Remove(SelectedCompanyCustomer);
+                SelectedCompanyCustomer = null;
+            }
+
+            IsPrivateCustomerVisible = false;
+            IsCompanyCustomerVisible = false;
         }
 
         // Ladda båda kundtyperna asynkront
@@ -146,5 +197,3 @@ namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
         }
     }
 }
-
-
