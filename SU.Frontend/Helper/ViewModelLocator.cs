@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SU.Frontend.ViewModels;
 using SU.Frontend.ViewModels.CeoMainViewModel;
 using SU.Frontend.ViewModels.CommonViewModels;
 using SU.Frontend.ViewModels.CommonViewModels.CustomerRelated;

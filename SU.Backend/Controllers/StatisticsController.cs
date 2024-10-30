@@ -26,22 +26,27 @@ namespace SU.Backend.Controllers
             _logger = logger;
         }
 
-        public async Task<(string message, List<SellerStatistics>)> GetSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null)
+        public async Task<(string message, List<SellerStatistics> statistics)> GetSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null)
         {
             _logger.LogInformation("Getting seller statistics for year {year}", year);
 
             var result = await _statisticsService.GetSellerStatistics(year, insuranceTypes);
 
-            if (result.success)
+            // Kontrollera om statistiken är null eller tom
+            if (result.statistics == null || !result.statistics.Any())
             {
-                _logger.LogInformation("Seller statistics retrieved successfully");
+                _logger.LogWarning("Ingen statistik hittades för vald säljare.");
+                return (result.message, null); // Returnera null för statistik om ingen data finns
             }
-            else
-            {
-                _logger.LogWarning("Error retrieving seller statistics: {result.Message}");
-            }
+
+            _logger.LogInformation("Seller statistics retrieved successfully");
+
+            // Returnera bara den tredje delen (statistiken) och meddelandet
             return (result.message, result.statistics);
         }
+
+
+
 
         public async Task<(List<InsuranceStatistics>, string message)> GetMonthlyInsuranceStats()
         {
