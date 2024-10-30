@@ -14,21 +14,23 @@
     <Grid DataContext="{Binding RegisterNewCustomerViewModel, Source={StaticResource Locator}}">
 
         <!-- View Title -->
-        <TextBlock Text="Register New Customer" FontSize="20" FontWeight="Bold" Margin="0,20,390,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <TextBlock Text="Register New Customer"  FontSize="25" FontWeight="Bold" Margin="20,37,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
         <!-- Left panel with customer types -->
-        <Border BorderBrush="Green" BorderThickness="2" Margin="52,82,0,0" Width="306" Height="211" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="Select Customer Type" FontSize="15" FontWeight="DemiBold" TextAlignment="Left" Margin="0,0,0,20"/>
-                <Button Content="Company Customer" Width="200" Height="35" Command="{Binding ToNewRegisterCompanyCommand}"/>
-                <Button Content="Private Customer" Width="200" Height="35" Command="{Binding ToNewRegisterPrivateCommand}"/>
-            </StackPanel>
+        <Border CornerRadius="2" BorderBrush="Green" BorderThickness="2" Margin="15,130,0,0" Width="306" Height="200" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
 
+        <Button Style="{StaticResource OptionsButtonStyle}" Content="Private Customer"  Command="{Binding ToNewRegisterPrivateCommand}" Margin="34,186,526,198" Height="50"/>
+        <TextBlock Text="Select Customer Type" FontSize="15" FontWeight="DemiBold" TextAlignment="Left" Margin="34,143,526,231"/>
+        <Button Style="{StaticResource OptionsButtonStyle}" Content="Company Customer" Command="{Binding ToNewRegisterCompanyCommand}" Margin="34,254,526,130" Height="50"/>
+
+
         <!-- Main View, Logout Button and SignedInUserUserControl -->
-        <!-- check the bugg with this one -> <controls:MainViewButtonControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,160,10,0"/> -->
-        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,160"/>
-        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0"/>
+        <controls:MainViewButtonControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,130,15,0"/>
+        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15"/>
+        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,10,10"/>
+
 
     </Grid>
 </Window> 

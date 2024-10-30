@@ -25,9 +25,9 @@
             </TextBlock.Inlines>
                     </TextBlock>
 
-        <TextBlock Text="{Binding SignedInUserName}" FontSize="16" Padding="10, 3, 10, 3"/>
-        <TextBlock Text="{Binding SignedInUserId}" FontSize="16" Padding="10, 3, 10, 3"/>
-        <TextBlock Text="{Binding SignedInUserRole}" FontSize="16" Padding="10, 3, 10, 3"/>
+        <TextBlock Text="{Binding SignedInUserName}" FontSize="13" Padding="10, 3, 10, 3"/>
+        <TextBlock Text="{Binding SignedInUserId}" FontSize="13" Padding="10, 3, 10, 3"/>
+        <TextBlock Text="{Binding SignedInUserRole}" FontSize="13" Padding="10, 3, 10, 3"/>
         </StackPanel>
     </Border>
 

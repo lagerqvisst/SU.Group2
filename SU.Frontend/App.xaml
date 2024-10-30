@@ -12,27 +12,35 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
         <Style x:Key="MainButtonStyle" TargetType="Button">
-            <Setter Property="Padding" Value="10 5"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Background" Value="Gray"/>
-            <Setter Property="FontFamily" Value="Times New Roman"/>
-            <Style.Resources> 
+            <Style.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>
                 </Style>
             </Style.Resources>
         </Style>
 
+        <Style x:Key="OptionsButtonStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="DarkSeaGreen"/>
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+
         <Style x:Key="ToppFont" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Times New Roman"/>
-            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontSize" Value="15"/>
             <Setter Property="Foreground" Value="Green"/>
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
 
         <Style x:Key="FörsäkringarFont" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Times New Roman"/>
-            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontSize" Value="15"/>
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
