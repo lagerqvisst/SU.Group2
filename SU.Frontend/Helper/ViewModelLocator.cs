@@ -69,14 +69,14 @@ namespace SU.Frontend.Helper
             public ShowInsuranceViewModel ShowInsuranceViewModel =>
                 App.AppHost?.Services.GetService<ShowInsuranceViewModel>();
 
-            public EditDeleteCustomerViewModel EditDeleteCustomerViewModel =>
+           public EditDeleteCustomerViewModel EditDeleteCustomerViewModel =>
                 App.AppHost?.Services.GetService<EditDeleteCustomerViewModel>();
 
             public EditDeleteInsuranceViewModel EditDeleteInsuranceViewModel =>
-                App.AppHost?.Services.GetService<EditDeleteInsuranceViewModel>();
+              App.AppHost?.Services.GetService<EditDeleteInsuranceViewModel>();
 
-            public CreateExportSellStatViewModel CreateExportSellStatViewModel =>
-                App.AppHost?.Services.GetService<CreateExportSellStatViewModel>();
+            public CreateSellStatViewModel CreateSellStatViewModel =>
+                App.AppHost?.Services.GetService<CreateSellStatViewModel>();
         }
     }
 
