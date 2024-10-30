@@ -26,10 +26,6 @@
                       DisplayMemberPath="${FirstName} + {LastName}"
                       SelectedItem="{Binding SelectedEmployee}" />
 
-
-
-
-
                 </ComboBox>
 
                 <TextBox Text="SearchTextBox" Width="200" Height="30" HorizontalAlignment="Left">
