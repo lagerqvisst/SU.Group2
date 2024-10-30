@@ -4,7 +4,7 @@
         xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         xmlns:local="clr-namespace:SU.Frontend.Views.CommonViews"
         xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
-        Title="Register New Company Customer" Height="500" Width="800">
+        Title="Register New Company Customer" Height="545" Width="800">
 
     <Window.Resources>
         <helper:ViewModelLocator x:Key="Locator"/>
