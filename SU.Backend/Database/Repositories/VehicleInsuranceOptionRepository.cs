@@ -20,7 +20,7 @@ namespace SU.Backend.Database.Repositories
 
         public async Task<List<VehicleInsuranceOption>> GetVehicleInsuranceOptions()
         {
-            return await _context.VehicleInsuranceOptions.ToListAsync();
+            return _context.VehicleInsuranceOptions.ToList();
         }
     }
 }

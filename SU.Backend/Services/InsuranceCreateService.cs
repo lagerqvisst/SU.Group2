@@ -268,6 +268,7 @@ namespace SU.Backend.Services
         public async Task<(bool success, string message)> CreateVehicleInsurance(
             CompanyCustomer companyCustomer,
             VehicleInsuranceCoverage vehicleCoverage,
+            RiskZone riskZone,  // Ny parameter för RiskZone
             Employee seller,
             string note,
             PaymentPlan paymentPlan,
@@ -292,17 +293,26 @@ namespace SU.Backend.Services
                     return (false, "No vehicle insurance coverage provided.");
                 }
 
+                if (riskZone == null)
+                {
+                    _logger.LogWarning("No risk zone provided.");
+                    return (false, "No risk zone provided.");
+                }
+
                 if (seller == null)
                 {
                     _logger.LogWarning("No seller provided.");
                     return (false, "No seller provided.");
                 }
 
+                // Tilldela riskzonen till vehicleCoverage
+                vehicleCoverage.RiskZone = riskZone;
+
                 // Create the insurance object
                 var insurance = new Insurance
                 {
                     InsuranceType = InsuranceType.VehicleInsurance,
-                    InsuranceStatus = InsuranceStatus.Active,
+                    InsuranceStatus = InsuranceStatus.Requested,
                     PaymentPlan = paymentPlan,
                     StartDate = startDate ?? DateTime.Now,  // Använd inskickat startdatum, annars nuvarande tid
                     EndDate = endDate ?? DateTime.Now.AddYears(1),  // Använd inskickat slutdatum, annars ett år framåt
@@ -318,7 +328,7 @@ namespace SU.Backend.Services
                         VehicleInsuranceCoverage = vehicleCoverage
                     },
 
-                    Premium = PremiumCalculator.GetVehicleInsurancePremium(vehicleCoverage.RiskZone, vehicleCoverage.VehicleInsuranceOption),
+                    Premium = PremiumCalculator.GetVehicleInsurancePremium(riskZone, vehicleCoverage.VehicleInsuranceOption),
                     Seller = seller
                 };
                 _logger.LogInformation("Insurance object created successfully.");
@@ -338,6 +348,7 @@ namespace SU.Backend.Services
                 return (false, "An error occurred while creating the company vehicle insurance.");
             }
         }
+
 
         // Deletes an insurance from the database
         public async Task<(bool success, string message)> DeleteInsurance(Insurance insurance)

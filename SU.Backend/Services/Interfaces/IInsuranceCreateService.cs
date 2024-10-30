@@ -60,6 +60,7 @@ namespace SU.Backend.Services.Interfaces
         Task<(bool success, string message)> CreateVehicleInsurance(
                     CompanyCustomer companyCustomer,
                     VehicleInsuranceCoverage vehicleCoverage,
+                    RiskZone riskZone,
                     Employee seller,
                     string note,
                     PaymentPlan paymentPlan,
