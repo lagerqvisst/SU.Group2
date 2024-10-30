@@ -30,5 +30,8 @@ namespace SU.Backend.Services.Interfaces
         Task<(bool success, string message)> DeleteEmployee(Employee employee);
 
         Task<(bool success, string message, List<EmployeeRoleAssignment> employeeRoleAssignments)> GetAllEmployeeRoleAssignments();
+
+        Task<(bool success, string message, List<Employee> salesEmployees)> GetAllSalesEmployees();
+
     }
 }

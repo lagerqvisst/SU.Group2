@@ -1,5 +1,7 @@
 ﻿using SU.Backend.Controllers;
+using SU.Backend.Helper;
 using SU.Backend.Models.Customers;
+using SU.Backend.Models.Employees;
 using SU.Backend.Models.Enums.Insurance;
 using SU.Backend.Models.Insurances;
 using SU.Frontend.Helper;
@@ -26,11 +28,12 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
         private readonly ILoggedInUserService _loggedInSeller;
         private readonly InsuranceListingController _insuranceListingController;
         private readonly InsuranceCreateController _insuranceCreateController;
+        private readonly EmployeeController _employeeController;
 
         public ICommand SaveInsuranceCommand { get; }
         public ICommand DeleteInsuranceCommand { get; }
 
-        public List<InsuranceType> PrivateInsuranceTypes { get; set; }
+        public List<InsuranceType> InsuranceTypes { get; set; }
         public List<PaymentPlan> PaymentPlans { get; set; }
 
         private InsuranceType _selectedInsuranceType;
@@ -52,7 +55,10 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
             {
                 _selectedPaymentPlan = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(SelectedPaymentPlan));
+                if (SelectedInsurance != null)
+                {
+                    SelectedInsurance.PaymentPlan = _selectedPaymentPlan;
+                }
             }
         }
 
@@ -76,30 +82,62 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
             {
                 _selectedInsurance = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(SelectedInsuranceAsCollection)); // Update DataGrid
+                OnSelectedInsuranceChanged(); // Uppdatera UI:t när en ny försäkring väljs
             }
         }
 
-        public EditDeleteInsuranceViewModel(INavigationService navigationService, IPolicyHolderService policyHolderService, ILoggedInUserService loggedInUserService, InsuranceListingController insuranceListingController, InsuranceCreateController insuranceCreateController)
-        {
+        public List<InsuranceStatus> InsuranceStatusOptions { get; set; }
 
+        private InsuranceStatus _selectedInsuranceStatus;
+        public InsuranceStatus SelectedInsuranceStatus
+        {
+            get => _selectedInsuranceStatus;
+            set
+            {
+                _selectedInsuranceStatus = value;
+                OnPropertyChanged();
+                if (SelectedInsurance != null)
+                {
+                    SelectedInsurance.InsuranceStatus = _selectedInsuranceStatus;
+                }
+            }
+        }
+
+        public ObservableCollection<Employee> Sellers { get; set; } = new ObservableCollection<Employee>();
+
+        private Employee _selectedSeller;
+        public Employee SelectedSeller
+        {
+            get => _selectedSeller;
+            set
+            {
+                _selectedSeller = value;
+                OnPropertyChanged();
+                if (SelectedInsurance != null)
+                {
+                    SelectedInsurance.Seller = _selectedSeller;
+                    SelectedInsurance.SellerId = _selectedSeller.EmployeeId;
+                }
+            }
+        }
+
+        public EditDeleteInsuranceViewModel(INavigationService navigationService, IPolicyHolderService policyHolderService, ILoggedInUserService loggedInUserService, EmployeeController employeeController, InsuranceListingController insuranceListingController, InsuranceCreateController insuranceCreateController)
+        {
             _navigationService = navigationService;
             _policyHolderService = policyHolderService;
             _loggedInSeller = loggedInUserService;
             _insuranceListingController = insuranceListingController;
             _insuranceCreateController = insuranceCreateController;
+            _employeeController = employeeController;
 
-            Task.Run(async () => await LoadInsurancesAsync()).Wait();
+            _ = InitializeAsync(); // Use discard to explicitly ignore the returned Task
 
-            PrivateInsuranceTypes = Enum.GetValues(typeof(InsuranceType))
-           .Cast<InsuranceType>()
-           .Where(t => IsPrivateInsuranceType(t))
-           .ToList();
+            InsuranceTypes = EnumService.InsuranceType();
+            InsuranceStatusOptions = EnumService.InsuranceStatus();
 
             PaymentPlans = Enum.GetValues(typeof(PaymentPlan))
-           .Cast<PaymentPlan>()
-           .ToList();
-
+                .Cast<PaymentPlan>()
+                .ToList();
 
             SaveInsuranceCommand = new RelayCommand(SaveInsurance);
             DeleteInsuranceCommand = new RelayCommand(DeleteInsurance, CanDeleteInsurance);
@@ -107,13 +145,21 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
 
         private async void SaveInsurance()
         {
-            var confirm = MessageBox.Show("Insurance has been updated",
-                                  "Confirm", MessageBoxButton.OK);
-
             if (SelectedInsurance != null)
             {
-                await _insuranceCreateController.UpdateInsurance(SelectedInsurance);
+                var result = await _insuranceCreateController.UpdateInsurance(SelectedInsurance);
+
+                if (result.success)
+                {
+                    MessageBox.Show($"{result.message}, MessageBoxButton.OK");
+                }
+                else
+                {
+                    MessageBox.Show($"{result.message}, MessageBoxButton.OK");
+                }
             }
+
+            
         }
 
         private bool CanDeleteInsurance()
@@ -160,6 +206,12 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
             }
         }
 
+        private async Task InitializeAsync()
+        {
+            await LoadInsurancesAsync();
+            await LoadSellersAsync();
+        }
+
 
         public IEnumerable<Insurance> SelectedInsuranceAsCollection
         {
@@ -168,6 +220,33 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
                 if (SelectedInsurance != null)
                     return new List<Insurance> { SelectedInsurance };
                 return null;
+            }
+        }
+
+        private async Task LoadSellersAsync()
+        {
+            var result = await _employeeController.GetAllSellers();
+            if (result.success && result.salesEmployees != null)
+            {
+                Sellers.Clear();
+                foreach (var seller in result.salesEmployees)
+                {
+                    Sellers.Add(seller);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Failed to load sellers: " + result.message);
+            }
+        }
+
+        private void OnSelectedInsuranceChanged()
+        {
+            if (SelectedInsurance != null)
+            {
+                SelectedPaymentPlan = SelectedInsurance.PaymentPlan;
+                SelectedInsuranceStatus = SelectedInsurance.InsuranceStatus;
+                SelectedSeller = SelectedInsurance.Seller;
             }
         }
 

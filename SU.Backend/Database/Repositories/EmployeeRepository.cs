@@ -52,12 +52,12 @@ namespace SU.Backend.Database.Repositories
 
         public async Task<List<Employee>> GetSalesEmployees()
         {
-            return await _context.Employees
+            return _context.Employees
                 .Include(e => e.RoleAssignments)
                 .Where(e => e.RoleAssignments.Any(ra =>
                     (ra.Role == EmployeeType.OutsideSales || ra.Role == EmployeeType.InsideSales) &&
                     ra.Percentage > 0))
-                .ToListAsync();
+                .ToList();
         }
 
         public async Task<List<Employee>> GetAllEmployees()
