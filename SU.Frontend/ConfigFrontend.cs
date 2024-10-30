@@ -34,6 +34,7 @@ using Microsoft.Extensions.Logging;
 using SU.Frontend.Helper.DI_Objects.InsuranceObjects;
 using SU.Frontend.Helper.DI_Objects.User;
 using SU.Frontend.ViewModels.CommonViewModels.CustomerRelated;
+using SU.Frontend.ViewModels.CommonViewModels;
 
 namespace SU.Frontend
 {
@@ -56,8 +57,9 @@ namespace SU.Frontend
             services.AddTransient<PrivateInsuranceTypeViewModel>();
             services.AddTransient<ShowCustomerViewModel>();
             services.AddTransient<ShowInsuranceViewModel>();
-
-
+            services.AddTransient<EditDeleteCustomerViewModel>();
+            services.AddTransient<EditDeleteInsuranceViewModel>();
+            services.AddTransient<CreateExportSellStatViewModel>();
 
             //MainView ViewModels
             services.AddTransient<CeoMainViewModel>(); // ViewModel for CeoMainView
@@ -65,7 +67,6 @@ namespace SU.Frontend
             services.AddTransient<SalesAssistantMainViewModel>(); // ViewModel for SalesAssistantMainView
             services.AddTransient<SalesManagerMainViewModel>(); // ViewModel for SalesManagerMainView
             services.AddTransient<SellerMainViewModel>(); // ViewModel for SellerMainView
-
 
             // Registrera Views och UserControls
             services.AddTransient<LoginWindow>();

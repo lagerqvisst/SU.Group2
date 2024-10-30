@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SU.Frontend.Views.CommonViews"
         mc:Ignorable="d"
         Title="EditDeleteInsuranceView" Height="450" Width="800">
-    <Grid>
+    <Grid >
         
     </Grid>
 </Window>
