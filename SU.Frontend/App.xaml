@@ -16,6 +16,11 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Background" Value="Gray"/>
             <Setter Property="FontFamily" Value="Times New Roman"/>
+            <Style.Resources> 
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Style.Resources>
         </Style>
 
         <Style x:Key="ToppFont" TargetType="TextBlock">
