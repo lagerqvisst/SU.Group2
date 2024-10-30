@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
 {
-    internal class EditDeleteInsuranceViewModel
+    public class EditDeleteInsuranceViewModel
     {
     }
 }

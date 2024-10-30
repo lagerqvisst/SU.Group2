@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SU.Frontend.ViewModels.CommonViewModels
 {
-    internal class CreateExportSellStatViewModel
+    public class CreateExportSellStatViewModel
     {
     }
 }
