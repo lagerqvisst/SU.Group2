@@ -187,5 +187,15 @@ namespace SU.Frontend.Helper.Navigation
         {
             NavigateTo("NewCompanyInsuranceView", "CommonViews.NewInsurance");
         }
+
+        public void NavigateToNewOutsideSeller()
+        {
+            NavigateTo("NewOutsideSellerView", "SalesAssistantViews.RegisterNewSeller");
+        }
+
+        public void NavigateToNewInsideSeller()
+        {
+            NavigateTo("NewInsideSellerView", "SalesAssistantViews.RegisterNewSeller");
+        }
     }
 }

@@ -128,7 +128,7 @@ namespace SU.Backend.Services
         }
 
         //Method to add new Emplyee
-        public async Task<(bool success, string message)> CreateNewEmployee(Employee employee)
+        public async Task<(bool success, string message)> CreateNewEmployee_Old(Employee employee)
         {
             _logger.LogInformation("Creating new Employee...");
 
@@ -268,7 +268,54 @@ namespace SU.Backend.Services
 
         }
 
-        public async Task<(bool success, string message, List<Employee> salesEmployees)> GetAllSalesEmployees()
+
+        public async Task<(bool success, string message, Employee employee)> CreateNewEmployee(EmployeeType role, string firstName, string lastName, string personalNumber)
+        {
+            _logger.LogInformation("Creating new employee");
+
+            try
+            {
+                _logger.LogInformation("Generating employee properties using EmployeeHelper");
+
+                Employee employee = new Employee
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    PersonalNumber = personalNumber,
+                    UserName = EmployeeHelper.GenerateEmployeeUsername(new Name { First = firstName, Last = lastName }),
+                    Password = EmployeeHelper.GenerateEmployeePassword(firstName, lastName),
+                    Email = EmployeeHelper.GenerateEmployeeEmail(firstName, lastName),
+                    Manager = await GetManagerForRole(role),
+                    BaseSalary = EmployeeHelper.GetSalaryForEmployeeType(role),
+                    AgentNumber = (role == EmployeeType.OutsideSales || role == EmployeeType.InsideSales)
+                                  ? EmployeeHelper.GenerateFourDigitCode()
+                                  : null,
+                };
+
+                _logger.LogInformation("Creating role assignment object");
+                var roleAssignment = new EmployeeRoleAssignment
+                {
+                    Employee = employee,
+                    Role = role,
+                    Percentage = 100
+                };
+
+                employee.RoleAssignments.Add(roleAssignment);
+
+                _logger.LogInformation("Saving new employee to database");
+                _unitOfWork.Employees.Add(employee);
+                await _unitOfWork.SaveChangesAsync();
+
+                return (true, "Successfully created and saved new employee", employee);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while creating new employee");
+                return (false, "An error occurred: " + ex.Message, null);
+            }
+        }
+        
+                public async Task<(bool success, string message, List<Employee> salesEmployees)> GetAllSalesEmployees()
         {
             _logger.LogInformation("Controller activated to get all sales employees...");
 
@@ -293,5 +340,9 @@ namespace SU.Backend.Services
                 return (false, "An error occurred while fetching the sales employees", new List<Employee>());
             }
         }
+
+
+
+
     }
 }

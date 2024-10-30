@@ -23,7 +23,9 @@ namespace SU.Backend.Services.Interfaces
 
         Task<(bool success, string message, Employee? employee)> GetEmployeeById(int id);
 
-        Task<(bool success, string message)> CreateNewEmployee(Employee employee);
+        Task<(bool success, string message)> CreateNewEmployee_Old(Employee employee);
+
+        Task<(bool success, string message, Employee employee)> CreateNewEmployee(EmployeeType role, string firstName, string lastName, string personalNumber);
 
         Task<(bool success, string message)> UpdateEmployee(Employee employee);
 
