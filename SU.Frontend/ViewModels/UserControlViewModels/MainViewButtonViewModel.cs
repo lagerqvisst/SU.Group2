@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using SU.Frontend.Helper.Navigation;
 using SU.Backend.Models.Employees;
+using SU.Frontend.Helper.DI_Objects.User;
 
 namespace SU.Frontend.ViewModels.UserControlViewModels
 {
@@ -15,10 +16,20 @@ namespace SU.Frontend.ViewModels.UserControlViewModels
     {
 
         public ICommand ReturnToMainViewCommand { get; }
+        public ILoggedInUserService _loggedInUserService { get; }
+        public INavigationService _navigationService { get; }
 
-        public MainViewButtonViewModel(Employee employee, INavigationService navigationService)
+        public MainViewButtonViewModel(INavigationService navigationService, ILoggedInUserService loggedInUserService)
         {
-            ReturnToMainViewCommand = new RelayCommand(() => navigationService.ReturnToMain(employee));
+            _loggedInUserService = loggedInUserService;
+            _navigationService = navigationService;
+
+            ReturnToMainViewCommand = new RelayCommand(ReturnToMainView);
+        }
+
+        public void ReturnToMainView()
+        {
+            _navigationService.ReturnToMain(_loggedInUserService.LoggedInEmployee);
         }
     }
 }
