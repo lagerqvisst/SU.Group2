@@ -73,7 +73,7 @@ namespace SU.Backend.Database.Repositories
 
         public async Task<List<Insurance>> GetAllInsurances()
         {
-            return await _context.Insurances
+            return _context.Insurances
                 .Include(i => i.InsurancePolicyHolder)
                     .ThenInclude(p => p.PrivateCustomer)
                 .Include(i => i.InsuranceCoverage)
@@ -82,7 +82,7 @@ namespace SU.Backend.Database.Repositories
                 .Include(i => i.InsuranceCoverage)
                     .ThenInclude(ic => ic.PrivateCoverage)
                 .Include(i => i.InsuranceAddons)
-                .ToListAsync();
+                .ToList();
         }
 
         public async Task<List<Insurance>> GetInsurancesByYear(int year)

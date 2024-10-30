@@ -267,5 +267,31 @@ namespace SU.Backend.Services
 
 
         }
+
+        public async Task<(bool success, string message, List<Employee> salesEmployees)> GetAllSalesEmployees()
+        {
+            _logger.LogInformation("Controller activated to get all sales employees...");
+
+            try
+            {
+                var salesEmployees = await _unitOfWork.Employees.GetSalesEmployees();
+
+                if (salesEmployees == null)
+                {
+                    _logger.LogInformation("No sales employees found");
+                    return (false, "No sales employees found", new List<Employee>());
+                }
+
+                _logger.LogInformation("Sales employees found");
+
+                return (true, "Sales employees found", salesEmployees);
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "Error occurred while fetching sales employees");
+                return (false, "An error occurred while fetching the sales employees", new List<Employee>());
+            }
+        }
     }
 }

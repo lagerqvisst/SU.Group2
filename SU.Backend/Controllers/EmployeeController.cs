@@ -146,9 +146,24 @@ namespace SU.Backend.Controllers
             }
         }
 
-        public Employee GetAllEmployeeDetails(object id)
+        public async Task<(bool success, string message, List<Employee> salesEmployees)> GetAllSellers()
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("Controller activated to list all sales employees...");
+
+            var result = await _employeeService.GetAllSalesEmployees();
+
+            if (result.success)
+            {
+                _logger.LogInformation($"Sales employees found:\n{result.salesEmployees.Count}");
+                return (result.success, result.message, result.salesEmployees);
+            }
+            else
+            {
+                _logger.LogWarning($"Error retrieving sales employees: {result.message}");
+                return (result.success, result.message, null);
+            }
+
+
         }
     }
 }
