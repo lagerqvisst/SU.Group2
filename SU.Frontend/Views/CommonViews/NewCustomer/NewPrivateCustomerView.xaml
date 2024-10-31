@@ -17,7 +17,7 @@
         <TextBlock Text="Register New Private Customer" FontSize="25" FontWeight="Bold" Margin="20,37,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
         <!-- Left Panel with fields to fill in to register new private customer -->
-        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" Margin="15,87,0,0" Width="390" Height="330" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" Margin="15,130,0,0" Width="390" Height="330" HorizontalAlignment="Left" VerticalAlignment="Top">
 
             <StackPanel Margin="10">
 
