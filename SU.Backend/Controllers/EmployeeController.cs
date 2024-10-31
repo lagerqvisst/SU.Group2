@@ -6,6 +6,7 @@ using SU.Backend.Services;
 using SU.Backend.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -61,20 +62,20 @@ namespace SU.Backend.Controllers
             }
         }
         //Controller for add employee
-        public async Task<(bool success, string message)> CreateEmployee(Employee employee)
+        public async Task<(bool success, string message, Employee employee)> CreateEmployee(EmployeeType role, string firstName, string lastName, string personalNumber)
         {
             _logger.LogInformation("Controller activated to create new employee...");
-            var result = await _employeeService.CreateNewEmployee(employee);
+            var result = await _employeeService.CreateNewEmployee(role, firstName, lastName, personalNumber); 
 
             if (result.success)
             {
                 _logger.LogInformation($"{result.message}");
-                return (result.success, result.message);
+                return(result.success, result.message, result.employee);
             }
             else
             {
                 _logger.LogWarning($"{result.message}");
-                return (result.success, result.message);
+                return (result.success, result.message, result.employee);
             }
         }
         //Controller for delete employee

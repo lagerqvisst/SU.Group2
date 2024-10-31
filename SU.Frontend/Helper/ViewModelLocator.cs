@@ -90,6 +90,9 @@ namespace SU.Frontend.Helper
 
             public CreateSellStatViewModel CreateSellStatViewModel =>
                 App.AppHost?.Services.GetService<CreateSellStatViewModel>();
+
+            public RegisterNewSellerViewModel RegisterNewSellerViewModel =>
+                App.AppHost?.Services.GetService<RegisterNewSellerViewModel>();
         }
     }
 
