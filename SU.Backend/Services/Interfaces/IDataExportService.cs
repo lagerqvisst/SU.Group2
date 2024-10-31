@@ -1,4 +1,5 @@
 ﻿using SU.Backend.Models.Comissions;
+using SU.Backend.Models.Insurances.Prospects;
 using SU.Backend.Models.Invoices;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,7 @@ namespace SU.Backend.Services.Interfaces
     {
         Task<(bool success, string message)> ExportCommissionsToExcel(List<Commission> commissions);
         Task<(bool success, string message)> ExportInvoicesToExcel(List<InvoiceEntry> invoices);
+        Task<(bool success, string message)> ExportProspects(List<Prospect> prospects);
+
     }
 }

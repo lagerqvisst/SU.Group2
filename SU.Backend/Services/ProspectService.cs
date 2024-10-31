@@ -190,6 +190,28 @@ namespace SU.Backend.Services
                 return (false, "Error getting all current prospects", null);
             }
         }
+
+        public async Task<(bool success, string message)> UpdateProspect(Prospect prospect)
+        {
+            _logger.LogInformation("Updating Prospects...");
+
+            try
+            {
+                _logger.LogInformation("Attempting to update a Prospect...");
+
+                await _unitOfWork.Prospects.UpdateAsync(prospect);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Prospect has been successfully updated.");
+
+                return (true, "The Prospect has been updated on the database.");
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning(e.ToString());
+                return (false, $"An error has occurred while updating the prospect: {e.Message.ToString()}");
+            }
+        }
     }
 }
 

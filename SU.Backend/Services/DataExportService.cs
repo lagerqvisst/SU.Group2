@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using OfficeOpenXml;
 using SU.Backend.Services.Interfaces;
 using SU.Backend.Models.Invoices;
+using SU.Backend.Models.Insurances.Prospects;
 
 namespace SU.Backend.Services
 {
@@ -150,6 +151,122 @@ namespace SU.Backend.Services
                 return (false, "Error exporting invoices to Excel");
             }
         }
+
+        public async Task<(bool success, string message)> ExportProspects(List<Prospect> prospects)
+        {
+            try
+            {
+                if (prospects == null || !prospects.Any())
+                {
+                    _logger.LogInformation("No prospects to export");
+                    return (false, "No prospects to export");
+                }
+
+                _logger.LogInformation("Exporting prospects to Excel");
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+                using (var package = new ExcelPackage())
+                {
+                    var worksheet = package.Workbook.Worksheets.Add("Prospect Report");
+
+                    // Skapa rubriker med fetstil och justering
+                    worksheet.Cells[1, 1].Value = "First / Company Name";
+                    worksheet.Cells[1, 2].Value = "Last Name";
+                    worksheet.Cells[1, 3].Value = "Personal / Org Nr";
+                    worksheet.Cells[1, 4].Value = "Street Address";
+                    worksheet.Cells[1, 5].Value = "Phone Number";
+                    worksheet.Cells[1, 6].Value = "Email";
+                    worksheet.Cells[1, 7].Value = "Agent Number";
+                    worksheet.Cells[1, 8].Value = "Export Date";
+
+                    // Tillämpa fetstil på rubrikraden
+                    using (var headerRange = worksheet.Cells[1, 1, 1, 8])
+                    {
+                        headerRange.Style.Font.Bold = true;
+                        headerRange.Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
+                        headerRange.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        headerRange.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                        headerRange.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+                    }
+
+                    var exportDate = DateTime.Now.ToShortDateString();
+                    int currentRow = 2; // Starta från rad 2 eftersom första raden är rubriker
+
+                    // Iterera över prospects och skriv ut data samt sammanfattning direkt under
+                    foreach (var prospect in prospects)
+                    {
+                        // Prospect data med ram och justering
+                        worksheet.Cells[currentRow, 1].Value = prospect.FirstName;
+                        worksheet.Cells[currentRow, 2].Value = prospect.LastName;
+                        worksheet.Cells[currentRow, 3].Value = prospect.PersonalOrOrgNumber;
+                        worksheet.Cells[currentRow, 4].Value = prospect.StreetAddress;
+                        worksheet.Cells[currentRow, 5].Value = prospect.PhoneNumber;
+                        worksheet.Cells[currentRow, 6].Value = prospect.Email;
+                        worksheet.Cells[currentRow, 7].Value = prospect.AssignedAgentNumber;
+                        worksheet.Cells[currentRow, 8].Value = exportDate;
+
+                        // Tillämpa ram på hela prospect-raden
+                        for (int col = 1; col <= 8; col++)
+                        {
+                            worksheet.Cells[currentRow, col].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
+                            worksheet.Cells[currentRow, col].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left;
+                            worksheet.Cells[currentRow, col].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                        }
+
+                        currentRow++;
+
+                        // Sammanfattning med fetstil och ram
+                        worksheet.Cells[currentRow, 1].Value = "Contact Date:";
+                        worksheet.Cells[currentRow, 2].Value = prospect.ContactDate?.ToShortDateString() ?? "";
+                        worksheet.Cells[currentRow, 1, currentRow, 2].Style.Font.Bold = true;
+
+                        worksheet.Cells[currentRow + 1, 1].Value = "Outcome:";
+                        worksheet.Cells[currentRow + 1, 2].Value = prospect.ContactNote ?? "";
+                        worksheet.Cells[currentRow + 1, 1, currentRow + 1, 2].Style.Font.Bold = true;
+
+                        worksheet.Cells[currentRow + 2, 1].Value = "Seller:";
+                        worksheet.Cells[currentRow + 2, 2].Value = $"{prospect.Seller?.FirstName} {prospect.Seller?.LastName}";
+                        worksheet.Cells[currentRow + 2, 1, currentRow + 2, 2].Style.Font.Bold = true;
+
+                        worksheet.Cells[currentRow + 3, 1].Value = "Agency Number:";
+                        worksheet.Cells[currentRow + 3, 2].Value = prospect.AssignedAgentNumber;
+                        worksheet.Cells[currentRow + 3, 1, currentRow + 3, 2].Style.Font.Bold = true;
+
+                        // Tillämpa ramar på varje cell i sammanfattningen
+                        for (int row = currentRow; row <= currentRow + 3; row++)
+                        {
+                            worksheet.Cells[row, 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
+                            worksheet.Cells[row, 2].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
+                        }
+
+                        // Öka currentRow för nästa prospect, lämnar en tom rad för bättre läsbarhet
+                        currentRow += 5;
+                    }
+
+                    // AutoFit kolumner för att passa innehållet
+                    worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
+                    // Spara filen
+                    var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                    var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"ProspectReport_{timestamp}.xlsx");
+                    _logger.LogInformation($"Saving Excel file to {filePath}");
+                    var file = new FileInfo(filePath);
+                    await package.SaveAsAsync(file);
+
+                    _logger.LogInformation("Excel file created successfully");
+
+                    return (true, $"Excel file '{file.Name}' has been created successfully!\n\nYou can find the file here:\n{filePath}");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error exporting prospects to Excel");
+                return (false, "Error exporting prospects to Excel");
+            }
+        }
+
+
+
 
 
     }

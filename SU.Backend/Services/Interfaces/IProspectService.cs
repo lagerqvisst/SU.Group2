@@ -18,5 +18,7 @@ namespace SU.Backend.Services.Interfaces
         Task<(bool success, string message)> AssignSellerToSpecificProspect(Employee employee, Prospect prospect);
 
         Task<(bool success, string message, List<Prospect> prospects)> GetAllCurrentProspects();
+
+        Task<(bool success, string message)> UpdateProspect(Prospect prospect);
     }
 }
