@@ -9,6 +9,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
 {
@@ -18,10 +20,15 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
         private ObservableCollection<Prospect> _prospects;
         private readonly ProspectController _prospectController;
 
+
+        public ICommand SaveProspectCommand { get; }
+
         public ShowCustomerProspectViewModel(ProspectController prospectController)
         {
             _prospectController = prospectController;
+            Prospects = new ObservableCollection<Prospect>();
             LoadProspectsAsync();
+            SaveProspectCommand = new RelayCommand(SaveProspect);
         }
 
         public ObservableCollection<Prospect> Prospects
@@ -47,19 +54,56 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
 
         private async Task LoadProspectsAsync()
         {
-            var result = await _prospectController.GetAllCurrentProspects();
-            if (result.prospects != null)
-            {
-                Prospects.Clear();
-                
-                foreach (var prospect in result.prospects)
-                {
-                    Prospects.Add(prospect);
-                }
-            }
-          
+            await LoadAllProspectsAsync();
         }
 
+        private async Task LoadAllProspectsAsync()
+        {
+            var prospectIdentify = await _prospectController.IdentifyNewProspects();
+            var prospectResult = await _prospectController.GetAllCurrentProspects();
+            if (prospectResult.prospects?.Any() ?? false)
+            {
+                Prospects.Clear();
+                foreach (var prospects in prospectResult.prospects)
+                {
+                    Prospects.Add(prospects);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No prospects found");
+            }
+        }
+
+        private Prospect _selectedProspect;
+        public Prospect SelectedProspect
+        {
+            get => _selectedProspect;
+            set
+            {
+                _selectedProspect = value;
+                OnPropertyChanged();
+               // OnSelectedProspectChanged();
+            }
+        }
+
+
+
+
+        private async void SaveProspect()
+        {
+            var confirm = MessageBox.Show("Prospect has been updated",
+                      "Confirm", MessageBoxButton.OK);
+
+            if (SelectedProspect != null)
+            {
+                await _prospectController.UpdateProspect(SelectedProspect);
+            }
+            else if (SelectedProspect != null)
+            {
+                await _prospectController.UpdateProspect(SelectedProspect);
+            }
+        }
 
     }
 

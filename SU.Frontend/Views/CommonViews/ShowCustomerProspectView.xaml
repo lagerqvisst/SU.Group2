@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
+        xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
         Title="ShowCustomerProspectView" 
         Width="1000" Height="600"
         WindowStartupLocation="CenterScreen">
@@ -24,15 +25,27 @@
         <TextBlock Text="Prospects" FontSize="24" FontWeight="Bold" Grid.Row="0" Margin="10"/>
         <!-- Date Range Selection -->
         <StackPanel Orientation="Horizontal" Margin="10" Grid.Row="1">
-            
-            
-            <TextBlock Text="Date of contact: " VerticalAlignment="Center" Margin="10,0,0,0"/>
-            <DatePicker SelectedDate="{Binding EndDate, Mode=TwoWay}" Margin="5,0"/>
-            <Button Content="Update prospects" Command="{Binding GenerateCommissionCommand}" Margin="10,0"/>
+
+
+
+
         </StackPanel>
 
-        <!-- DataGrid to Display Commissions -->
-        <DataGrid ItemsSource="{Binding Commissions}" AutoGenerateColumns="True" Grid.Row="2" Margin="10"/>
-        
+
+        <DataGrid ItemsSource="{Binding Prospects}" SelectedItem="{Binding SelectedProspect}" AutoGenerateColumns="True" Grid.Row="2" Margin="10,28,10,146"/>
+
+        <Button Content="Save changes" Command="{Binding SaveProspectCommand}" Grid.Row="3" Margin="720,17,160,26" Height="60" Width="120"/>
+
+        <StackPanel VerticalAlignment="Bottom" Grid.Row="3" Height="100" RenderTransformOrigin="0.501,0.475">
+
+
+
+            <controls:DownloadButton Command="{Binding ExportComissionExcel}" 
+                 HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"
+                 Grid.Row="3"/>
+
+        </StackPanel>
+
+
     </Grid>
 </Window>
