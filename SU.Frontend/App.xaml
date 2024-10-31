@@ -36,7 +36,7 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Background" Value="Green"/>
             <Setter Property="Width" Value="150"/>
-            <Setter Property="Height" Value="35"/>
+            <Setter Property="Height" Value="30"/>
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
