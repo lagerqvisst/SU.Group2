@@ -8,6 +8,7 @@
         xmlns:local="clr-namespace:SU.Frontend.Views.SalesAssistantView"
         mc:Ignorable="d"
         Title="RegisterNewSellerView" Height="650" Width="800">
+    
     <Window.Resources>
         <helper:ViewModelLocator x:Key="Locator"/>
     </Window.Resources>

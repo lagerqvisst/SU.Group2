@@ -12,7 +12,7 @@ namespace SU.Backend.Models.Comissions
     /// </summary>
     public class Commission
     {
-        public Employee Seller { get; set; } // A commission is associated with 1 seller
+        public string AgentNumber { get; set; }
         public string SellerName { get; set; }
         public string PersonalNumber { get; set; }
 

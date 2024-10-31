@@ -24,5 +24,17 @@ namespace SU.Frontend.Views.UserControls
         {
             InitializeComponent();
         }
+
+
+        //Reason for code behind is that the button is a usercontrol and the command is binded to the viewmodel, needs flexibility to be easily binded to different viewmodels/views
+
+        public ICommand Command
+        {
+            get => (ICommand)GetValue(CommandProperty);
+            set => SetValue(CommandProperty, value);
+        }
+
+        public static readonly DependencyProperty CommandProperty =
+            DependencyProperty.Register("Command", typeof(ICommand), typeof(DownloadButton), new PropertyMetadata(null));
     }
 }
