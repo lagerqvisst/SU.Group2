@@ -17,35 +17,33 @@
     <Grid DataContext="{Binding ShowCustomerProspectViewModel, Source={StaticResource Locator}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Text="Prospects" FontSize="24" FontWeight="Bold" Grid.Row="0" Margin="10"/>
-        <!-- Date Range Selection -->
-        <StackPanel Orientation="Horizontal" Margin="10" Grid.Row="1">
+
+        <TextBlock Text="Note" FontWeight="Bold" Grid.Row="2" Margin="60,0,0,0"/>
+
+        <DataGrid ItemsSource="{Binding Prospects}" SelectedItem="{Binding SelectedProspect}" AutoGenerateColumns="True" Grid.Row="1" Margin="10,28,10,56"/>
 
 
+        <Border BorderBrush="Green" BorderThickness="2" Grid.Row="3" Margin="0,0,0,0">
+            <StackPanel VerticalAlignment="Top" Grid.Row="3" Height="102" Margin="0,-2,0,0" Orientation="Horizontal">
+                <!--Used for Note-->
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                    <TextBox Text="{Binding SelectedProspect.ContactNote, Mode=TwoWay}" Width="161" Height="93" TextWrapping="Wrap" AcceptsReturn="True"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
 
+        <Button Content="Save changes" Command="{Binding SaveProspectCommand}" Grid.Row="4" Margin="736,33,144,10" Height="60" Width="120"/>
 
-        </StackPanel>
-
-
-        <DataGrid ItemsSource="{Binding Prospects}" SelectedItem="{Binding SelectedProspect}" AutoGenerateColumns="True" Grid.Row="2" Margin="10,28,10,146"/>
-
-        <Button Content="Save changes" Command="{Binding SaveProspectCommand}" Grid.Row="3" Margin="720,17,160,26" Height="60" Width="120"/>
-
-        <StackPanel VerticalAlignment="Bottom" Grid.Row="3" Height="100" RenderTransformOrigin="0.501,0.475">
-
-
-
-            <controls:DownloadButton Command="{Binding ExportComissionExcel}" 
+        <controls:DownloadButton Command="{Binding ExportComissionExcel}" 
                  HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"
-                 Grid.Row="3"/>
-
-        </StackPanel>
-
+                 Grid.Row="4"/>
 
     </Grid>
 </Window>
