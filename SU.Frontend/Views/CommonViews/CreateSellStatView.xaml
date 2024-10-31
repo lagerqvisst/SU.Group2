@@ -15,13 +15,8 @@
                 <!-- DataGrid for showing statistics -->
                 <DataGrid ItemsSource="{Binding InsuranceStatistics}" AutoGenerateColumns="True" 
                           Margin="0,10,0,0" Height="300">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Insurance Type" Binding="{Binding InsuranceType}" />
-                        <DataGridTextColumn Header="Month" Binding="{Binding Month}" />
-                        <DataGridTextColumn Header="Total Policies" Binding="{Binding TotalPolicies}" />
-                        <DataGridTextColumn Header="Total Premium" Binding="{Binding TotalPremium}" />
-                    </DataGrid.Columns>
-                </DataGrid>
+
+              </DataGrid>
             </StackPanel>
         </Border>
     </Grid>
