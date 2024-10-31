@@ -91,15 +91,11 @@ namespace SU.Backend.Services
                 // Step 1: Fetch all active insurances
                 var activeInsurances = await _unitOfWork.Insurances.GetAllActiveInsurances();
 
-                // If no active insurances are found, return an error message
-                if (activeInsurances == null || !activeInsurances.Any())
-                {
-                    _logger.LogInformation("No active insurances found");
-                    return (false, "No active insurances found", new List<InsuranceStatistics>());
-                }
+                // Step 2: Create a list of all insurance types from the enum
+                var allInsuranceTypes = Enum.GetValues(typeof(InsuranceType)).Cast<InsuranceType>();
 
-                // Step 2: Group insurances by type and month, and calculate total policies and premium
-                var statistics = activeInsurances
+                // Step 3: Group insurances by type and month, and calculate total policies and premium
+                var groupedStatistics = activeInsurances
                     .GroupBy(i => new { i.InsuranceType, Month = i.StartDate.Month })
                     .Select(g => new InsuranceStatistics
                     {
@@ -108,11 +104,37 @@ namespace SU.Backend.Services
                         TotalPolicies = g.Count(),
                         TotalPremium = g.Sum(i => i.Premium)
                     })
-                    .OrderBy(stat => stat.Month)  // Sort by month
                     .ToList();
 
+                // Step 4: Ensure all insurance types are included in the statistics
+                var allStatistics = new List<InsuranceStatistics>();
+                foreach (var type in allInsuranceTypes)
+                {
+                    for (int month = 1; month <= 12; month++)
+                    {
+                        var existingStat = groupedStatistics
+                            .FirstOrDefault(stat => stat.InsuranceType == type.ToString() && stat.Month == month);
+
+                        if (existingStat != null)
+                        {
+                            allStatistics.Add(existingStat);
+                        }
+                        else
+                        {
+                            // Add a zero-filled entry for types without sales
+                            allStatistics.Add(new InsuranceStatistics
+                            {
+                                InsuranceType = type.ToString(),
+                                Month = month,
+                                TotalPolicies = 0,
+                                TotalPremium = 0m
+                            });
+                        }
+                    }
+                }
+
                 // Return the statistics
-                return (true, "Success", statistics);
+                return (true, "Success", allStatistics.OrderBy(stat => stat.Month).ToList());
             }
             catch (Exception ex)
             {
@@ -120,8 +142,6 @@ namespace SU.Backend.Services
                 return (false, "An error occurred while fetching insurance statistics", new List<InsuranceStatistics>());
             }
         }
-
-
 
     }
 }
