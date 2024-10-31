@@ -4,8 +4,6 @@
              xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper">
 
 
-
-
     <Application.Resources>
         <!-- Register ViewModelLocator -->
         <helper:ViewModelLocator x:Key="Locator" />

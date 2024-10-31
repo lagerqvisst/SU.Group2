@@ -59,7 +59,7 @@ namespace SU.Backend.Database.Repositories
                 .GroupBy(ins => ins.Seller)
                 .Select(group => new Commission
                 {
-                    Seller = group.Key,
+                    AgentNumber = group.Key.AgentNumber,
                     SellerName = group.Key.FirstName + " " + group.Key.LastName,
                     PersonalNumber = group.Key.PersonalNumber,
                     CommissionAmount = Commission.CalculateCommission(group.Sum(ins => ins.Premium)),

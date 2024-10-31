@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace SU.Frontend.Views.FinancialAssistantView
 {
     /// <summary>
-    /// Interaction logic for RegisterProvisionSeller.xaml
+    /// Interaction logic for ComissionView.xaml
     /// </summary>
-    public partial class RegisterProvisionSellerView : Window
+    public partial class ComissionView : Window
     {
-        public RegisterProvisionSellerView()
+        public ComissionView()
         {
             InitializeComponent();
         }

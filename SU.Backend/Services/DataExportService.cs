@@ -50,7 +50,7 @@ namespace SU.Backend.Services
                     for (int i = 0; i < commissions.Count; i++)
                     {
                         var commission = commissions[i];
-                        worksheet.Cells[i + 2, 1].Value = commission.Seller.AgentNumber;
+                        worksheet.Cells[i + 2, 1].Value = commission.AgentNumber;
                         worksheet.Cells[i + 2, 2].Value = commission.SellerName;
                         worksheet.Cells[i + 2, 3].Value = commission.PersonalNumber;
                         worksheet.Cells[i + 2, 4].Value = commission.StartDate.ToShortDateString();
@@ -63,8 +63,8 @@ namespace SU.Backend.Services
 
                     // Skapa ett unikt filnamn med datum och tid
                     var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-                    var filePath = $"CommissionReport_{timestamp}.xlsx";
-
+                    var fileName = $"CommissionReport_{timestamp}.xlsx";
+                    var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
                     // Spara filen
                     _logger.LogInformation($"Saving Excel file to {filePath}");
                     var file = new FileInfo(filePath);
@@ -72,7 +72,7 @@ namespace SU.Backend.Services
 
                     _logger.LogInformation("Excel file created successfully");
 
-                    return (true, "Excel file created successfully");
+                    return (true, $"Excel file '{fileName}' has been created successfully!\n\nYou can find the file here:\n{filePath}");
                 }
             }
             catch (Exception ex)
