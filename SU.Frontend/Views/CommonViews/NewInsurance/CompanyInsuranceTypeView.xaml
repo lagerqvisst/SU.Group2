@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SU.Frontend.Views.CommonViews.NewInsurance"
         xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         mc:Ignorable="d"
-        Title="CompanyInsuranceTypeView" Height="600" Width="900">
+        Title="Company Insurance Options" Height="600" Width="900">
 
     <Window.Resources>
         <helper:ViewModelLocator x:Key="Locator"/>

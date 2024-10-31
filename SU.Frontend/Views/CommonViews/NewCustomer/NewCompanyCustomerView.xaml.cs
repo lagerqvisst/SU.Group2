@@ -23,10 +23,5 @@ namespace SU.Frontend.Views.CommonViews.NewCustomer
         {
             InitializeComponent();
         }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
     }
 }
