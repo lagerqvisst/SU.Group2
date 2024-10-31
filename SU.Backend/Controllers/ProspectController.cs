@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using SU.Backend.Models.Employees;
 using SU.Backend.Models.Insurances.Prospects;
+using SU.Backend.Services;
 using SU.Backend.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -57,7 +58,7 @@ namespace SU.Backend.Controllers
             return (result.success, result.message);
         }
 
-        public async Task<(List<Prospect>, string message)> GetAllCurrentProspects()
+        public async Task<(List<Prospect> prospects, string message)> GetAllCurrentProspects()
         {
             _logger.LogInformation("Getting all current prospects...");
             var result = await prospectService.GetAllCurrentProspects();
@@ -70,6 +71,23 @@ namespace SU.Backend.Controllers
                 _logger.LogWarning($"Failed to retrieve prospects: {result.message}");
             }
             return (result.prospects, result.message);
+        }
+
+        public async Task<(bool success, string message)> UpdateProspect(Prospect prospect)
+        {
+            _logger.LogInformation("Prospect object updated via GUI");
+            var result = await prospectService.UpdateProspect(prospect);
+
+            if (result.success)
+            {
+                _logger.LogInformation($"{result.message}");
+                return (result.success, result.message);
+            }
+            else
+            {
+                _logger.LogWarning($"{result.message}");
+                return (result.success, result.message);
+            }
         }
     }
 }
