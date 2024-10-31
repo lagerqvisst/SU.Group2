@@ -41,11 +41,13 @@
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                     <DataGrid ItemsSource="{Binding FilteredPrivateCustomers}" 
                               AutoGenerateColumns="True" 
-                              Width="560" Height="200" 
+                              Width="560" 
+                              Height="200" 
                               Margin="20,0,0,0"
                               SelectedItem="{Binding SelectedPrivateCustomer}">
                     </DataGrid>
                 </ScrollViewer>
+                
                 <!-- Button to select the policy holder -->
                 <Button Style="{StaticResource ConfirmationButtonStyle}" 
                         Content="Select as Policy Holder" 

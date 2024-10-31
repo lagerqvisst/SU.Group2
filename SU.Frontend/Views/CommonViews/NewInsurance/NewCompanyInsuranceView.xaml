@@ -5,36 +5,65 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SU.Frontend.Views.CommonViews.NewInsurance"
         xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
+        xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
         mc:Ignorable="d"
-        Title="New Company Insurance" Height="450" Width="800">
+        Title="New Company Insurance" Height="545" Width="800">
 
     <Window.Resources>
         <helper:ViewModelLocator x:Key="Locator"/>
     </Window.Resources>
 
-    <Grid DataContext="{Binding NewCompanyInsuranceViewModel, Source={StaticResource Locator}}" Margin="20">
-        <StackPanel>
-
+    <Grid DataContext="{Binding NewCompanyInsuranceViewModel, Source={StaticResource Locator}}">
+        
             <!-- Title -->
-            <TextBlock Text="Select a company customer to be the insurance policy holder" 
-                       FontSize="20" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,20"/>
+            <TextBlock Text="Select An Insurance Policy Holder" 
+                       FontSize="25" 
+                       FontWeight="Bold" 
+                       TextAlignment="Left" 
+                       Margin="20,37,0,0"/>
+        
+        <!-- Left Panel -->
+        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" Margin="15,120,0,0" Width="600" Height="400" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <StackPanel>
+                <!-- Search label -->
+                <TextBlock Text="Insert Customers Name" 
+                           FontSize="15" 
+                           FontWeight="DemiBold"
+                           Margin="20,20,10,5"/>
 
-            <!-- Search label -->
-            <TextBlock Text="Search customers to filter the list:" TextAlignment="Center" FontSize="14" Margin="0,0,0,10"/>
+                <!-- Search Box -->
+                <TextBox Style="{StaticResource FillInBoxesStyle}" 
+                         Width="300" 
+                         Height="30" 
+                         Margin="20,10,0,20" 
+                         HorizontalAlignment="Left"
+                         Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <!-- Search Box -->
-            <TextBox Width="300" Height="30" Margin="0,0,0,20" Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"/>
+                <!-- DataGrid for displaying company customers -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <DataGrid ItemsSource="{Binding FilteredCompanyCustomers}" 
+                          AutoGenerateColumns="True" 
+                          Width="560" 
+                          Height="200" 
+                          Margin="20,0"
+                          SelectedItem="{Binding SelectedCompanyCustomer}">
+                    </DataGrid>
+                </ScrollViewer>
 
-            <!-- DataGrid for displaying private customers -->
-            <DataGrid ItemsSource="{Binding FilteredCompanyCustomers}" 
-                      AutoGenerateColumns="True" 
-                      Width="560" Height="200" 
-                      SelectedItem="{Binding SelectedCompanyCustomer}">
-            </DataGrid>
-
-            <!-- Button to select the policy holder -->
-            <Button Content="Select as Policy Holder" Command="{Binding SelectPolicyHolderCommand}" Width="200" Margin="0,20,0,0" 
+                <!-- Button to select the policy holder -->
+                <Button Style="{StaticResource ConfirmationButtonStyle}" 
+                        Content="Select as Policy Holder" 
+                        Command="{Binding SelectPolicyHolderCommand}" 
+                        Width="200" 
+                        Margin="0,20,0,0" 
                     />
-        </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Main View, Logout Button and SignedInUserUserControl -->
+        <controls:MainViewButtonControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,120,10,0"/>
+        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"/>
+        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,10,10"/>
+        
     </Grid>
 </Window>
