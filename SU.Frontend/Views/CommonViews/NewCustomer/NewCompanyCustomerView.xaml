@@ -28,7 +28,7 @@
                     <TextBlock Text="Organization Number"  FontSize="15" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
                     <TextBox Style="{StaticResource FillInBoxesStyle}" 
                              Text="{Binding OrganizationNumber, UpdateSourceTrigger=PropertyChanged}" 
-                             Grid.Column="1" TextChanged="TextBox_TextChanged"/>
+                             Grid.Column="1"/>
                 </Grid>
 
                 <!-- Company Name -->
