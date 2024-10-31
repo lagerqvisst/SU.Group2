@@ -82,6 +82,9 @@ namespace SU.Frontend.Helper
            public EditDeleteCustomerViewModel EditDeleteCustomerViewModel =>
                 App.AppHost?.Services.GetService<EditDeleteCustomerViewModel>();
 
+            public EditDeleteSellerViewModel EditDeleteSellerViewModel =>
+                App.AppHost?.Services.GetService<EditDeleteSellerViewModel>();
+
             public EditDeleteInsuranceViewModel EditDeleteInsuranceViewModel =>
               App.AppHost?.Services.GetService<EditDeleteInsuranceViewModel>();
 
