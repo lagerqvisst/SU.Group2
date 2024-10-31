@@ -128,6 +128,7 @@ namespace SU.Backend.Helper
 
             employee.RoleAssignments.Clear();
 
+
             employee.RoleAssignments.Add(new EmployeeRoleAssignment
             {
                 Role = newRole,
@@ -135,6 +136,7 @@ namespace SU.Backend.Helper
             });
         }
 
+        
 
     }
 }
