@@ -15,10 +15,10 @@
 
     <Grid DataContext="{Binding SellerMainViewModel, Source={StaticResource Locator}}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="200*"/>
+            <ColumnDefinition Width="200*"/>
+            <ColumnDefinition Width="153*"/>
+            <ColumnDefinition Width="247*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -34,61 +34,49 @@
                    Text="Seller Main View" 
                    FontWeight="Bold"
                    HorizontalAlignment="Left" 
-                   Margin="20,37,0,0" 
-                   Grid.ColumnSpan="2"/>
+                   Margin="20,37,0,106" 
+                   Grid.ColumnSpan="2" Grid.RowSpan="2" Width="196"/>
 
         <!-- Functionalities available for Sellers -->
         <Button Style="{StaticResource OptionsButtonStyle}" 
                 Content="Register new customer" 
-                Command="{Binding ToRegisterNewCustomer}" 
-                Width="180"
-                Height="50"
-                Grid.Row="1"/>
+                Command="{Binding ToRegisterNewCustomer}"
+                Grid.Row="1" 
+                Margin="10,28,10,28"/>
         <Button Style="{StaticResource OptionsButtonStyle}" 
                 Content="Register new insurance" 
                 Command="{Binding ToRegisterNewInsurance}" 
-                Width="180"
-                Height="50" 
                 Grid.Row="1" 
-                Grid.Column="1"/>
+                Grid.Column="1" 
+                Margin="10,28,10,28"/>
         <Button Style="{StaticResource OptionsButtonStyle}" 
                 Content="Edit/ Delete customer" 
-                Command="{Binding ToEditDeleteCustomer}" 
-                Width="180"
-                Height="50"
-                Grid.Row="2"/>
+                Command="{Binding ToEditDeleteCustomer}"
+                Grid.Row="2" Margin="10,28,10,27"/>
         <Button Style="{StaticResource OptionsButtonStyle}" 
                 Content="Edit/ Delete insurance" 
-                Command="{Binding ToEditDeleteInsurance}" 
-                Width="180"
-                Height="50"
+                Command="{Binding ToEditDeleteInsurance}"
                 Grid.Row="2" 
-                Grid.Column="1"/>
+                Grid.Column="1" Margin="10,28,10,27"/>
         <Button Style="{StaticResource OptionsButtonStyle}" 
                 Content="Show/ Search Insurances" 
-                Command="{Binding ToShowInsurances}" 
-                Width="180"
-                Height="50"
-                Grid.Row="3"/>
+                Command="{Binding ToShowInsurances}"
+                Grid.Row="3" Margin="10,28,10,28"/>
         <Button Style="{StaticResource OptionsButtonStyle}" 
                 Content="Show/ Search Customers" 
-                Command="{Binding ToShowCustomers}" 
-                Width="180"
-                Height="50"
+                Command="{Binding ToShowCustomers}"
                 Grid.Row="3" 
-                Grid.Column="1"/>
+                Grid.Column="1" Margin="10,28,10,28"/>
         <Button Style="{StaticResource OptionsButtonStyle}" 
                 Content="Show customer prospects" 
-                Command="{Binding ToShowCustomerProspects}" 
-                Width="180"
-                Height="50"
+                Command="{Binding ToShowCustomerProspects}"
                 Grid.Row="4"
-                Grid.ColumnSpan="2"/>
+                Grid.ColumnSpan="2" Margin="110,28,110,28"/>
 
         <!-- Main View, Logout Button and SignedInUserUserControl -->
-        <controls:MainViewButtonControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,120,10,0" Grid.Column="3" Grid.RowSpan="2" />
-        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Grid.Column="3" Grid.Row="4"/>
-        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,10,10" Grid.Column="3"/>
+        <controls:MainViewButtonControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,19,10,0" Grid.Column="3" Height="30" Grid.Row="1" Width="100" />
+        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Grid.Column="3" Grid.Row="4" Height="30" Width="100"/>
+        <controls:SignedInUserUserControl HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="3" Height="105" Width="227" Margin="0,15,0,0" Grid.RowSpan="2"/>
 
     </Grid>
 </Window>
