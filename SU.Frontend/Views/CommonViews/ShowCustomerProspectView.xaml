@@ -3,100 +3,114 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SU.Frontend.Views.CommonViews"
-        xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
-        mc:Ignorable="d"
-        Title="ShowCustomerProspectView" Height="450" Width="1000">
+        xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
+        Title="ShowCustomerProspectView" 
+        Width="1000" Height="600"
+        WindowStartupLocation="CenterScreen">
 
-    <Grid Background="White">
-        <!-- Title -->
+
+    <Window.Resources>
+        <helper:ViewModelLocator x:Key="Locator" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+
+    <Grid Background="White" Margin="20" DataContext="{Binding ShowCustomerProspectViewModel, Source={StaticResource Locator}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Title "Prospects" -->
         <TextBlock Text="Prospects" 
                    FontWeight="Bold" FontSize="20" 
-                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,25,0,0"/>
+                   HorizontalAlignment="Left" VerticalAlignment="Top" 
+                   Grid.ColumnSpan="2" Margin="20,20,0,0"/>
 
-        <!-- Left Panel - Client List with Border -->
-        <Border BorderBrush="Green" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,70,0,0">
-            <StackPanel Width="200" Margin="10">
-                <TextBlock Text="Select a client or enter clients ID" FontWeight="Bold" Margin="0,0,0,10"/>
+        <!-- Left Panel - Client List with Green Border -->
+        <Border Grid.Column="0" BorderBrush="Green" BorderThickness="2" 
+                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0">
+            <StackPanel Width="250" Margin="10">
+                <TextBlock Text="Private Customers" FontWeight="Bold" Margin="0,0,0,10"/>
+                <ComboBox Height="30" Margin="0,0,0,10" 
+                          ItemsSource="{Binding PrivateCustomers}" 
+                          DisplayMemberPath="FirstName" 
+                          SelectedItem="{Binding SelectedPrivateCustomer}"/>
 
-                <ComboBox Height="30" Margin="0,0,0,10">
-                    <!-- Placeholder for binding ItemsSource and SelectedItem -->
-                </ComboBox>
-                <TextBox Text="SearchTextBox" Width="200" Height="30" HorizontalAlignment="Left">
-                    
-                </TextBox>
-                  
-                 
-
-                <Button Content="Select" Width="80" Height="30" HorizontalAlignment="Left"/>
+                <TextBlock Text="Company Customers" FontWeight="Bold" Margin="0,20,0,10"/>
+                <ComboBox Height="30" Margin="0,0,0,10" 
+                          ItemsSource="{Binding CompanyCustomers}" 
+                          DisplayMemberPath="CompanyName" 
+                          SelectedItem="{Binding SelectedCompanyCustomer}"/>
             </StackPanel>
         </Border>
 
-        <!-- Right Panel - Client Details with Border -->
-        <Border BorderBrush="Green" BorderThickness="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,70,390,0">
+        <!-- Right Panel - Private Customer Details with Green Border -->
+        <Border Grid.Column="1" BorderBrush="Green" BorderThickness="2" 
+                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0"
+                Visibility="{Binding IsPrivateCustomerVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
             <StackPanel Width="300" Margin="10">
-                <TextBlock Text="Client information" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
+                <TextBlock Text="Private Customer Information" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
+                <TextBlock Text="First Name:" FontWeight="Bold"/>
+                <TextBlock Text="{Binding SelectedPrivateCustomer.FirstName}"/>
 
-                <TextBlock Text="Chosen client: Placeholder for binding" FontWeight="Bold" FontSize="14" Margin="0,0,0,10"/>
+                <TextBlock Text="Last Name:" FontWeight="Bold" Margin="10,0,0,0"/>
+                <TextBlock Text="{Binding SelectedPrivateCustomer.LastName}"/>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="First Name:" FontWeight="Bold" Width="120"/>
-                    <TextBlock Text="Placeholder for binding"/>
-                </StackPanel>
+                <TextBlock Text="Email:" FontWeight="Bold" Margin="10,0,0,0"/>
+                <TextBlock Text="{Binding SelectedPrivateCustomer.Email}"/>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Last Name:" FontWeight="Bold" Width="120"/>
-                    <TextBlock Text="Placeholder for binding"/>
-                </StackPanel>
+                <TextBlock Text="Phone Number:" FontWeight="Bold" Margin="10,0,0,0"/>
+                <TextBlock Text="{Binding SelectedPrivateCustomer.PhoneNumber}"/>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Client ID:" FontWeight="Bold" Width="120"/>
-                    <TextBlock Text="Placeholder for binding"/>
-                </StackPanel>
+                <!-- Prospect Status -->
+                <TextBlock Text="Prospect Status:" FontWeight="Bold" Margin="10,10,0,0"/>
+                <ComboBox Height="30" Width="160" ItemsSource="{Binding AvailableStatuses}" 
+                          SelectedItem="{Binding SelectedStatus}" Margin="0,0,0,10"/>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Address:" FontWeight="Bold" Width="120"/>
-                    <TextBlock Text="Placeholder for binding"/>
-                </StackPanel>
+                <!-- Note -->
+                <TextBlock Text="Note:" FontWeight="Bold" Margin="10,10,0,0"/>
+                <TextBox Width="160" Height="60" TextWrapping="Wrap" Text="{Binding Comment}" Margin="0,0,0,10"/>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Postcode:" FontWeight="Bold" Width="120"/>
-                    <TextBlock Text="Placeholder for binding"/>
-                </StackPanel>
+                <!-- Date of Contact -->
+                <TextBlock Text="Date of Contact:" FontWeight="Bold" Margin="10,10,0,0"/>
+                <DatePicker Width="160" SelectedDate="{Binding ContactDate}" Margin="0,0,0,10"/>
 
-                <!-- New fields for updating status, adding a comment, and changing contact date -->
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Prospect Status:" FontWeight="Bold" Width="120"/>
-                    <ComboBox Width="160" Height="30">
-                        <ComboBoxItem Content="New"/>
-                        <ComboBoxItem Content="In Progress"/>
-                        <ComboBoxItem Content="Closed"/>
-                    </ComboBox>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Comment:" FontWeight="Bold" Width="120"/>
-                    <TextBox Width="160" Height="60" TextWrapping="Wrap"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Date of Contact:" FontWeight="Bold" Width="120"/>
-                    <DatePicker Width="160"/>
-                </StackPanel>
-
+                <!-- Save Button -->
                 <Button Content="Save" Width="100" Height="30" HorizontalAlignment="Center" Margin="10"/>
             </StackPanel>
         </Border>
 
-        <!-- Taskbar Control -->
-        <controls:Taskbar HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10"/>
+        <!-- Right Panel - Company Customer Details with Green Border -->
+        <Border Grid.Column="1" BorderBrush="Green" BorderThickness="2" 
+                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0"
+                Visibility="{Binding IsCompanyCustomerVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel Width="300" Margin="10">
+                <TextBlock Text="Company Customer Information" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
+                <TextBlock Text="Company Name:" FontWeight="Bold"/>
+                <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyName}"/>
 
-        <!-- Main View, Logout Button and SignedInUserUserControl -->
-        <controls:MainViewButtonControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,160,10,0"/>
-        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"/>
-        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,10,10"/>
+                <TextBlock Text="Contact Person:" FontWeight="Bold" Margin="10,0,0,0"/>
+                <TextBlock Text="{Binding SelectedCompanyCustomer.ContactPerson}"/>
 
+                <TextBlock Text="Phone Number:" FontWeight="Bold" Margin="10,0,0,0"/>
+                <TextBlock Text="{Binding SelectedCompanyCustomer.ContactPersonPhonenumber}"/>
+
+                <!-- Prospect Status -->
+                <TextBlock Text="Prospect Status:" FontWeight="Bold" Margin="10,10,0,0"/>
+                <ComboBox Height="30" Width="160" ItemsSource="{Binding AvailableStatuses}" 
+                          SelectedItem="{Binding SelectedStatus}" Margin="0,0,0,10"/>
+
+                <!-- Note -->
+                <TextBlock Text="Note:" FontWeight="Bold" Margin="10,10,0,0"/>
+                <TextBox Width="160" Height="60" TextWrapping="Wrap" Text="{Binding Comment}" Margin="0,0,0,10"/>
+
+                <!-- Date of Contact -->
+                <TextBlock Text="Date of Contact:" FontWeight="Bold" Margin="10,10,0,0"/>
+                <DatePicker Width="160" SelectedDate="{Binding ContactDate}" Margin="0,0,0,10"/>
+
+                <!-- Save Button -->
+                <Button Content="Save" Width="100" Height="30" HorizontalAlignment="Center" Margin="10"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
-
-
