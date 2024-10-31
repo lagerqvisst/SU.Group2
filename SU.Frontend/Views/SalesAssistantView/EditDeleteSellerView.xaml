@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
         xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         mc:Ignorable="d"
-        Title="EditDeleteSellerView" Height="450" Width="800">
+        Title="EditDeleteSellerView" SizeToContent="WidthAndHeight">
     
     <Window.Resources>
         <helper:ViewModelLocator x:Key="Locator" />
@@ -33,14 +33,18 @@
 
         <!-- Details Panel for Sellers with Border -->
 
-        <Border BorderBrush="Green" BorderThickness="2" Margin="251,140,175,99">
-            <ScrollViewer VerticalScrollBarVisibility="Visible" CanContentScroll="True">
+        <Border BorderBrush="Green" BorderThickness="2" Margin="251,140,235,213">
+            <ScrollViewer VerticalScrollBarVisibility="Visible" CanContentScroll="True" Margin="0,0,0,2">
                 
-                <StackPanel Orientation="Vertical" Margin="5,0,0,0" Height="239" Width="437">
+                <StackPanel Orientation="Vertical" Margin="5,0,0,0" Height="200" Width="382">
                     <TextBlock Text="Seller Details:" FontWeight="Bold" FontSize="16" Margin="0,5,0,10"/>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                         <TextBlock Text="Seller type: " FontWeight="Bold"/>
                         <ComboBox Margin="0,0,0,10" ItemsSource="{Binding Sellers}" SelectedItem="{Binding SelectedSeller.RoleAssignments}" Width="100"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                        <TextBlock Text="Employee ID: " FontWeight="Bold"/>
+                        <TextBlock Text="{Binding SelectedSeller.EmployeeId}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                         <TextBlock Text="Personal number: " FontWeight="Bold"/>
@@ -54,12 +58,36 @@
                         <TextBlock Text="Last name: " FontWeight="Bold"/>
                         <TextBox Text="{Binding SelectedSeller.LastName}"/>
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                        <TextBlock Text="User name: " FontWeight="Bold"/>
+                        <TextBox Text="{Binding SelectedSeller.UserName}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                        <TextBlock Text="Password: " FontWeight="Bold"/>
+                        <TextBox Text="{Binding SelectedSeller.Password}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                        <TextBlock Text="Email: " FontWeight="Bold"/>
+                        <TextBox Text="{Binding SelectedSeller.Email}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                        <TextBlock Text="Agent number: " FontWeight="Bold"/>
+                        <TextBlock Text="{Binding SelectedSeller.AgentNumber}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                        <TextBlock Text="Manager ID: " FontWeight="Bold"/>
+                        <TextBlock Text="{Binding SelectedSeller.ManagerId}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                        <TextBlock Text="Base salary: " FontWeight="Bold"/>
+                        <TextBox Text="{Binding SelectedSeller.BaseSalary}"/>
+                    </StackPanel>
                 </StackPanel>
             </ScrollViewer>
         </Border>
 
-        <Button Content="Save Changes" Background="LightGreen" Command="{Binding SaveInsuranceCommand}" Width="120" Height="40" Margin="251,404,542,40"/>
-        <Button Content="Delete Insurance" Background="IndianRed" Command="{Binding DeleteInsuranceCommand}" Width="120" Height="40" Margin="0,404,175,40" HorizontalAlignment="Right"/>
+        <Button Content="Save Changes" Background="LightGreen" Command="{Binding SaveSellerCommand}" Width="120" Height="41" Margin="251,401,529,143" HorizontalAlignment="Center"/>
+        <Button Content="Delete Insurance" Background="IndianRed" Command="{Binding DeleteSellerCommand}" Width="120" Height="41" Margin="545,401,235,143" HorizontalAlignment="Center"/>
 
         <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,10,10,10" Grid.Column="3" Grid.Row="4"/>
         <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="2" Grid.ColumnSpan="2" Margin="50,0,0,0" Width="350" Height="180" Grid.RowSpan="2"/>
