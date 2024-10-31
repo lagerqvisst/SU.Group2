@@ -39,63 +39,63 @@
 
                 <StackPanel Orientation="Vertical" Margin="0,0,0,0" Height="239" Width="437">
                     <TextBlock Text="Insurance Details:" FontWeight="Bold" FontSize="16" Margin="0,5,0,10"/>
-                    <StackPanel Orientation="Horizontal"  Margin="0,0,0,0">
+
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
                         <TextBlock Text="Insurance ID: " FontWeight="Bold"/>
                         <TextBlock Text="{Binding SelectedInsurance.InsuranceId}"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal"  Margin="0,5,0,5">
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                         <TextBlock Text="Insurance type: " FontWeight="Bold"/>
-                        <ComboBox Width="200" ItemsSource="{Binding SelectedInsurance.InsuranceType}" 
-                         SelectedItem="{Binding SelectedInsuranceType}"/>
+                        <TextBlock Text="{Binding SelectedInsurance.InsuranceType}" Width="200"/>
                     </StackPanel>
-                    <!--<StackPanel Orientation="Horizontal">
-                     <TextBlock Text="Insurance policy holder: " FontWeight="Bold"/>
-                     <TextBlock Text="{Binding SelectedInsurance.InsurancePolicyHolder}"/>
-                 </StackPanel>-->
-                    <!--<StackPanel Orientation="Horizontal">
-                     <TextBlock Text="Insurance coverage " FontWeight="Bold"/>
-                     <TextBlock Text="{Binding SelectedInsurance.InsuranceCoverage}"/>
-                 </StackPanel>-->
-                    <StackPanel Orientation="Horizontal"  Margin="0,5,0,5">
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                         <TextBlock Text="Insurance category: " FontWeight="Bold"/>
-                        <TextBox Text="{Binding SelectedInsurance.InsuranceCategory, Mode=TwoWay}"/>
+                        <TextBlock Text="{Binding SelectedInsurance.InsuranceCategory}" Width="200"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal"  Margin="0,5,0,5">
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                         <TextBlock Text="Insurance status: " FontWeight="Bold"/>
-                        <ComboBox Width="200" ItemsSource="{Binding XXXXX}" 
-                        SelectedItem="{Binding XXXXXX, Mode=TwoWay}"/>
+                        <ComboBox Width="200" ItemsSource="{Binding InsuranceStatusOptions}" 
+                                SelectedItem="{Binding SelectedInsuranceStatus, Mode=TwoWay}"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal"  Margin="0,5,0,5">
-                        <TextBlock Text="Seller ID " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding SelectedInsurance.SellerId}"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                        <TextBlock Text="Seller: " FontWeight="Bold"/>
+                        <ComboBox Width="200" ItemsSource="{Binding Sellers}" 
+                                  DisplayMemberPath="FirstName" 
+                                  SelectedItem="{Binding SelectedSeller, Mode=TwoWay}"/>
                     </StackPanel>
-                    <!--<StackPanel Orientation="Horizontal">
-                     <TextBlock Text="Seller name: " FontWeight="Bold"/>
-                     <TextBlock Text="{Binding SelectedInsurance.Seller}"/>
-                 </StackPanel>-->
-                    <StackPanel Orientation="Horizontal"  Margin="0,5,0,5">
+
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                         <TextBlock Text="Premium: " FontWeight="Bold"/>
-                        <ComboBox Width="200" ItemsSource="{Binding XXXXX}" 
-                        SelectedItem="{Binding XXXXXX, Mode=TwoWay}"/>
+                        <TextBlock Text="{Binding SelectedInsurance.Premium}" Width="200"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal"  Margin="0,5,0,5">
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                         <TextBlock Text="Payment plan: " FontWeight="Bold"/>
                         <ComboBox Width="200" ItemsSource="{Binding PaymentPlans}" 
-                         SelectedItem="{Binding SelectedPaymentPlan, Mode=TwoWay}"/>
+                  SelectedItem="{Binding SelectedPaymentPlan, Mode=TwoWay}"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal"  Margin="0,5,0,5">
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                         <TextBlock Text="Note: " FontWeight="Bold"/>
-                        <TextBox Text="{Binding SelectedInsurance.Note, Mode=TwoWay}"/>
+                        <TextBox Text="{Binding SelectedInsurance.Note, Mode=TwoWay}" Width="300" Height="100" TextWrapping="Wrap" AcceptsReturn="True"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal"  Margin="0,5,0,5">
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                         <TextBlock Text="Start date: " FontWeight="Bold"/>
                         <DatePicker SelectedDate="{Binding SelectedInsurance.StartDate, Mode=TwoWay}"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal"  Margin="0,5,0,5">
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                         <TextBlock Text="End date: " FontWeight="Bold"/>
                         <DatePicker SelectedDate="{Binding SelectedInsurance.EndDate, Mode=TwoWay}"/>
                     </StackPanel>
                 </StackPanel>
+
             </ScrollViewer>
         </Border>
 
@@ -104,7 +104,7 @@
 
         <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,10,10,10" Grid.Column="3" Grid.Row="4"/>
         <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="2" Grid.ColumnSpan="2" Margin="50,0,0,0" Width="350" Height="180" Grid.RowSpan="2"/>
-        <!--<controls:MainViewButtonControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,147,10,0" Grid.Column="0"/>-->
+        <controls:MainViewButtonControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,147,10,0" Grid.Column="0"/>
 
     </Grid>
 </Window>

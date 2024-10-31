@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SU.Frontend.ViewModels;
 using SU.Frontend.ViewModels.CeoMainViewModel;
-using SU.Frontend.ViewModels.CommonViewModels;
 using SU.Frontend.ViewModels.CommonViewModels.CustomerRelated;
 using SU.Frontend.ViewModels.CommonViewModels.Customers;
 using SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated;
@@ -64,14 +62,11 @@ namespace SU.Frontend.Helper
             public PrivateInsuranceTypeViewModel PrivateInsuranceTypeViewModel =>
                 App.AppHost?.Services.GetService<PrivateInsuranceTypeViewModel>();
 
-
-
             public NewCompanyInsuranceViewModel NewCompanyInsuranceViewModel =>
                 App.AppHost?.Services.GetService<NewCompanyInsuranceViewModel>();
 
             public CompanyInsuranceTypeViewModel CompanyInsuranceTypeViewModel =>
                 App.AppHost?.Services.GetService<CompanyInsuranceTypeViewModel>();
-
 
             public ShowCustomerViewModel ShowCustomerViewModel =>
                 App.AppHost?.Services.GetService<ShowCustomerViewModel>();
@@ -82,14 +77,30 @@ namespace SU.Frontend.Helper
            public EditDeleteCustomerViewModel EditDeleteCustomerViewModel =>
                 App.AppHost?.Services.GetService<EditDeleteCustomerViewModel>();
 
+            public EditDeleteSellerViewModel EditDeleteSellerViewModel =>
+                App.AppHost?.Services.GetService<EditDeleteSellerViewModel>();
+
             public EditDeleteInsuranceViewModel EditDeleteInsuranceViewModel =>
               App.AppHost?.Services.GetService<EditDeleteInsuranceViewModel>();
 
             public CreateSellStatViewModel CreateSellStatViewModel =>
                 App.AppHost?.Services.GetService<CreateSellStatViewModel>();
 
+
+            
+
+            public RegisterNewSellerViewModel RegisterNewSellerViewModel =>
+                App.AppHost?.Services.GetService<RegisterNewSellerViewModel>();
+
+            public CommissionViewModel CommissionViewModel =>
+                App.AppHost?.Services.GetService<CommissionViewModel>();
+
+            public DownloadButtonViewModel DownloadButtonViewModel =>
+                App.AppHost?.Services.GetService<DownloadButtonViewModel>();
+          
             public ShowCustomerProspectViewModel ShowCustomerProspectViewModel =>
                 App.AppHost?.Services.GetService<ShowCustomerProspectViewModel>();
+
         }
     }
 

@@ -23,5 +23,10 @@ namespace SU.Frontend.Views.CeoView
         {
             InitializeComponent();
         }
+
+        private void SignedInUserUserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

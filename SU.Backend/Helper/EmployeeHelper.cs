@@ -121,7 +121,22 @@ namespace SU.Backend.Helper
                 .FirstOrDefault();
         }
 
+        public static void UpdateEmployeeRole(Employee employee, EmployeeType newRole)
+        {
+            if (employee == null || employee.RoleAssignments == null || !employee.RoleAssignments.Any())
+                return;
 
+            employee.RoleAssignments.Clear();
+
+
+            employee.RoleAssignments.Add(new EmployeeRoleAssignment
+            {
+                Role = newRole,
+                Percentage = 100
+            });
+        }
+
+        
 
     }
 }
