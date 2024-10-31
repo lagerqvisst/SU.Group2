@@ -41,12 +41,14 @@
         <Button Style="{StaticResource OptionsButtonStyle}" 
                 Content="Register new customer" 
                 Command="{Binding ToRegisterNewCustomer}"
-                Grid.Row="1" Margin="10,28,10,28"/>
+                Grid.Row="1" 
+                Margin="10,28,10,28"/>
         <Button Style="{StaticResource OptionsButtonStyle}" 
                 Content="Register new insurance" 
                 Command="{Binding ToRegisterNewInsurance}" 
                 Grid.Row="1" 
-                Grid.Column="1" Margin="10,28,10,28"/>
+                Grid.Column="1" 
+                Margin="10,28,10,28"/>
         <Button Style="{StaticResource OptionsButtonStyle}" 
                 Content="Edit/ Delete customer" 
                 Command="{Binding ToEditDeleteCustomer}"
