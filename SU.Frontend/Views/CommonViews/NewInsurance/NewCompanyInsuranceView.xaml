@@ -7,7 +7,7 @@
         xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
         mc:Ignorable="d"
-        Title="New Company Insurance" Height="545" Width="800">
+        Title="New Company Insurance" Height="580" Width="800">
 
     <Window.Resources>
         <helper:ViewModelLocator x:Key="Locator"/>
@@ -40,7 +40,6 @@
                          Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <!-- DataGrid for displaying company customers -->
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                     <DataGrid ItemsSource="{Binding FilteredCompanyCustomers}" 
                           AutoGenerateColumns="True" 
                           Width="560" 
@@ -48,7 +47,6 @@
                           Margin="20,0"
                           SelectedItem="{Binding SelectedCompanyCustomer}">
                     </DataGrid>
-                </ScrollViewer>
 
                 <!-- Button to select the policy holder -->
                 <Button Style="{StaticResource ConfirmationButtonStyle}" 
