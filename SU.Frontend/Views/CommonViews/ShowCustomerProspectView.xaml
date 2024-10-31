@@ -9,7 +9,6 @@
         Width="1000" Height="600"
         WindowStartupLocation="CenterScreen">
 
-
     <Window.Resources>
         <helper:ViewModelLocator x:Key="Locator" />
     </Window.Resources>
@@ -17,7 +16,8 @@
     <Grid DataContext="{Binding ShowCustomerProspectViewModel, Source={StaticResource Locator}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -25,25 +25,56 @@
 
         <TextBlock Text="Prospects" FontSize="24" FontWeight="Bold" Grid.Row="0" Margin="10"/>
 
-        <TextBlock Text="Note" FontWeight="Bold" Grid.Row="2" Margin="60,0,0,0"/>
+        <DataGrid Grid.Row="1" 
+          ItemsSource="{Binding Prospects}" 
+          SelectedItem="{Binding SelectedProspect}" 
+          AutoGenerateColumns="True" 
+          Margin="10,28,10,56">
+        </DataGrid>
 
-        <DataGrid ItemsSource="{Binding Prospects}" SelectedItem="{Binding SelectedProspect}" AutoGenerateColumns="True" Grid.Row="1" Margin="10,28,10,56"/>
 
 
-        <Border BorderBrush="Green" BorderThickness="2" Grid.Row="3" Margin="0,0,0,0">
-            <StackPanel VerticalAlignment="Top" Grid.Row="3" Height="102" Margin="0,-2,0,0" Orientation="Horizontal">
-                <!--Used for Note-->
-                <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                    <TextBox Text="{Binding SelectedProspect.ContactNote, Mode=TwoWay}" Width="161" Height="93" TextWrapping="Wrap" AcceptsReturn="True"/>
-                </StackPanel>
-            </StackPanel>
-        </Border>
 
-        <Button Content="Save changes" Command="{Binding SaveProspectCommand}" Grid.Row="4" Margin="736,33,144,10" Height="60" Width="120"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10,5,10,10">
+            <TextBlock Text="Assign Seller" FontWeight="Bold" VerticalAlignment="Center"/>
+            <ComboBox ItemsSource="{Binding Sellers}" 
+                      SelectedItem="{Binding SelectedSeller, Mode=TwoWay}" 
+                      DisplayMemberPath="EmployeeId" Width="200" Margin="10,0,0,0"/>
 
-        <controls:DownloadButton Command="{Binding ExportComissionExcel}" 
-                 HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"
-                 Grid.Row="4"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Orientation="Vertical" Margin="10">
+            <TextBlock Text="Contact Note" FontWeight="Bold" HorizontalAlignment="Left" Margin="0,0,0,5"/>
+            <TextBox Text="{Binding SelectedProspect.ContactNote, Mode=TwoWay}" 
+             Width="300" Height="60" TextWrapping="Wrap" AcceptsReturn="True" 
+             HorizontalAlignment="Left"/>
+        </StackPanel>
 
+
+        <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="10,5,10,5">
+            <TextBlock Text="Prospect Status" FontWeight="Bold" VerticalAlignment="Center"/>
+            <ComboBox ItemsSource="{Binding ProspectStatusOptions}" 
+                      SelectedItem="{Binding SelectedProspect.ProspectStatus, Mode=TwoWay}" 
+                      Width="200" Margin="10,0,0,0"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="10,5,10,5">
+            <TextBlock Text="Contact Date" FontWeight="Bold" VerticalAlignment="Center"/>
+            <DatePicker SelectedDate="{Binding SelectedProspect.ContactDate, Mode=TwoWay}" 
+                        Width="200" Margin="10,0,0,0"/>
+        </StackPanel>
+
+
+
+        <Button Content="Save changes" 
+                Command="{Binding SaveProspectCommand}" 
+                Grid.Row="6" 
+                HorizontalAlignment="Right" 
+                Margin="10" Height="40" Width="120"/>
+
+        <controls:DownloadButton Command="{Binding ExportToExcel}" 
+                                 HorizontalAlignment="Right" 
+                                 VerticalAlignment="Bottom" 
+                                 Margin="10"
+                                 Grid.Row="0"/>
     </Grid>
 </Window>

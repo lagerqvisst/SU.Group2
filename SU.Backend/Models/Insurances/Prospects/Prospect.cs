@@ -13,13 +13,21 @@ namespace SU.Backend.Models.Insurances.Prospects
     public class Prospect
     {
         public int ProspectId { get; set; } // Primary Key
+        public ProspectType ProspectType { get; set; } // Type of prospect
+        public ProspectStatus ProspectStatus { get; set; } // Status of the prospect
+
+        // Additional properties for print
+        public string? FirstName => PrivateCustomer?.FirstName ?? CompanyCustomer?.CompanyName;
+        public string? LastName => PrivateCustomer?.LastName;
+        public string? PersonalOrOrgNumber => PrivateCustomer?.PersonalNumber ?? CompanyCustomer?.OrganizationNumber;
+        public string? StreetAddress => PrivateCustomer?.Address ?? CompanyCustomer?.CompanyAdress;
+        public string? PhoneNumber => PrivateCustomer?.PhoneNumber ?? CompanyCustomer?.CompanyPhoneNumber;
+        public string? Email => PrivateCustomer?.Email ?? CompanyCustomer?.CompanyEmailAdress;
 
         // Status of the prospect
-        public ProspectStatus ProspectStatus { get; set; } // Status of the prospect
 
         public string? ContactNote { get; set; } // Note of contact
 
-        public ProspectType ProspectType { get; set; } // Type of prospect
         public DateTime? ContactDate { get; set; } // Date of contact
         public string? AssignedAgentNumber { get; set; } // Assigned agent number
 
@@ -34,6 +42,9 @@ namespace SU.Backend.Models.Insurances.Prospects
         public PrivateCustomer? PrivateCustomer { get; set; }
         public CompanyCustomer? CompanyCustomer { get; set; }
         public Employee? Seller { get; set; }
+
+
     }
+
 
 }

@@ -19,19 +19,22 @@ namespace SU.Backend.Controllers
     /// </summary>
     public class ProspectController
     {
-        private readonly IProspectService prospectService;
+        private readonly IProspectService _prospectService;
+        private readonly IDataExportService _dataExportService;
         private readonly ILogger<ProspectController> _logger;
 
-        public ProspectController(IProspectService prospectService, ILogger<ProspectController> logger)
+        public ProspectController(IProspectService prospectService, IDataExportService dataExportService, ILogger<ProspectController> logger)
         {
-            this.prospectService = prospectService;
+            _prospectService = prospectService;
+            _dataExportService = dataExportService;
+
             _logger = logger;
         }
 
         public async Task<(List<Prospect>, string message)> IdentifyNewProspects()
         {
             _logger.LogInformation("Identifying new prospects...");
-            var result = await prospectService.IdentifyProspects();
+            var result = await _prospectService.IdentifyProspects();
             if (result.success)
             {
                 _logger.LogInformation("Prospects identified successfully");
@@ -46,7 +49,7 @@ namespace SU.Backend.Controllers
         public async Task<(bool success, string message)> AssignSellerToSpecificProspect(Employee employee, Prospect prospect)
         {
             _logger.LogInformation($"Assigning seller {employee.FirstName} {employee.LastName} to prospect {prospect.ProspectId}");
-            var result = await prospectService.AssignSellerToSpecificProspect(employee, prospect);
+            var result = await _prospectService.AssignSellerToSpecificProspect(employee, prospect);
             if (result.success)
             {
                 _logger.LogInformation($"Seller assigned to prospect successfully");
@@ -61,7 +64,7 @@ namespace SU.Backend.Controllers
         public async Task<(List<Prospect> prospects, string message)> GetAllCurrentProspects()
         {
             _logger.LogInformation("Getting all current prospects...");
-            var result = await prospectService.GetAllCurrentProspects();
+            var result = await _prospectService.GetAllCurrentProspects();
             if (result.success)
             {
                 _logger.LogInformation("Prospects retrieved successfully");
@@ -76,7 +79,7 @@ namespace SU.Backend.Controllers
         public async Task<(bool success, string message)> UpdateProspect(Prospect prospect)
         {
             _logger.LogInformation("Prospect object updated via GUI");
-            var result = await prospectService.UpdateProspect(prospect);
+            var result = await _prospectService.UpdateProspect(prospect);
 
             if (result.success)
             {
@@ -88,6 +91,27 @@ namespace SU.Backend.Controllers
                 _logger.LogWarning($"{result.message}");
                 return (result.success, result.message);
             }
+        }
+
+        public async Task<(bool success, string message)> ExportProspectsToExcel(List<Prospect> prospects)
+        {
+            _logger.LogInformation("Exporting prospects to Excel...");
+
+            var result = await _dataExportService.ExportProspects(prospects);
+
+            if (result.success)
+            {
+                _logger.LogInformation("Prospects exported successfully");
+                return (result.success, result.message);
+            }
+            else
+            {
+                _logger.LogWarning($"Failed to export prospects: {result.message}");
+                return (result.success, result.message);
+            }
+
+
+
         }
     }
 }
