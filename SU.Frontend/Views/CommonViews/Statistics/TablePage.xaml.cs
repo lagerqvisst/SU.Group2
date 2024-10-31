@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SU.Frontend.Views.CommonViews
+namespace SU.Frontend.Views.CommonViews.Statistics
 {
     /// <summary>
-    /// Interaction logic for CreateSellStatView.xaml
+    /// Interaction logic for TablePage.xaml
     /// </summary>
-    public partial class CreateSellStatView : Window
+    public partial class TablePage : Page
     {
-        public CreateSellStatView()
+        public TablePage()
         {
             InitializeComponent();
         }

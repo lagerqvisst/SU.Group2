@@ -35,6 +35,7 @@ using SU.Frontend.Helper.DI_Objects.InsuranceObjects;
 using SU.Frontend.Helper.DI_Objects.User;
 using SU.Frontend.ViewModels.CommonViewModels.CustomerRelated;
 using SU.Frontend.ViewModels.CommonViewModels;
+using SU.Frontend.ViewModels.Statistics;
 
 namespace SU.Frontend
 {
@@ -62,7 +63,7 @@ namespace SU.Frontend
             services.AddTransient<ShowInsuranceViewModel>();
             services.AddTransient<EditDeleteCustomerViewModel>();
             services.AddTransient<EditDeleteInsuranceViewModel>();
-            services.AddTransient<CreateSellStatViewModel>();
+            services.AddTransient<MonthlyStatisticsViewModel>();
             services.AddTransient<CompanyInsuranceTypeViewModel>();
 
             
@@ -97,7 +98,8 @@ namespace SU.Frontend
             services.AddTransient<SellerMainView>(); // View for SellerMainView
 
             // Common Views
-            services.AddTransient<CreateSellStatView>();
+            services.AddTransient<MonthlyStatisticsView>();
+            services.AddTransient<TrendsView>();
             services.AddTransient<EditDeleteCustomerView>();
             services.AddTransient<EditDeleteInsuranceView>();
             services.AddTransient<ShowCustomerProspectView>();

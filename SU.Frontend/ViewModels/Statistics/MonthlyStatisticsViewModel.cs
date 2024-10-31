@@ -5,16 +5,16 @@ using SU.Backend.Controllers;
 using SU.Backend.Models.Statistics;
 using SU.Frontend.Helper;
 
-namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
+namespace SU.Frontend.ViewModels.Statistics
 {
-    public class CreateSellStatViewModel : ObservableObject
+    public class MonthlyStatisticsViewModel : ObservableObject
     {
         private readonly StatisticsController _statisticsController;
 
         // Lista över försäkringsstatistik
         public ObservableCollection<InsuranceStatistics> InsuranceStatistics { get; set; }
 
-        public CreateSellStatViewModel(StatisticsController statisticsController)
+        public MonthlyStatisticsViewModel(StatisticsController statisticsController)
         {
             _statisticsController = statisticsController;
             InsuranceStatistics = new ObservableCollection<InsuranceStatistics>();
