@@ -1,4 +1,5 @@
 ﻿using SU.Backend.Controllers;
+using SU.Backend.Helper;
 using SU.Backend.Models.Customers;
 using SU.Backend.Models.Employees;
 using SU.Backend.Models.Enums;
@@ -21,18 +22,8 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
 
         public ICommand SaveSellerCommand { get; }
         public ICommand DeleteSellerCommand { get; }
-
-        private ObservableCollection<Employee> _sellers;
-        public ObservableCollection<Employee> Sellers
-        {
-            get => _sellers;
-            set
-            {
-                _sellers = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(SelectedSellerAsCollection)); // Update DataGrid
-            }
-        }
+        
+        public ObservableCollection<Employee> Sellers { get; set; } = new ObservableCollection<Employee>();
 
         public List<EmployeeType> SellerRoles { get; } = new List<EmployeeType>
         {
@@ -49,6 +40,7 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
             {
                 _selectedSellerType = value;
                 OnPropertyChanged();
+                EmployeeHelper.UpdateEmployeeRole(SelectedSeller, _selectedSellerType);
             }
         }
 
@@ -60,7 +52,7 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
             {
                 _selectedSeller = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(SelectedSellerAsCollection)); // Update DataGrid
+                OnSelectedSellerChanged(); // Update DataGrid
             }
         }
 
@@ -78,6 +70,8 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
         public EditDeleteSellerViewModel(EmployeeController employeeController)
         {
             _employeeController = employeeController;
+
+            LoadSellersAsync().ConfigureAwait(false);
 
             SaveSellerCommand = new RelayCommand(SaveSeller);
             DeleteSellerCommand = new RelayCommand(DeleteSeller);
@@ -97,23 +91,6 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
             else
             {
                 Console.WriteLine("Failed to load sellers: " + result.message);
-            }
-        }
-
-
-        private async Task<IEnumerable<Employee>> GetSellersAsync()
-        {
-            // Hämta alla anställda asynkront
-            var result = await _employeeController.GetAllSellers();
-
-            if (result.success && result.salesEmployees != null)
-            {
-                return result.salesEmployees;
-            }
-            else
-            {
-                Console.WriteLine("Failed to load sellers: " + result.message);
-                return new List<Employee>();
             }
         }
 
@@ -148,6 +125,15 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
                 {
                     MessageBox.Show($"{result.message}, MessageBoxButton.OK");
                 }
+            }
+        }
+
+        private void OnSelectedSellerChanged()
+        {
+            if (SelectedSeller != null)
+            {
+                SelectedSellerType = EmployeeHelper.GetLowestPercentageRole(SelectedSeller.RoleAssignments.ToList());
+
             }
         }
     }

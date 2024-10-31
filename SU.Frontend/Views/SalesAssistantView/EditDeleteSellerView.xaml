@@ -26,7 +26,7 @@
                 <!-- ComboBox for Sellers -->
                 <ComboBox Height="30" Margin="0,0,0,10" 
                     ItemsSource="{Binding Sellers}" 
-                    DisplayMemberPath="SellerId"
+                    DisplayMemberPath="EmployeeId"
                     SelectedItem="{Binding SelectedSeller}"/>
             </StackPanel>
         </Border>
@@ -40,7 +40,7 @@
                     <TextBlock Text="Seller Details:" FontWeight="Bold" FontSize="16" Margin="0,5,0,10"/>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                         <TextBlock Text="Seller type: " FontWeight="Bold"/>
-                        <ComboBox Margin="0,0,0,10" ItemsSource="{Binding Sellers}" SelectedItem="{Binding SelectedSeller.RoleAssignments}" Width="100"/>
+                        <ComboBox Margin="0,0,0,10" ItemsSource="{Binding SellerRoles}" SelectedItem="{Binding SelectedSellerType, Mode=TwoWay}" Width="100"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                         <TextBlock Text="Employee ID: " FontWeight="Bold"/>
