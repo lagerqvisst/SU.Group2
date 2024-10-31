@@ -3,11 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         Title="ShowCustomerProspectView" 
         Width="1000" Height="600"
         WindowStartupLocation="CenterScreen">
 
-    <Grid Background="White" Margin="20">
+
+    <Window.Resources>
+        <helper:ViewModelLocator x:Key="Locator" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+
+    <Grid Background="White" Margin="20" DataContext="{Binding ShowCustomerProspectViewModel, Source={StaticResource Locator}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
