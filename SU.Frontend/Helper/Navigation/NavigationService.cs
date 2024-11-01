@@ -49,7 +49,7 @@ namespace SU.Frontend.Helper.Navigation
             }
             else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.OutsideSales))
             {
-                NavigateTo("TestView", null);
+                NavigateTo("SellerMainView", "SellerView");
             }
             else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.InsideSales))
             {

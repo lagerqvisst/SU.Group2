@@ -15,7 +15,7 @@
     <Grid DataContext="{Binding NewCompanyCustomerViewModel, Source={StaticResource Locator}}" >
         <TextBlock Text="Register New Company Customer" FontSize="25" FontWeight="Bold" Margin="20,37,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" Margin="15,87,0,0" Width="535" Height="387" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" Margin="15,120,0,0" Width="535" Height="387" HorizontalAlignment="Left" VerticalAlignment="Top">
             <StackPanel  Margin="10,10,8,10" >
 
 
@@ -28,7 +28,7 @@
                     <TextBlock Text="Organization Number"  FontSize="15" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0"/>
                     <TextBox Style="{StaticResource FillInBoxesStyle}" 
                              Text="{Binding OrganizationNumber, UpdateSourceTrigger=PropertyChanged}" 
-                             Grid.Column="1" TextChanged="TextBox_TextChanged"/>
+                             Grid.Column="1"/>
                 </Grid>
 
                 <!-- Company Name -->

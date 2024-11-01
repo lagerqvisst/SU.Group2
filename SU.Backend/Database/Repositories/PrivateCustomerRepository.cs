@@ -28,9 +28,9 @@ namespace SU.Backend.Database.Repositories
         // This is the definition of a prospect according to the business documentation.
         public async Task<List<PrivateCustomer>> GetProspectDataForPrivateCustomers()
         {
-            return await _context.PrivateCustomers
+            return _context.PrivateCustomers
                 .Where(x => x.InsurancePolicyHolders.Count == 1)
-                .ToListAsync();
+                .ToList();
         }
 
         public async Task<List<PrivateCustomer>> GetAllPrivateCustomers()
