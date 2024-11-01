@@ -99,6 +99,9 @@ namespace SU.Frontend.Helper
             public ShowCustomerProspectViewModel ShowCustomerProspectViewModel =>
                 App.AppHost?.Services.GetService<ShowCustomerProspectViewModel>();
 
+            public TablePageViewModel TablePageViewModel =>
+                App.AppHost?.Services.GetService<TablePageViewModel>();
+
         }
     }
 

@@ -9,18 +9,18 @@
         <!-- TabControl för att hantera de tre olika sidorna -->
         <TabControl>
             <!-- Tab för tabellvyn -->
-            <TabItem Header="Tabell">
-                <Frame Source="Views/CommonViews/Statistics/TablePage.xaml"/>
+            <TabItem Header="Table">
+                <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/TablePage.xaml"/>
             </TabItem>
 
             <!-- Tab för linjediagram -->
-            <TabItem Header="Linjediagram">
-                <Frame Source="Views/CommonViews/Statistics/LineChartPage.xaml"/>
+            <TabItem Header="Line Diagram">
+                <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/LineChartPage.xaml"/>
             </TabItem>
 
             <!-- Tab för stapeldiagram -->
-            <TabItem Header="Stapeldiagram">
-                <Frame Source="Views/CommonViews/Statistics/BarChartPage.xaml"/>
+            <TabItem Header="Bar Chart">
+                <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/BarChartPage.xaml"/>
             </TabItem>
         </TabControl>
     </Grid>

@@ -129,7 +129,7 @@ namespace SU.Frontend.Helper.Navigation
 
         public void NavigateToMonthlyStatistics()
         {
-            NavigateTo("MonthlyStatisticsView", "CommonViews");
+            NavigateTo("MonthlyStatisticsView", "CommonViews.Statistics");
         }
 
         public void NavigateToShowInsurances()
@@ -200,7 +200,7 @@ namespace SU.Frontend.Helper.Navigation
 
         public void NavigateToTrends()
         {
-            NavigateTo("TrendsView", "CommonViews");
+            NavigateTo("TrendsView", "CommonViews.Statistics");
         }
     }
 }

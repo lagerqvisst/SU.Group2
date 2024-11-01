@@ -3,12 +3,46 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:SU.Frontend.Views.CommonViews.Statistics"
+      xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TablePage">
 
-    <Grid>
-        
+    <Page.Resources>
+        <helper:ViewModelLocator x:Key="Locator" />
+    </Page.Resources>
+
+    <Grid DataContext="{Binding TablePageViewModel, Source={StaticResource Locator}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- DataGrid för Privata Försäkringar -->
+        <DataGrid Grid.Row="0" AutoGenerateColumns="False" HeadersVisibility="Column" 
+          ItemsSource="{Binding PrivateInsuranceStatistics}">
+            <DataGrid.Columns>
+                <!-- Columns for Seller and Agent Number -->
+                <DataGridTextColumn Header="Seller/Insurance" Binding="{Binding SellerName}" />
+                <DataGridTextColumn Header="Agent Number" Binding="{Binding AgentNumber}" />
+
+                <!-- Columns for each month (Child, Adult, Life) -->
+                <DataGridTextColumn Header="January Child" Binding="{Binding MonthlySales[0].ChildInsuranceSales}" />
+                <DataGridTextColumn Header="January Adult" Binding="{Binding MonthlySales[0].AdultInsuranceSales}" />
+                <DataGridTextColumn Header="January Life" Binding="{Binding MonthlySales[0].LifeInsuranceSales}" />
+                <!-- Repeat similar columns for each month up to December -->
+
+                <!-- Columns for October -->
+                <DataGridTextColumn Header="October Child" Binding="{Binding MonthlySales[9].ChildInsuranceSales}" />
+                <DataGridTextColumn Header="October Adult" Binding="{Binding MonthlySales[9].AdultInsuranceSales}" />
+                <DataGridTextColumn Header="October Life" Binding="{Binding MonthlySales[9].LifeInsuranceSales}" />
+
+                <!-- Total and Average for the year -->
+                <DataGridTextColumn Header="Total" Binding="{Binding TotalYearlySales}" />
+                <DataGridTextColumn Header="Average/Month" Binding="{Binding AverageMonthlySales}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+
     </Grid>
 </Page>

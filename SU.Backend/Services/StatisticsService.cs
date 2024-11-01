@@ -30,7 +30,6 @@ namespace SU.Backend.Services
 
         public async Task<(bool success, string message, List<SellerStatistics> statistics)> GetSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null)
         {
-           // _logger.LogInformation($"Getting seller statistics for year {year} and insurance types: {string.Join(", ", insuranceTypes)}");
 
             try
             {
@@ -53,24 +52,38 @@ namespace SU.Backend.Services
                     (seller, insurances) => new
                     {
                         seller1 = seller,
-                        monthlySales = Enumerable.Range(1, 12).Select(month => new MonthlySalesData
+                        monthlySales = Enumerable.Range(1, 12).Select(month =>
                         {
-                            Month = month,
-                            InsuranceSalesCounts = insurances
-                                .Where(i => i.StartDate.Month == month)
-                                .GroupBy(i => i.InsuranceType)
-                                .ToDictionary(group => group.Key, group => group.Count())
+                            // Initialize counts for each insurance type to 0
+                            var insuranceCounts = Enum.GetValues(typeof(InsuranceType))
+                                                      .Cast<InsuranceType>()
+                                                      .ToDictionary(type => type, type => 0);
+
+                            // Populate counts for existing sales in that month
+                            foreach (var group in insurances
+                                                    .Where(i => i.StartDate.Month == month)
+                                                    .GroupBy(i => i.InsuranceType))
+                            {
+                                insuranceCounts[group.Key] = group.Count();
+                            }
+
+                            return new MonthlySalesData
+                            {
+                                Month = month,
+                                InsuranceSalesCounts = insuranceCounts
+                            };
                         }).ToList()
-                    })
-                    .Select(data => new SellerStatistics
-                    {
-                        SellerName = data.seller1.FirstName + " " + data.seller1.LastName,
-                        AgentNumber = data.seller1.AgentNumber,
-                        MonthlySales = data.monthlySales,
-                        TotalYearlySales = data.monthlySales.Sum(m => m.TotalSales),
-                        AverageMonthlySales = data.monthlySales.Average(m => m.TotalSales)
-                    })
-                    .ToList();
+                         })
+                        .Select(data => new SellerStatistics
+                        {
+                            SellerName = data.seller1.FirstName + " " + data.seller1.LastName,
+                            AgentNumber = data.seller1.AgentNumber,
+                            MonthlySales = data.monthlySales,
+                            TotalYearlySales = data.monthlySales.Sum(m => m.TotalSales),
+                            AverageMonthlySales = data.monthlySales.Average(m => m.TotalSales)
+                        })
+                        .ToList();
+
 
                 return (true, "Success", groupedData);
             }

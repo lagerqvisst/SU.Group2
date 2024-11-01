@@ -36,6 +36,7 @@ using SU.Frontend.Helper.DI_Objects.User;
 using SU.Frontend.ViewModels.CommonViewModels.CustomerRelated;
 using SU.Frontend.ViewModels.CommonViewModels;
 using SU.Frontend.ViewModels.Statistics;
+using SU.Frontend.Views.CommonViews.Statistics;
 
 namespace SU.Frontend
 {
@@ -58,7 +59,6 @@ namespace SU.Frontend
             services.AddTransient<NewCompanyInsuranceViewModel>();
             services.AddTransient<PrivateInsuranceTypeViewModel>();
             services.AddTransient<CommissionViewModel>();
-
             services.AddTransient<ShowCustomerViewModel>();
             services.AddTransient<ShowInsuranceViewModel>();
             services.AddTransient<EditDeleteCustomerViewModel>();
@@ -100,6 +100,7 @@ namespace SU.Frontend
             // Common Views
             services.AddTransient<MonthlyStatisticsView>();
             services.AddTransient<TrendsView>();
+            services.AddTransient<TablePageViewModel>();
             services.AddTransient<EditDeleteCustomerView>();
             services.AddTransient<EditDeleteInsuranceView>();
             services.AddTransient<ShowCustomerProspectView>();
