@@ -65,16 +65,14 @@ namespace SU.Frontend
             services.AddTransient<EditDeleteInsuranceViewModel>();
             services.AddTransient<MonthlyStatisticsViewModel>();
             services.AddTransient<CompanyInsuranceTypeViewModel>();
-
-            
-
             services.AddTransient<RegisterNewSellerViewModel>();
             services.AddTransient<DownloadButtonViewModel>();
             services.AddTransient<ShowCustomerProspectViewModel>();
-
-
             services.AddTransient<EditDeleteSellerViewModel>();
-            
+            services.AddTransient<TablePageViewModel>();
+            services.AddTransient<LineChartViewModel>();
+            services.AddTransient<BarChartViewModel>();
+
             //MainView ViewModels
             services.AddTransient<CeoMainViewModel>(); // ViewModel for CeoMainView
             services.AddTransient<FinancialAssistantMainViewModel>(); // ViewModel for FinancialAssistantMainView
@@ -100,7 +98,7 @@ namespace SU.Frontend
             // Common Views
             services.AddTransient<MonthlyStatisticsView>();
             services.AddTransient<TrendsView>();
-            services.AddTransient<TablePageViewModel>();
+
             services.AddTransient<EditDeleteCustomerView>();
             services.AddTransient<EditDeleteInsuranceView>();
             services.AddTransient<ShowCustomerProspectView>();

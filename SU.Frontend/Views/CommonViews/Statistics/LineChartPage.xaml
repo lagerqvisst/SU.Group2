@@ -3,12 +3,18 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
       xmlns:local="clr-namespace:SU.Frontend.Views.CommonViews.Statistics"
+      xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="LineChartPage">
 
-    <Grid>
-        
+    <Page.Resources>
+        <helper:ViewModelLocator x:Key="Locator" />
+    </Page.Resources>
+
+    <Grid DataContext="{Binding LineChartViewModel, Source={StaticResource Locator}}">
+        <lvc:CartesianChart Series="{Binding Series}" XAxes="{Binding XAxes}" YAxes="{Binding YAxes}" LegendPosition="Top" />
     </Grid>
 </Page>

@@ -44,10 +44,10 @@ namespace SU.Backend.Database.Repositories
         // Used for authenticating users in the login page.
         public async Task<Employee?> GetEmployeeByUserCredentials(string usersUsername, string usersPassword)
         {
-            return await _context.Employees
+            return _context.Employees
                 .Include(e => e.RoleAssignments)
                 .Where(e => e.UserName == usersUsername && e.Password == usersPassword)
-                .FirstOrDefaultAsync();
+                .FirstOrDefault();
         }
 
         public async Task<List<Employee>> GetSalesEmployees()
@@ -62,7 +62,7 @@ namespace SU.Backend.Database.Repositories
 
         public async Task<List<Employee>> GetAllEmployees()
         {
-            return await _context.Employees.ToListAsync();
+            return _context.Employees.ToList();
         }
 
         public async Task<Employee> GetEmployeeById(int id)

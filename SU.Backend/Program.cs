@@ -24,11 +24,11 @@ class Program
     {
 
         var host = Host.CreateDefaultBuilder(args)
-            .ConfigureServices((context, services) =>
-            {
-                services.AddBackendServices();
-            })
-            .Build();
+                    .ConfigureServices((context, services) =>
+                    {
+                        services.AddBackendServices(context.Configuration); 
+                    })
+                    .Build();
 
 
 

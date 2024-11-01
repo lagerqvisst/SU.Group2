@@ -102,6 +102,12 @@ namespace SU.Frontend.Helper
             public TablePageViewModel TablePageViewModel =>
                 App.AppHost?.Services.GetService<TablePageViewModel>();
 
+            public LineChartViewModel LineChartViewModel =>
+                App.AppHost?.Services.GetService<LineChartViewModel>();
+
+            public BarChartViewModel BarChartViewModel =>
+                App.AppHost?.Services.GetService<BarChartViewModel>();
+
         }
     }
 

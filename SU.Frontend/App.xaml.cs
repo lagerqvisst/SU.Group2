@@ -13,15 +13,13 @@ namespace SU.Frontend
         public App()
         {
             AppHost = Host.CreateDefaultBuilder()
-                .ConfigureServices((context, services) =>
-                {
-                    // Registrera din backend DI-konfiguration
-                    services.AddBackendServices();
-                    services.AddFrontendServices();
-
-
-                })
-                .Build();
+            .ConfigureServices((context, services) =>
+            {
+                
+                services.AddBackendServices(context.Configuration);
+                services.AddFrontendServices();
+            })
+            .Build();
         }
 
         protected override async void OnStartup(StartupEventArgs e)

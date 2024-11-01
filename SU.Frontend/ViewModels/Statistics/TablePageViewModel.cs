@@ -56,10 +56,15 @@ namespace SU.Frontend.ViewModels.Statistics
             // Set default category
             SelectedInsuranceCategory = InsuranceCategory.Private;
 
-            LoadStatistics();
+            OnInitialized();
         }
 
-        private async void LoadStatistics()
+        private async Task OnInitialized()
+        {
+            await LoadStatistics();
+        }
+
+        private async Task LoadStatistics()
         {
             int year = DateTime.Now.Year;
 
