@@ -4,9 +4,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SU.Frontend.Views.FinancialAssistantView"
+        xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
+        xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
         mc:Ignorable="d"
-        Title="RegisterExportBillingInfoView" Height="450" Width="800">
+        Title="Register/Export Billing Information View" Height="450" Width="800">
+    
+    <Window.Resources>
+        <helper:ViewModelLocator x:Key="Locator" />
+    </Window.Resources>
+    
     <Grid>
+        <!-- Header TextBlock (Outside Border) -->
+        <TextBlock Text="Register/Export Billing Information" 
+                   FontSize="25" 
+                   FontWeight="Bold"
+                   HorizontalAlignment="Left" 
+                   Margin="20,37,0,353" Width="444"/>
+
+        <!-- Main View, Logout Button and SignedInUserUserControl -->
+        <controls:MainViewButtonControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,120,10,0" Height="30" Width="100"/>
+        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,7" Height="30" Width="100"/>
+        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Height="97" Width="214"/>
         
     </Grid>
 </Window>
