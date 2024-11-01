@@ -36,7 +36,7 @@
                    Grid.ColumnSpan="2" 
                    Width="368"/>
 
-        <!-- Functionalities available for Sales Assistant -->
+        <!-- Functionalities available for Financia Assistant -->
         <Button Style="{StaticResource OptionsButtonStyle}" 
                 Content="Comission Report" Command="{Binding ToRegisterProvision}" 
                 Margin="25,25,210,24" 
