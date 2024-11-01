@@ -12,18 +12,49 @@ using System.Windows;
 
 namespace SU.Frontend.ViewModels.Statistics
 {
+    using System.Windows.Input;
+
     public class TablePageViewModel : ObservableObject
     {
         private readonly IStatisticsService _statisticsService;
+        private readonly IDataExportService _dataExportService;
 
         public ObservableCollection<SellerStatistics> PrivateInsuranceStatistics { get; set; }
         public ObservableCollection<SellerStatistics> CompanyInsuranceStatistics { get; set; }
+        public ObservableCollection<InsuranceCategory> InsuranceCategories { get; } =
+            new ObservableCollection<InsuranceCategory> { InsuranceCategory.Private, InsuranceCategory.Company };
 
-        public TablePageViewModel(IStatisticsService statisticsService)
+        private InsuranceCategory _selectedInsuranceCategory;
+        public InsuranceCategory SelectedInsuranceCategory
+        {
+            get => _selectedInsuranceCategory;
+            set
+            {
+                _selectedInsuranceCategory = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsPrivateInsuranceVisible));
+                OnPropertyChanged(nameof(IsCompanyInsuranceVisible));
+            }
+        }
+
+        public bool IsPrivateInsuranceVisible => SelectedInsuranceCategory == InsuranceCategory.Private;
+        public bool IsCompanyInsuranceVisible => SelectedInsuranceCategory == InsuranceCategory.Company;
+
+        // Command for exporting statistics
+        public ICommand ExportSellerStatisticsCommand { get; }
+
+        public TablePageViewModel(IStatisticsService statisticsService, IDataExportService dataExportService)
         {
             _statisticsService = statisticsService;
+            _dataExportService = dataExportService;
             PrivateInsuranceStatistics = new ObservableCollection<SellerStatistics>();
             CompanyInsuranceStatistics = new ObservableCollection<SellerStatistics>();
+
+            // Initialize the command
+            ExportSellerStatisticsCommand = new RelayCommand(ExecuteExportSellerStatistics);
+
+            // Set default category
+            SelectedInsuranceCategory = InsuranceCategory.Private;
 
             LoadStatistics();
         }
@@ -57,7 +88,7 @@ namespace SU.Frontend.ViewModels.Statistics
             }
             else
             {
-                MessageBox.Show(messagePrivate, "Fel vid hämtning av statistik", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(messagePrivate, "Error fetching statistics", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             var (successCompany, messageCompany, companyStatistics) = await _statisticsService.GetSellerStatistics(year, companyInsuranceTypes);
@@ -71,11 +102,27 @@ namespace SU.Frontend.ViewModels.Statistics
             }
             else
             {
-                MessageBox.Show(messageCompany, "Fel vid hämtning av statistik", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(messageCompany, "Error fetching statistics", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private async void ExecuteExportSellerStatistics()
+        {
+            // Determine which statistics to export based on selected category
+            var isPrivateInsurance = SelectedInsuranceCategory == InsuranceCategory.Private;
+            var statistics = isPrivateInsurance ? PrivateInsuranceStatistics.ToList() : CompanyInsuranceStatistics.ToList();
+
+            // Call export service
+            var (success, message) = await _dataExportService.ExportSellerStatisticsToExcel(statistics, isPrivateInsurance);
+            if (!success)
+            {
+                MessageBox.Show(message, "Error exporting to Excel", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                MessageBox.Show(message, "Export Successful", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
     }
-
-
 
 }

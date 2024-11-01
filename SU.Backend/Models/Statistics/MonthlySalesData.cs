@@ -37,6 +37,12 @@ namespace SU.Backend.Models.Statistics
 
         public int LiabilityInsuranceSales => InsuranceSalesCounts.ContainsKey(InsuranceType.LiabilityInsurance)
             ? InsuranceSalesCounts[InsuranceType.LiabilityInsurance] : 0;
+
+        // Total sales for private insurance types
+        public int TotalSalesPrivate => ChildInsuranceSales + AdultInsuranceSales + LifeInsuranceSales;
+
+        // Total sales for company insurance types
+        public int TotalSalesCompany => PropertyInsuranceSales + VehicleInsuranceSales + LiabilityInsuranceSales;
     }
 
 

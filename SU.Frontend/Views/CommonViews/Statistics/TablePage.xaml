@@ -4,45 +4,217 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
+      xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TablePage">
 
     <Page.Resources>
         <helper:ViewModelLocator x:Key="Locator" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Page.Resources>
 
     <Grid DataContext="{Binding TablePageViewModel, Source={StaticResource Locator}}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
+        <!-- Titel -->
+        <TextBlock Grid.Row="0" Text="Seller Statistics per Insurance Type" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Margin="0,10,0,10"/>
+
+        <!-- ComboBox för att välja försäkringstyp -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,20,20">
+            <TextBlock Text="Select Insurance Type:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <ComboBox Width="150" ItemsSource="{Binding InsuranceCategories}" SelectedItem="{Binding SelectedInsuranceCategory}" />
+        </StackPanel>
+
         <!-- DataGrid för Privata Försäkringar -->
-        <DataGrid Grid.Row="0" AutoGenerateColumns="False" HeadersVisibility="Column" 
-          ItemsSource="{Binding PrivateInsuranceStatistics}">
-            <DataGrid.Columns>
+        <DataGrid Grid.Row="2" AutoGenerateColumns="False" HeadersVisibility="Column" 
+          ItemsSource="{Binding PrivateInsuranceStatistics}"
+          Visibility="{Binding IsPrivateInsuranceVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+
+        <DataGrid.Columns>
                 <!-- Columns for Seller and Agent Number -->
                 <DataGridTextColumn Header="Seller/Insurance" Binding="{Binding SellerName}" />
                 <DataGridTextColumn Header="Agent Number" Binding="{Binding AgentNumber}" />
 
-                <!-- Columns for each month (Child, Adult, Life) -->
-                <DataGridTextColumn Header="January Child" Binding="{Binding MonthlySales[0].ChildInsuranceSales}" />
-                <DataGridTextColumn Header="January Adult" Binding="{Binding MonthlySales[0].AdultInsuranceSales}" />
-                <DataGridTextColumn Header="January Life" Binding="{Binding MonthlySales[0].LifeInsuranceSales}" />
-                <!-- Repeat similar columns for each month up to December -->
-
-                <!-- Columns for October -->
-                <DataGridTextColumn Header="October Child" Binding="{Binding MonthlySales[9].ChildInsuranceSales}" />
-                <DataGridTextColumn Header="October Adult" Binding="{Binding MonthlySales[9].AdultInsuranceSales}" />
-                <DataGridTextColumn Header="October Life" Binding="{Binding MonthlySales[9].LifeInsuranceSales}" />
-
-                <!-- Total and Average for the year -->
-                <DataGridTextColumn Header="Total" Binding="{Binding TotalYearlySales}" />
+                <!-- Yearly Total and Monthly Average Columns -->
+                <DataGridTextColumn Header="Total Yearly" Binding="{Binding TotalYearlySales}" />
                 <DataGridTextColumn Header="Average/Month" Binding="{Binding AverageMonthlySales}" />
+                <!-- Columns for each month with a private total -->
+                <!-- January -->
+                <DataGridTextColumn Header="JAN: Child" Binding="{Binding MonthlySales[0].ChildInsuranceSales}" />
+                <DataGridTextColumn Header="JAN: Adult" Binding="{Binding MonthlySales[0].AdultInsuranceSales}" />
+                <DataGridTextColumn Header="JAN: Life" Binding="{Binding MonthlySales[0].LifeInsuranceSales}" />
+                <DataGridTextColumn Header="JAN: Total" Binding="{Binding MonthlySales[0].TotalSalesPrivate}" />
+
+                <!-- February -->
+                <DataGridTextColumn Header="FEB: Child" Binding="{Binding MonthlySales[1].ChildInsuranceSales}" />
+                <DataGridTextColumn Header="FEB: Adult" Binding="{Binding MonthlySales[1].AdultInsuranceSales}" />
+                <DataGridTextColumn Header="FEB: Life" Binding="{Binding MonthlySales[1].LifeInsuranceSales}" />
+                <DataGridTextColumn Header="FEB: Total" Binding="{Binding MonthlySales[1].TotalSalesPrivate}" />
+
+                <!-- March -->
+                <DataGridTextColumn Header="MAR: Child" Binding="{Binding MonthlySales[2].ChildInsuranceSales}" />
+                <DataGridTextColumn Header="MAR: Adult" Binding="{Binding MonthlySales[2].AdultInsuranceSales}" />
+                <DataGridTextColumn Header="MAR: Life" Binding="{Binding MonthlySales[2].LifeInsuranceSales}" />
+                <DataGridTextColumn Header="MAR: Total" Binding="{Binding MonthlySales[2].TotalSalesPrivate}" />
+
+                <!-- April -->
+                <DataGridTextColumn Header="APR: Child" Binding="{Binding MonthlySales[3].ChildInsuranceSales}" />
+                <DataGridTextColumn Header="APR: Adult" Binding="{Binding MonthlySales[3].AdultInsuranceSales}" />
+                <DataGridTextColumn Header="APR: Life" Binding="{Binding MonthlySales[3].LifeInsuranceSales}" />
+                <DataGridTextColumn Header="APR: Total" Binding="{Binding MonthlySales[3].TotalSalesPrivate}" />
+
+                <!-- May -->
+                <DataGridTextColumn Header="MAY: Child" Binding="{Binding MonthlySales[4].ChildInsuranceSales}" />
+                <DataGridTextColumn Header="MAY: Adult" Binding="{Binding MonthlySales[4].AdultInsuranceSales}" />
+                <DataGridTextColumn Header="MAY: Life" Binding="{Binding MonthlySales[4].LifeInsuranceSales}" />
+                <DataGridTextColumn Header="MAY: Total" Binding="{Binding MonthlySales[4].TotalSalesPrivate}" />
+
+                <!-- June -->
+                <DataGridTextColumn Header="JUN: Child" Binding="{Binding MonthlySales[5].ChildInsuranceSales}" />
+                <DataGridTextColumn Header="JUN: Adult" Binding="{Binding MonthlySales[5].AdultInsuranceSales}" />
+                <DataGridTextColumn Header="JUN: Life" Binding="{Binding MonthlySales[5].LifeInsuranceSales}" />
+                <DataGridTextColumn Header="JUN: Total" Binding="{Binding MonthlySales[5].TotalSalesPrivate}" />
+
+                <!-- July -->
+                <DataGridTextColumn Header="JUL: Child" Binding="{Binding MonthlySales[6].ChildInsuranceSales}" />
+                <DataGridTextColumn Header="JUL: Adult" Binding="{Binding MonthlySales[6].AdultInsuranceSales}" />
+                <DataGridTextColumn Header="JUL: Life" Binding="{Binding MonthlySales[6].LifeInsuranceSales}" />
+                <DataGridTextColumn Header="JUL: Total" Binding="{Binding MonthlySales[6].TotalSalesPrivate}" />
+
+                <!-- August -->
+                <DataGridTextColumn Header="AUG: Child" Binding="{Binding MonthlySales[7].ChildInsuranceSales}" />
+                <DataGridTextColumn Header="AUG: Adult" Binding="{Binding MonthlySales[7].AdultInsuranceSales}" />
+                <DataGridTextColumn Header="AUG: Life" Binding="{Binding MonthlySales[7].LifeInsuranceSales}" />
+                <DataGridTextColumn Header="AUG: Total" Binding="{Binding MonthlySales[7].TotalSalesPrivate}" />
+
+                <!-- September -->
+                <DataGridTextColumn Header="SEP: Child" Binding="{Binding MonthlySales[8].ChildInsuranceSales}" />
+                <DataGridTextColumn Header="SEP: Adult" Binding="{Binding MonthlySales[8].AdultInsuranceSales}" />
+                <DataGridTextColumn Header="SEP: Life" Binding="{Binding MonthlySales[8].LifeInsuranceSales}" />
+                <DataGridTextColumn Header="SEP: Total" Binding="{Binding MonthlySales[8].TotalSalesPrivate}" />
+
+                <!-- October -->
+                <DataGridTextColumn Header="OCT: Child" Binding="{Binding MonthlySales[9].ChildInsuranceSales}" />
+                <DataGridTextColumn Header="OCT: Adult" Binding="{Binding MonthlySales[9].AdultInsuranceSales}" />
+                <DataGridTextColumn Header="OCT: Life" Binding="{Binding MonthlySales[9].LifeInsuranceSales}" />
+                <DataGridTextColumn Header="OCT: Total" Binding="{Binding MonthlySales[9].TotalSalesPrivate}" />
+
+                <!-- November -->
+                <DataGridTextColumn Header="NOV: Child" Binding="{Binding MonthlySales[10].ChildInsuranceSales}" />
+                <DataGridTextColumn Header="NOV: Adult" Binding="{Binding MonthlySales[10].AdultInsuranceSales}" />
+                <DataGridTextColumn Header="NOV: Life" Binding="{Binding MonthlySales[10].LifeInsuranceSales}" />
+                <DataGridTextColumn Header="NOV: Total" Binding="{Binding MonthlySales[10].TotalSalesPrivate}" />
+
+                <!-- December -->
+                <DataGridTextColumn Header="DEC: Child" Binding="{Binding MonthlySales[11].ChildInsuranceSales}" />
+                <DataGridTextColumn Header="DEC: Adult" Binding="{Binding MonthlySales[11].AdultInsuranceSales}" />
+                <DataGridTextColumn Header="DEC: Life" Binding="{Binding MonthlySales[11].LifeInsuranceSales}" />
+                <DataGridTextColumn Header="DEC: Total" Binding="{Binding MonthlySales[11].TotalSalesPrivate}" />
+
             </DataGrid.Columns>
         </DataGrid>
 
+        <!-- DataGrid för Företag Försäkringar -->
+        <DataGrid Grid.Row="2" AutoGenerateColumns="False" HeadersVisibility="Column" 
+          ItemsSource="{Binding CompanyInsuranceStatistics}"
+          Visibility="{Binding IsCompanyInsuranceVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <!-- DataGrid columns for Company Insurance -->
+
+
+        <DataGrid.Columns>
+                <!-- Columns for Seller and Agent Number -->
+                <DataGridTextColumn Header="Seller/Insurance" Binding="{Binding SellerName}" />
+                <DataGridTextColumn Header="Agent Number" Binding="{Binding AgentNumber}" />
+
+                <!-- Yearly Total and Monthly Average Columns -->
+                <DataGridTextColumn Header="Total Yearly" Binding="{Binding TotalYearlySales}" />
+                <DataGridTextColumn Header="Average/Month" Binding="{Binding AverageMonthlySales}" />
+
+                <!-- Columns for each month with a company total -->
+                <!-- January -->
+                <DataGridTextColumn Header="JAN: Property" Binding="{Binding MonthlySales[0].PropertyInsuranceSales}" />
+                <DataGridTextColumn Header="JAN: Vehicle" Binding="{Binding MonthlySales[0].VehicleInsuranceSales}" />
+                <DataGridTextColumn Header="JAN: Liability" Binding="{Binding MonthlySales[0].LiabilityInsuranceSales}" />
+                <DataGridTextColumn Header="JAN: Total" Binding="{Binding MonthlySales[0].TotalSalesCompany}" />
+
+                <!-- February -->
+                <DataGridTextColumn Header="FEB: Property" Binding="{Binding MonthlySales[1].PropertyInsuranceSales}" />
+                <DataGridTextColumn Header="FEB: Vehicle" Binding="{Binding MonthlySales[1].VehicleInsuranceSales}" />
+                <DataGridTextColumn Header="FEB: Liability" Binding="{Binding MonthlySales[1].LiabilityInsuranceSales}" />
+                <DataGridTextColumn Header="FEB: Total" Binding="{Binding MonthlySales[1].TotalSalesCompany}" />
+
+                <!-- March -->
+                <DataGridTextColumn Header="MAR: Property" Binding="{Binding MonthlySales[2].PropertyInsuranceSales}" />
+                <DataGridTextColumn Header="MAR: Vehicle" Binding="{Binding MonthlySales[2].VehicleInsuranceSales}" />
+                <DataGridTextColumn Header="MAR: Liability" Binding="{Binding MonthlySales[2].LiabilityInsuranceSales}" />
+                <DataGridTextColumn Header="MAR: Total" Binding="{Binding MonthlySales[2].TotalSalesCompany}" />
+
+                <!-- April -->
+                <DataGridTextColumn Header="APR: Property" Binding="{Binding MonthlySales[3].PropertyInsuranceSales}" />
+                <DataGridTextColumn Header="APR: Vehicle" Binding="{Binding MonthlySales[3].VehicleInsuranceSales}" />
+                <DataGridTextColumn Header="APR: Liability" Binding="{Binding MonthlySales[3].LiabilityInsuranceSales}" />
+                <DataGridTextColumn Header="APR: Total" Binding="{Binding MonthlySales[3].TotalSalesCompany}" />
+
+                <!-- May -->
+                <DataGridTextColumn Header="MAY: Property" Binding="{Binding MonthlySales[4].PropertyInsuranceSales}" />
+                <DataGridTextColumn Header="MAY: Vehicle" Binding="{Binding MonthlySales[4].VehicleInsuranceSales}" />
+                <DataGridTextColumn Header="MAY: Liability" Binding="{Binding MonthlySales[4].LiabilityInsuranceSales}" />
+                <DataGridTextColumn Header="MAY: Total" Binding="{Binding MonthlySales[4].TotalSalesCompany}" />
+
+                <!-- June -->
+                <DataGridTextColumn Header="JUN: Property" Binding="{Binding MonthlySales[5].PropertyInsuranceSales}" />
+                <DataGridTextColumn Header="JUN: Vehicle" Binding="{Binding MonthlySales[5].VehicleInsuranceSales}" />
+                <DataGridTextColumn Header="JUN: Liability" Binding="{Binding MonthlySales[5].LiabilityInsuranceSales}" />
+                <DataGridTextColumn Header="JUN: Total" Binding="{Binding MonthlySales[5].TotalSalesCompany}" />
+
+                <!-- July -->
+                <DataGridTextColumn Header="JUL: Property" Binding="{Binding MonthlySales[6].PropertyInsuranceSales}" />
+                <DataGridTextColumn Header="JUL: Vehicle" Binding="{Binding MonthlySales[6].VehicleInsuranceSales}" />
+                <DataGridTextColumn Header="JUL: Liability" Binding="{Binding MonthlySales[6].LiabilityInsuranceSales}" />
+                <DataGridTextColumn Header="JUL: Total" Binding="{Binding MonthlySales[6].TotalSalesCompany}" />
+
+                <!-- August -->
+                <DataGridTextColumn Header="AUG: Property" Binding="{Binding MonthlySales[7].PropertyInsuranceSales}" />
+                <DataGridTextColumn Header="AUG: Vehicle" Binding="{Binding MonthlySales[7].VehicleInsuranceSales}" />
+                <DataGridTextColumn Header="AUG: Liability" Binding="{Binding MonthlySales[7].LiabilityInsuranceSales}" />
+                <DataGridTextColumn Header="AUG: Total" Binding="{Binding MonthlySales[7].TotalSalesCompany}" />
+
+                <!-- September -->
+                <DataGridTextColumn Header="SEP: Property" Binding="{Binding MonthlySales[8].PropertyInsuranceSales}" />
+                <DataGridTextColumn Header="SEP: Vehicle" Binding="{Binding MonthlySales[8].VehicleInsuranceSales}" />
+                <DataGridTextColumn Header="SEP: Liability" Binding="{Binding MonthlySales[8].LiabilityInsuranceSales}" />
+                <DataGridTextColumn Header="SEP: Total" Binding="{Binding MonthlySales[8].TotalSalesCompany}" />
+
+                <!-- October -->
+                <DataGridTextColumn Header="OCT: Property" Binding="{Binding MonthlySales[9].PropertyInsuranceSales}" />
+                <DataGridTextColumn Header="OCT: Vehicle" Binding="{Binding MonthlySales[9].VehicleInsuranceSales}" />
+                <DataGridTextColumn Header="OCT: Liability" Binding="{Binding MonthlySales[9].LiabilityInsuranceSales}" />
+                <DataGridTextColumn Header="OCT: Total" Binding="{Binding MonthlySales[9].TotalSalesCompany}" />
+
+                <!-- November -->
+                <DataGridTextColumn Header="NOV: Property" Binding="{Binding MonthlySales[10].PropertyInsuranceSales}" />
+                <DataGridTextColumn Header="NOV: Vehicle" Binding="{Binding MonthlySales[10].VehicleInsuranceSales}" />
+                <DataGridTextColumn Header="NOV: Liability" Binding="{Binding MonthlySales[10].LiabilityInsuranceSales}" />
+                <DataGridTextColumn Header="NOV: Total" Binding="{Binding MonthlySales[10].TotalSalesCompany}" />
+
+                <!-- December -->
+                <DataGridTextColumn Header="DEC: Property" Binding="{Binding MonthlySales[11].PropertyInsuranceSales}" />
+                <DataGridTextColumn Header="DEC: Vehicle" Binding="{Binding MonthlySales[11].VehicleInsuranceSales}" />
+                <DataGridTextColumn Header="DEC: Liability" Binding="{Binding MonthlySales[11].LiabilityInsuranceSales}" />
+                <DataGridTextColumn Header="DEC: Total" Binding="{Binding MonthlySales[11].TotalSalesCompany}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <controls:DownloadButton Command="{Binding ExportSellerStatisticsCommand}" 
+                         HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"
+                         Grid.Row="3"/>
 
     </Grid>
 </Page>
