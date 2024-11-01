@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls" 
         xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         mc:Ignorable="d"
-        Title="CeoMainView" Height="450" Width="800">
+        Title="Ceo Main View" Height="450" Width="800">
 
     <Window.Resources>
         <helper:ViewModelLocator x:Key="Locator" />
@@ -15,7 +15,6 @@
 
     <Grid DataContext="{Binding CeoMainViewModel, Source={StaticResource Locator}}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -28,15 +27,44 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,10,10,10" Grid.Column="3" Grid.Row="3"/>
-        <controls:SignedInUserUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Grid.ColumnSpan="2" Margin="50,0,0,0" Width="350" Height="180" Grid.RowSpan="2"/>
+        <!-- View Title -->
+        <TextBlock FontSize="25"
+                   Text="CEO Main View" 
+                   FontWeight="Bold"
+                   HorizontalAlignment="Left" 
+                   Margin="20,37,0,15" 
+                   Grid.ColumnSpan="2" 
+                   Width="322"/>
 
-        <TextBlock Style="{StaticResource FörsäkringarFont}" Text="CEO Main View" HorizontalAlignment="Left" Grid.Column="1" Margin="0,0,0,108" Grid.RowSpan="2"/>
+        <!-- Functionalities available for Sales Assistant -->
+        <Button Style="{StaticResource OptionsButtonStyle}" 
+                Content="Show/Search Customers" 
+                Command="{Binding ToShowCustomers}" 
+                Margin="25,25,25,25" Grid.Row="1" 
+                Grid.Column="0"/>
+        <Button Style="{StaticResource OptionsButtonStyle}" 
+                Content="Show/Search Insurances" 
+                Command="{Binding ToShowInsurances}" 
+                Margin="25,25,25,25" 
+                Grid.Row="2" 
+                Grid.Column="0"/>
+        <Button Style="{StaticResource OptionsButtonStyle}" 
+                Content="Monthly Statistics" 
+                Command="{Binding ToMonthlyStatistics}" 
+                Margin="25,25,25,25" 
+                Grid.Row="1" 
+                Grid.Column="1"/>
+        <Button Style="{StaticResource OptionsButtonStyle}" 
+                Content="Trends and Graphs" 
+                Command="{Binding ToTrends}" 
+                Margin="25,25,25,25" 
+                Grid.Row="2" 
+                Grid.Column="1"/>
 
-        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search Customers" Command="{Binding ToShowCustomers}" Margin="25,25,25,25" Grid.Row="1" Grid.Column="1"/>
-        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search Insurances" Command="{Binding ToShowInsurances}" Margin="25,25,25,25" Grid.Row="2" Grid.Column="1"/>
-        <Button Style="{StaticResource MainViewAlternatives}" Content="Monthly Statistics" Command="{Binding ToMonthlyStatistics}" Margin="25,25,25,25" Grid.Row="3" Grid.Column="1"/>
-        <Button Style="{StaticResource MainViewAlternatives}" Content="Trends and Graphs" Command="{Binding ToTrends}" Margin="25,25,25,25" Grid.Row="3" Grid.Column="2"/>
+        <!-- Main View, Logout Button and SignedInUserUserControl -->
+        <controls:MainViewButtonControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,33,20,0" Grid.Column="2" Height="30" Grid.Row="1" Width="100" />
+        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,20,20" Grid.Column="2" Grid.Row="3" Height="30" Width="100"/>
+        <controls:SignedInUserUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Margin="33,17,0,0" Grid.RowSpan="2"/>
 
     </Grid>
 </Window>
