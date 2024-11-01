@@ -46,18 +46,6 @@ namespace SU.Backend.Database
         public DbSet<PropertyAndInventoryCoverage> PropertyAndInventoryCoverages { get; set; }
 
 
-        // We store the connection string in appsettings.json
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                var connectionString = _configuration.GetConnectionString("DefaultConnection");
-                optionsBuilder.UseSqlServer(connectionString);
-            }
-
-            base.OnConfiguring(optionsBuilder);
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

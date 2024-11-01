@@ -35,7 +35,8 @@
 
         <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search Customers" Command="{Binding ToShowCustomers}" Margin="25,25,25,25" Grid.Row="1" Grid.Column="1"/>
         <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Search Insurances" Command="{Binding ToShowInsurances}" Margin="25,25,25,25" Grid.Row="2" Grid.Column="1"/>
-        <Button Style="{StaticResource MainViewAlternatives}" Content="Show/ Create/ Export Selling statistics" Command="{Binding ToCreateExportStatistics}" Margin="25,25,25,25" Grid.Row="3" Grid.Column="1"/>
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Monthly Statistics" Command="{Binding ToMonthlyStatistics}" Margin="25,25,25,25" Grid.Row="3" Grid.Column="1"/>
+        <Button Style="{StaticResource MainViewAlternatives}" Content="Trends and Graphs" Command="{Binding ToTrends}" Margin="25,25,25,25" Grid.Row="3" Grid.Column="2"/>
 
     </Grid>
 </Window>

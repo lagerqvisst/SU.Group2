@@ -20,7 +20,7 @@ namespace SU.Frontend.ViewModels.SalesManagerViewModels
         {
             _navigationService = navigationService;
             //Shared views are navigated through the navigation service
-            ToCreateExportStatistics = new RelayCommand(() => _navigationService.NavigateToCreateExportStatistics());
+            ToCreateExportStatistics = new RelayCommand(() => _navigationService.NavigateToTrends());
             ToShowInsurances = new RelayCommand(() => _navigationService.NavigateToShowInsurances());
             ToShowCustomers = new RelayCommand(() => _navigationService.NavigateToShowCustomers());
         }

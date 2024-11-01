@@ -4,17 +4,23 @@ using SU.Backend.Services;
 using SU.Backend.Services.Interfaces;
 using SU.Backend.Controllers;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace SU.Backend.Configuration
 {
     public static class ConfigBackend
     {
-        public static void AddBackendServices(this IServiceCollection services)
+        public static void AddBackendServices(this IServiceCollection services, IConfiguration configuration)
         {
             // Registers all services and controllers for the backend
 
             //DB Service 
-            services.AddDbContext<Context>();
+            services.AddDbContext<Context>(options =>
+            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")),
+             ServiceLifetime.Transient); // Använd Transient för att skapa en ny instans varje gång
+
+
             services.AddScoped<UnitOfWork>();
 
             //API Service (only used for testing)

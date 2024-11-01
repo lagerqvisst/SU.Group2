@@ -16,7 +16,9 @@ namespace SU.Frontend.Helper.Navigation
 
         void ReturnToMain(Employee employee);
 
-        void NavigateToCreateExportStatistics();
+        void NavigateToMonthlyStatistics();
+
+        void NavigateToTrends();
 
         void NavigateToShowInsurances();
 

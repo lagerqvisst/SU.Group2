@@ -35,6 +35,8 @@ using SU.Frontend.Helper.DI_Objects.InsuranceObjects;
 using SU.Frontend.Helper.DI_Objects.User;
 using SU.Frontend.ViewModels.CommonViewModels.CustomerRelated;
 using SU.Frontend.ViewModels.CommonViewModels;
+using SU.Frontend.ViewModels.Statistics;
+using SU.Frontend.Views.CommonViews.Statistics;
 
 namespace SU.Frontend
 {
@@ -57,23 +59,20 @@ namespace SU.Frontend
             services.AddTransient<NewCompanyInsuranceViewModel>();
             services.AddTransient<PrivateInsuranceTypeViewModel>();
             services.AddTransient<CommissionViewModel>();
-
             services.AddTransient<ShowCustomerViewModel>();
             services.AddTransient<ShowInsuranceViewModel>();
             services.AddTransient<EditDeleteCustomerViewModel>();
             services.AddTransient<EditDeleteInsuranceViewModel>();
-            services.AddTransient<CreateSellStatViewModel>();
+            services.AddTransient<MonthlyStatisticsViewModel>();
             services.AddTransient<CompanyInsuranceTypeViewModel>();
-
-            
-
             services.AddTransient<RegisterNewSellerViewModel>();
             services.AddTransient<DownloadButtonViewModel>();
             services.AddTransient<ShowCustomerProspectViewModel>();
-
-
             services.AddTransient<EditDeleteSellerViewModel>();
-            
+            services.AddTransient<TablePageViewModel>();
+            services.AddTransient<LineChartViewModel>();
+            services.AddTransient<BarChartViewModel>();
+
             //MainView ViewModels
             services.AddTransient<CeoMainViewModel>(); // ViewModel for CeoMainView
             services.AddTransient<FinancialAssistantMainViewModel>(); // ViewModel for FinancialAssistantMainView
@@ -97,7 +96,9 @@ namespace SU.Frontend
             services.AddTransient<SellerMainView>(); // View for SellerMainView
 
             // Common Views
-            services.AddTransient<CreateSellStatView>();
+            services.AddTransient<MonthlyStatisticsView>();
+            services.AddTransient<TrendsView>();
+
             services.AddTransient<EditDeleteCustomerView>();
             services.AddTransient<EditDeleteInsuranceView>();
             services.AddTransient<ShowCustomerProspectView>();

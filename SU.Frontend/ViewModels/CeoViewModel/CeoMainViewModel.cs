@@ -13,7 +13,8 @@ namespace SU.Frontend.ViewModels.CeoMainViewModel
     public class CeoMainViewModel : ObservableObject
     {
         // Gör kommandon till offentliga egenskaper
-        public ICommand ToCreateExportStatistics { get; set; }
+        public ICommand ToTrends { get; set; }
+        public ICommand ToMonthlyStatistics { get; set; }
         public ICommand ToShowInsurances { get; set; }
         public ICommand ToShowCustomers { get; set; }
 
@@ -21,7 +22,8 @@ namespace SU.Frontend.ViewModels.CeoMainViewModel
         public CeoMainViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            ToCreateExportStatistics = new RelayCommand(() => _navigationService.NavigateToCreateExportStatistics());
+            ToTrends = new RelayCommand(() => _navigationService.NavigateToTrends());
+            ToMonthlyStatistics = new RelayCommand(() => _navigationService.NavigateToMonthlyStatistics());
             ToShowInsurances = new RelayCommand(() => _navigationService.NavigateToShowInsurances());
             ToShowCustomers = new RelayCommand(() =>_navigationService.NavigateToShowCustomers());
         }

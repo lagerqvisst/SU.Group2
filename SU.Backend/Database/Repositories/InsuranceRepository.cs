@@ -24,23 +24,23 @@ namespace SU.Backend.Database.Repositories
         //Used in multiple services methods
         public async Task<List<Insurance>> GetAllActiveInsurances()
         {
-            return await _context.Insurances
+            return _context.Insurances
                 .Include(s => s.Seller)
                 .Include(c => c.InsurancePolicyHolder)
                     .ThenInclude(p => p.PrivateCustomer)  
                 .Include(c => c.InsurancePolicyHolder)
                     .ThenInclude(c => c.CompanyCustomer)  
                 .Where(i => i.InsuranceStatus == InsuranceStatus.Active)
-                .ToListAsync();
+                .ToList();
         }
 
         //This method is used to get all active insurances within a specific date range
         public async Task<List<Insurance>> GetActiveInsurancesInDateRange(DateTime startDate, DateTime endDate)
         {
-            return await _context.Insurances
+            return _context.Insurances
                 .Include(s => s.Seller)
                 .Where(i => i.InsuranceStatus == InsuranceStatus.Active && i.StartDate >= startDate && i.StartDate <= endDate)
-                .ToListAsync();
+                .ToList();
         }
 
         //TODO: Include left join for sellers who did not sell any insurances
@@ -87,16 +87,16 @@ namespace SU.Backend.Database.Repositories
 
         public async Task<List<Insurance>> GetInsurancesByYear(int year)
         {
-            return await _context.Insurances
+            return  _context.Insurances
                 .Include(i => i.Seller) // Include the seller
                 .Where(i => i.StartDate.Year <= year && (i.EndDate == null || i.EndDate.Year >= year)) // Filter by the given year
-                .ToListAsync();
+                .ToList();
         }
 
         //Not sure if this is or will be used anywhere
         public async Task<Insurance> GetInsuranceById(int id)
         {
-            return await _context.Insurances
+            return _context.Insurances
                 .Include(i => i.InsurancePolicyHolder)
                     .ThenInclude(p => p.PrivateCustomer)
                 .Include(i => i.InsuranceCoverage)
@@ -105,7 +105,7 @@ namespace SU.Backend.Database.Repositories
                 .Include(i => i.InsuranceCoverage)
                     .ThenInclude(ic => ic.PrivateCoverage)
                 .Include(i => i.InsuranceAddons)
-                .FirstOrDefaultAsync(i => i.InsuranceId == id);
+                .FirstOrDefault(i => i.InsuranceId == id);
         }
 
 

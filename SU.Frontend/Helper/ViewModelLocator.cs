@@ -8,6 +8,7 @@ using SU.Frontend.ViewModels.FinancialAssistantViewModels;
 using SU.Frontend.ViewModels.SalesAssistantViewModels;
 using SU.Frontend.ViewModels.SalesManagerViewModels;
 using SU.Frontend.ViewModels.SellerViewModels;
+using SU.Frontend.ViewModels.Statistics;
 using SU.Frontend.ViewModels.UserControlViewModels;
 
 
@@ -83,11 +84,8 @@ namespace SU.Frontend.Helper
             public EditDeleteInsuranceViewModel EditDeleteInsuranceViewModel =>
               App.AppHost?.Services.GetService<EditDeleteInsuranceViewModel>();
 
-            public CreateSellStatViewModel CreateSellStatViewModel =>
-                App.AppHost?.Services.GetService<CreateSellStatViewModel>();
-
-
-            
+            public MonthlyStatisticsViewModel CreateSellStatViewModel =>
+                App.AppHost?.Services.GetService<MonthlyStatisticsViewModel>();
 
             public RegisterNewSellerViewModel RegisterNewSellerViewModel =>
                 App.AppHost?.Services.GetService<RegisterNewSellerViewModel>();
@@ -100,6 +98,15 @@ namespace SU.Frontend.Helper
           
             public ShowCustomerProspectViewModel ShowCustomerProspectViewModel =>
                 App.AppHost?.Services.GetService<ShowCustomerProspectViewModel>();
+
+            public TablePageViewModel TablePageViewModel =>
+                App.AppHost?.Services.GetService<TablePageViewModel>();
+
+            public LineChartViewModel LineChartViewModel =>
+                App.AppHost?.Services.GetService<LineChartViewModel>();
+
+            public BarChartViewModel BarChartViewModel =>
+                App.AppHost?.Services.GetService<BarChartViewModel>();
 
         }
     }

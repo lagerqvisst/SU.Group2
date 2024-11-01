@@ -127,9 +127,9 @@ namespace SU.Frontend.Helper.Navigation
             }
         }
 
-        public void NavigateToCreateExportStatistics()
+        public void NavigateToMonthlyStatistics()
         {
-            NavigateTo("CreateSellStatView", "CommonViews");
+            NavigateTo("MonthlyStatisticsView", "CommonViews.Statistics");
         }
 
         public void NavigateToShowInsurances()
@@ -196,6 +196,11 @@ namespace SU.Frontend.Helper.Navigation
         public void NavigateToNewInsideSeller()
         {
             NavigateTo("NewInsideSellerView", "SalesAssistantViews.RegisterNewSeller");
+        }
+
+        public void NavigateToTrends()
+        {
+            NavigateTo("TrendsView", "CommonViews.Statistics");
         }
     }
 }

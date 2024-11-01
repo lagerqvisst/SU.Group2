@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SU.Frontend.Views.CommonViews
+namespace SU.Frontend.Views.CommonViews.Statistics
 {
     /// <summary>
     /// Interaction logic for CreateSellStatView.xaml
     /// </summary>
-    public partial class CreateSellStatView : Window
+    public partial class MonthlyStatisticsView : Window
     {
-        public CreateSellStatView()
+        public MonthlyStatisticsView()
         {
             InitializeComponent();
         }

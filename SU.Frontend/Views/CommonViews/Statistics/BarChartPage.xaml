@@ -1,0 +1,40 @@
+﻿<Page x:Class="SU.Frontend.Views.CommonViews.Statistics.BarChartPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
+      xmlns:local="clr-namespace:SU.Frontend.Views.CommonViews.Statistics"
+      xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="BarChartPage">
+
+    <Page.Resources>
+        <helper:ViewModelLocator x:Key="Locator" />
+    </Page.Resources>
+
+    <Grid DataContext="{Binding BarChartViewModel, Source={StaticResource Locator}}" Margin="10">
+
+        <!-- Grid layout definition -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- För ComboBox -->
+            <RowDefinition Height="*"/>
+            <!-- För stapeldiagram -->
+        </Grid.RowDefinitions>
+
+        <!-- ComboBox för att välja säljare -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10">
+            <TextBlock Text="Choose Seller:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <ComboBox ItemsSource="{Binding Sellers}"
+                      DisplayMemberPath="FirstName"
+                      SelectedItem="{Binding SelectedSeller, Mode=TwoWay}"
+                      Width="200"/>
+        </StackPanel>
+
+        <!-- Stapeldiagram -->
+        <lvc:CartesianChart Grid.Row="1" Series="{Binding Series}" XAxes="{Binding XAxes}" YAxes="{Binding YAxes}" 
+                            LegendPosition="Top" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,20,0,0"/>
+    </Grid>
+</Page>

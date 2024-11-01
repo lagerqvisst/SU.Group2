@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using SU.Backend.Database;
+using SU.Backend.Models.Employees;
 using SU.Backend.Models.Enums.Insurance;
 using SU.Backend.Models.Insurances;
 using SU.Backend.Models.Statistics;
@@ -30,7 +31,6 @@ namespace SU.Backend.Services
 
         public async Task<(bool success, string message, List<SellerStatistics> statistics)> GetSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null)
         {
-           // _logger.LogInformation($"Getting seller statistics for year {year} and insurance types: {string.Join(", ", insuranceTypes)}");
 
             try
             {
@@ -53,24 +53,38 @@ namespace SU.Backend.Services
                     (seller, insurances) => new
                     {
                         seller1 = seller,
-                        monthlySales = Enumerable.Range(1, 12).Select(month => new MonthlySalesData
+                        monthlySales = Enumerable.Range(1, 12).Select(month =>
                         {
-                            Month = month,
-                            InsuranceSalesCounts = insurances
-                                .Where(i => i.StartDate.Month == month)
-                                .GroupBy(i => i.InsuranceType)
-                                .ToDictionary(group => group.Key, group => group.Count())
+                            // Initialize counts for each insurance type to 0
+                            var insuranceCounts = Enum.GetValues(typeof(InsuranceType))
+                                                      .Cast<InsuranceType>()
+                                                      .ToDictionary(type => type, type => 0);
+
+                            // Populate counts for existing sales in that month
+                            foreach (var group in insurances
+                                                    .Where(i => i.StartDate.Month == month)
+                                                    .GroupBy(i => i.InsuranceType))
+                            {
+                                insuranceCounts[group.Key] = group.Count();
+                            }
+
+                            return new MonthlySalesData
+                            {
+                                Month = month,
+                                InsuranceSalesCounts = insuranceCounts
+                            };
                         }).ToList()
-                    })
-                    .Select(data => new SellerStatistics
-                    {
-                        SellerName = data.seller1.FirstName + " " + data.seller1.LastName,
-                        AgentNumber = data.seller1.AgentNumber,
-                        MonthlySales = data.monthlySales,
-                        TotalYearlySales = data.monthlySales.Sum(m => m.TotalSales),
-                        AverageMonthlySales = data.monthlySales.Average(m => m.TotalSales)
-                    })
-                    .ToList();
+                         })
+                        .Select(data => new SellerStatistics
+                        {
+                            SellerName = data.seller1.FirstName + " " + data.seller1.LastName,
+                            AgentNumber = data.seller1.AgentNumber,
+                            MonthlySales = data.monthlySales,
+                            TotalYearlySales = data.monthlySales.Sum(m => m.TotalSales),
+                            AverageMonthlySales = data.monthlySales.Average(m => m.TotalSales)
+                        })
+                        .ToList();
+
 
                 return (true, "Success", groupedData);
             }
@@ -81,6 +95,74 @@ namespace SU.Backend.Services
             }
 
         }
+
+        public async Task<(bool success, string message, List<SellerStatistics> statistics)> GetActiveSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null)
+        {
+            try
+            {
+                // Steg 1: Hämta alla säljare (inne- eller utesäljare)
+                var salesEmployees = await _unitOfWork.Employees.GetSalesEmployees();
+
+                // Steg 2: Hämta försäkringar för det angivna året och typer, med relaterad säljare
+                var insurancesQuery = await _unitOfWork.Insurances.GetInsurancesByYear(year);
+
+                if (insuranceTypes != null && insuranceTypes.Any())
+                {
+                    insurancesQuery = insurancesQuery.Where(i => insuranceTypes.Contains(i.InsuranceType)).ToList();
+                }
+
+                // Steg 3: Gruppera per säljare och aggregera månatlig data
+                var groupedData = salesEmployees.GroupJoin(
+                    insurancesQuery,
+                    seller => seller.EmployeeId,
+                    insurance => insurance.SellerId,
+                    (seller, insurances) => new
+                    {
+                        Seller = seller,
+                        MonthlySales = Enumerable.Range(1, 12).Select(month =>
+                        {
+                            var insuranceCounts = Enum.GetValues(typeof(InsuranceType))
+                                                      .Cast<InsuranceType>()
+                                                      .ToDictionary(type => type, type => 0);
+
+                            foreach (var group in insurances
+                                                    .Where(i => i.StartDate.Month == month)
+                                                    .GroupBy(i => i.InsuranceType))
+                            {
+                                insuranceCounts[group.Key] = group.Count();
+                            }
+
+                            var totalSales = insuranceCounts.Values.Sum(); // Räknar total försäljning för månaden
+                            Console.WriteLine($"Seller: {seller.FirstName} {seller.LastName}, Month: {month}, TotalSales: {totalSales}"); // Logg
+
+                            return new MonthlySalesData
+                            {
+                                Month = month,
+                                InsuranceSalesCounts = insuranceCounts
+                            };
+                        }).ToList()
+                    })
+                    .Where(data => data.MonthlySales.Any(m => m.TotalSales > 0)) // Filtrera enbart säljare med försäljningar
+                    .Select(data => new SellerStatistics
+                    {
+                        SellerName = data.Seller.FirstName + " " + data.Seller.LastName,
+                        AgentNumber = data.Seller.AgentNumber,
+                        MonthlySales = data.MonthlySales,
+                        TotalYearlySales = data.MonthlySales.Sum(m => m.TotalSales),
+                        AverageMonthlySales = data.MonthlySales.Average(m => m.TotalSales)
+                    })
+                    .ToList();
+
+                return (true, "Success", groupedData);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while getting active seller statistics");
+                return (false, "An error occurred while fetching active seller statistics", new List<SellerStatistics>());
+            }
+        }
+
+
 
         public async Task<(bool success, string message, List<InsuranceStatistics> statistics)> GetMonthlyInsuranceStatistics()
         {
@@ -140,6 +222,54 @@ namespace SU.Backend.Services
             {
                 _logger.LogError(ex, "Error while fetching insurance statistics");
                 return (false, "An error occurred while fetching insurance statistics", new List<InsuranceStatistics>());
+            }
+        }
+
+        public async Task<(bool success, string message, SellerStatistics statistics)> GetSellerStatisticsBySeller(int year, Employee seller)
+        {
+            try
+            {
+                // Hämta försäkringar för den specifika säljaren och året
+                var insurancesQuery = await _unitOfWork.Insurances.GetInsurancesByYear(year);
+                var sellerInsurances = insurancesQuery.Where(i => i.SellerId == seller.EmployeeId).ToList();
+
+                // Gruppera försäljning per månad
+                var monthlySales = Enumerable.Range(1, 12).Select(month =>
+                {
+                    var insuranceCounts = Enum.GetValues(typeof(InsuranceType))
+                                              .Cast<InsuranceType>()
+                                              .ToDictionary(type => type, type => 0);
+
+                    foreach (var group in sellerInsurances
+                                            .Where(i => i.StartDate.Month == month)
+                                            .GroupBy(i => i.InsuranceType))
+                    {
+                        insuranceCounts[group.Key] = group.Count();
+                    }
+
+                    return new MonthlySalesData
+                    {
+                        Month = month,
+                        InsuranceSalesCounts = insuranceCounts
+                    };
+                }).ToList();
+
+                // Skapa SellerStatistics objekt för den specifika säljaren
+                var sellerStatistics = new SellerStatistics
+                {
+                    SellerName = seller.FirstName + " " + seller.LastName,
+                    AgentNumber = seller.AgentNumber,
+                    MonthlySales = monthlySales,
+                    TotalYearlySales = monthlySales.Sum(m => m.TotalSales),
+                    AverageMonthlySales = monthlySales.Average(m => m.TotalSales)
+                };
+
+                return (true, "Success", sellerStatistics);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error fetching statistics for seller {seller.FirstName} {seller.LastName}");
+                return (false, "An error occurred while fetching seller statistics", null);
             }
         }
 
