@@ -34,7 +34,8 @@
                    FontWeight="Bold"
                    HorizontalAlignment="Left" 
                    Margin="20,37,0,31" 
-                   Grid.ColumnSpan="2" Width="322"/>
+                   Grid.ColumnSpan="2" 
+                   Width="322"/>
 
         <!-- Functionalities available for Sales Manager -->
         <Button Style="{StaticResource OptionsButtonStyle}" 
