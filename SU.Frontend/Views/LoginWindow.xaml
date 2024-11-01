@@ -11,27 +11,38 @@
         <!-- Taskbar added at the top -->
         <controls:Taskbar DockPanel.Dock="Top" />
 
-        <Grid x:Name="MainGrid" Margin="20">
+        <Grid x:Name="MainGrid" Margin="20" Height="394" Width="728">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="9*"/>
+                <RowDefinition Height="38*"/>
+            </Grid.RowDefinitions>
             <!-- 2 Column grid -->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <!-- Left colomun: Sign in fields -->
-            <StackPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="20">
+            <StackPanel 
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Center" 
+                        Margin="0,66,0,0"
+                        Width="600" Grid.RowSpan="2">
                 <!-- Company title/info -->
-                <TextBlock>
+                <TextBlock HorizontalAlignment="Center">
                     <TextBlock.Inlines>
-                        <TextBlock Style="{StaticResource ToppFont}" Text="TOPP"/>
-                        <TextBlock Style="{StaticResource FörsäkringarFont}" Text="FÖRSÄKRINGAR AB"/>
+                        <TextBlock Style="{StaticResource ToppFont}" 
+                                   Text="TOPP"
+                                   FontSize="40"/>
+                        <TextBlock Style="{StaticResource FörsäkringarFont}" 
+                                   Text="FÖRSÄKRINGAR AB"
+                                   FontSize="40"/>
                     </TextBlock.Inlines>
                 </TextBlock>
-                <Line X1="0" Y1="0" X2="1" Y2="0" Stroke="Black" StrokeThickness="2" Margin="0,5"/>
                 <TextBlock Text="Privat &amp; Företagsförsäkringar" 
                            FontSize="16" 
                            FontWeight="Regular" 
                            HorizontalAlignment="Center" 
+                           Margin="0,0,0,30"
                            />
 
                 <!-- Input fields -->
