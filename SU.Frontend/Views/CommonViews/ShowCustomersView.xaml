@@ -14,7 +14,7 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
 
-    <Grid Background="White" DataContext="{Binding ShowCustomerViewModel, Source={StaticResource Locator}}">
+    <Grid DataContext="{Binding ShowCustomerViewModel, Source={StaticResource Locator}}">
         <!-- Title - Client Information -->
         <TextBlock Text="Client information" FontWeight="Bold" FontSize="20" 
                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="36,46,0,0"/>

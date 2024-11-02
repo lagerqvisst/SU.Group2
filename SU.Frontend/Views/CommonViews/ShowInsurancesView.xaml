@@ -13,7 +13,7 @@
         <helper:ViewModelLocator x:Key="Locator" />
     </Window.Resources>
 
-    <Grid DataContext="{Binding ShowInsuranceViewModel, Source={StaticResource Locator}}">
+    <Grid Background="White" DataContext="{Binding ShowInsuranceViewModel, Source={StaticResource Locator}}">
         
         <!-- Title - Insurance Information -->
         <TextBlock Text="Insurance information"
@@ -61,7 +61,7 @@
                         <TextBlock Text="Insurance ID" 
                                    FontSize="15"
                                    Margin="0,0,70,0"/>
-                        <TextBox Text="{Binding SelectedInsurance.InsuranceId}"/>
+                        <TextBlock Text="{Binding SelectedInsurance.InsuranceId}"/>
                     </StackPanel>
 
                     <!-- Insurance Type-->
@@ -70,7 +70,7 @@
                         <TextBlock Text="Insurance Type"
                                    FontSize="15"
                                    Margin="0,0,53,0"/>
-                        <TextBox Text="{Binding SelectedInsurance.InsuranceType}"/>
+                        <TextBlock Text="{Binding SelectedInsurance.InsuranceType}"/>
                     </StackPanel>
                     
                     
@@ -89,7 +89,7 @@
                         <TextBlock Text="Insurance Category"
                                    FontSize="15"
                                    Margin="0,0,24,0"/>
-                        <TextBox Text="{Binding SelectedInsurance.InsuranceCategory}"/>
+                        <TextBlock Text="{Binding SelectedInsurance.InsuranceCategory}"/>
                     </StackPanel>
                     
                     <!-- Insurance Status-->
@@ -98,7 +98,7 @@
                         <TextBlock Text="Insurance Status"
                                    FontSize="15"
                                    Margin="0,0,44,0"/>
-                        <TextBox Text="{Binding SelectedInsurance.InsuranceStatus}"/>
+                        <TextBlock Text="{Binding SelectedInsurance.InsuranceStatus}"/>
                     </StackPanel>
 
                     <!-- Seller ID-->
@@ -107,7 +107,7 @@
                         <TextBlock Text="Seller ID "
                                    FontSize="15"
                                    Margin="0,0,93,0"/>
-                        <TextBox Text="{Binding SelectedInsurance.SellerId}"/>
+                        <TextBlock Text="{Binding SelectedInsurance.SellerId}"/>
                     </StackPanel>
                     
                     <!--<StackPanel Orientation="Horizontal">
@@ -121,7 +121,7 @@
                         <TextBlock Text="Premium"
                                    FontSize="15"
                                    Margin="0,0,92,0"/>
-                        <TextBox Text="{Binding SelectedInsurance.Premium}"/>
+                        <TextBlock Text="{Binding SelectedInsurance.Premium}"/>
                     </StackPanel>
 
                     <!-- Payment Plan-->
@@ -130,7 +130,7 @@
                         <TextBlock Text="Payment Plan"
                                    FontSize="15"
                                    Margin="0,0,62,0"/>
-                        <TextBox Text="{Binding SelectedInsurance.PaymentPlan}"/>
+                        <TextBlock Text="{Binding SelectedInsurance.PaymentPlan}"/>
                     </StackPanel>
 
                     <!-- Note-->
@@ -139,7 +139,7 @@
                         <TextBlock Text="Note"
                                    FontSize="15"
                                    Margin="0,0,118,0"/>
-                        <TextBox Text="{Binding SelectedInsurance.Note}"/>
+                        <TextBlock Text="{Binding SelectedInsurance.Note}"/>
                     </StackPanel>
 
                     <!-- Start Date-->
@@ -148,7 +148,7 @@
                         <TextBlock Text="Start Date"
                                    FontSize="15"
                                    Margin="0,0,85,0"/>
-                        <TextBox Text="{Binding SelectedInsurance.StartDate}"/>
+                        <TextBlock Text="{Binding SelectedInsurance.StartDate}"/>
                     </StackPanel>
 
                     <!-- End Date-->
@@ -157,7 +157,7 @@
                         <TextBlock Text="End Date"
                                    FontSize="15"
                                    Margin="0,0,91,0"/>
-                        <TextBox Text="{Binding SelectedInsurance.EndDate}"/>
+                        <TextBlock Text="{Binding SelectedInsurance.EndDate}"/>
                         
                     </StackPanel>
                 </StackPanel>
