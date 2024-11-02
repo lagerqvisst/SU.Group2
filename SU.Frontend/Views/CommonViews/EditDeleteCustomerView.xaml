@@ -59,8 +59,8 @@
                             Width="382">
 
                     <TextBlock Text="Private Customer Details" 
-                               FontWeight="Bold" 
-                               FontSize="16" 
+                               FontWeight="DemiBold" 
+                               FontSize="18" 
                                Margin="0,0,10,20"/>
                     
                     <!-- Private Customer ID-->
