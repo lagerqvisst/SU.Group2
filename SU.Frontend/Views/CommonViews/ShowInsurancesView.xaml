@@ -7,24 +7,31 @@
         xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         xmlns:local="clr-namespace:SU.Frontend.Views.CommonViews"
         mc:Ignorable="d"
-        Title="ShowInsurancesView" Height="450" Width="800">
+        Title="ShowInsurancesView"  SizeToContent="WidthAndHeight">
 
     <Window.Resources>
         <helper:ViewModelLocator x:Key="Locator" />
     </Window.Resources>
 
-    <Grid Background="White" DataContext="{Binding ShowInsuranceViewModel, Source={StaticResource Locator}}">
-        <!-- Title - Client Information -->
-        <TextBlock Text="Insurance information" FontWeight="Bold" FontSize="20" 
-                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="36,46,0,0"/>
+    <Grid DataContext="{Binding ShowInsuranceViewModel, Source={StaticResource Locator}}">
+        
+        <!-- Title - Insurance Information -->
+        <TextBlock Text="Insurance information"
+                   FontSize="25"
+                   FontWeight="Bold"
+                   Grid.Row="0" 
+                   Margin="20,37,496,344" />
 
-        <!-- Left Panel - Client List with Border -->
-        <Border BorderBrush="Green" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,141,0,0" Height="183">
+        <!-- Left Panel - Insurances List with Border -->
+        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,141,0,0" Height="231">
             <StackPanel Width="200" Margin="10">
-                <TextBlock Text="Insurances listed by ID" FontWeight="Bold" Margin="0,0,0,10"/>
+                <TextBlock Text="Insurances Listed By ID" 
+                           FontWeight="DemiBold"
+                           Margin="0,10,10,20"
+                           FontSize="18"/>
 
-                <!-- ComboBox for Private Customers -->
-                <ComboBox Height="30" Margin="0,0,0,10" 
+                <!-- ComboBox for Insurances -->
+                <ComboBox Margin="0,0,0,10"
                           ItemsSource="{Binding Insurances}" 
                           DisplayMemberPath="InsuranceId"
                           SelectedItem="{Binding SelectedInsurance}"/>
@@ -33,22 +40,40 @@
         </Border>
 
         <!-- Details Panel for Insurance with Border -->
-
-        <Border BorderBrush="Green" BorderThickness="2" Margin="251,140,124,75">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,0" >
-
+        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" Margin="251,140,235,185">
+            <ScrollViewer VerticalScrollBarVisibility="Visible" CanContentScroll="True" Margin="0,-2,0,1">
+               
                 <!-- Kommenterat ut det av attributen som inte funkade med bindings, blir att de skriver ut SU.Map.Blabla -->
+                <StackPanel Orientation="Vertical" 
+                            Height="207"
+                            Width="382"
+                            Margin="12,20,10,20">
 
-                <StackPanel Orientation="Vertical" Margin="5,0,0,0" Height="206" Width="414">
-                    <TextBlock Text="Insurance Details:" FontWeight="Bold" FontSize="16" Margin="0,5,0,10"/>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Insurance ID: " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding SelectedInsurance.InsuranceId}"/>
+                    <TextBlock Text="Insurance Details"
+                               FontWeight="DemiBold" 
+                               FontSize="18" 
+                               Margin="0,0,10,20"
+                               Height="24"/>
+
+                    <!-- Insurance ID -->
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,5,0,5">
+                        <TextBlock Text="Insurance ID" 
+                                   FontSize="15"
+                                   Margin="0,0,70,0"/>
+                        <TextBox Text="{Binding SelectedInsurance.InsuranceId}"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Insurance type: " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding SelectedInsurance.InsuranceType}"/>
+
+                    <!-- Insurance Type-->
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,5,0,5">
+                        <TextBlock Text="Insurance Type"
+                                   FontSize="15"
+                                   Margin="0,0,53,0"/>
+                        <TextBox Text="{Binding SelectedInsurance.InsuranceType}"/>
                     </StackPanel>
+                    
+                    
                     <!--<StackPanel Orientation="Horizontal">
                         <TextBlock Text="Insurance policy holder: " FontWeight="Bold"/>
                         <TextBlock Text="{Binding SelectedInsurance.InsurancePolicyHolder}"/>
@@ -57,49 +82,92 @@
                         <TextBlock Text="Insurance coverage " FontWeight="Bold"/>
                         <TextBlock Text="{Binding SelectedInsurance.InsuranceCoverage}"/>
                     </StackPanel>-->
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Insurance category: " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding SelectedInsurance.InsuranceCategory}"/>
+
+                    <!-- Insurance Category-->
+                    <StackPanel Orientation="Horizontal"
+                                 Margin="0,5,0,5">
+                        <TextBlock Text="Insurance Category"
+                                   FontSize="15"
+                                   Margin="0,0,24,0"/>
+                        <TextBox Text="{Binding SelectedInsurance.InsuranceCategory}"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Insurance status: " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding SelectedInsurance.InsuranceStatus}"/>
+                    
+                    <!-- Insurance Status-->
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,5,0,5">
+                        <TextBlock Text="Insurance Status"
+                                   FontSize="15"
+                                   Margin="0,0,44,0"/>
+                        <TextBox Text="{Binding SelectedInsurance.InsuranceStatus}"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Seller ID " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding SelectedInsurance.SellerId}"/>
+
+                    <!-- Seller ID-->
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,5,0,5">
+                        <TextBlock Text="Seller ID "
+                                   FontSize="15"
+                                   Margin="0,0,93,0"/>
+                        <TextBox Text="{Binding SelectedInsurance.SellerId}"/>
                     </StackPanel>
+                    
                     <!--<StackPanel Orientation="Horizontal">
                         <TextBlock Text="Seller name: " FontWeight="Bold"/>
                         <TextBlock Text="{Binding SelectedInsurance.Seller}"/>
                     </StackPanel>-->
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Premium: " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding SelectedInsurance.Premium}"/>
+
+                    <!-- Premium-->
+                    <StackPanel Orientation="Horizontal"
+                                 Margin="0,5,0,5">
+                        <TextBlock Text="Premium"
+                                   FontSize="15"
+                                   Margin="0,0,92,0"/>
+                        <TextBox Text="{Binding SelectedInsurance.Premium}"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Payment plan: " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding SelectedInsurance.PaymentPlan}"/>
+
+                    <!-- Payment Plan-->
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,5,0,5">
+                        <TextBlock Text="Payment Plan"
+                                   FontSize="15"
+                                   Margin="0,0,62,0"/>
+                        <TextBox Text="{Binding SelectedInsurance.PaymentPlan}"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Note: " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding SelectedInsurance.Note}"/>
+
+                    <!-- Note-->
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,5,0,5">
+                        <TextBlock Text="Note"
+                                   FontSize="15"
+                                   Margin="0,0,118,0"/>
+                        <TextBox Text="{Binding SelectedInsurance.Note}"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Start date: " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding SelectedInsurance.StartDate}"/>
+
+                    <!-- Start Date-->
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,5,0,5">
+                        <TextBlock Text="Start Date"
+                                   FontSize="15"
+                                   Margin="0,0,85,0"/>
+                        <TextBox Text="{Binding SelectedInsurance.StartDate}"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="End date: " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding SelectedInsurance.EndDate}"/>
+
+                    <!-- End Date-->
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,5,0,5">
+                        <TextBlock Text="End Date"
+                                   FontSize="15"
+                                   Margin="0,0,91,0"/>
+                        <TextBox Text="{Binding SelectedInsurance.EndDate}"/>
+                        
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>
         </Border>
 
-        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,10,10,10" Grid.Column="3" Grid.Row="4"/>
-        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="2" Grid.ColumnSpan="2" Margin="50,0,0,0" Width="350" Height="180" Grid.RowSpan="2"/>
-        <!--<controls:MainViewButtonControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,147,10,0" Grid.Column="0"/>-->
+        <!-- Additional Controls (Logout and User Information) -->
+        <controls:LogoutButtonControl HorizontalAlignment="Right" Margin="0,546,10,10"/>
+        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0"/>
+        <controls:MainViewButtonControl  VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,120,10,0"/>
 
     </Grid>
 

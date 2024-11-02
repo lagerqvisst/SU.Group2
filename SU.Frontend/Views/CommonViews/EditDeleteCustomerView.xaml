@@ -35,7 +35,7 @@
                           DisplayMemberPath="FirstName"
                           SelectedItem="{Binding SelectedPrivateCustomer}"/>
 
-                <TextBlock Text="Company customers" 
+                <TextBlock Text="Company Customers" 
                            FontWeight="DemiBold" 
                            Margin="0,10,10,20"
                            FontSize="18"/>
