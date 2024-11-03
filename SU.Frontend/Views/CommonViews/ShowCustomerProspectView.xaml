@@ -13,6 +13,7 @@
         <helper:ViewModelLocator x:Key="Locator" />
     </Window.Resources>
 
+    
     <Grid DataContext="{Binding ShowCustomerProspectViewModel, Source={StaticResource Locator}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -23,27 +24,46 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Prospects" FontSize="24" FontWeight="Bold" Grid.Row="0" Margin="10"/>
+        <!-- Header TextBlock (Outside Border) -->
+        <TextBlock Text="Prospects" 
+                   FontSize="25" 
+                   FontWeight="Bold" 
+                   Grid.Row="0"
+                   Margin="20,37,0,17" />
+        
+        
 
-        <DataGrid Grid.Row="1" 
-          ItemsSource="{Binding Prospects}" 
-          SelectedItem="{Binding SelectedProspect}" 
-          AutoGenerateColumns="True" 
-          Margin="10,28,10,56">
+        <!-- Prospects table with green border -->
+        <DataGrid  BorderBrush="Green"
+                   BorderThickness="3" 
+                   Grid.Row="1" 
+                   ItemsSource="{Binding Prospects}" 
+                   SelectedItem="{Binding SelectedProspect}" 
+                   AutoGenerateColumns="True" 
+                   Margin="10,28,10,56">
         </DataGrid>
 
+        <Border Grid.Row="2" CornerRadius="3" 
+                BorderBrush="Green" 
+                BorderThickness="2" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                Margin="10,0,0,0" >
 
-
-
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10,5,10,10">
-            <TextBlock Text="Assign Seller" FontWeight="Bold" VerticalAlignment="Center"/>
-            <ComboBox ItemsSource="{Binding Sellers}" 
+            <StackPanel Grid.Row="2"
+                    Orientation="Horizontal" 
+                    Margin="10,5,10,10">
+                <TextBlock Text="Assign Seller" FontSize="15" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                <ComboBox ItemsSource="{Binding Sellers}" 
                       SelectedItem="{Binding SelectedSeller, Mode=TwoWay}" 
                       DisplayMemberPath="EmployeeId" Width="200" Margin="10,0,0,0"/>
 
-        </StackPanel>
-        <StackPanel Grid.Row="3" Orientation="Vertical" Margin="10">
-            <TextBlock Text="Contact Note" FontWeight="Bold" HorizontalAlignment="Left" Margin="0,0,0,5"/>
+            </StackPanel>
+            </Border>
+            
+        
+        <StackPanel Grid.Row="3" Orientation="Vertical" Margin="10,5,10,0">
+            <TextBlock Text="Contact Note" FontSize="15" FontWeight="DemiBold" HorizontalAlignment="Left" Margin="10,0,0,5"/>
             <TextBox Text="{Binding SelectedProspect.ContactNote, Mode=TwoWay}" 
              Width="300" Height="60" TextWrapping="Wrap" AcceptsReturn="True" 
              HorizontalAlignment="Left"/>
@@ -56,12 +76,12 @@
                       SelectedItem="{Binding SelectedProspect.ProspectStatus, Mode=TwoWay}" 
                       Width="200" Margin="10,0,0,0"/>
         </StackPanel>
-
         <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="10,5,10,5">
             <TextBlock Text="Contact Date" FontWeight="Bold" VerticalAlignment="Center"/>
             <DatePicker SelectedDate="{Binding SelectedProspect.ContactDate, Mode=TwoWay}" 
                         Width="200" Margin="10,0,0,0"/>
         </StackPanel>
+        
 
 
 
