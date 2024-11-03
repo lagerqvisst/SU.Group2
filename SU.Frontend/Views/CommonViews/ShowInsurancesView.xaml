@@ -52,7 +52,7 @@
                     <TextBlock Text="Insurance Details"
                                FontWeight="DemiBold" 
                                FontSize="18" 
-                               Margin="0,0,10,20"
+                               Margin="0,-5,10,20"
                                Height="24"/>
 
                     <!-- Insurance ID -->

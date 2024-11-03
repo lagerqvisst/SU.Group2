@@ -46,8 +46,8 @@
                             Width="382">
                     
                     <TextBlock Text="Insurance Details"
-                               FontWeight="Bold" 
-                               FontSize="16" 
+                               FontWeight="DemiBold" 
+                               FontSize="18" 
                                Margin="0,0,10,20"/>
 
                     <!-- Insurance ID-->
