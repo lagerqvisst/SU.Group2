@@ -12,7 +12,7 @@
         <helper:ViewModelLocator x:Key="Locator" />
     </Window.Resources>
 
-    <Grid  DataContext="{Binding EditDeleteInsuranceViewModel, Source={StaticResource Locator}}">
+    <Grid DataContext="{Binding EditDeleteInsuranceViewModel, Source={StaticResource Locator}}">
         <!-- View Title -->
         <TextBlock Text="Edit Or Delete Insurance" 
                    FontSize="25" 
@@ -31,7 +31,7 @@
                 <!-- ComboBox for Private Customers -->
                 <ComboBox Margin="0,0,0,10" 
                           ItemsSource="{Binding Insurances}" 
-                          DisplayMemberPath="Insurance ID"
+                          DisplayMemberPath="InsuranceId"
                           SelectedItem="{Binding SelectedInsurance}"/>
             </StackPanel>
         </Border>
@@ -46,8 +46,8 @@
                             Width="382">
                     
                     <TextBlock Text="Insurance Details"
-                               FontWeight="Bold" 
-                               FontSize="16" 
+                               FontWeight="DemiBold" 
+                               FontSize="18" 
                                Margin="0,0,10,20"/>
 
                     <!-- Insurance ID-->
@@ -56,7 +56,7 @@
                         <TextBlock Text="Insurance ID"
                                    FontSize="15"
                                    Margin="0,0,53,0"/>
-                        <TextBox Text="{Binding SelectedInsurance.InsuranceId}"/>
+                        <TextBlock Text="{Binding SelectedInsurance.InsuranceId}"/>
                     </StackPanel>
 
                     <!-- Insurance type-->
@@ -65,7 +65,7 @@
                         <TextBlock Text="Insurance yTpe"
                                    FontSize="15"
                                    Margin="0,0,37,0"/>
-                        <TextBox Text="{Binding SelectedInsurance.InsuranceType}"/>
+                        <TextBlock Text="{Binding SelectedInsurance.InsuranceType}"/>
                     </StackPanel>
 
                     <!-- Insurance Category-->
@@ -74,13 +74,13 @@
                         <TextBlock Text="Insurance Category"
                                    FontSize="15"
                                    Margin="0,0,8,0"/>
-                        <TextBox Text="{Binding SelectedInsurance.InsuranceCategory}"/>
+                        <TextBlock Text="{Binding SelectedInsurance.InsuranceCategory}"/>
                     </StackPanel>
 
                     <!-- Insurance Category-->
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,0,0,0">
-                        <TextBlock Text="Insurance status"
+                        <TextBlock Text="Insurance Status"
                                    FontSize="15"
                                    Margin="0,0,30,0"/>
                         <ComboBox Margin="0,0,0,5"
@@ -108,7 +108,7 @@
                         <TextBlock Text="Premium"
                                    FontSize="15"
                                    Margin="0,0,77,0"/>
-                        <TextBox Text="{Binding SelectedInsurance.Premium}"/>
+                        <TextBlock Text="{Binding SelectedInsurance.Premium}"/>
                     </StackPanel>
 
                     <!-- Payment Plan-->
