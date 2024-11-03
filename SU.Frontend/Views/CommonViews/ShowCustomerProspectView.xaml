@@ -26,94 +26,96 @@
                    Margin="20,37,0,17" Width="362"/>
 
         <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" Margin="15,120,0,0" Width="750" Height="460" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Grid DataContext="{Binding ShowCustomerProspectViewModel, Source={StaticResource Locator}}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+            <ScrollViewer VerticalScrollBarVisibility="Visible" CanContentScroll="True">
+                <Grid DataContext="{Binding ShowCustomerProspectViewModel, Source={StaticResource Locator}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                <!-- Prospects table with green border -->
-                <DataGrid  BorderBrush="Green"
-                   BorderThickness="1" 
+                    <!-- Prospects table with green border -->
+                    <DataGrid  BorderBrush="Green"
+                   BorderThickness="2" 
                    Grid.Row="1" 
                    ItemsSource="{Binding Prospects}" 
                    SelectedItem="{Binding SelectedProspect}" 
                    AutoGenerateColumns="True" 
                    Margin="10,20,10,20">
-                </DataGrid>
+                    </DataGrid>
 
-                <!-- assign seller panel -->
-                <StackPanel Grid.Row="2"
+                    <!-- assign seller panel -->
+                    <StackPanel Grid.Row="2"
                             Orientation="Horizontal" 
                             Margin="10,5,10,10">
-                    <TextBlock Text="Assign Seller" 
+                        <TextBlock Text="Assign Seller" 
                                FontSize="15" 
                                FontWeight="DemiBold" 
                                VerticalAlignment="Center"/>
-                    <ComboBox ItemsSource="{Binding Sellers}" 
+                        <ComboBox ItemsSource="{Binding Sellers}" 
                               SelectedItem="{Binding SelectedSeller, Mode=TwoWay}" 
                               DisplayMemberPath="EmployeeId" 
                               Width="200" 
                               Margin="10,0,0,0"
                               Height="23"/>
-                </StackPanel>
-                <!-- contact note panel -->
-                <StackPanel Grid.Row="3" Orientation="Vertical" Margin="10,5,10,0">
-                    <TextBlock Text="Contact Note" 
+                    </StackPanel>
+                    <!-- contact note panel -->
+                    <StackPanel Grid.Row="3" Orientation="Vertical" Margin="10,5,10,0">
+                        <TextBlock Text="Contact Note" 
                                FontSize="15" 
                                FontWeight="DemiBold" 
                                HorizontalAlignment="Left" 
                                Margin="0,0,0,5"/>
-                    <TextBox Text="{Binding SelectedProspect.ContactNote, Mode=TwoWay}" 
+                        <TextBox Text="{Binding SelectedProspect.ContactNote, Mode=TwoWay}" 
                              Width="297" 
                              Height="80" 
                              TextWrapping="Wrap" 
                              AcceptsReturn="True" 
                              HorizontalAlignment="Left"/>
-                </StackPanel>
-                <!-- prospect status panel -->
-                <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="10,0,10,5">
-                    <TextBlock Text="Prospect Status" 
+                    </StackPanel>
+                    <!-- prospect status panel -->
+                    <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="10,0,10,5">
+                        <TextBlock Text="Prospect Status" 
                                FontSize="15"
                                FontWeight="DemiBold" 
                                VerticalAlignment="Center"/>
-                    <ComboBox ItemsSource="{Binding ProspectStatusOptions}" 
+                        <ComboBox ItemsSource="{Binding ProspectStatusOptions}" 
                               SelectedItem="{Binding SelectedProspect.ProspectStatus, Mode=TwoWay}" 
                               Width="182" 
                               Margin="10,0,0,0" 
                               Height="23"/>
-                </StackPanel>
-                <!-- contact date panel -->
-                <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="10,20,10,5">
-                    <TextBlock Text="Contact Date" 
+                    </StackPanel>
+                    <!-- contact date panel -->
+                    <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="10,20,10,5">
+                        <TextBlock Text="Contact Date" 
                                FontWeight="DemiBold" 
                                FontSize="15"
                                VerticalAlignment="Center"/>
-                    <DatePicker SelectedDate="{Binding SelectedProspect.ContactDate, Mode=TwoWay}" 
+                        <DatePicker SelectedDate="{Binding SelectedProspect.ContactDate, Mode=TwoWay}" 
                         Width="200" Margin="8,0,0,0"/>
-                </StackPanel>
+                    </StackPanel>
 
-                <!-- save changes button -->
-                <Button Style="{StaticResource ConfirmationButtonStyle}" 
+                    <!-- save changes button -->
+                    <Button Style="{StaticResource ConfirmationButtonStyle}" 
                         Content="Save Changes" 
                         Command="{Binding SaveProspectCommand}" 
                         Grid.Row="5" 
                         HorizontalAlignment="Right" 
-                        Margin="0,76,10,-56" 
+                        Margin="0,4,10,16" 
                         Height="40"
                         Width="120"/>
 
-                <!-- export button -->
-                <controls:DownloadButton Command="{Binding ExportToExcel}" 
+                    <!-- export button -->
+                    <controls:DownloadButton Command="{Binding ExportToExcel}" 
                                  HorizontalAlignment="Right" 
                                  VerticalAlignment="Bottom" 
                                  Margin="10"
                                  Grid.Row="0"/>
-            </Grid>
+                </Grid>
+            </ScrollViewer>
         </Border>
 
         <!-- Main View, Logout Button and SignedInUserUserControl -->

@@ -127,7 +127,6 @@ namespace SU.Frontend.Helper.Navigation
             }
         }
 
-
         public void NavigateToMonthlyStatistics()
         {
             NavigateTo("MonthlyStatisticsView", "CommonViews.Statistics");
