@@ -13,6 +13,8 @@
         <Style x:Key="MainButtonStyle" TargetType="Button">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Background" Value="Gray"/>
+            <Setter Property="Foreground" Value="White"/>
+
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>
@@ -35,6 +37,7 @@
         <Style x:Key="ConfirmationButtonStyle" TargetType="Button">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Background" Value="Green"/>
+            <Setter Property="Foreground" Value="White"/>
             <Setter Property="Width" Value="150"/>
             <Setter Property="Height" Value="30"/>
             <Style.Resources>
