@@ -11,11 +11,15 @@ namespace SU.Frontend.ViewModels.SalesManagerViewModels
 {
     public class SalesManagerMainViewModel : ObservableObject
     {
+        // Commands
         public ICommand ToCreateExportStatistics { get; set; }
         public ICommand ToShowInsurances { get; set; }
         public ICommand ToShowCustomers { get; set; }
 
+        // Service
         public INavigationService _navigationService;
+
+        // Constructor
         public SalesManagerMainViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;

@@ -11,6 +11,7 @@ namespace SU.Frontend.ViewModels.SellerViewModels
 {
     public class SellerMainViewModel : ObservableObject
     {
+        // Commands
         public ICommand ToRegisterNewCustomer { get; set; }
         public ICommand ToRegisterNewInsurance { get; set; }
         public ICommand ToEditDeleteCustomer { get; set; }
@@ -19,7 +20,10 @@ namespace SU.Frontend.ViewModels.SellerViewModels
         public ICommand ToShowCustomers { get; set; }
         public ICommand ToShowCustomerProspects { get; set; }
 
+        // Service
         public INavigationService _navigationService;
+
+        // Constructor
         public SellerMainViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;

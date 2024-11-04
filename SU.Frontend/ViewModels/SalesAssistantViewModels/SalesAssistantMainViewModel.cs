@@ -20,7 +20,6 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
         public ICommand ToShowInsurances { get; set; }
         public ICommand ToShowCustomers { get; set; }
         public ICommand ToShowCustomerProspects { get; set; }
-
         public ICommand ToRegisterNewSeller { get; set; }
         public ICommand ToEditDeleteSeller { get; set; }
 
@@ -43,7 +42,6 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
 
             ToRegisterNewSeller = new RelayCommand(() => NavigateToRegisterNewSeller());
             ToEditDeleteSeller = new RelayCommand(() => NavigateToEditDeleteSeller());
-
         }
 
         //Methods for navigating to unique views

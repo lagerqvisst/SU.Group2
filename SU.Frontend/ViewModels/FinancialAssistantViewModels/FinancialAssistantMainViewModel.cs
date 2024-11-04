@@ -14,20 +14,19 @@ namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
         // Commands
         public ICommand ToShowInsurances { get; set; }
         public ICommand ToShowCustomers { get; set; }
-
         public ICommand ToRegisterBillingInfo { get; set; }
-
         public ICommand ToRegisterProvision { get; set; }
-
         public ICommand ToShowSellingStat { get; set; }
 
-        // Service 
+        // Service
         public INavigationService _navigationService;
 
         // Constructor
         public FinancialAssistantMainViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
+
+            //Shared views are navigated through the navigation service
             ToShowInsurances = new RelayCommand(() => _navigationService.NavigateToShowInsurances());
             ToShowCustomers = new RelayCommand(() => _navigationService.NavigateToShowCustomers());
             ToRegisterBillingInfo = new RelayCommand(() => NavigateToShowBillingInfo());
