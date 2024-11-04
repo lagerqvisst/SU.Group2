@@ -29,22 +29,6 @@ namespace SU.Backend.Controllers
             _logger = logger;
         }
 
-        // Controller for GenerateRandomPrivateCustomer method
-        public async Task GenerateRandomPrivateCustomer()
-        {
-            _logger.LogInformation("Controller activated to create new random private customer...");
-            var result = await _privateCustomerService.GenerateRandomPrivateCustomer();
-
-            if (result.success)
-            {
-                _logger.LogInformation($"Customer created successfully:\n{result.customer}");
-            }
-            else
-            {
-                _logger.LogWarning($"Error creating customer: {result.message}");
-            }
-        }
-
         // Controller for CreateNewPrivateCustomer method 
         public async Task<(bool success, String message)> CreateNewPrivateCustomer(PrivateCustomer privateCustomer)
         {

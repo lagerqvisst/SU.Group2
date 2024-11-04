@@ -12,7 +12,6 @@ namespace SU.Backend.Services.Interfaces
     /// </summary>
     public interface IPrivateCustomerService
     {
-        Task<(bool success, string message, PrivateCustomer customer)> GenerateRandomPrivateCustomer();
         Task<(bool success, string message, PrivateCustomer customer)> GetPrivateCustomerById(PrivateCustomer privateCustomer);
         Task<(bool success, string message)> CreateNewPrivateCustomer(PrivateCustomer privateCustomer);
         Task<(bool success, string message)> DeletePrivateCustomer(PrivateCustomer privateCustomer);

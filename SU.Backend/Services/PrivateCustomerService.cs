@@ -19,13 +19,12 @@ namespace SU.Backend.Services
     public class PrivateCustomerService : IPrivateCustomerService
     {
         private ILogger<PrivateCustomerService> _logger; 
-        private readonly IRandomGenerationService _randomInfoGenerationService;
+        
         private readonly UnitOfWork _unitOfWork; 
 
-        public PrivateCustomerService(IRandomGenerationService randomInfoGenerationService, UnitOfWork unitOfWork, ILogger<PrivateCustomerService> logger)
+        public PrivateCustomerService(UnitOfWork unitOfWork, ILogger<PrivateCustomerService> logger)
         {
             _logger = logger;
-            _randomInfoGenerationService = randomInfoGenerationService;
             _unitOfWork = unitOfWork;
         }
         // method to update a private customer 
@@ -96,51 +95,6 @@ namespace SU.Backend.Services
                 return (false, $"There was an error saving the new user: {e.Message.ToString()}");
             }
 
-        }
-
-        /// <summary>
-        /// This method generates a random private customer and saves it to the database.
-        /// Only used for testing purposes to quickly seed the database with test data.
-        /// </summary>
-        /// <returns></returns>
-        public async Task<(bool success, string message, PrivateCustomer customer)> GenerateRandomPrivateCustomer()
-        {
-            try
-            {
-                var (success, randomUser) = _randomInfoGenerationService.GenerateSingleRandomUser().Result;
-
-                if (success)
-                {
-                    var info = randomUser.Results[0];
-
-                    var customer = new PrivateCustomer
-                    {
-                        PersonalNumber = PrivateCustomerHelper.GenerateCompletePersonalNumber(info),
-                        FirstName = info.Name.First,
-                        LastName = info.Name.Last,
-                        Email = info.Email,
-                        PhoneNumber = info.Phone,
-                        Address = $"{info.Location.Street.Number} {info.Location.Street.Name} {info.Location.Postcode}",
-
-                    }; 
-
-                    _unitOfWork.PrivateCustomers.Add(customer);
-                    _unitOfWork.SaveChanges();
-
-                    return (true, "Successfully generated and saved new employee", customer);
-
-                }
-                else
-                {
-                    return (false, "Failed to generate random employee", null);
-                }
-            }
-            catch (Exception ex)
-            {
-
-                return (false, "An error occurred: " + ex.Message, null);
-
-            }
         }
 
         // method to get a private customer by id
