@@ -38,7 +38,7 @@
 
         <!-- Details Panel for Insurance with Border -->
         <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" Margin="251,140,235,185">
-            <ScrollViewer VerticalScrollBarVisibility="Visible" CanContentScroll="True" Margin="0,-2,0,1">
+            <ScrollViewer VerticalScrollBarVisibility="Visible" CanContentScroll="True" Margin="0,1,0,1">
 
                 <!-- Kommenterat ut det av attributen som inte funkade med bindings, blir att de skriver ut SU.Map.Blabla -->
                 <StackPanel Orientation="Vertical" 
@@ -82,7 +82,7 @@
                                 Margin="0,0,0,0">
                         <TextBlock Text="Insurance Status"
                                    FontSize="15"
-                                   Margin="0,0,30,0"/>
+                                   Margin="0,0,29,0"/>
                         <ComboBox Margin="0,0,0,5"
                                   Width="245"
                                   ItemsSource="{Binding InsuranceStatusOptions}" 
@@ -116,7 +116,7 @@
                                 Margin="0,0,0,5">
                         <TextBlock Text="Payment Plan"
                                    FontSize="15"
-                                   Margin="0,0,46,0"/>
+                                   Margin="0,0,47,0"/>
                         <ComboBox Margin="0,0,0,10"
                                   Width="245" 
                                   ItemsSource="{Binding PaymentPlans}" 
