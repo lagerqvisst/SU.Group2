@@ -24,6 +24,9 @@ namespace SU.Frontend.Helper
             public MainViewButtonViewModel MainViewButtonViewModel =>
                 App.AppHost?.Services.GetService<MainViewButtonViewModel>();
 
+            public ReturnButtonViewModel ReturnButtonViewModel =>
+                App.AppHost?.Services.GetService<ReturnButtonViewModel>();
+
             public SignedInUserViewModel SignedInUserViewModel =>
                 App.AppHost?.Services.GetService<SignedInUserViewModel>();
 
@@ -84,7 +87,7 @@ namespace SU.Frontend.Helper
             public EditDeleteInsuranceViewModel EditDeleteInsuranceViewModel =>
               App.AppHost?.Services.GetService<EditDeleteInsuranceViewModel>();
 
-            public MonthlyStatisticsViewModel CreateSellStatViewModel =>
+            public MonthlyStatisticsViewModel MonthlyStatisticsViewModel =>
                 App.AppHost?.Services.GetService<MonthlyStatisticsViewModel>();
 
             public RegisterNewSellerViewModel RegisterNewSellerViewModel =>
@@ -107,6 +110,9 @@ namespace SU.Frontend.Helper
 
             public BarChartViewModel BarChartViewModel =>
                 App.AppHost?.Services.GetService<BarChartViewModel>();
+
+            public TrendsViewModel TrendsViewModel =>
+                App.AppHost?.Services.GetService<TrendsViewModel>();
 
         }
     }

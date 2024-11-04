@@ -36,7 +36,7 @@
         </Border>
 
         <!-- Main View, Logout Button and SignedInUserUserControl -->
-        <controls:MainViewButtonControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,120,10,0"/>
+        <controls:ReturnButton HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,120,10,0"/>
         <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"/>
         <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,10,10"/>
 

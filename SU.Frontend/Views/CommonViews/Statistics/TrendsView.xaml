@@ -3,41 +3,33 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SU.Frontend.Views.CommonViews"
-       xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
+        xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         mc:Ignorable="d"
-        Title="Trends View" Height="600" Width="1000">
-    <Grid>
-        <!-- View Title -->
-        <TextBlock Text="Trends" 
-            FontSize="25" 
-            FontWeight="Bold" Grid.Row="0" 
-            Margin="30,37,300,300" />
+        Title="TrendsView" Height="450" Width="800">
 
-        <Border BorderBrush="Green" BorderThickness="2" Margin="20,120,160,32" Width="800">
+    <Window.Resources>
+        <helper:ViewModelLocator x:Key="Locator" />
+    </Window.Resources>
+
+    <Grid DataContext="{Binding TrendsViewModel, Source={StaticResource Locator}}">
+        <!-- Lägg till en StackPanel eller Grid för att lägga till knappen över TabControl -->
+        <StackPanel Orientation="Vertical">
+            <!-- Return-knapp -->
+            <Button Content="Back" Command="{Binding ReturnCommnad}" HorizontalAlignment="Left" Margin="10" Padding="5"/>
+
             <!-- TabControl för att hantera de tre olika sidorna -->
             <TabControl>
-                <!-- Tab för tabellvyn -->
                 <TabItem Header="Table">
                     <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/TablePage.xaml"/>
                 </TabItem>
-
-                <!-- Tab för linjediagram -->
                 <TabItem Header="Line Diagram">
                     <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/LineChartPage.xaml"/>
                 </TabItem>
-
-                <!-- Tab för stapeldiagram -->
                 <TabItem Header="Bar Chart">
                     <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/BarChartPage.xaml"/>
                 </TabItem>
             </TabControl>
-        </Border>
-
-        <!-- Additional Controls (Logout and User Information) -->
-        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0"/>
-        <controls:MainViewButtonControl  VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,120,10,0"/>
-        <controls:LogoutButtonControl HorizontalAlignment="Right" Margin="0,454,10,-55"/>
+        </StackPanel>
 
     </Grid>
 </Window>
