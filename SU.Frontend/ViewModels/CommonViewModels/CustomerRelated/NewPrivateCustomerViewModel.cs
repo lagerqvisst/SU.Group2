@@ -10,6 +10,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.Customers
 {
     public class NewPrivateCustomerViewModel : ObservableObject
     {
+        // Controller for the private customer
         private readonly PrivateCustomerController _privateCustomerController;
 
         // Properties bound to the XAML form fields
@@ -107,6 +108,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.Customers
         // ICommand for the registration button
         public RelayCommand RegisterPrivateCustomerCommand { get; }
 
+        // Constructor
         public NewPrivateCustomerViewModel(PrivateCustomerController privateCustomerController)
         {
             _privateCustomerController = privateCustomerController;

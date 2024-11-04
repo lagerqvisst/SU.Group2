@@ -15,14 +15,15 @@ namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
 {
     public class ShowCustomerViewModel : ObservableObject
     {
+        // Controllers for customers
         private readonly PrivateCustomerController _privateCustomerController;
         private readonly CompanyCustomerController _companyCustomerController;
 
-        // ObservableCollections för kunder
+        // ObservableCollections for customers
         public ObservableCollection<PrivateCustomer> PrivateCustomers { get; set; } = new ObservableCollection<PrivateCustomer>();
         public ObservableCollection<CompanyCustomer> CompanyCustomers { get; set; } = new ObservableCollection<CompanyCustomer>();
 
-        // Valda kunder
+        // Chosen customers
         private PrivateCustomer _selectedPrivateCustomer;
         public PrivateCustomer SelectedPrivateCustomer
         {
@@ -31,12 +32,12 @@ namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
             {
                 _selectedPrivateCustomer = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(SelectedPrivateCustomerAsCollection)); // Uppdatera DataGrid
+                OnPropertyChanged(nameof(SelectedPrivateCustomerAsCollection)); // Update DataGrid
 
-                // När en privatkund väljs, döljer vi företagskunden och visar privatkunden
+                // When a private customer is selected, hide the company customer and show the private customer
                 if (_selectedPrivateCustomer != null)
                 {
-                    SelectedCompanyCustomer = null; // Rensa företagskunder
+                    SelectedCompanyCustomer = null; // Clear company customers
                     IsPrivateCustomerVisible = true;
                     IsCompanyCustomerVisible = false;
                 }
@@ -51,19 +52,19 @@ namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
             {
                 _selectedCompanyCustomer = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(SelectedCompanyCustomerAsCollection)); // Uppdatera DataGrid
+                OnPropertyChanged(nameof(SelectedCompanyCustomerAsCollection)); // Update DataGrid
 
-                // När en företagskund väljs, döljer vi privatkunden och visar företagskunden
+                // When a company customer is selected, hide the private customer and show the company customer
                 if (_selectedCompanyCustomer != null)
                 {
-                    SelectedPrivateCustomer = null; // Rensa privatkunder
+                    SelectedPrivateCustomer = null; // Clear private customers
                     IsPrivateCustomerVisible = false;
                     IsCompanyCustomerVisible = true;
                 }
             }
         }
 
-        // Visibilitetsindikatorer för DataGrid
+        // Visibility properties for the DataGrids
         private bool _isPrivateCustomerVisible;
         public bool IsPrivateCustomerVisible
         {
@@ -86,6 +87,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
             }
         }
 
+        // Constructor
         public ShowCustomerViewModel(PrivateCustomerController privateCustomerController, CompanyCustomerController companyCustomerController)
         {
             _privateCustomerController = privateCustomerController;
@@ -95,7 +97,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
             LoadCustomersAsync();
         }
 
-        // Ladda båda kundtyperna asynkront
+        // Load both customer types async
         private async Task LoadCustomersAsync()
         {
             await LoadPrivateCustomersAsync();
@@ -104,7 +106,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
 
         private async Task LoadPrivateCustomersAsync()
         {
-            // Hämta privatkunder asynkront och lägg till dem i ObservableCollection
+            // Get private customers async and add them to ObservableCollection
             var privateCustomerResult = await _privateCustomerController.GetAllPrivateCustomers();
             PrivateCustomers.Clear();
             foreach (var customer in privateCustomerResult.privateCustomers)
@@ -115,7 +117,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
 
         private async Task LoadCompanyCustomersAsync()
         {
-            // Hämta företagskunder asynkront och lägg till dem i ObservableCollection
+            // Get company customers async and add them to ObservableCollection
             var companyCustomerResult = await _companyCustomerController.GetAllCompanyCustomers();
             CompanyCustomers.Clear();
             foreach (var customer in companyCustomerResult.companyCustomers)
@@ -124,7 +126,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
             }
         }
 
-        // Egenskaper som omvandlar valda kunder till samlingar så att DataGrid kan visa dem
+        // Properties to return the selected private customer as a collection
         public IEnumerable<PrivateCustomer> SelectedPrivateCustomerAsCollection
         {
             get
@@ -135,6 +137,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
             }
         }
 
+        // Properties to return the selected company customer as a collection
         public IEnumerable<CompanyCustomer> SelectedCompanyCustomerAsCollection
         {
             get
@@ -146,5 +149,3 @@ namespace SU.Frontend.ViewModels.CommonViewModels.CustomerRelated
         }
     }
 }
-
-
