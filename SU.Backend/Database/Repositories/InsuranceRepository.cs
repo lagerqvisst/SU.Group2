@@ -78,9 +78,11 @@ namespace SU.Backend.Database.Repositories
                     .ThenInclude(p => p.PrivateCustomer)
                 .Include(i => i.InsuranceCoverage)
                     .ThenInclude(ic => ic.PrivateCoverage)
-                        .ThenInclude(pc => pc.PrivateCoverageOption) // Inkludera PrivateCoverageOption
+                        .ThenInclude(pc => pc.PrivateCoverageOption) // Include PrivateCoverageOption
                 .Include(i => i.InsuranceCoverage)
                     .ThenInclude(ic => ic.PrivateCoverage)
+                .Include(i => i.InsurancePolicyHolder)
+                    .ThenInclude(p => p.CompanyCustomer)
                 .Include(i => i.InsuranceAddons)
                 .ToList();
         }

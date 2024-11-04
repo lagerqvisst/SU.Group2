@@ -15,7 +15,10 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
 {
     public class NewPrivateInsuranceViewModel : ObservableObject
     {
+        // Controller
         private readonly PrivateCustomerController _privateCustomerController;
+
+        // Services
         private readonly IPolicyHolderService _policyHolderService;
         private readonly INavigationService _navigationService;
 

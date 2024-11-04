@@ -11,14 +11,23 @@ using SU.Frontend.Helper.DI_Objects.User;
 
 public class CompanyInsuranceTypeViewModel : ObservableObject
 {
+    // Services
     private readonly INavigationService _navigationService;
     private readonly IPolicyHolderService _policyHolderService;
     private readonly ILoggedInUserService _loggedInSeller;
+
+    // Controllers for handling insurance creation and listing
     private readonly InsuranceListingController _insuranceListingController;
     private readonly InsuranceCreateController _insuranceCreateController;
 
+    // Lists
     public List<InsuranceType> CompanyInsuranceTypes { get; set; }
     public List<PaymentPlan> PaymentPlans { get; set; }
+
+    // ObservableCollections
+    public ObservableCollection<LiabilityCoverageOption> LiabilityCoverageOptions { get; private set; } = new ObservableCollection<LiabilityCoverageOption>();
+    public ObservableCollection<VehicleInsuranceOption> VehicleInsuranceOptions { get; private set; } = new ObservableCollection<VehicleInsuranceOption>();
+    public ObservableCollection<RiskZone> RiskZones { get; private set; } = new ObservableCollection<RiskZone>();
 
     private InsuranceType _selectedInsuranceType;
     public InsuranceType SelectedInsuranceType
@@ -32,10 +41,6 @@ public class CompanyInsuranceTypeViewModel : ObservableObject
         }
     }
 
-    public ObservableCollection<LiabilityCoverageOption> LiabilityCoverageOptions { get; private set; } = new ObservableCollection<LiabilityCoverageOption>();
-    public ObservableCollection<VehicleInsuranceOption> VehicleInsuranceOptions { get; private set; } = new ObservableCollection<VehicleInsuranceOption>();
-    public ObservableCollection<RiskZone> RiskZones { get; private set; } = new ObservableCollection<RiskZone>();
-
     private PaymentPlan _selectedPaymentPlan;
     public PaymentPlan SelectedPaymentPlan
     {
@@ -47,6 +52,7 @@ public class CompanyInsuranceTypeViewModel : ObservableObject
         }
     }
 
+    #region Properties
     private string _note;
     public string Note
     {
@@ -91,7 +97,7 @@ public class CompanyInsuranceTypeViewModel : ObservableObject
         }
     }
 
-    // Egenskaper för Property and Inventory Coverage
+    // Properties for Property and Inventory Coverage
     private string _propertyAddress;
     public string PropertyAddress
     {
@@ -158,6 +164,7 @@ public class CompanyInsuranceTypeViewModel : ObservableObject
         }
     }
 
+    // Properties for Liability Coverage
     private LiabilityCoverageOption _selectedLiabilityCoverageOption;
     public LiabilityCoverageOption SelectedLiabilityCoverageOption
     {
@@ -169,6 +176,7 @@ public class CompanyInsuranceTypeViewModel : ObservableObject
         }
     }
 
+    // Properties for Vehicle Insurance Option
     private VehicleInsuranceOption _selectedVehicleCoverageOption;
     public VehicleInsuranceOption SelectedVehicleCoverageOption
     {
@@ -180,10 +188,12 @@ public class CompanyInsuranceTypeViewModel : ObservableObject
         }
     }
 
+    #endregion Properties
 
+    // Command for creating insurance
     public ICommand CreateInsuranceCommand { get; }
 
-
+    // Constructor
     public CompanyInsuranceTypeViewModel(INavigationService navigationService, ILoggedInUserService loggedInUserService, IPolicyHolderService policyHolderService,InsuranceCreateController insuranceCreateController, InsuranceListingController insuranceListingController)
     {
         _navigationService = navigationService;
@@ -203,6 +213,7 @@ public class CompanyInsuranceTypeViewModel : ObservableObject
         CreateInsuranceCommand = new RelayCommand(CreateInsurance, CanCreateInsurance);
     }
 
+    // Method to check if the insurance type is a company insurance type
     private bool IsCompanyInsuranceType(InsuranceType type)
     {
         return type == InsuranceType.VehicleInsurance
@@ -210,6 +221,7 @@ public class CompanyInsuranceTypeViewModel : ObservableObject
             || type == InsuranceType.PropertyAndInventoryInsurance;
     }
 
+    // Method to load coverage options based on the selected insurance type
     private async Task LoadCoverageOptionsAsync()
     {
         // Återställ synlighet för alla sektioner
@@ -243,13 +255,13 @@ public class CompanyInsuranceTypeViewModel : ObservableObject
             IsPropertyCoverageVisible = true;
         }
 
-        // Uppdatera UI med nya synlighetsinställningar
+        // Update visibility properties for the UI
         OnPropertyChanged(nameof(IsLiabilityCoverageVisible));
         OnPropertyChanged(nameof(IsVehicleInsuranceVisible));
         OnPropertyChanged(nameof(IsPropertyCoverageVisible));
     }
 
-
+    // Method to create insurance based on the selected insurance type
     private async void CreateInsurance()
     {
         var insuranceType = SelectedInsuranceType;
@@ -259,35 +271,33 @@ public class CompanyInsuranceTypeViewModel : ObservableObject
 
         if (insuranceType == InsuranceType.PropertyAndInventoryInsurance)
         {
-            // Egendoms- och inventarieförsäkring
+            // Property and Inventory Insurance
             var companyCustomer = _policyHolderService.InsurancePolicyHolder.CompanyCustomer;
             var propertyCoverage = new PropertyAndInventoryCoverage(PropertyValue, InventoryValue)
             {
                 PropertyAddress = PropertyAddress
             };
 
-
-
-            // Anropa CreatePropertyInventoryInsurance i kontrollern
+            // Call CreatePropertyInventoryInsurance in the controller
             var result = await _insuranceCreateController.CreatePropertyInventoryInsurance(companyCustomer, propertyCoverage, seller, note, paymentPlan);
             ShowMessage(result);
         }
         else if (insuranceType == InsuranceType.LiabilityInsurance)
         {
-            // Ansvarsförsäkring
+            // Liability Insurance
             var companyCustomer = _policyHolderService.InsurancePolicyHolder.CompanyCustomer;
             var liabilityCoverage = new LiabilityCoverage
             {
                 LiabilityCoverageOption = SelectedLiabilityCoverageOption
             };
 
-            // Anropa CreateLiabilityInsurance i kontrollern
+            // Call CreateLiabilityInsurance in the controller
             var result = await _insuranceCreateController.CreateLiabilityInsurance(companyCustomer, liabilityCoverage, seller, note, paymentPlan);
             ShowMessage(result);
         }
         else if (insuranceType == InsuranceType.VehicleInsurance)
         {
-            // Fordonsförsäkring
+            // Vehicle Insurance
             var companyCustomer = _policyHolderService.InsurancePolicyHolder.CompanyCustomer;
             var vehicleCoverage = new VehicleInsuranceCoverage
             {
@@ -296,18 +306,19 @@ public class CompanyInsuranceTypeViewModel : ObservableObject
 
             };
 
-            // Anropa CreateVehicleInsurance i kontrollern
+            // Call CreateVehicleInsurance in the controller
             var result = await _insuranceCreateController.CreateVehicleInsurance(companyCustomer, vehicleCoverage, SelectedRiskZone, seller, note, paymentPlan);
             ShowMessage(result);
         }
     }
 
+    // Method to show a message box with the result of the insurance creation
     private void ShowMessage((bool success, string message) result)
     {
         MessageBox.Show(result.message, result.success ? "Success" : "Error", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
-
+    // Method to check if the insurance can be created
     private bool CanCreateInsurance()
     {
         return SelectedInsuranceType != null && SelectedPaymentPlan != null && StartDate.HasValue && EndDate.HasValue;
