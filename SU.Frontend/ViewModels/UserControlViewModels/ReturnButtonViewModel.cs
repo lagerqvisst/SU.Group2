@@ -12,9 +12,13 @@ namespace SU.Frontend.ViewModels.UserControlViewModels
 {
     public class ReturnButtonViewModel
     {
+        // Command
         public ICommand ReturnCommand { get; }
+
+        // Service
         public INavigationService _navigationService { get; }
 
+        // Constructor
         public ReturnButtonViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
@@ -22,6 +26,7 @@ namespace SU.Frontend.ViewModels.UserControlViewModels
             ReturnCommand = new RelayCommand(ReturnToPrevious);
         }
 
+        // Method to return to the previous view
         public void ReturnToPrevious()
         {
             _navigationService.ReturnToPrevious();

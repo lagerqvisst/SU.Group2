@@ -14,11 +14,14 @@ namespace SU.Frontend.ViewModels.UserControlViewModels
 {
     public class MainViewButtonViewModel
     {
-
+        // Command
         public ICommand ReturnToMainViewCommand { get; }
+
+        // Services
         public ILoggedInUserService _loggedInUserService { get; }
         public INavigationService _navigationService { get; }
 
+        // Constructor
         public MainViewButtonViewModel(INavigationService navigationService, ILoggedInUserService loggedInUserService)
         {
             _loggedInUserService = loggedInUserService;
@@ -27,6 +30,7 @@ namespace SU.Frontend.ViewModels.UserControlViewModels
             ReturnToMainViewCommand = new RelayCommand(ReturnToMainView);
         }
 
+        // Method to return to the main view
         public void ReturnToMainView()
         {
             _navigationService.ReturnToMain(_loggedInUserService.LoggedInEmployee);
