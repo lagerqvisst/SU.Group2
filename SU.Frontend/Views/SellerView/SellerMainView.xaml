@@ -13,6 +13,7 @@
         <helper:ViewModelLocator x:Key="Locator" />
     </Window.Resources>
 
+    <!-- Grid with columns and rows -->
     <Grid DataContext="{Binding SellerMainViewModel, Source={StaticResource Locator}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200*"/>
@@ -67,13 +68,8 @@
                 Command="{Binding ToShowCustomers}"
                 Grid.Row="3" 
                 Grid.Column="1" Margin="10,28,10,28"/>
-        <Button Style="{StaticResource OptionsButtonStyle}" 
-                Content="Show customer prospects" 
-                Command="{Binding ToShowCustomerProspects}"
-                Grid.Row="4"
-                Grid.ColumnSpan="2" Margin="110,28,110,28"/>
 
-        <!-- Main View, Logout Button and SignedInUserUserControl -->
+        <!-- Logout Button and SignedInUserUserControl -->
         <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Grid.Column="3" Grid.Row="4" Height="30" Width="100"/>
         <controls:SignedInUserUserControl HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="3" Height="105" Width="227" Margin="0,15,0,0" Grid.RowSpan="2"/>
 

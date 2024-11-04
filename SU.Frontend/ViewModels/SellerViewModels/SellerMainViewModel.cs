@@ -18,7 +18,6 @@ namespace SU.Frontend.ViewModels.SellerViewModels
         public ICommand ToEditDeleteInsurance { get; set; }
         public ICommand ToShowInsurances { get; set; }
         public ICommand ToShowCustomers { get; set; }
-        public ICommand ToShowCustomerProspects { get; set; }
 
         // Service
         public INavigationService _navigationService;
@@ -34,7 +33,6 @@ namespace SU.Frontend.ViewModels.SellerViewModels
             ToEditDeleteInsurance = new RelayCommand(() => _navigationService.NavigateToEditDeleteInsurance());
             ToShowInsurances = new RelayCommand(() => _navigationService.NavigateToShowInsurances());
             ToShowCustomers = new RelayCommand(() => _navigationService.NavigateToShowCustomers());
-            ToShowCustomerProspects = new RelayCommand(() => _navigationService.NavigateToShowCustomerProspects());
         }
     }
 }

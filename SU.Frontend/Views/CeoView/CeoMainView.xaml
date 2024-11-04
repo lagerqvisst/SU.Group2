@@ -13,6 +13,7 @@
         <helper:ViewModelLocator x:Key="Locator" />
     </Window.Resources>
 
+    <!-- Grid with columns and rows -->
     <Grid DataContext="{Binding CeoMainViewModel, Source={StaticResource Locator}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -61,7 +62,7 @@
                 Grid.Row="2" 
                 Grid.Column="1"/>
 
-        <!-- Main View, Logout Button and SignedInUserUserControl -->
+        <!-- Logout Button and SignedInUserUserControl -->
         <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,20,20" Grid.Column="2" Grid.Row="3" Height="30" Width="100"/>
         <controls:SignedInUserUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Margin="33,17,0,0" Grid.RowSpan="2"/>
 
