@@ -128,14 +128,12 @@ namespace SU.Backend.Services
                         worksheet.Cells[i + 2, 7].Value = premium;
                     }
 
-
                     // Formatera kolumner för snyggare utseende
                     worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
 
                     // Skapa ett unikt filnamn med datum och tid
                     var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-                    var filePath = $"InvoiceReport_{timestamp}.xlsx";
-
+                    var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"InvoiceReport_{timestamp}.xlsx");
 
                     // Spara filen
                     _logger.LogInformation($"Saving Excel file to {filePath}");
@@ -144,7 +142,7 @@ namespace SU.Backend.Services
 
                     _logger.LogInformation("Excel file created successfully");
 
-                    return (true, "Excel file created successfully");
+                    return (true, $"Excel file '{file.Name}' has been created successfully!\n\nYou can find the file here:\n{filePath}");
                 }
             }
             catch (Exception ex)
@@ -153,6 +151,7 @@ namespace SU.Backend.Services
                 return (false, "Error exporting invoices to Excel");
             }
         }
+
 
         public async Task<(bool success, string message)> ExportProspects(List<Prospect> prospects)
         {

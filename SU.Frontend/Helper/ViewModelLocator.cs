@@ -114,6 +114,9 @@ namespace SU.Frontend.Helper
             public TrendsViewModel TrendsViewModel =>
                 App.AppHost?.Services.GetService<TrendsViewModel>();
 
+            public InvoiceViewModel InvoiceViewModel =>
+                App.AppHost?.Services.GetService<InvoiceViewModel>();
+
         }
     }
 

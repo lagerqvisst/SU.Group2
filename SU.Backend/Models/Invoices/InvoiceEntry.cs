@@ -20,6 +20,7 @@ namespace SU.Backend.Models.Invoices
         public string ContactPerson { get; set; } // For companies
         public string Address { get; set; }
         public string PostalCode { get; set; }
+        public int Insurances { get; set; }
         public decimal Premium { get; set; }
     }
 
