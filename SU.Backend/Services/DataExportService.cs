@@ -103,8 +103,7 @@ namespace SU.Backend.Services
                     worksheet.Cells[1, 3].Value = "Personal Number / Org Number";
                     worksheet.Cells[1, 4].Value = "Contact Person";  // Endast för företag
                     worksheet.Cells[1, 5].Value = "Address";
-                    worksheet.Cells[1, 6].Value = "Postal Code";
-                    worksheet.Cells[1, 7].Value = "Premium";
+                    worksheet.Cells[1, 6].Value = "Premium";
 
                     // Fyll på med data
                     for (int i = 0; i < invoices.Count; i++)
@@ -116,7 +115,6 @@ namespace SU.Backend.Services
                         string personalOrOrgNumber = type == "Privat" ? invoice.PersonalNumber : invoice.OrganizationNumber;
                         string contactPerson = type == "Företag" ? invoice.ContactPerson : "";
                         string address = invoice.Address ?? "";
-                        string postalCode = invoice.PostalCode ?? "";
                         decimal premium = invoice.Premium;
 
                         worksheet.Cells[i + 2, 1].Value = type;
@@ -124,8 +122,7 @@ namespace SU.Backend.Services
                         worksheet.Cells[i + 2, 3].Value = personalOrOrgNumber;
                         worksheet.Cells[i + 2, 4].Value = contactPerson;
                         worksheet.Cells[i + 2, 5].Value = address;
-                        worksheet.Cells[i + 2, 6].Value = postalCode;
-                        worksheet.Cells[i + 2, 7].Value = premium;
+                        worksheet.Cells[i + 2, 6].Value = premium;
                     }
 
                     // Formatera kolumner för snyggare utseende

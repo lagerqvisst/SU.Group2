@@ -15,5 +15,7 @@ namespace SU.Backend.Database.Interfaces
         Task<InsurancePolicyHolder> GetById(InsurancePolicyHolder insurancePolicyHolder);
 
         Task<List<InsurancePolicyHolder>> GetAllInsurancePolicyHolders();
+
+        Task<List<InsurancePolicyHolder>> GetAllPolicyHoldersWithInsurances();
     }
 }

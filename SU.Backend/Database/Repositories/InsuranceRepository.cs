@@ -110,6 +110,27 @@ namespace SU.Backend.Database.Repositories
                 .FirstOrDefault(i => i.InsuranceId == id);
         }
 
+        public async Task<List<Insurance>> GetInsurancesForInvoicing(DateTime currentDate)
+        {
+            return await _context.Insurances
+                .Include(i => i.InsurancePolicyHolder)
+                    .ThenInclude(p => p.PrivateCustomer)
+                .Include(i => i.InsurancePolicyHolder)
+                    .ThenInclude(p => p.CompanyCustomer)
+                .Include(i => i.InsuranceCoverage)
+                .Where(i => i.StartDate <= currentDate && // Försäkringar som har startat
+                            i.InsuranceStatus == InsuranceStatus.Active && // Endast aktiva försäkringar
+                            (
+                                i.PaymentPlan == PaymentPlan.Monthly || // Fakturera varje månad
+                                (i.PaymentPlan == PaymentPlan.Quarterly && ((currentDate.Month - i.StartDate.Month) % 3 == 0)) || // Fakturera var tredje månad
+                                (i.PaymentPlan == PaymentPlan.SemiAnnual && ((currentDate.Month - i.StartDate.Month) % 6 == 0)) || // Fakturera var sjätte månad
+                                (i.PaymentPlan == PaymentPlan.Annual && ((currentDate.Month - i.StartDate.Month) % 12 == 0)) // Fakturera var tolfte månad
+                            ))
+                .ToListAsync();
+        }
+
+
+
 
     }
 

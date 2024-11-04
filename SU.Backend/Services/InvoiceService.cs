@@ -6,7 +6,6 @@ using SU.Backend.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SU.Backend.Services
@@ -38,26 +37,33 @@ namespace SU.Backend.Services
             {
                 DateTime currentDate = DateTime.Now; // Alltid aktuell månad
 
-                // Get all active insurances
-                var activeInsurances = await _unitOfWork.Insurances.GetAllActiveInsurances();
+                // Hämta aktiva försäkringar som ska faktureras
+                var insurancesToInvoice = await _unitOfWork.Insurances.GetInsurancesForInvoicing(currentDate);
 
-                // Filter insurances to be invoiced this month
-                var insurancesToInvoice = activeInsurances
-                    .Where(i => InvoiceHelper.ShouldInvoiceInsuranceThisMonth(i, currentDate)) // Använd den statiska hjälpfunktionen
+                var invoiceEntries = insurancesToInvoice
+                    .GroupBy(i => i.InsurancePolicyHolder.CompanyCustomer != null
+                        ? (object)i.InsurancePolicyHolder.CompanyCustomer
+                        : (object)i.InsurancePolicyHolder.PrivateCustomer) // Gruppera per kund
+                    .Select(g =>
+                    {
+                        var firstInsurance = g.First(); // Hämta den första försäkringen för denna grupp
+                        var policyHolder = firstInsurance.InsurancePolicyHolder;
+                        var invoiceEntry = InvoiceHelper.CreateInvoiceEntry(policyHolder);
+
+                        // Summera premierna för alla försäkringar i gruppen
+                        invoiceEntry.Premium = g.Sum(i => i.Premium);
+
+                        return invoiceEntry;
+                    })
                     .ToList();
 
-                if (!insurancesToInvoice.Any())
+                if (!invoiceEntries.Any())
                 {
                     _logger.LogInformation("No insurances to invoice for this month.");
                     return (false, "No insurances to invoice for this month.", new List<InvoiceEntry>());
                 }
 
-                // Generate invoice data
-                var invoiceData = insurancesToInvoice
-                    .Select(i => InvoiceHelper.CreateInvoiceEntry(i)) // Använd den uppdaterade hjälpfunktionen
-                    .ToList();
-
-                return (true, "Invoice data generated successfully.", invoiceData);
+                return (true, "Invoice data generated successfully.", invoiceEntries);
             }
             catch (Exception ex)
             {
@@ -65,6 +71,8 @@ namespace SU.Backend.Services
                 return (false, "An error occurred during invoice data generation.", new List<InvoiceEntry>());
             }
         }
+
+
 
 
 

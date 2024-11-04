@@ -35,8 +35,15 @@ namespace SU.Backend.Database.Repositories
 
         public async Task<List<PrivateCustomer>> GetAllPrivateCustomers()
         {
-            return _context.PrivateCustomers.ToList();
+            return  _context.PrivateCustomers
+                .Include(c => c.InsurancePolicyHolders)
+                    .ThenInclude(p => p.Insurance)
+                .ToList();
         }
+
+
+
+
     }
 
 }
