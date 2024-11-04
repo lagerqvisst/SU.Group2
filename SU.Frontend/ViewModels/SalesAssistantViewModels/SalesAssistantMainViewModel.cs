@@ -19,7 +19,6 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
         public ICommand ToEditDeleteInsurance { get; set; }
         public ICommand ToShowInsurances { get; set; }
         public ICommand ToShowCustomers { get; set; }
-        public ICommand ToShowCustomerProspects { get; set; }
         public ICommand ToRegisterNewSeller { get; set; }
         public ICommand ToEditDeleteSeller { get; set; }
 
@@ -38,7 +37,6 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
             ToEditDeleteInsurance = new RelayCommand(() => _navigationService.NavigateToEditDeleteInsurance());
             ToShowInsurances = new RelayCommand(() => _navigationService.NavigateToShowInsurances());
             ToShowCustomers = new RelayCommand(() => _navigationService.NavigateToShowCustomers());
-            ToShowCustomerProspects = new RelayCommand(() => _navigationService.NavigateToShowCustomerProspects());
 
             ToRegisterNewSeller = new RelayCommand(() => NavigateToRegisterNewSeller());
             ToEditDeleteSeller = new RelayCommand(() => NavigateToEditDeleteSeller());
