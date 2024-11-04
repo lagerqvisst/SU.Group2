@@ -16,12 +16,13 @@ namespace SU.Frontend.Helper.Navigation
     {
         private readonly IServiceProvider _serviceProvider;
 
+        // Constructor that takes an IServiceProvider as a parameter to resolve views from the DI container
         public NavigationService(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
 
-
+        // Method to close all windows except the one with the specified view name
         public void CloseAllExcept(string viewName)
         {
             foreach (var window in Application.Current.Windows.OfType<Window>())
@@ -33,14 +34,14 @@ namespace SU.Frontend.Helper.Navigation
             }
         }
 
-
+        // Method to get an existing window based on the view name
         private Window GetExistingWindow(string viewName)
         {
             return Application.Current.Windows.OfType<Window>()
                    .FirstOrDefault(window => window.GetType().Name == viewName);
         }
 
-
+        // Method to navigate to the main view based on the employee's role
         public void NavigateToMainViewBasedOnRole(Employee employee)
         {
             Window existingWindow = null;
@@ -95,7 +96,7 @@ namespace SU.Frontend.Helper.Navigation
             }
         }
 
-
+        // Method to navigate to a specific view based on the view name, folder name, and optional parameter
         public void NavigateTo(string viewName, string folderName = null, object parameter = null)
         {
             if (string.IsNullOrEmpty(viewName))
@@ -103,29 +104,29 @@ namespace SU.Frontend.Helper.Navigation
                 throw new ArgumentNullException(nameof(viewName), "View name cannot be null or empty.");
             }
 
-            // Om en mapp skickas in, inkludera den i typens fullständiga namn
+            // If a folder is passed in, include it in the full type name
             var fullViewName = string.IsNullOrEmpty(folderName)
                 ? $"SU.Frontend.Views.{viewName}"
                 : $"SU.Frontend.Views.{folderName}.{viewName}";
 
-            // Hämta typen baserat på det fullständiga namnet
+            // Get the type based on the full name
             var viewType = Type.GetType(fullViewName);
             if (viewType == null)
             {
                 throw new ArgumentException($"View type '{fullViewName}' not found.", nameof(viewName));
             }
 
-            // Hämta vyn från DI-behållaren
+            // Get the view from the DI container
             var view = (Window)_serviceProvider.GetService(viewType);
             if (view != null)
             {
-                // Om parameter skickas med, sätt DataContext till det
+                // If a parameter is passed in, set the DataContext of the view
                 if (parameter != null)
                 {
                     view.DataContext = parameter;
                 }
 
-                // Visa vyn
+                // Show the view
                 view.Show();
             }
             else
@@ -134,6 +135,7 @@ namespace SU.Frontend.Helper.Navigation
             }
         }
 
+        // Method to return to the previous window
         public void ReturnToPrevious()
         {
             Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -144,7 +146,7 @@ namespace SU.Frontend.Helper.Navigation
             }
         }
 
-
+        // Method to return to the main view based on the employee's role
         public void ReturnToMain(Employee employee)
         {
             // Navigate to the main view based on the role
@@ -170,7 +172,7 @@ namespace SU.Frontend.Helper.Navigation
             });
         }
 
-
+        #region Navigation Methods
         public void NavigateToMonthlyStatistics()
         {
             NavigateTo("MonthlyStatisticsView", "CommonViews.Statistics");
@@ -246,5 +248,6 @@ namespace SU.Frontend.Helper.Navigation
         {
             NavigateTo("TrendsView", "CommonViews.Statistics");
         }
+        #endregion Navigation Methods
     }
 }

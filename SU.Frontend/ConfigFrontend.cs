@@ -44,7 +44,7 @@ namespace SU.Frontend
     {
         public static void AddFrontendServices(this IServiceCollection services)
         {
-            // Registrera alla ViewModels
+            #region ViewModels
             services.AddTransient<TaskbarViewModel>();
             services.AddSingleton<LoginViewModel>(); // Registrerar LoginViewModel som singleton
             services.AddTransient<LogoutButtonViewModel>(); // ViewModel for Log Out button
@@ -74,33 +74,36 @@ namespace SU.Frontend
             services.AddTransient<LineChartViewModel>();
             services.AddTransient<BarChartViewModel>();
             services.AddTransient<TrendsViewModel>();
+            #endregion ViewModels
 
-            //MainView ViewModels
+            #region MainView ViewModels
             services.AddTransient<CeoMainViewModel>(); // ViewModel for CeoMainView
             services.AddTransient<FinancialAssistantMainViewModel>(); // ViewModel for FinancialAssistantMainView
             services.AddTransient<SalesAssistantMainViewModel>(); // ViewModel for SalesAssistantMainView
             services.AddTransient<SalesManagerMainViewModel>(); // ViewModel for SalesManagerMainView
             services.AddTransient<SellerMainViewModel>(); // ViewModel for SellerMainView
+            #endregion MainView ViewModels
 
-            // Registrera Views och UserControls
+            #region UserControls
             services.AddTransient<LoginWindow>();
             services.AddTransient<TestView>();
             services.AddTransient<LogoutButtonControl>(); // UserControl for Log Out button
             services.AddTransient<MainViewButtonControl>(); // UserControl for MainView button
             services.AddTransient<SignedInUserUserControl>(); // UserControl for Signed in user
             services.AddTransient<Taskbar>(); // UserControl for TaskbarView
+            #endregion UserControls
 
-            // Main Views
+            #region Main Views
             services.AddTransient<CeoMainView>(); // View for CeoMainView
             services.AddTransient<FinancialAssistantMainView>();
             services.AddTransient<SalesAssistantMainView>(); // View for SalesAssistantMainView
             services.AddTransient<SalesManagerMainView>(); // View for SalesManagerMainView
             services.AddTransient<SellerMainView>(); // View for SellerMainView
+            #endregion Main Views
 
-            // Common Views
+            #region Common Views
             services.AddTransient<MonthlyStatisticsView>();
             services.AddTransient<TrendsView>();
-
             services.AddTransient<EditDeleteCustomerView>();
             services.AddTransient<EditDeleteInsuranceView>();
             services.AddTransient<ShowCustomerProspectView>();
@@ -120,9 +123,9 @@ namespace SU.Frontend
             services.AddTransient<ShowCustomerProspectView>();
             services.AddTransient<ShowCustomersView>();
             services.AddTransient<ShowInsurancesView>();
+            #endregion Common Views
 
-
-            //Specific Views
+            #region Specific Views
             //Financial Assistant
             services.AddTransient<RegisterExportBillingInfoView>();
             services.AddTransient<ShowSellingStatsView>();
@@ -130,8 +133,9 @@ namespace SU.Frontend
             //SalesAssistant
             services.AddTransient<RegisterNewSellerView>();
             services.AddTransient<EditDeleteSellerView>();
+            #endregion Specific Views
 
-            // Registrera andra tjänster
+            // Register other services
             services.AddScoped<INavigationService, NavigationService>();
 
             //Singletons
@@ -141,8 +145,7 @@ namespace SU.Frontend
 
             services.AddTransient<IAuthenticationService, AuthenticationService>();
 
-
-            // Loggning
+            // Logging
             services.AddLogging(configure => configure.AddConsole());
         }
     }
