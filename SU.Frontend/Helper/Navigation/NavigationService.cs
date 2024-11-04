@@ -21,7 +21,7 @@ namespace SU.Frontend.Helper.Navigation
             _serviceProvider = serviceProvider;
         }
 
-       
+
         public void CloseAllExcept(string viewName)
         {
             foreach (var window in Application.Current.Windows.OfType<Window>())
@@ -33,37 +33,68 @@ namespace SU.Frontend.Helper.Navigation
             }
         }
 
+
+        private Window GetExistingWindow(string viewName)
+        {
+            return Application.Current.Windows.OfType<Window>()
+                   .FirstOrDefault(window => window.GetType().Name == viewName);
+        }
+
+
         public void NavigateToMainViewBasedOnRole(Employee employee)
         {
+            Window existingWindow = null;
+
             if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.CEO))
             {
-                NavigateTo("CeoMainView", "CeoView");
+                existingWindow = GetExistingWindow("CeoMainView");
+                if (existingWindow == null)
+                    NavigateTo("CeoMainView", "CeoView");
             }
             else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.SalesAssistant))
             {
-                NavigateTo("SalesAssistantMainView", "SalesAssistantView");
+                existingWindow = GetExistingWindow("SalesAssistantMainView");
+                if (existingWindow == null)
+                    NavigateTo("SalesAssistantMainView", "SalesAssistantView");
             }
             else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.SalesManager))
             {
-                NavigateTo("SalesManagerMainView", "SalesManagerView");
+                existingWindow = GetExistingWindow("SalesManagerMainView");
+                if (existingWindow == null)
+                    NavigateTo("SalesManagerMainView", "SalesManagerView");
             }
             else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.OutsideSales))
             {
-                NavigateTo("SellerMainView", "SellerView");
+                existingWindow = GetExistingWindow("SellerMainView");
+                if (existingWindow == null)
+                    NavigateTo("SellerMainView", "SellerView");
             }
             else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.InsideSales))
             {
-                NavigateTo("SellerMainView", "SellerView");
+                existingWindow = GetExistingWindow("SellerMainView");
+                if (existingWindow == null)
+                    NavigateTo("SellerMainView", "SellerView");
             }
             else if (employee.RoleAssignments.Any(r => r.Role == EmployeeType.FinancialAssistant))
             {
-                NavigateTo("FinancialAssistantMainView", "FinancialAssistantView");
+                existingWindow = GetExistingWindow("FinancialAssistantMainView");
+                if (existingWindow == null)
+                    NavigateTo("FinancialAssistantMainView", "FinancialAssistantView");
             }
             else
             {
-                NavigateTo("DefaultDashboardView", null);
+                existingWindow = GetExistingWindow("DefaultDashboardView");
+                if (existingWindow == null)
+                    NavigateTo("DefaultDashboardView", null);
+            }
+
+            if (existingWindow != null)
+            {
+                existingWindow.Activate();
+                existingWindow.Show();
             }
         }
+
 
         public void NavigateTo(string viewName, string folderName = null, object parameter = null)
         {
@@ -103,29 +134,42 @@ namespace SU.Frontend.Helper.Navigation
             }
         }
 
+        public void ReturnToPrevious()
+        {
+            Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+            if (currentWindow != null)
+            {
+                currentWindow.Close();
+            }
+        }
+
 
         public void ReturnToMain(Employee employee)
         {
+            // Navigate to the main view based on the role
             NavigateToMainViewBasedOnRole(employee);
 
-            Window currentWindow = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-
-            // Check if window is current
-            if (currentWindow != null)
+            // Wait for the UI thread to finish navigation before closing windows
+            Application.Current.Dispatcher.InvokeAsync(() =>
             {
-                // Map current window to string 
-                string windowName = currentWindow.Title;
+                Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
-                CloseAllExcept(windowName);
+                if (currentWindow != null)
+                {
+                    string windowName = currentWindow.GetType().Name; // Use the window type name instead of Title
+                    CloseAllExcept(windowName);
 
-                // Show window as string 
-                Console.WriteLine($"Current window: {windowName}");
-            }
-            else
-            {
-                Console.WriteLine("No active window found.");
-            }
+                    // Log or show current window name
+                    Console.WriteLine($"Current window: {windowName}");
+                }
+                else
+                {
+                    Console.WriteLine("No active window found.");
+                }
+            });
         }
+
 
         public void NavigateToMonthlyStatistics()
         {
