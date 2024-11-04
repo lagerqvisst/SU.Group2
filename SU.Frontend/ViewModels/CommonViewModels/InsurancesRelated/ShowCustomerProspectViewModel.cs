@@ -18,9 +18,11 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
 {
     public class ShowCustomerProspectViewModel : ObservableObject
     {
+        // Controllers
         private readonly ProspectController _prospectController;
         private readonly EmployeeController _employeeController;
 
+        // Constructor
         public ShowCustomerProspectViewModel(ProspectController prospectController, EmployeeController employeeController)
         {
             _prospectController = prospectController;
@@ -112,6 +114,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
             await LoadAllProspectsAsync();
         }
 
+        // Method to load all prospects from the controller
         private async Task LoadAllProspectsAsync()
         {
             var prospectResult = await _prospectController.GetAllCurrentProspects();
@@ -129,6 +132,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
             }
         }
 
+        // Method to load all sellers from the controller
         private async Task LoadSellersAsync()
         {
             var sellersResult = await _employeeController.GetAllSellers();
@@ -144,6 +148,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
             await _prospectController.IdentifyNewProspects();
         }
 
+        // Method to save the selected prospect to the database
         private async void SaveProspect()
         {
             if (SelectedProspect != null)
@@ -164,6 +169,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
             }
         }
 
+        // Method to initialize the ViewModel
         private async Task OnInitialized()
         {
             await IdentifyNewProspects();
@@ -198,6 +204,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
             await LoadProspectsAsync();
         }
 
+        // Method to export the prospects to an Excel file
         private async void ExportProspectsToExcel()
         {
             var prospectList = Prospects.ToList();

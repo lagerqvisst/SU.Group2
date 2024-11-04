@@ -22,17 +22,21 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
 {
     public class EditDeleteInsuranceViewModel : ObservableObject
     {
-
+        // Services
         private readonly INavigationService _navigationService;
         private readonly IPolicyHolderService _policyHolderService;
         private readonly ILoggedInUserService _loggedInSeller;
+
+        // Controllers
         private readonly InsuranceListingController _insuranceListingController;
         private readonly InsuranceCreateController _insuranceCreateController;
         private readonly EmployeeController _employeeController;
 
+        // Commands
         public ICommand SaveInsuranceCommand { get; }
         public ICommand DeleteInsuranceCommand { get; }
 
+        //Lists
         public List<InsuranceType> InsuranceTypes { get; set; }
         public List<PaymentPlan> PaymentPlans { get; set; }
 
@@ -82,7 +86,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
             {
                 _selectedInsurance = value;
                 OnPropertyChanged();
-                OnSelectedInsuranceChanged(); // Uppdatera UI:t när en ny försäkring väljs
+                OnSelectedInsuranceChanged(); // Update UI
             }
         }
 
@@ -103,6 +107,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
             }
         }
 
+        // ObservableCollections for sellers
         public ObservableCollection<Employee> Sellers { get; set; } = new ObservableCollection<Employee>();
 
         private Employee _selectedSeller;
@@ -121,6 +126,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
             }
         }
 
+        // Constructor
         public EditDeleteInsuranceViewModel(INavigationService navigationService, IPolicyHolderService policyHolderService, ILoggedInUserService loggedInUserService, EmployeeController employeeController, InsuranceListingController insuranceListingController, InsuranceCreateController insuranceCreateController)
         {
             _navigationService = navigationService;
@@ -143,6 +149,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
             DeleteInsuranceCommand = new RelayCommand(DeleteInsurance, CanDeleteInsurance);
         }
 
+        // Check if insurance can be saved
         private async void SaveInsurance()
         {
             if (SelectedInsurance != null)
@@ -151,17 +158,16 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
 
                 if (result.success)
                 {
-                    MessageBox.Show($"{result.message}, MessageBoxButton.OK");
+                    MessageBox.Show($"{result.message}");
                 }
                 else
                 {
-                    MessageBox.Show($"{result.message}, MessageBoxButton.OK");
+                    MessageBox.Show($"{result.message}");
                 }
             }
-
-            
         }
 
+        // Check if insurance can be deleted
         private bool CanDeleteInsurance()
         {
             return SelectedInsurance != null;
@@ -175,7 +181,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
 
             if (confirm != MessageBoxResult.Yes) return;
 
-            // Fortsätt med att ta bort om användaren bekräftar
+            // Continue with deletion if user confirms
             if (SelectedInsurance != null)
             {
                 await _insuranceCreateController.DeleteInsurance(SelectedInsurance);
@@ -189,6 +195,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
             await LoadAllInsurancesAsync();
         }
 
+        // Load all insurances from the database
         private async Task LoadAllInsurancesAsync()
         {
             var insuranceResult = await _insuranceListingController.GetAllInsurances();
@@ -240,6 +247,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
             }
         }
 
+        // Update UI when insurance is selected
         private void OnSelectedInsuranceChanged()
         {
             if (SelectedInsurance != null)
