@@ -11,8 +11,7 @@ namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
 {
     public class FinancialAssistantMainViewModel : ObservableObject
     {
-        // Lägg till register billing, reg provision, show selling stats
-
+        // Commands
         public ICommand ToShowInsurances { get; set; }
         public ICommand ToShowCustomers { get; set; }
 
@@ -22,8 +21,10 @@ namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
 
         public ICommand ToShowSellingStat { get; set; }
 
+        // Service 
         public INavigationService _navigationService;
 
+        // Constructor
         public FinancialAssistantMainViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
@@ -34,6 +35,7 @@ namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
             ToShowSellingStat = new RelayCommand(() => NavigateToShowSellingStat());
         }
 
+        // Navigation logic
         public void NavigateToShowBillingInfo()
         {
             _navigationService.NavigateTo("InvoiceView", "FinancialAssistantView");
