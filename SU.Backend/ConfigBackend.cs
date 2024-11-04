@@ -23,9 +23,6 @@ namespace SU.Backend.Configuration
 
             services.AddScoped<UnitOfWork>();
 
-            //API Service (only used for testing)
-            services.AddHttpClient<IRandomGenerationService, RandomGenerationService>();
-
             //Controllers
             services.AddTransient<EmployeeController>();
             services.AddTransient<PrivateCustomerController>(); 

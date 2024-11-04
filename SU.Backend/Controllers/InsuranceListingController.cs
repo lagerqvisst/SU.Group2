@@ -12,7 +12,6 @@ using SU.Backend.Models.Enums.Insurance;
 
 namespace SU.Backend.Controllers
 {
-
     /// <summary>
     /// This class is responsible for handling the insurance listing controller.
     /// Makes logic available in the Viewmodel
@@ -20,16 +19,18 @@ namespace SU.Backend.Controllers
     /// </summary>
     public class InsuranceListingController
     {
-
+        // Services
         private readonly IInsuranceListingService _insuranceListingService;   
         private readonly ILogger<InsuranceListingController> _logger;
 
+        // Constructor
         public InsuranceListingController(IInsuranceListingService insuranceListingService, ILogger<InsuranceListingController> logger)
         {
             _insuranceListingService = insuranceListingService;
             _logger = logger;
         }
 
+        // Controller for GetAllVehicleInsuranceCoverages method
         public async Task<(List<VehicleInsuranceCoverage> vehicleInsuranceCoverages, string message)> GetAllVehicleInsuranceCoverages()
         {
             _logger.LogInformation("Controller activated to list all vehicle insurance coverages...");
@@ -47,6 +48,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+        // Controller for GetAllVehicleInsuranceOptions method
         public async Task<(List<VehicleInsuranceOption> vehicleInsuranceOptions, string Message)> GetAllVehicleInsuranceOptions()
         {
             _logger.LogInformation("Controller activated to list all vehicle insurance options...");
@@ -65,6 +67,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+        // Controller for GetAllInsurances method
         public async Task<(List<Insurance> insurances, string message)> GetAllInsurances()
         {
             _logger.LogInformation("Controller activated to list all insurances...");
@@ -81,6 +84,8 @@ namespace SU.Backend.Controllers
                 return (new List<Insurance>(), result.message);
             }
         }
+
+        // Controller for GetAllInsuranceAddonTypes method
         public async Task<(bool Success, List<InsuranceAddonType> insuranceAddonTypes, string Message)> GetAllInsuranceAddonTypes()
           {
               _logger.LogInformation("Controller activated to list all insurance addon types...");
@@ -98,7 +103,7 @@ namespace SU.Backend.Controllers
               }
           }
 
-
+        // Controller for GetAllInsuranceAddons method
         public async Task<(List<InsuranceAddon> insuranceAddons, string message)> GetAllInsuranceAddons()
         {
             _logger.LogInformation("Controller activated to list all insurance addons...");
@@ -116,6 +121,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+        // Controller for GetAllInsurancePolicyHolders method
         public async Task<(List<InsurancePolicyHolder> insurancePolicyHolders, string message)> GetAllInsurancePolicyHolders()
         {
             _logger.LogInformation("Controller activated to list all insurance policy holders...");
@@ -133,6 +139,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+        // Controller for GetAllInsuranceCoverages method
         public async Task<(List<InsuranceCoverage> insuranceCoverages, string message)> GetAllInsuranceCoverages()
         {
             _logger.LogInformation("Controller activated to list all insurance coverages...");
@@ -150,6 +157,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+        // Controller for GetAllLiabilityCoverages method
         public async Task<(List<LiabilityCoverage> liabilityCoverages, string message)> GetAllLiabilityCoverages()
         {
             _logger.LogInformation("Controller activated to list all liability coverages...");
@@ -167,6 +175,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+        // Controller for GetAllLiabilityCoverageOptions method
         public async Task<(List<LiabilityCoverageOption> liabilityCoverageOptions, string message)> GetAllLiabilityCoverageOptions()
         {
             _logger.LogInformation("Controller activated to list all liability coverages...");
@@ -184,6 +193,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+        // Controller for GetAllRiskZones method
         public async Task<(List<RiskZone> riskzones, string message)> GetAllRiskZones()
         {
             _logger.LogInformation("Controller activated to list all riskzones...");
@@ -201,6 +211,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+        // Controller for GetAllPropertyAndInventoryCoverages method
         public async Task<(List<PropertyAndInventoryCoverage> propertyAndInventoryCoverages, string message)> GetAllPropertyAndInventoryCoverages()
         {
             _logger.LogInformation("Controller activated to list all property and inventory coverages...");
@@ -218,6 +229,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+        // Controller for GetSpecificPrivateOption method
         public async Task<(List<PrivateCoverageOption> PrivateCoverageOptions, string Message)> GetSpecificPrivateOption(InsuranceType insuranceType)
         {
             _logger.LogInformation("Controller activated to get specific private option...");
@@ -234,7 +246,5 @@ namespace SU.Backend.Controllers
                 return (new List<PrivateCoverageOption>(), result.Message);
             }
         }
-
-
     }
 }

@@ -16,10 +16,12 @@ namespace SU.Backend.Controllers
     /// </summary>
     public class InvoiceController
     {
+        // Services
         IInvoiceService _invoiceService;
         IDataExportService _dataExportService;
         ILogger<InvoiceController> _logger;
 
+        // Constructor
         public InvoiceController(IInvoiceService invoiceService, IDataExportService dataExportService, ILogger<InvoiceController> logger)
         {
             _invoiceService = invoiceService;
@@ -27,6 +29,7 @@ namespace SU.Backend.Controllers
             _logger = logger;
         }
 
+        // Controller for GenerateInvoiceData method
         public async Task<(bool success, string message, List<InvoiceEntry> invoiceData)> GenerateInvoiceData()
         {
             _logger.LogInformation("Controller activated to generate invoice data...");
@@ -45,6 +48,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+        // Controller for ExportInvoicesToExcel method
         public async Task<(bool Success, string Message)> ExportInvoicesToExcel(List<InvoiceEntry> invoices)
         {
             _logger.LogInformation("Exporting invoices to Excel...");
@@ -61,5 +65,5 @@ namespace SU.Backend.Controllers
             }
             return (result.success, result.message);
         }
-}
     }
+}

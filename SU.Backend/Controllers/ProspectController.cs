@@ -19,10 +19,12 @@ namespace SU.Backend.Controllers
     /// </summary>
     public class ProspectController
     {
+        // Services
         private readonly IProspectService _prospectService;
         private readonly IDataExportService _dataExportService;
         private readonly ILogger<ProspectController> _logger;
 
+        // Constructor
         public ProspectController(IProspectService prospectService, IDataExportService dataExportService, ILogger<ProspectController> logger)
         {
             _prospectService = prospectService;
@@ -31,6 +33,7 @@ namespace SU.Backend.Controllers
             _logger = logger;
         }
 
+        // Controller for IdentifyNewProspects method
         public async Task<(List<Prospect>, string message)> IdentifyNewProspects()
         {
             _logger.LogInformation("Identifying new prospects...");
@@ -46,6 +49,7 @@ namespace SU.Backend.Controllers
             return (result.prospects, result.message);
         }
 
+        // Controller for AssignSellerToSpecificProspect method
         public async Task<(bool success, string message)> AssignSellerToSpecificProspect(Employee employee, Prospect prospect)
         {
             _logger.LogInformation($"Assigning seller {employee.FirstName} {employee.LastName} to prospect {prospect.ProspectId}");
@@ -61,6 +65,7 @@ namespace SU.Backend.Controllers
             return (result.success, result.message);
         }
 
+        // Controller for GetAllCurrentProspects method
         public async Task<(List<Prospect> prospects, string message)> GetAllCurrentProspects()
         {
             _logger.LogInformation("Getting all current prospects...");
@@ -76,6 +81,7 @@ namespace SU.Backend.Controllers
             return (result.prospects, result.message);
         }
 
+        // Controller for UpdateProspect method
         public async Task<(bool success, string message)> UpdateProspect(Prospect prospect)
         {
             _logger.LogInformation("Prospect object updated via GUI");
@@ -93,6 +99,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+        // Controller for ExportProspectsToExcel method
         public async Task<(bool success, string message)> ExportProspectsToExcel(List<Prospect> prospects)
         {
             _logger.LogInformation("Exporting prospects to Excel...");
@@ -109,10 +116,6 @@ namespace SU.Backend.Controllers
                 _logger.LogWarning($"Failed to export prospects: {result.message}");
                 return (result.success, result.message);
             }
-
-
-
         }
     }
 }
-

@@ -15,7 +15,6 @@ namespace SU.Backend.Services.Interfaces
     /// </summary>
     public interface IEmployeeService
     {
-        Task<(bool success, string message, Employee employee)> GenerateRandomEmployee(EmployeeType role);
         Task<Employee?> GetManagerForRole(EmployeeType role);
 
         Task<(bool success, string message, Employee employee)> GetEmployeeByRole(EmployeeType role);

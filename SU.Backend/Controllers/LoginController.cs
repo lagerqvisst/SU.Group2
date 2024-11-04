@@ -17,16 +17,18 @@ namespace SU.Backend.Controllers
     /// </summary>
     public class LoginController
     {
+        // Services
         private readonly ILoginService _loginService;
         private readonly ILogger<LoginController> _logger;
 
+        // Constructor
         public LoginController(ILoginService loginService, ILogger<LoginController> logger)
         {
             _loginService = loginService;
             _logger = logger;
-
         }
 
+        // Controller for Authentication method
         public async Task<(bool success, string message, Employee employee)> Authentication(string userName, string password)
         {
             _logger.LogInformation("User input collected... starting authentication process.");
@@ -43,8 +45,7 @@ namespace SU.Backend.Controllers
                 _logger.LogWarning($"Login failed: {result.message}");
             }
 
-            return result; // Returnera resultatet
+            return result;
         }
-
     }
 }
