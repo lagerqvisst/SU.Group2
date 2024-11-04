@@ -91,6 +91,7 @@ namespace SU.Frontend
             services.AddTransient<MainViewButtonControl>(); // UserControl for MainView button
             services.AddTransient<SignedInUserUserControl>(); // UserControl for Signed in user
             services.AddTransient<Taskbar>(); // UserControl for TaskbarView
+            services.AddTransient<UserInfoDockViewModel>();
             #endregion UserControls
 
             #region Main Views

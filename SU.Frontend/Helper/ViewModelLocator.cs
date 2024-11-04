@@ -118,6 +118,9 @@ namespace SU.Frontend.Helper
             public InvoiceViewModel InvoiceViewModel =>
                 App.AppHost?.Services.GetService<InvoiceViewModel>();
 
+            public UserInfoDockViewModel UserInfoDockViewModel =>
+                App.AppHost?.Services.GetService<UserInfoDockViewModel>();
+
         }
     }
 
