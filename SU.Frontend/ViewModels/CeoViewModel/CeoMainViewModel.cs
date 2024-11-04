@@ -12,7 +12,7 @@ namespace SU.Frontend.ViewModels.CeoMainViewModel
 {    
     public class CeoMainViewModel : ObservableObject
     {
-        // Gör kommandon till offentliga egenskaper
+        // Commands to public properties
         public ICommand ToTrends { get; set; }
         public ICommand ToMonthlyStatistics { get; set; }
         public ICommand ToShowInsurances { get; set; }

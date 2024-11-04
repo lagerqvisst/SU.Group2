@@ -13,9 +13,11 @@ namespace SU.Frontend.ViewModels.CommonViewModels.Customers
     {
         INavigationService _navigationService;
 
+        // Commands to public properties
         public ICommand ToNewRegisterPrivateCommand { get; set; }
         public ICommand ToNewRegisterCompanyCommand { get; set; }
 
+        // Constructor
         public RegisterNewCustomerViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;

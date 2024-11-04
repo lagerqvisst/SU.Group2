@@ -10,6 +10,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.Customers
 {
     public class NewCompanyCustomerViewModel : ObservableObject
     {
+        // Controller for the company customer
         private readonly CompanyCustomerController _companyCustomerController;
 
         // Properties bound to the XAML form fields
@@ -129,6 +130,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.Customers
         // ICommand for the registration button
         public RelayCommand RegisterCompanyCustomerCommand { get; }
 
+        // Constructor
         public NewCompanyCustomerViewModel(CompanyCustomerController companyCustomerController)
         {
             _companyCustomerController = companyCustomerController;
