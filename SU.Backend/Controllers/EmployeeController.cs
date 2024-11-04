@@ -20,31 +20,18 @@ namespace SU.Backend.Controllers
     /// </summary>
     public class EmployeeController
     {
+        // Services
         private readonly IEmployeeService _employeeService;
         private readonly ILogger<EmployeeController> _logger;
 
+        // Constructor
         public EmployeeController(IEmployeeService employeeService, ILogger<EmployeeController> logger)
         {
             _employeeService = employeeService;
             _logger = logger;
         }
 
-        //Only for testing purposes
-        public async Task CreateRandomNewEmployee(EmployeeType role)
-        {
-            _logger.LogInformation($"Controller activated to create new random {role.ToString()}...");
-            var result = await _employeeService.GenerateRandomEmployee(role);
-
-            if (result.success)
-            {
-                _logger.LogInformation($"Employee created successfully:\n{result.employee}");
-            }
-            else
-            {
-                _logger.LogWarning($"Error creating employee: {result.message}");
-            }
-        }
-
+        //Controller for GetAllEmployees method
         public async Task <(bool success, string message, List <Employee>)> GetAllEmployees()
         {
             _logger.LogInformation("Controller activated to list all employees...");
@@ -61,7 +48,7 @@ namespace SU.Backend.Controllers
                 return (result.success, result.message, null);
             }
         }
-        //Controller for add employee
+        //Controller for CreateEmployee method
         public async Task<(bool success, string message, Employee employee)> CreateEmployee(EmployeeType role, string firstName, string lastName, string personalNumber)
         {
             _logger.LogInformation("Controller activated to create new employee...");
@@ -78,7 +65,8 @@ namespace SU.Backend.Controllers
                 return (result.success, result.message, result.employee);
             }
         }
-        //Controller for delete employee
+
+        //Controller for DeleteEmployee method
         public async Task<(bool success, string message)> DeleteEmployee(Employee employee)
         {
             _logger.LogInformation("Employee object updated via GUI");
@@ -95,7 +83,8 @@ namespace SU.Backend.Controllers
                 return (result.success, result.message);
             }
         }
-        //Controller for update employee
+
+        //Controller for UpdateEmployee method
         public async Task<(bool success, string message)> UpdateEmployee(Employee employee)
         {
             _logger.LogInformation("Employee object updated via GUI");
@@ -113,6 +102,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+        //Controller for GetAllEmployeeRoleAssignments method
         public async Task<(List<EmployeeRoleAssignment> employeeRoleAssignments, string message)> GetAllEmployeeRoleAssignments()
         {
             _logger.LogInformation("Controller activated to list all employee role assignments...");
@@ -130,6 +120,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+        //Controller for GetEmployeeByRole method
         public async Task<(bool success, string message, Employee employee)> GetEmployeeByRole(EmployeeType role)
         {
             _logger.LogInformation("Controller activated to get employee by role...");
@@ -147,6 +138,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+        //Controller for GetAllSellers method
         public async Task<(bool success, string message, List<Employee> salesEmployees)> GetAllSellers()
         {
             _logger.LogInformation("Controller activated to list all sales employees...");
@@ -163,8 +155,6 @@ namespace SU.Backend.Controllers
                 _logger.LogWarning($"Error retrieving sales employees: {result.message}");
                 return (result.success, result.message, null);
             }
-
-
         }
     }
 }

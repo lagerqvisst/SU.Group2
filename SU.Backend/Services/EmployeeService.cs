@@ -27,67 +27,6 @@ namespace SU.Backend.Services
             _unitOfWork = unitOfWork; // Injicera UnitOfWork
         }
 
-        // This method generates a random employee based on the provided role. Used for testing purposes.
-        public async Task<(bool success, string message, Employee employee)> GenerateRandomEmployee(EmployeeType role)
-        {
-            _logger.LogInformation("Generating random employee");
-            try
-            {
-
-                var (success, randomUser) = await _randomInfoGenerationService.GenerateSingleRandomUser();
-
-                _logger.LogInformation("Random employee generated");
-                if (success)
-                {
-
-                    var info = randomUser.Results[0];
-
-                    _logger.LogInformation("Creating new employee object");
-                    Employee employee = new Employee
-                    {
-                        FirstName = info.Name.First,
-                        LastName = info.Name.Last,
-                        PersonalNumber = "19900101-0000",
-                        Email = info.Email,
-                        UserName = EmployeeHelper.GenerateEmployeeUsername(info.Name),
-                        Password = info.Login.Password,
-                        Manager = await GetManagerForRole(role),
-                        BaseSalary = EmployeeHelper.GetSalaryForEmployeeType(role),
-                        AgentNumber = (role == EmployeeType.OutsideSales || role == EmployeeType.InsideSales) ? EmployeeHelper.GenerateFourDigitCode() : null,
-
-                    };
-
-                    _logger.LogInformation("Creating new role assignment object");
-                    var roleAssignment = new EmployeeRoleAssignment
-                    {
-                        Employee = employee,
-                        Role = role,
-                        Percentage = 10
-                    };
-
-                    employee.RoleAssignments.Add(roleAssignment);
-
-                    _logger.LogInformation("New employee object created");
-                    // Spara den nya anställda i databasen via UnitOfWork
-                    _unitOfWork.Employees.Add(employee);
-                    _unitOfWork.SaveChanges(); // Spara ändringar till databasen
-
-                    _logger.LogInformation("New employee saved to database");
-                    return (true, "Successfully generated and saved new employee", employee);
-                }
-                else
-                {
-                    _logger.LogWarning("Failed to generate random employee");
-                    return (false, "Failed to generate random employee", null);
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while generating random employee");
-                return (false, "An error occurred: " + ex.Message, null);
-            }
-        }
-
         //Auto assign manager based on role. In case an employee has multiple roles the highest role will be used (highest = highest %) 
         public async Task<Employee?> GetManagerForRole(EmployeeType role)
         {

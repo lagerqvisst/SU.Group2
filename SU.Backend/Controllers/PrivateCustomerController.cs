@@ -18,16 +18,18 @@ namespace SU.Backend.Controllers
     /// </summary>
     public class PrivateCustomerController
     {
-
+        // Services
         private readonly IPrivateCustomerService _privateCustomerService;
         private readonly ILogger<PrivateCustomerController> _logger;
 
+        // Constructor
         public PrivateCustomerController(IPrivateCustomerService privateCustomerService, ILogger<PrivateCustomerController> logger)
         {
             _privateCustomerService = privateCustomerService;
             _logger = logger;
         }
 
+        // Controller for GenerateRandomPrivateCustomer method
         public async Task GenerateRandomPrivateCustomer()
         {
             _logger.LogInformation("Controller activated to create new random private customer...");
@@ -43,7 +45,7 @@ namespace SU.Backend.Controllers
             }
         }
 
-        // controller for CreateNewPrivateCustomer method 
+        // Controller for CreateNewPrivateCustomer method 
         public async Task<(bool success, String message)> CreateNewPrivateCustomer(PrivateCustomer privateCustomer)
         {
             _logger.LogInformation("Private Customer object added via GUI");
@@ -62,7 +64,7 @@ namespace SU.Backend.Controllers
 
         }
 
-        // controller for UpdatePrivateCustomer method
+        // Controller for UpdatePrivateCustomer method
         public async Task<(bool success, string message)> UpdatePrivateCustomer(PrivateCustomer privateCustomer)
         {
             _logger.LogInformation("Private Customer object updated via GUI");
@@ -80,7 +82,7 @@ namespace SU.Backend.Controllers
             }
         }
 
-        // controller for DeletePrivateCustomer method 
+        // Controller for DeletePrivateCustomer method 
         public async Task<(bool success, string message)> DeletePrivateCustomer(PrivateCustomer privateCustomer)
         {
             _logger.LogInformation("Private Customer deleted via GUI");
@@ -98,7 +100,7 @@ namespace SU.Backend.Controllers
             }
         }
 
-
+        // Controller for GetPrivateCustomerById method
         public async Task<(List<PrivateCustomer> privateCustomers, string message)> GetAllPrivateCustomers()
         {
             _logger.LogInformation("Controller activated to list all private customers...");

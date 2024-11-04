@@ -20,15 +20,18 @@ namespace SU.Backend.Controllers
     /// </summary>
     public class InsuranceCreateController
     {
+        // Services
         private readonly IInsuranceCreateService _insuranceCreateService; 
         private readonly ILogger<InsuranceCreateController> _logger;
 
+        // Constructor
         public InsuranceCreateController(IInsuranceCreateService insuranceCreateService, ILogger<InsuranceCreateController> logger)
         {
             _insuranceCreateService = insuranceCreateService;
             _logger = logger;
         }
 
+        // Controller to create a new private insurance
         public async Task<(bool success, string message)> CreatePrivateInsurance(PrivateCustomer privateCustomer,
             InsuranceType insuranceType,
             PrivateCoverageOption privateCoverageOption,
@@ -56,6 +59,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+        // Controller to create a new property and inventory insurance
         public async Task<(bool success, string message)> CreatePropertyInventoryInsurance(CompanyCustomer companyCustomer,
             PropertyAndInventoryCoverage propertyAndInventoryCoverage, Employee seller, string note, PaymentPlan paymentPlan)
         {
@@ -74,6 +78,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+        // Controller to create a new liability insurance
         public async Task<(bool success, string message)> CreateLiabilityInsurance(CompanyCustomer companyCustomer,
             LiabilityCoverage liabilityCoverage, Employee seller, string note, PaymentPlan paymentPlan)
         {
@@ -92,6 +97,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+        // Controller to create a new vehicle insurance
         public async Task<(bool success, string message)> CreateVehicleInsurance(
             CompanyCustomer companyCustomer,
             VehicleInsuranceCoverage vehicleCoverage,
@@ -115,7 +121,7 @@ namespace SU.Backend.Controllers
             }
         }
 
-
+        // Controller to delete an insurance
         public async Task<(bool success, string message)> DeleteInsurance(Insurance insurance)
         {
             _logger.LogInformation("Controller activated to delete insurance...");
@@ -133,6 +139,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+        // Controller to update an insurance
         public async Task<(bool success, string message)> UpdateInsurance(Insurance insurance)
         {
             _logger.LogInformation("Controller activated to update insurance...");
@@ -151,4 +158,3 @@ namespace SU.Backend.Controllers
         }
     }
 }
-

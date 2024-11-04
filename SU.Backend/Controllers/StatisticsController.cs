@@ -17,37 +17,38 @@ namespace SU.Backend.Controllers
     /// </summary>
     public class StatisticsController
     {
+        // Services
         IStatisticsService _statisticsService;
         ILogger<StatisticsController> _logger;
 
+        // Constructor
         public StatisticsController(IStatisticsService statisticsService, ILogger<StatisticsController> logger)
         {
             _statisticsService = statisticsService;
             _logger = logger;
         }
 
+        // Controller for GetSellerStatistics method
         public async Task<(string message, List<SellerStatistics> statistics)> GetSellerStatistics(int year, List<InsuranceType>? insuranceTypes = null)
         {
             _logger.LogInformation("Getting seller statistics for year {year}", year);
 
             var result = await _statisticsService.GetSellerStatistics(year, insuranceTypes);
 
-            // Kontrollera om statistiken är null eller tom
+            // Check if the result is successful
             if (result.statistics == null || !result.statistics.Any())
             {
-                _logger.LogWarning("Ingen statistik hittades för vald säljare.");
-                return (result.message, null); // Returnera null för statistik om ingen data finns
+                _logger.LogWarning("No statistic found for chosen seller");
+                return (result.message, null); // Return null if no statistics were found
             }
 
             _logger.LogInformation("Seller statistics retrieved successfully");
 
-            // Returnera bara den tredje delen (statistiken) och meddelandet
+            // Only returned if the result is successful
             return (result.message, result.statistics);
         }
 
-
-
-
+        // Controller for GetMonthlyInsuranceStats method
         public async Task<(List<InsuranceStatistics>, string message)> GetMonthlyInsuranceStats()
         {
             _logger.LogInformation("Getting monthly insurance statistics...");

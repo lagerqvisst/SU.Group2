@@ -16,10 +16,12 @@ namespace SU.Backend.Controllers
     /// </summary>
     public class ComissionController
     {
+        // Services
         ICommissionService _commissionService;
         IDataExportService _dataExportService;
         ILogger<ComissionController> _logger;
 
+        // Constructor
         public ComissionController(ICommissionService commissionService, IDataExportService dataExportService, ILogger<ComissionController> logger)
         {
             _commissionService = commissionService;
@@ -27,7 +29,7 @@ namespace SU.Backend.Controllers
             _logger = logger;
         }
 
-        // This method is responsible for getting all commissions for a given year.
+        // Controller for GetCommissions method
         public async Task<(string message, List<Commission>)> GetCommissions(DateTime startDate, DateTime endDate)
         {
             _logger.LogInformation("Getting commissions for year {year}");
@@ -45,6 +47,7 @@ namespace SU.Backend.Controllers
             return (result.message, result.commissions);
         }
 
+        // Controller for ExportCommissionsToExcel method
         public async Task<(bool success, string message)> ExportCommissionsToExcel(List<Commission> commissions)
         {
             _logger.LogInformation("Exporting commissions to Excel...");
@@ -62,5 +65,4 @@ namespace SU.Backend.Controllers
             return (result.success, result.message);
         }
     }
-
 }

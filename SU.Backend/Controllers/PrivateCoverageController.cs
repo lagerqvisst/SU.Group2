@@ -17,15 +17,18 @@ namespace SU.Backend.Controllers
     /// </summary>
     public class PrivateCoverageController
     {
+        // Services
         private readonly IPrivateCoverageService _privateCoverageService;
         private readonly ILogger<PrivateCoverageController> _logger;
 
+        // Constructor
         public PrivateCoverageController(IPrivateCoverageService privateCoverageService, ILogger<PrivateCoverageController> logger)
         {
             _privateCoverageService = privateCoverageService;
             _logger = logger;
         }
 
+        // Controller for GetPrivateCoverageOption method
         public async Task<(PrivateCoverageOption?, string message)> GetPrivateCoverageOption(decimal coverageAmount, InsuranceType insuranceType)
         {
             _logger.LogInformation("Controller activated to get private coverage option...");
@@ -43,6 +46,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+        // Controller for GetAllPrivateCoverageOptions method
         public async Task<(List<PrivateCoverageOption>, string message)> GetAllPrivateCoverageOptions()
         {
             _logger.LogInformation("Controller activated to get all private coverage options...");
@@ -60,6 +64,7 @@ namespace SU.Backend.Controllers
             }
         }
 
+        // Controller for GetAllPrivateCoverages method
         public async Task<(List<PrivateCoverage>, string message)> GetAllPrivateCoverages()
         {
             _logger.LogInformation("Controller activated to get all private coverages...");
