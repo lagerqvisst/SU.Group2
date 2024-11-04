@@ -38,7 +38,7 @@
                                    FontSize="40"/>
                     </TextBlock.Inlines>
                 </TextBlock>
-                <TextBlock Text="Privat &amp; Företagsförsäkringar" 
+                <TextBlock Text="Private &amp; Corporate Insurances" 
                            FontSize="16" 
                            FontWeight="Regular" 
                            HorizontalAlignment="Center" 
