@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
+        xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
         mc:Ignorable="d"
         Title="TrendsView" Height="450" Width="800">
 
@@ -12,24 +13,30 @@
     </Window.Resources>
 
     <Grid DataContext="{Binding TrendsViewModel, Source={StaticResource Locator}}">
-        <!-- Lägg till en StackPanel eller Grid för att lägga till knappen över TabControl -->
-        <StackPanel Orientation="Vertical">
-            <!-- Return-knapp -->
-            <Button Content="Back" Command="{Binding ReturnCommnad}" HorizontalAlignment="Left" Margin="10" Padding="5"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <!-- För TabControl -->
+            <RowDefinition Height="Auto" />
+            <!-- För Return- och Logout-knapparna -->
+        </Grid.RowDefinitions>
 
-            <!-- TabControl för att hantera de tre olika sidorna -->
-            <TabControl>
-                <TabItem Header="Table">
-                    <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/TablePage.xaml"/>
-                </TabItem>
-                <TabItem Header="Line Diagram">
-                    <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/LineChartPage.xaml"/>
-                </TabItem>
-                <TabItem Header="Bar Chart">
-                    <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/BarChartPage.xaml"/>
-                </TabItem>
-            </TabControl>
+        <!-- TabControl för att hantera de tre olika sidorna -->
+        <TabControl Grid.Row="0">
+            <TabItem Header="Table">
+                <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/TablePage.xaml"/>
+            </TabItem>
+            <TabItem Header="Line Diagram">
+                <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/LineChartPage.xaml"/>
+            </TabItem>
+            <TabItem Header="Bar Chart">
+                <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/BarChartPage.xaml"/>
+            </TabItem>
+        </TabControl>
+
+        <!-- Horisontell StackPanel för knapparna längst ned -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+            <controls:ReturnButton Margin="5" Padding="5"/>
+            <controls:LogoutButtonControl Margin="5" Padding="5"/>
         </StackPanel>
-
     </Grid>
 </Window>
