@@ -68,7 +68,9 @@
                 </StackPanel>
 
                 <!-- DataGrid to Display Commissions -->
-                <DataGrid ItemsSource="{Binding Commissions}" 
+                <DataGrid BorderThickness="2"
+                          BorderBrush="Green"
+                          ItemsSource="{Binding Commissions}" 
                           AutoGenerateColumns="True" 
                           Grid.Row="2" 
                           Margin="20,0,20,20"
