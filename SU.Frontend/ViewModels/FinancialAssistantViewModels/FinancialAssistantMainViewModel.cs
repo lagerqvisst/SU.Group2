@@ -29,13 +29,13 @@ namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
             //Shared views are navigated through the navigation service
             ToShowInsurances = new RelayCommand(() => _navigationService.NavigateToShowInsurances());
             ToShowCustomers = new RelayCommand(() => _navigationService.NavigateToShowCustomers());
-            ToRegisterBillingInfo = new RelayCommand(() => NavigateToShowBillingInfo());
+            ToRegisterBillingInfo = new RelayCommand(() => NavigateToInvoices());
             ToRegisterProvision = new RelayCommand(() => NavigateToShowProvision());
             ToShowSellingStat = new RelayCommand(() => NavigateToShowSellingStat());
         }
 
         // Navigation logic
-        public void NavigateToShowBillingInfo()
+        public void NavigateToInvoices()
         {
             _navigationService.NavigateTo("InvoiceView", "FinancialAssistantView");
         }

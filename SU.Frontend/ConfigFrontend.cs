@@ -127,7 +127,8 @@ namespace SU.Frontend
 
             #region Specific Views
             //Financial Assistant
-            services.AddTransient<RegisterExportBillingInfoView>();
+            services.AddTransient<InvoiceViewModel>();
+            services.AddTransient<InvoiceView>();
             services.AddTransient<ShowSellingStatsView>();
             services.AddTransient<ComissionView>();
             //SalesAssistant
