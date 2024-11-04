@@ -10,18 +10,22 @@ namespace SU.Frontend.ViewModels.UserControlViewModels
 {
     public class TaskbarViewModel : ObservableObject
     {
+        // Service
         private readonly IAuthenticationService _authenticationService;
+
+        // Controllers
         private readonly LoginController _loginController;
         private readonly EmployeeController _employeeController;
         private readonly LoginViewModel _loginViewModel;
 
+        // Commands
         public ICommand ExitApplicationCommand { get; set; }
         public ICommand LogOutCommand { get; set; }
         public ICommand FetchDemoCredentialsCommand { get; set; }
 
+        // Constructor
         public TaskbarViewModel(IAuthenticationService authenticationService, LoginController loginController, EmployeeController employeeController, LoginViewModel loginViewModel)
         {
-
             _loginController = loginController;
             _employeeController = employeeController;
             _loginViewModel = loginViewModel;
@@ -29,10 +33,9 @@ namespace SU.Frontend.ViewModels.UserControlViewModels
             FetchDemoCredentialsCommand = new RelayCommand(OnFetchDemoCredentials);
             ExitApplicationCommand = new RelayCommand(() => Application.Current.Shutdown());
             LogOutCommand = new RelayCommand(authenticationService.Logout);
-
-
         }
 
+        // Properties
         public List<EmployeeType> EmployeeTypes { get; set; } = EnumService.EmployeeType();
         private EmployeeType _selectedEmployeeType;
         public EmployeeType SelectedEmployeeType
@@ -45,7 +48,7 @@ namespace SU.Frontend.ViewModels.UserControlViewModels
             }
         }
 
-
+        // Method to fetch demo credentials
         private async void OnFetchDemoCredentials()
         {
             if (SelectedEmployeeType != null)
@@ -70,11 +73,5 @@ namespace SU.Frontend.ViewModels.UserControlViewModels
                 }
             }
         }
-
-
-
-
     }
-
-
 }

@@ -11,12 +11,18 @@ namespace SU.Frontend.ViewModels
 {
     public class LoginViewModel : ObservableObject
     {
+        // Controllers
         private readonly LoginController _loginController;
         private readonly EmployeeController _employeeController;
+
+        // Services
         private readonly INavigationService _navigationService;
         private readonly ILoggedInUserService _loggedInUserService;
 
+        // Command
+        public RelayCommand LoginCommand { get; }
 
+        // Constructor
         public LoginViewModel(LoginController loginController,  INavigationService navigationService, ILoggedInUserService loggedInUserService, EmployeeController employeeController)
         {
             _loginController = loginController;
@@ -24,7 +30,7 @@ namespace SU.Frontend.ViewModels
             _loggedInUserService = loggedInUserService;
 
             LoginCommand = new RelayCommand(OnLogin, CanLogin);
-            // replaced by taskbar FetchEmployeeCommand = new RelayCommand(OnFetchEmployee, CanFetchEmployee); // Nytt kommando
+            // Replaced by taskbar FetchEmployeeCommand = new RelayCommand(OnFetchEmployee, CanFetchEmployee); // New Command
 
             _userName = string.Empty;
             _password = string.Empty;
@@ -32,6 +38,7 @@ namespace SU.Frontend.ViewModels
             _employeeController = employeeController;
         }
 
+        #region Properties
         private string _userName;
         public string UserName
         {
@@ -79,13 +86,12 @@ namespace SU.Frontend.ViewModels
                 OnPropertyChanged();
             }
         }
+        #endregion Properties
 
-
-
-        public RelayCommand LoginCommand { get; }
-
+        // Method to check if the user can login
         private bool CanLogin() => !string.IsNullOrWhiteSpace(UserName) && !string.IsNullOrWhiteSpace(Password);
 
+        // Method to login
         private async void OnLogin()
         {
             try
@@ -112,10 +118,6 @@ namespace SU.Frontend.ViewModels
                 IsLoading = false;
             }
         }
-
-
-
-
     }
 }
 

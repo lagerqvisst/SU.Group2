@@ -11,8 +11,10 @@ namespace SU.Frontend.ViewModels.UserControlViewModels
 {
     public class LogoutButtonViewModel
     {
+        // Command
         public ICommand LogoutCommand { get; }
 
+        // Constructor
         public LogoutButtonViewModel(IAuthenticationService authenticationService)
         {
             LogoutCommand = new RelayCommand(authenticationService.Logout);
