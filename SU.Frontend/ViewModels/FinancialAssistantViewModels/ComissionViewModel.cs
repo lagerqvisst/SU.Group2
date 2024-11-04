@@ -11,9 +11,17 @@ namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
 {
     public class CommissionViewModel : ObservableObject
     {
+        // ObservableCollections for commissions
         private ObservableCollection<Commission> _commissions;
+
+        //Controller 
         private readonly ComissionController _commissionController;
 
+        // Commands
+        public ICommand GenerateCommissionCommand { get; }
+        public ICommand ExportComissionExcel { get; }
+
+        // Constructor
         public CommissionViewModel(ComissionController commissionController)
         {
             _commissionController = commissionController;
@@ -27,6 +35,7 @@ namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
 
         }
 
+        #region Properties
         public ObservableCollection<Commission> Commissions
         {
             get => _commissions;
@@ -58,10 +67,9 @@ namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
                 OnPropertyChanged();
             }
         }
+        #endregion Properties
 
-        public ICommand GenerateCommissionCommand { get; }
-        public ICommand ExportComissionExcel { get; }
-
+        // Method to export the commissions to an Excel file
         private async void ExportComissionToExcel()
         {
             var commissionList = Commissions.ToList();
@@ -87,8 +95,7 @@ namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
             }
         }
 
-
-
+        // Method to load all commissions from the controller
         private async Task LoadCommissionsAsync()
         {
             var (message, commissions) = await _commissionController.GetCommissions(StartDate, EndDate);

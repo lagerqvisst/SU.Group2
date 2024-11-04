@@ -16,13 +16,19 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
 {
     public class RegisterNewSellerViewModel : ObservableObject
     {
+        // Controller
         private readonly EmployeeController _employeeController;
+
+        // Command
+        public ICommand SaveSellerCommand { get; }
 
         public List<EmployeeType> SellerRoles { get; } = new List<EmployeeType>
         {
             EmployeeType.InsideSales,
             EmployeeType.OutsideSales
         };
+
+        #region Properties
 
         private EmployeeType _selectedRole;
         public EmployeeType SelectedRole
@@ -68,16 +74,6 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
             }
         }
 
-        public ICommand SaveSellerCommand { get; }
-
-        public RegisterNewSellerViewModel(EmployeeController employeeController)
-        {
-            _employeeController = employeeController;
-
-            SaveSellerCommand = new RelayCommand(SaveSeller);
-
-        }
-
         private EmployeeType _selectedSellerType;
         public EmployeeType SelectedSellerType
         {
@@ -89,6 +85,18 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
             }
         }
 
+        #endregion Properties
+
+        // Constructor
+        public RegisterNewSellerViewModel(EmployeeController employeeController)
+        {
+            _employeeController = employeeController;
+
+            SaveSellerCommand = new RelayCommand(SaveSeller);
+
+        }
+
+        // Method to save a new seller
         private async void SaveSeller()
         {
             var result = await _employeeController.CreateEmployee(SelectedRole, FirstName, LastName, PersonalNumber);
@@ -117,11 +125,10 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
             }
         }
 
-
+        // Check if seller can be saved
         private bool CanSaveSeller()
         {
             return !string.IsNullOrEmpty(FirstName) && !string.IsNullOrEmpty(LastName) && !string.IsNullOrEmpty(PersonalNumber);
         }
     }
-
 }
