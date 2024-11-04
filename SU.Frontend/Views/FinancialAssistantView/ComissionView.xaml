@@ -31,7 +31,7 @@
                 BorderBrush="Green" 
                 BorderThickness="2" 
                 Margin="20,120,0,0" 
-                Width="750" 
+                Width="570" 
                 Height="460" 
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top">
@@ -45,29 +45,37 @@
                 </Grid.RowDefinitions>
 
                 <!-- Date Range Selection -->
-                <StackPanel Orientation="Horizontal" Margin="20,20,0,10" Grid.Row="1">
+                <StackPanel Orientation="Horizontal" Margin="20,20,20,10" Grid.Row="1">
                     <TextBlock Text="Start Date" 
                                FontSize="15"
                                VerticalAlignment="Center"/>
                     <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay}" 
-                                Margin="5,5"/>
+                                Margin="5,5"
+                                Width="101"/>
                     <TextBlock Text="End Date"
                                FontSize="15"
                                VerticalAlignment="Center" 
-                               Margin="30,0,0,0"/>
+                               Margin="10,0,0,0"/>
                     <DatePicker SelectedDate="{Binding EndDate, Mode=TwoWay}" 
-                                Margin="5,5"/>
+                                Margin="5,5"
+                                Width="101"/>
                     <Button Style="{StaticResource ConfirmationButtonStyle}" 
                             Content="Generate Report" 
                             Command="{Binding GenerateCommissionCommand}" 
-                            Margin="175,0"/>
+                            Margin="10,0"
+                            Width="120"
+                            Height="25"/>
                 </StackPanel>
 
                 <!-- DataGrid to Display Commissions -->
-                <DataGrid ItemsSource="{Binding Commissions}" 
+                <DataGrid BorderThickness="2"
+                          BorderBrush="Green"
+                          ItemsSource="{Binding Commissions}" 
                           AutoGenerateColumns="True" 
                           Grid.Row="2" 
-                          Margin="20,0,20,0"/>
+                          Margin="20,0,20,20"
+                          Width="495"
+                          HorizontalAlignment="Left"/>
                 <controls:DownloadButton Command="{Binding ExportComissionExcel}" 
                                          HorizontalAlignment="Center" 
                                          VerticalAlignment="Bottom" 

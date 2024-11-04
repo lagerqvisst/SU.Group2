@@ -18,15 +18,19 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
 {
     public class PrivateInsuranceTypeViewModel : ObservableObject
     {
+        // Services
         private readonly INavigationService _navigationService;
         private readonly IPolicyHolderService _policyHolderService;
         private readonly ILoggedInUserService _loggedInSeller;
+
+        // Controllers
         private readonly InsuranceListingController _insuranceListingController;
         private readonly InsuranceCreateController _insuranceCreateController;
 
-
+        // Lists
         public List<InsuranceType> PrivateInsuranceTypes { get; set; }
         public List<PaymentPlan> PaymentPlans { get; set; }
+
 
         private InsuranceType _selectedInsuranceType;
         public InsuranceType SelectedInsuranceType
@@ -40,7 +44,6 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
 
             }
         }
-
 
         private PaymentPlan _selectedPaymentPlan;
         public PaymentPlan SelectedPaymentPlan
@@ -128,8 +131,6 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
                 OnPropertyChanged();
             }
         }
-
-
 
         private List<InsuranceAddonType> _sicknessAccidentAddons;
         public List<InsuranceAddonType> SicknessAccidentAddons
@@ -221,15 +222,18 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
             }
         }
 
+        // Display text for the year
         public string DisplayYearText => $"Available options for {SelectedInsuranceType.ToString()} & {DateTime.Now.Year}";
 
+        // Commands
         public ICommand ContinueCommand { get; }
-
-        public bool IsCoverageOptionsEnabled => AvailableCoverageOptions?.Any() == true;
 
         public ICommand CreateInsuranceCommand { get; }
 
+        // Properties for enabling/disabling CoverageOptions listview
+        public bool IsCoverageOptionsEnabled => AvailableCoverageOptions?.Any() == true;
 
+        // Constructor
         public PrivateInsuranceTypeViewModel(INavigationService navigationService, IPolicyHolderService policyHolderService, ILoggedInUserService loggedInUserService, InsuranceListingController insuranceListingController, InsuranceCreateController insuranceCreateController)
         {
             _navigationService = navigationService;
@@ -266,7 +270,6 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
             CreateInsuranceCommand = new RelayCommand(CreateInsurance, CanCreateInsurance);
         }
 
-
         private bool IsPrivateInsuranceType(InsuranceType type)
         {
             return type == InsuranceType.ChildAccidentAndHealthInsurance
@@ -276,14 +279,14 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
 
         private async Task OnSelectedInsuranceTypeChangedAsync()
         {
-            // Uppdatera IsAddonVisible baserat på valt försäkringstyp
+            // Update Addon visibility based on selected insurance type
             IsAddonVisible = SelectedInsuranceType == InsuranceType.ChildAccidentAndHealthInsurance ||
                              SelectedInsuranceType == InsuranceType.AdultAccidentAndHealthInsurance;
 
             SelectedLongTermSicknessAddon = null;
             SelectedSicknessAccidentAddon = null;
             SelectedCoverageOption = null;
-            // Kör metoder för att ladda alternativ och tillägg
+            // Run methods to load coverage options and addons
             await LoadCoverageOptions();
             await LoadAddonOptions();
         }
@@ -294,10 +297,10 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
             {
                 var (options, message) = await _insuranceListingController.GetSpecificPrivateOption(SelectedInsuranceType);
 
-                // Sätt AvailableCoverageOptions direkt till de hämtade alternativen
+                // Add AvailableCoverageOptions to the list
                 AvailableCoverageOptions = options;
 
-                // Meddela UI att AvailableCoverageOptions har uppdaterats
+                // Tell the UI that AvailableCoverageOptions has been updated
                 OnPropertyChanged(nameof(AvailableCoverageOptions));
                 OnPropertyChanged(nameof(IsCoverageOptionsEnabled));
                 OnPropertyChanged(nameof(DisplayYearText));
@@ -312,7 +315,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
 
                 if (success)
                 {
-                    // Filtrera de två olika typerna av tillägg
+                    // Filter out the addons based on the type
                     SicknessAccidentAddons = addons.Where(a => a.Description == AddonType.SicknessAccident).ToList();
                     LongTermSicknessAddons = addons.Where(a => a.Description == AddonType.LongTermSickness).ToList();
                 }
@@ -342,8 +345,8 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
             var isPolicyHolderInsured = IsInsuredPersonSameAsPolicyHolder;
             var note = Note;
             var paymentPlan = SelectedPaymentPlan;
-            var startDate = StartDate ?? DateTime.Now; // Använd valt startdatum eller nuvarande datum
-            var endDate = EndDate ?? startDate.AddYears(1); // Använd valt slutdatum eller ett år framåt som standard 
+            var startDate = StartDate ?? DateTime.Now; // Use the chosen start date or today as default
+            var endDate = EndDate ?? startDate.AddYears(1); // Use the chosen end date or start date + 1 year as default
             var addons = new List<InsuranceAddonType> { SelectedSicknessAccidentAddon, SelectedLongTermSicknessAddon }
                          .Where(addon => addon != null).ToList();
             var insuredPerson = !IsInsuredPersonSameAsPolicyHolder
@@ -363,6 +366,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.NewInsurance
             }
         }
 
+        // Check if insurance can be created
         private bool CanCreateInsurance()
         {
             return SelectedInsuranceType != null

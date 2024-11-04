@@ -7,6 +7,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
 {
     public class RegisterNewInsuranceViewModel : ObservableObject
     {
+        // Service
         private readonly INavigationService _navigationService;
 
         // ICommand for Private Insurance Button

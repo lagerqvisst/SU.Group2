@@ -18,21 +18,25 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
 {
     public class EditDeleteSellerViewModel : ObservableObject
     {
+        // Controller
         private readonly EmployeeController _employeeController;
 
+        // Commands
         public ICommand SaveSellerCommand { get; }
         public ICommand DeleteSellerCommand { get; }
         
+        // ObservableCollections for sellers
         public ObservableCollection<Employee> Sellers { get; set; } = new ObservableCollection<Employee>();
 
+        // List of seller types (Outside and Inside sales)
         public List<EmployeeType> SellerRoles { get; } = new List<EmployeeType>
         {
             EmployeeType.InsideSales,
             EmployeeType.OutsideSales
         };
 
+        #region Properties
         private EmployeeType _selectedSellerType;
-
         public EmployeeType SelectedSellerType
         {
             get => _selectedSellerType;
@@ -65,8 +69,9 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
                 return null;
             }
         }
+        #endregion Properties
 
-        // Constructor  for viewmodel
+        // Constructor
         public EditDeleteSellerViewModel(EmployeeController employeeController)
         {
             _employeeController = employeeController;
@@ -77,6 +82,7 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
             DeleteSellerCommand = new RelayCommand(DeleteSeller);
         }
 
+        // Load all sellers
         private async Task LoadSellersAsync()
         {
             var result = await _employeeController.GetAllSellers();
@@ -94,6 +100,7 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
             }
         }
 
+        // Method to delete a seller
         private async void DeleteSeller()
         {
             var confirm = MessageBox.Show("Are you sure you want to delete this seller?",
@@ -102,7 +109,7 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
 
             if (confirm != MessageBoxResult.Yes) return;
 
-            // Fortsätt med att ta bort om användaren bekräftar
+            // Continue with deletion if user confirms
             if (SelectedSeller != null)
             {
                 await _employeeController.DeleteEmployee(SelectedSeller);
@@ -111,6 +118,7 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
             }
         }
 
+        // Method to save a seller
         private async void SaveSeller()
         {
             if (SelectedSeller != null)
@@ -128,6 +136,7 @@ namespace SU.Frontend.ViewModels.SalesAssistantViewModels
             }
         }
 
+        // Method to update the selected seller type
         private void OnSelectedSellerChanged()
         {
             if (SelectedSeller != null)
