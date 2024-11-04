@@ -13,7 +13,6 @@ namespace SU.Backend.Services.Interfaces
     /// </summary>
     public interface ICompanyCustomerService
     {
-        Task<(bool success, string message, CompanyCustomer customer)> GenerateTestCompanyCustomer();
 
         Task<(bool success, string message)> CreateCompanyCustomer(CompanyCustomer newCompanyCustomer);
 

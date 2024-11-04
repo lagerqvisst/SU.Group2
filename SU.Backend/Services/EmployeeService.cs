@@ -17,13 +17,12 @@ namespace SU.Backend.Services
     public class EmployeeService : IEmployeeService
     {
         private ILogger<EmployeeService> _logger;
-        private readonly IRandomGenerationService _randomInfoGenerationService;
+        
         private readonly UnitOfWork _unitOfWork; // Lägg till UnitOfWork
 
-        public EmployeeService(IRandomGenerationService randomInfoGenerationService, UnitOfWork unitOfWork, ILogger<EmployeeService> logger)
+        public EmployeeService( UnitOfWork unitOfWork, ILogger<EmployeeService> logger)
         {
             _logger = logger;
-            _randomInfoGenerationService = randomInfoGenerationService;
             _unitOfWork = unitOfWork; // Injicera UnitOfWork
         }
 

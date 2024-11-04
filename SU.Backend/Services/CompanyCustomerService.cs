@@ -24,42 +24,6 @@ namespace SU.Backend.Services
             _unitOfWork = unitOfWork;
         }
 
-        // Method to generate a test company customer, only used for testing purposes
-        public async Task<(bool success, string message, CompanyCustomer customer)> GenerateTestCompanyCustomer()
-        {
-            _logger.LogInformation("Generating test company customer");
-
-            try
-            {
-                CompanyCustomer companyCustomer = new CompanyCustomer
-                {
-                    OrganizationNumber = "556677-8890", // Exempel på ett organisationsnummer
-                    CompanyName = "Exempel AB",
-                    ContactPerson = "Anna Andersson",
-                    ContactPersonPhonenumber = "070-1234567",
-                    CompanyAdress = "Storgatan 1, 12345 Exempelstad",
-                    CompanyPhoneNumber = "08-123456",
-                    CompanyLandlineNumber = "08-7654321",
-                    CompanyEmailAdress = "info@exempel.se",
-                };
-                _logger.LogInformation("Company customer generated");
-
-                _logger.LogInformation("Adding company customer to database");
-
-                _unitOfWork.CompanyCustomers.Add(companyCustomer);
-                _unitOfWork.SaveChanges();
-
-                _logger.LogInformation("Company customer added to database");
-
-                return (true, "Successfully generated and saved new company customer", companyCustomer);
-            }
-            catch (Exception)
-            {
-
-                return (false, "Failed to generate random company customer", null);
-            }
-        }
-
         // Method to create a new company customer
         public async Task<(bool success, string message)> CreateCompanyCustomer(CompanyCustomer newCompanyCustomer)
         {
