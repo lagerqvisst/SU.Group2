@@ -41,9 +41,14 @@ namespace SU.Backend.Database.Repositories
             return await _context.CompanyCustomers.FirstOrDefaultAsync(x => x.CompanyCustomerId == id);
         }
 
-        public async Task <List<CompanyCustomer>> GetAllCompanyCustomers()
+        public async Task<List<CompanyCustomer>> GetAllCompanyCustomers()
         {
-            return _context.CompanyCustomers.ToList();
+            return  _context.CompanyCustomers
+                .Include(c => c.InsurancePolicyHolders)
+                    .ThenInclude(p => p.Insurance)
+                .ToList();
         }
+
+
     }
 }

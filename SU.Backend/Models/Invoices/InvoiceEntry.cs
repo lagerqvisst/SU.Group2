@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SU.Backend.Models.Insurances;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,8 @@ namespace SU.Backend.Models.Invoices
         public string OrganizationNumber { get; set; } // For companies
         public string ContactPerson { get; set; } // For companies
         public string Address { get; set; }
-        public string PostalCode { get; set; }
-        public int Insurances { get; set; }
         public decimal Premium { get; set; }
+        public string Insurances { get; set; } // Single string of all insurances
     }
 
 }

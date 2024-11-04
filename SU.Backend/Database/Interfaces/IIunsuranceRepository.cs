@@ -19,6 +19,8 @@ namespace SU.Backend.Database.Interfaces
         Task<List<Insurance>> GetActiveInsurancesInDateRange(DateTime startDate, DateTime endDate);
         Task<List<Insurance>> GetAllActiveInsurances();
         Task<List<Insurance>> GetInsurancesByYear(int year);
+        Task<List<Insurance>> GetInsurancesForInvoicing(DateTime currentDate);
+
 
 
     }

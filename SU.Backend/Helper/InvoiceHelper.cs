@@ -16,60 +16,46 @@ namespace SU.Backend.Helper
     public static class InvoiceHelper
     {
 
-        // This method determines if an insurance should be invoiced this month.
-        // Its based on the logic from the business documentation.
-        public static bool ShouldInvoiceInsuranceThisMonth(Insurance insurance, DateTime currentDate)
-        {
-            int monthsSinceStart = ((currentDate.Year - insurance.StartDate.Year) * 12) + currentDate.Month - insurance.StartDate.Month;
 
-            switch (insurance.PaymentPlan)
-            {
-                case PaymentPlan.Monthly:
-                    return true; // Invoice every month
-                case PaymentPlan.Quarterly:
-                    return monthsSinceStart % 3 == 0; // Invoice every third month
-                case PaymentPlan.SemiAnnual:
-                    return monthsSinceStart % 6 == 0; // Invoice every sixth month
-                case PaymentPlan.Annual:
-                    return monthsSinceStart % 12 == 0; // Invoice every twelfth month
-                default:
-                    return false;
-            }
-        }
-
-        // This method creates an invoice entry based on the insurance data.
-        // Its called after logic such as the method above has been applied.
-        // Used for exporting invoice data to external systems.
-        public static InvoiceEntry CreateInvoiceEntry(Insurance insurance)
+        public static InvoiceEntry CreateInvoiceEntry(InsurancePolicyHolder policyHolder)
         {
-            if (insurance.InsurancePolicyHolder.PrivateCustomer != null)
+            // Samla alla försäkrings-ID kopplade till denna policyinnehavare
+            var allInsuranceIds = policyHolder.CompanyCustomer != null
+                ? policyHolder.CompanyCustomer.InsurancePolicyHolders
+                    .Select(p => p.Insurance.InsuranceId.ToString())
+                : policyHolder.PrivateCustomer?.InsurancePolicyHolders
+                    .Select(p => p.Insurance.InsuranceId.ToString()) ?? new List<string>();
+
+            // Bygg strängen med "ID: " följt av alla ID:n
+            string insurancesAsString = $"ID: {string.Join(", ", allInsuranceIds)}";
+
+            if (policyHolder.PrivateCustomer != null)
             {
                 return new InvoiceEntry
                 {
                     Type = "Privat",
-                    CustomerName = $"{insurance.InsurancePolicyHolder.PrivateCustomer.FirstName} {insurance.InsurancePolicyHolder.PrivateCustomer.LastName}",
-                    PersonalNumber = insurance.InsurancePolicyHolder.PrivateCustomer.PersonalNumber,
-                    Address = insurance.InsurancePolicyHolder.PrivateCustomer.Address,
-                    PostalCode = insurance.InsurancePolicyHolder.PrivateCustomer.Address,
-                    Premium = insurance.Premium
+                    CustomerName = $"{policyHolder.PrivateCustomer.FirstName} {policyHolder.PrivateCustomer.LastName}",
+                    PersonalNumber = policyHolder.PrivateCustomer.PersonalNumber,
+                    Address = policyHolder.PrivateCustomer.Address,
+                    Premium = policyHolder.Insurance.Premium,
+                    Insurances = insurancesAsString
                 };
             }
-            else if (insurance.InsurancePolicyHolder.CompanyCustomer != null)
+            else if (policyHolder.CompanyCustomer != null)
             {
                 return new InvoiceEntry
                 {
                     Type = "Företag",
-                    CompanyName = insurance.InsurancePolicyHolder.CompanyCustomer.CompanyName,
-                    OrganizationNumber = insurance.InsurancePolicyHolder.CompanyCustomer.OrganizationNumber,
-                    ContactPerson = insurance.InsurancePolicyHolder.CompanyCustomer.ContactPerson,
-                    Address = insurance.InsurancePolicyHolder.CompanyCustomer.CompanyAdress,
-                    PostalCode = insurance.InsurancePolicyHolder.CompanyCustomer.CompanyAdress,
-                    Premium = insurance.Premium
+                    CompanyName = policyHolder.CompanyCustomer.CompanyName,
+                    OrganizationNumber = policyHolder.CompanyCustomer.OrganizationNumber,
+                    ContactPerson = policyHolder.CompanyCustomer.ContactPerson,
+                    Address = policyHolder.CompanyCustomer.CompanyAdress,
+                    Premium = policyHolder.Insurance.Premium,
+                    Insurances = insurancesAsString
                 };
             }
             return null;
         }
-
 
 
     }
