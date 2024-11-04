@@ -18,6 +18,7 @@ namespace SU.Frontend.Helper
     {
         public class ViewModelLocator
         {
+            // Properties to get the view models from the DI container
             public LogoutButtonViewModel LogoutButtonViewModel =>
                 App.AppHost?.Services.GetService<LogoutButtonViewModel>();
 

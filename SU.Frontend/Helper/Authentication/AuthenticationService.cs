@@ -11,15 +11,18 @@ namespace SU.Frontend.Helper.Authentication
 {
     public class AuthenticationService : IAuthenticationService
     {
+        // Services needed for the AuthenticationService
         private readonly INavigationService _navigationService;
         private readonly ILoggedInUserService _loggedInUserService;
 
+        // Constructor
         public AuthenticationService(INavigationService navigationService, ILoggedInUserService loggedInUserService)
         {
             _navigationService = navigationService;
             _loggedInUserService = loggedInUserService;
         }
 
+        // Method to log out the user
         public void Logout()
         {
             // Set loggedInEmployee to null
@@ -28,6 +31,5 @@ namespace SU.Frontend.Helper.Authentication
             // Shut down all windows except LoginWindow so new user can log in
             _navigationService.CloseAllExcept("LoginWindow");
         }
-
     }
 }
