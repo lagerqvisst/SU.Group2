@@ -33,7 +33,6 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
 
             OnInitialized();
 
-            SaveProspectCommand = new RelayCommand(SaveProspect);
             ExportToExcel = new RelayCommand(ExportProspectsToExcel);
         }
 
@@ -52,58 +51,13 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
         // List of sellers to choose from
         public ObservableCollection<Employee> Sellers { get; set; }
 
-        // Selected prospect
-        private Prospect _selectedProspect;
-        public Prospect SelectedProspect
-        {
-            get => _selectedProspect;
-            set
-            {
-                _selectedProspect = value;
-                OnPropertyChanged();
-                // Update the ContactDate and ProspectStatus based on the selected prospect
-                if (_selectedProspect != null)
-                {
-                    ContactDate = _selectedProspect.ContactDate;
-                    ProspectStatus = _selectedProspect.ProspectStatus;
-                }
-            }
-        }
 
-        // Contact date of the selected prospect
-        private DateTime? _contactDate;
-        public DateTime? ContactDate
-        {
-            get => _contactDate;
-            set
-            {
-                _contactDate = value;
-                if (_selectedProspect != null)
-                {
-                    _selectedProspect.ContactDate = value;
-                }
-                OnPropertyChanged();
-            }
-        }
+
 
         // List of available ProspectStatus options
         public List<ProspectStatus> ProspectStatusOptions => Enum.GetValues(typeof(ProspectStatus)).Cast<ProspectStatus>().ToList();
 
-        // ProspectStatus of the selected prospect
-        private ProspectStatus _prospectStatus;
-        public ProspectStatus ProspectStatus
-        {
-            get => _prospectStatus;
-            set
-            {
-                _prospectStatus = value;
-                if (_selectedProspect != null)
-                {
-                    _selectedProspect.ProspectStatus = value;
-                }
-                OnPropertyChanged();
-            }
-        }
+
 
         // Commands
         public ICommand SaveProspectCommand { get; }
@@ -117,7 +71,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
         // Method to load all prospects from the controller
         private async Task LoadAllProspectsAsync()
         {
-            var prospectResult = await _prospectController.GetAllCurrentProspects();
+            var prospectResult = await _prospectController.IdentifyNewProspects();
             if (prospectResult.prospects?.Any() ?? false)
             {
                 Prospects.Clear();
@@ -149,25 +103,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
         }
 
         // Method to save the selected prospect to the database
-        private async void SaveProspect()
-        {
-            if (SelectedProspect != null)
-            {
-                var result = await _prospectController.UpdateProspect(SelectedProspect);
-                
-                if(result.success)
-                {
-                    MessageBox.Show($"{result.message}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    ReloadProspects();
-                }
-                else
-                {
-                    MessageBox.Show($"{result.message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
 
-                
-            }
-        }
 
         // Method to initialize the ViewModel
         private async Task OnInitialized()
@@ -178,26 +114,7 @@ namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
         }
 
 
-        // Selected seller to assign to prospect
-        private Employee _selectedSeller;
-        public Employee SelectedSeller
-        {
-            get => _selectedSeller;
-            set
-            {
-                _selectedSeller = value;
-                OnPropertyChanged();
 
-                if (SelectedProspect != null)
-                {
-                    SelectedProspect.Seller = _selectedSeller;
-                    SelectedProspect.SellerId = _selectedSeller?.EmployeeId;
-                    SelectedProspect.AssignedAgentNumber = _selectedSeller?.AgentNumber;
-                    OnPropertyChanged(nameof(SelectedProspect)); 
-                    
-                }
-            }
-        }
 
         private async void ReloadProspects()
         {

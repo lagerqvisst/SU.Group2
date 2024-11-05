@@ -167,7 +167,7 @@ namespace SU.Backend.Services
                 {
                     var worksheet = package.Workbook.Worksheets.Add("Prospect Report");
 
-                    // Skapa rubriker med fetstil och justering
+                    // Skapa rubriker
                     worksheet.Cells[1, 1].Value = "First / Company Name";
                     worksheet.Cells[1, 2].Value = "Last Name";
                     worksheet.Cells[1, 3].Value = "Personal / Org Nr";
@@ -177,7 +177,7 @@ namespace SU.Backend.Services
                     worksheet.Cells[1, 7].Value = "Agent Number";
                     worksheet.Cells[1, 8].Value = "Export Date";
 
-                    // Tillämpa fetstil på rubrikraden
+                    // Tillämpa format på rubrikraden
                     using (var headerRange = worksheet.Cells[1, 1, 1, 8])
                     {
                         headerRange.Style.Font.Bold = true;
@@ -188,22 +188,21 @@ namespace SU.Backend.Services
                     }
 
                     var exportDate = DateTime.Now.ToShortDateString();
-                    int currentRow = 2; // Starta från rad 2 eftersom första raden är rubriker
+                    int currentRow = 2;
 
-                    // Iterera över prospects och skriv ut data samt sammanfattning direkt under
                     foreach (var prospect in prospects)
                     {
-                        // Prospect data med ram och justering
+                        // Skriv ut grundläggande prospektdata
                         worksheet.Cells[currentRow, 1].Value = prospect.FirstName;
                         worksheet.Cells[currentRow, 2].Value = prospect.LastName;
                         worksheet.Cells[currentRow, 3].Value = prospect.PersonalOrOrgNumber;
                         worksheet.Cells[currentRow, 4].Value = prospect.StreetAddress;
                         worksheet.Cells[currentRow, 5].Value = prospect.PhoneNumber;
                         worksheet.Cells[currentRow, 6].Value = prospect.Email;
-                        worksheet.Cells[currentRow, 7].Value = prospect.AssignedAgentNumber;
+                        worksheet.Cells[currentRow, 7].Value = prospect.AgentNumber;
                         worksheet.Cells[currentRow, 8].Value = exportDate;
 
-                        // Tillämpa ram på hela prospect-raden
+                        // Tillämpa ram på prospektsdata
                         for (int col = 1; col <= 8; col++)
                         {
                             worksheet.Cells[currentRow, col].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
@@ -213,21 +212,21 @@ namespace SU.Backend.Services
 
                         currentRow++;
 
-                        // Sammanfattning med fetstil och ram
+                        // Lägg till detaljerad information som anteckningar och status
                         worksheet.Cells[currentRow, 1].Value = "Contact Date:";
-                        worksheet.Cells[currentRow, 2].Value = prospect.ContactDate?.ToShortDateString() ?? "";
+                        worksheet.Cells[currentRow, 2].Value = "";
                         worksheet.Cells[currentRow, 1, currentRow, 2].Style.Font.Bold = true;
 
                         worksheet.Cells[currentRow + 1, 1].Value = "Outcome:";
-                        worksheet.Cells[currentRow + 1, 2].Value = prospect.ContactNote ?? "";
+                        worksheet.Cells[currentRow + 1, 2].Value = "";
                         worksheet.Cells[currentRow + 1, 1, currentRow + 1, 2].Style.Font.Bold = true;
 
                         worksheet.Cells[currentRow + 2, 1].Value = "Seller:";
-                        worksheet.Cells[currentRow + 2, 2].Value = $"{prospect.Seller?.FirstName} {prospect.Seller?.LastName}";
+                        worksheet.Cells[currentRow + 2, 2].Value = "";
                         worksheet.Cells[currentRow + 2, 1, currentRow + 2, 2].Style.Font.Bold = true;
 
-                        worksheet.Cells[currentRow + 3, 1].Value = "Agency Number:";
-                        worksheet.Cells[currentRow + 3, 2].Value = prospect.AssignedAgentNumber;
+                        worksheet.Cells[currentRow + 3, 1].Value = "Agent Number:";
+                        worksheet.Cells[currentRow + 3, 2].Value = "";
                         worksheet.Cells[currentRow + 3, 1, currentRow + 3, 2].Style.Font.Bold = true;
 
                         // Tillämpa ramar på varje cell i sammanfattningen
@@ -262,7 +261,8 @@ namespace SU.Backend.Services
                 return (false, "Error exporting prospects to Excel");
             }
         }
-        
+
+
         public async Task<(bool success, string message)> ExportSellerStatisticsToExcel(List<SellerStatistics> sellerStatistics, bool isPrivateInsurance)
 {
     try

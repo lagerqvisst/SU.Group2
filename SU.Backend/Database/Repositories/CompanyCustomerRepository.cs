@@ -32,6 +32,9 @@ namespace SU.Backend.Database.Repositories
         {
             return await _context.CompanyCustomers
                 .Where(x => x.InsurancePolicyHolders.Count == 1)
+                .Include(i => i.InsurancePolicyHolders)
+                    .ThenInclude(p => p.Insurance)
+                    .ThenInclude(s => s.Seller)
                 .ToListAsync();
         }
 

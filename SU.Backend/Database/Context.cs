@@ -36,7 +36,6 @@ namespace SU.Backend.Database
         public DbSet<InsuranceAddonType> InsuranceAddonTypes { get; set; }
         public DbSet<PrivateCoverageOption> PrivateCoverageOption { get; set; }
         public DbSet<PrivateCoverage> PrivateCoverages { get; set; }
-        public DbSet<Prospect> Prospects { get; set; }
         public DbSet<CompanyCustomer> CompanyCustomers { get; set; }
         public DbSet<RiskZone> Riskzones { get; set; }
         public DbSet<VehicleInsuranceOption> VehicleInsuranceOptions { get; set; }
@@ -223,28 +222,7 @@ namespace SU.Backend.Database
                 .OnDelete(DeleteBehavior.Restrict); // Prevent deletion of LiabilityCoverageOption
             #endregion
 
-            #region Prospect
-            //Configure the relationship between Prospect and PrivateCustomer
-            modelBuilder.Entity<Prospect>()
-                .HasOne(p => p.PrivateCustomer) // A Prospect has a PrivateCustomer
-                .WithMany() // A PrivateCustomer can be related to many Prospects (hmm vill vi verkligen detta?)
-                .HasForeignKey(p => p.PrivateCustomerId) // FK in Prospect
-                .OnDelete(DeleteBehavior.Restrict); // Prevent deletion of PrivateCustomer
-
-            //Configure the relationship between Prospect and CompanyCustomer
-            modelBuilder.Entity<Prospect>()
-                .HasOne(p => p.CompanyCustomer) // A Prospect has a CompanyCustomer
-                .WithMany() // A CompanyCustomer can be related to many Prospects (hmm vill vi verkligen detta?)
-                .HasForeignKey(p => p.CompanyCustomerId) // FK in Prospect
-                .OnDelete(DeleteBehavior.Restrict); // Prevent deletion of CompanyCustomer
-
-            // Configure the relationship between Prospect and Employee
-            modelBuilder.Entity<Prospect>()
-                .HasOne(p => p.Seller) // A Prospect has (can have) a Seller
-                .WithMany() // A Seller can be related to many Prospects
-                .HasForeignKey(p => p.SellerId) // FK in Prospect
-                .OnDelete(DeleteBehavior.Restrict); // Prevent deletion of Seller if there are related Prospects
-            #endregion
+           
 
 
         }

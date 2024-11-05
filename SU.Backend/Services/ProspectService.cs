@@ -33,185 +33,73 @@ namespace SU.Backend.Services
         /// A prospect is considered a customer with 1 insurance only.
         /// </summary>
         /// <returns></returns>
-        public async Task<(bool success, string message, List<Prospect> prospects)> IdentifyProspects()
+        public async Task<(bool success, string message, List<Prospect> prospects)> GenerateProspectData()
         {
-            _logger.LogInformation("Identifying prospects");
+            _logger.LogInformation("Generating prospects without saving to the database");
+
             try
             {
-                // Get private customers
-                _logger.LogInformation("Getting private customers with >0 && <2 insurance (1 insurance only)");
+                var prospects = new List<Prospect>();
+
+                // Hämta privatkunder och företagskunder med endast en försäkring
                 var privateCustomers = await _unitOfWork.PrivateCustomers.GetProspectDataForPrivateCustomers();
-                if (privateCustomers == null || !privateCustomers.Any())
-                {
-                    _logger.LogInformation("No private customer prospects found");
-                }
-                _logger.LogInformation($"Found {privateCustomers.Count} private customer prospects");
-
-                // Get company customers
-                _logger.LogInformation("Getting company customers with >0 && <2 insurance (1 insurance only)");
                 var companyCustomers = await _unitOfWork.CompanyCustomers.GetProspectDataForCompanyCustomers();
-                if (companyCustomers == null || !companyCustomers.Any())
-                {
-                    _logger.LogInformation("No company customer prospects found");
-                }
-                _logger.LogInformation($"Found {companyCustomers.Count} company customer prospects");
 
-                // Combine prospect lists
-                List<Prospect> prospects = new List<Prospect>();
-
-                // Handle private customers
-                foreach (var privateCustomer in privateCustomers)
+                // Lägg till privatkunder som prospekt
+                if (privateCustomers.Any())
                 {
-                    _logger.LogInformation($"Checking if prospect for PrivateCustomer ID {privateCustomer.PrivateCustomerId} already exists in the database");
-                    if (!await _unitOfWork.Prospects.ProspectExists(privateCustomer.PrivateCustomerId, null))
+                    prospects.AddRange(privateCustomers.Select(pc => new Prospect
                     {
-                        prospects.Add(new Prospect
-                        {
-                            ProspectStatus = ProspectStatus.NotContacted,
-                            ProspectType = ProspectType.Private,
-                            PrivateCustomer = privateCustomer,
-                            ContactNote = "test"
-                        });
-                    }
-                    else
-                    {
-                        _logger.LogInformation($"Prospect for PrivateCustomer {privateCustomer.PrivateCustomerId} already exists, skipping...");
-                    }
+                        FirstName = pc.FirstName,
+                        LastName = pc.LastName,
+                        PersonalOrOrgNumber = pc.PersonalNumber,
+                        StreetAddress = pc.Address,
+                        PhoneNumber = pc.PhoneNumber,
+                        Email = pc.Email,
+                        AgentNumber = pc.InsurancePolicyHolders.First().Insurance.Seller.AgentNumber,
+                        Seller = $"{pc.InsurancePolicyHolders.First().Insurance.Seller.FirstName} {pc.InsurancePolicyHolders.First().Insurance.Seller.LastName}"
+                    }));
                 }
 
-                // Handle company customers
-                foreach (var companyCustomer in companyCustomers)
+                // Lägg till företagskunder som prospekt
+                if (companyCustomers.Any())
                 {
-                    _logger.LogInformation($"Checking if prospect for CompanyCustomer ID {companyCustomer.CompanyCustomerId} already exists in the database");
-                    if (!await _unitOfWork.Prospects.ProspectExists(null, companyCustomer.CompanyCustomerId))
+                    prospects.AddRange(companyCustomers.Select(cc => new Prospect
                     {
-                        prospects.Add(new Prospect
-                        {
-                            ProspectStatus = ProspectStatus.NotContacted,
-                            ProspectType = ProspectType.Company,
-                            CompanyCustomer = companyCustomer
-                        });
-                    }
-                    else
-                    {
-                        _logger.LogInformation($"Prospect for CompanyCustomer {companyCustomer.CompanyCustomerId} already exists, skipping...");
-                    }
+                        FirstName = cc.CompanyName,
+                        LastName = string.Empty,
+                        PersonalOrOrgNumber = cc.OrganizationNumber,
+                        StreetAddress = cc.CompanyAdress,
+                        PhoneNumber = cc.CompanyPhoneNumber,
+                        Email = cc.CompanyEmailAdress,
+                        AgentNumber = cc.InsurancePolicyHolders.First().Insurance.Seller.AgentNumber,
+                        Seller = $"{cc.InsurancePolicyHolders.First().Insurance.Seller.FirstName} {cc.InsurancePolicyHolders.First().Insurance.Seller.LastName}"
+                    }));
                 }
 
-                // Check if there are any prospects to add to the database
                 if (prospects.Any())
                 {
-                    _logger.LogInformation($"Adding {prospects.Count} prospect(s) to the database");
-                    await _unitOfWork.Prospects.AddRangeAsync(prospects);
-                    await _unitOfWork.SaveChangesAsync();
-
-                    return (true, $"{prospects.Count} Prospects identified", prospects);
+                    _logger.LogInformation($"Generated {prospects.Count} prospects");
+                    return (true, $"{prospects.Count} prospects generated successfully", prospects);
                 }
                 else
                 {
-                    _logger.LogInformation("No new prospects to add to the database");
-                    return (false, "No new prospects identified", null);
+                    _logger.LogInformation("No prospects found");
+                    return (false, "No prospects found", prospects);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error identifying prospects");
-                return (false, "Error identifying prospects", null);
+                _logger.LogError(ex, "Error generating prospects");
+                return (false, "Error generating prospects", new List<Prospect>());
             }
         }
 
 
-        /// <summary>
-        /// This method assigns a seller to a specific prospect.
-        /// Since prospects are by default not assigned to any seller, this method can be used to assign a seller to a specific prospect.
-        /// </summary>
-        public async Task<(bool success, string message)> AssignSellerToSpecificProspect(Employee employee, Prospect prospect)
-        {
-            _logger.LogInformation("Checking if employee has the correct role assignments");
 
-            try
-            {
-                // Kontrollera om anställd har antingen OutsideSales eller InsideSales roller
-                var hasValidRole = employee.RoleAssignments.Any(role =>
-                    role.Role == EmployeeType.OutsideSales || role.Role == EmployeeType.InsideSales);
 
-                if (!hasValidRole)
-                {
-                    _logger.LogInformation("Employee does not have the correct role (OutsideSales or InsideSales)");
-                    return (false, "Employee does not have the correct role (OutsideSales or InsideSales)");
-                }
 
-                _logger.LogInformation("Employee has a valid role assignment");
 
-                // Kontrollera om prospektet redan har en säljare
-                if (prospect.Seller != null)
-                {
-                    _logger.LogInformation($"Prospect with id: {prospect.ProspectId} already has a seller assigned");
-                    return (false, "Prospect already has a seller assigned");
-                }
-
-                // Tilldela säljaren till det specifika prospektet
-                _logger.LogInformation($"Assigning seller to prospect id: {prospect.ProspectId}");
-                prospect.Seller = employee;
-                prospect.AssignedAgentNumber = employee.AgentNumber;
-
-                await _unitOfWork.Prospects.UpdateAsync(prospect);
-
-                _logger.LogInformation("Saving changes to database");
-                await _unitOfWork.SaveChangesAsync();
-
-                return (true, "Seller assigned to the specific prospect");
-
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "Error assigning seller to the specific prospect");
-                return (false, "Error assigning seller to the specific prospect");
-            }
-        }
-
-        /// <summary>
-        /// This method returns all current prospects in the database.
-        /// </summary>
-        public async Task<(bool success, string message, List<Prospect> prospects)> GetAllCurrentProspects()
-        {
-            _logger.LogInformation("Getting all current prospects");
-
-            try
-            {
-                var prospects = await _unitOfWork.Prospects.GetAllProspects();
-                _logger.LogInformation($"Found {prospects.Count} current prospects");
-
-                return (true, $"{prospects.Count} current prospects found", prospects);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "Error getting all current prospects");
-                return (false, "Error getting all current prospects", null);
-            }
-        }
-
-        public async Task<(bool success, string message)> UpdateProspect(Prospect prospect)
-        {
-            _logger.LogInformation("Updating Prospects...");
-
-            try
-            {
-                _logger.LogInformation("Attempting to update a Prospect...");
-
-                await _unitOfWork.Prospects.UpdateAsync(prospect);
-                await _unitOfWork.SaveChangesAsync();
-
-                _logger.LogInformation("Prospect has been successfully updated.");
-
-                return (true, "The Prospect has been updated on the database.");
-            }
-            catch (Exception e)
-            {
-                _logger.LogWarning(e.ToString());
-                return (false, $"An error has occurred while updating the prospect: {e.Message.ToString()}");
-            }
-        }
     }
 }
 
