@@ -130,7 +130,6 @@ namespace SU.Frontend
             //Financial Assistant
             services.AddTransient<InvoiceViewModel>();
             services.AddTransient<InvoiceView>();
-            services.AddTransient<ShowSellingStatsView>();
             services.AddTransient<ComissionView>();
             //SalesAssistant
             services.AddTransient<RegisterNewSellerView>();
