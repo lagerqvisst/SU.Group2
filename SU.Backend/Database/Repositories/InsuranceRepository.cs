@@ -94,7 +94,7 @@ public class InsuranceRepository : Repository<Insurance>, IIunsuranceRepository
         return _context.Insurances
             .Include(i => i.Seller) // Include the seller
             .Where(i => i.StartDate.Year <= year &&
-                        (i.EndDate == null || i.EndDate.Year >= year)) // Filter by the given year
+                        i.EndDate.Year >= year) // Filter by the given year
             .ToList();
     }
 

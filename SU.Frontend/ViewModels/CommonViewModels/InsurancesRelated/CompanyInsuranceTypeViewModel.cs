@@ -19,7 +19,6 @@ public class CompanyInsuranceTypeViewModel : ObservableObject
     private readonly ILoggedInUserService _loggedInSeller;
 
     // Services
-    private readonly INavigationService _navigationService;
     private readonly IPolicyHolderService _policyHolderService;
 
     private InsuranceType _selectedInsuranceType;
@@ -27,11 +26,10 @@ public class CompanyInsuranceTypeViewModel : ObservableObject
     private PaymentPlan _selectedPaymentPlan;
 
     // Constructor
-    public CompanyInsuranceTypeViewModel(INavigationService navigationService, ILoggedInUserService loggedInUserService,
+    public CompanyInsuranceTypeViewModel(ILoggedInUserService loggedInUserService,
         IPolicyHolderService policyHolderService, InsuranceCreateController insuranceCreateController,
         InsuranceListingController insuranceListingController)
     {
-        _navigationService = navigationService;
         _policyHolderService = policyHolderService;
         _loggedInSeller = loggedInUserService;
         _insuranceCreateController = insuranceCreateController;

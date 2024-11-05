@@ -121,7 +121,7 @@ public static class EmployeeHelper
 
     public static void UpdateEmployeeRole(Employee employee, EmployeeType newRole)
     {
-        if (employee == null || employee.RoleAssignments == null || !employee.RoleAssignments.Any())
+        if (employee != null && (employee.RoleAssignments == null || !employee.RoleAssignments.Any()))
             return;
 
         employee.RoleAssignments.Clear();

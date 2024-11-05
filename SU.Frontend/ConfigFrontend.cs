@@ -144,7 +144,6 @@ public static class ConfigFrontend
         //Singletons
         services.AddSingleton<ILoggedInUserService, LoggedInUserService>();
         services.AddSingleton<IPolicyHolderService, PolicyHolderService>();
-        services.AddSingleton<IInsuranceTypeService, InsuranceTypeService>();
 
         services.AddTransient<IAuthenticationService, AuthenticationService>();
 
