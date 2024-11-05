@@ -22,11 +22,11 @@
 
         <!-- TabControl för att hantera de tre olika sidorna -->
         <TabControl Grid.Row="0">
-            <TabItem Header="Table">
-                <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/TablePage.xaml"/>
-            </TabItem>
             <TabItem Header="Line Diagram">
                 <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/LineChartPage.xaml"/>
+            </TabItem>
+            <TabItem Header="Table">
+                <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/TablePage.xaml"/>
             </TabItem>
             <TabItem Header="Bar Chart">
                 <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/BarChartPage.xaml"/>

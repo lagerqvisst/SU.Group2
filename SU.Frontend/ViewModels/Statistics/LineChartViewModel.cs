@@ -7,11 +7,11 @@ using SU.Frontend.Helper;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows;
+using SU.Backend.Controllers;
 
 public class LineChartViewModel : ObservableObject
 {
-    private readonly IStatisticsService _statisticsService;
-    private readonly IDataExportService _dataExportService;
+    private readonly StatisticsController _statisticsController;
 
     public ICommand ExportLineChartCommand { get; }
 
@@ -21,10 +21,9 @@ public class LineChartViewModel : ObservableObject
 
     public List<InsuranceType> insuranceTypes = EnumService.InsuranceType();
 
-    public LineChartViewModel(IStatisticsService statisticsService, IDataExportService dataExportService)
+    public LineChartViewModel(StatisticsController statisticsController)
     {
-        _statisticsService = statisticsService;
-        _dataExportService = dataExportService;
+        _statisticsController = statisticsController;
         Series = new ObservableCollection<ISeries>();
 
         ExportLineChartCommand = new RelayCommand(async () => await ExportLineChartDataAsync());
@@ -38,7 +37,8 @@ public class LineChartViewModel : ObservableObject
 
     private async Task LoadDataAsync(int year)
     {
-        var (success, message, statistics) = await _statisticsService.GetActiveSellerStatistics(year, insuranceTypes);
+        //var (success, message, statistics) = await _statisticsService.GetActiveSellerStatistics(year, insuranceTypes);
+        var (success, message, statistics) = await _statisticsController.GetActiveSellerStatistics(year, insuranceTypes);
 
         if (!success) return;
 
@@ -77,11 +77,11 @@ public class LineChartViewModel : ObservableObject
     private async Task ExportLineChartDataAsync()
     {
         var year = 2024;
-        var (success, message, statistics) = await _statisticsService.GetActiveSellerStatistics(year, insuranceTypes);
+        var (success, message, statistics) = await _statisticsController.GetActiveSellerStatistics(year, insuranceTypes);
 
         if (success && statistics != null)
         {
-            var exportResult = await _dataExportService.ExportLineChartStatisticsToExcel(statistics);
+            var exportResult = await _statisticsController.ExportLineChart(statistics);
             if (!exportResult.success)
             {
                 MessageBox.Show(exportResult.message, "Error exporting to Excel", MessageBoxButton.OK, MessageBoxImage.Error);

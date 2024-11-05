@@ -155,8 +155,6 @@ namespace SU.Backend.Services
             }
         }
 
-
-
         public async Task<(bool success, string message)> ExportProspects(List<Prospect> prospects)
         {
             try
@@ -268,7 +266,6 @@ namespace SU.Backend.Services
                 return (false, "Error exporting prospects to Excel");
             }
         }
-
 
         public async Task<(bool success, string message)> ExportSellerStatisticsToExcel(List<SellerStatistics> sellerStatistics, bool isPrivateInsurance)
 {
