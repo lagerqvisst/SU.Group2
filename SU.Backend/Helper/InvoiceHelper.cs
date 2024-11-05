@@ -29,6 +29,9 @@ namespace SU.Backend.Helper
             // Bygg strängen med "ID: " följt av alla ID:n
             string insurancesAsString = $"ID: {string.Join(", ", allInsuranceIds)}";
 
+            // Formatera Premium till sträng med SEK
+            string formattedPremium = $"{policyHolder.Insurance.Premium:N0} SEK";
+
             if (policyHolder.PrivateCustomer != null)
             {
                 return new InvoiceEntry
@@ -37,7 +40,7 @@ namespace SU.Backend.Helper
                     CustomerName = $"{policyHolder.PrivateCustomer.FirstName} {policyHolder.PrivateCustomer.LastName}",
                     PersonalNumber = policyHolder.PrivateCustomer.PersonalNumber,
                     Address = policyHolder.PrivateCustomer.Address,
-                    Premium = policyHolder.Insurance.Premium,
+                    Premium = formattedPremium,
                     Insurances = insurancesAsString
                 };
             }
@@ -50,7 +53,7 @@ namespace SU.Backend.Helper
                     OrganizationNumber = policyHolder.CompanyCustomer.OrganizationNumber,
                     ContactPerson = policyHolder.CompanyCustomer.ContactPerson,
                     Address = policyHolder.CompanyCustomer.CompanyAdress,
-                    Premium = policyHolder.Insurance.Premium,
+                    Premium = formattedPremium,
                     Insurances = insurancesAsString
                 };
             }

@@ -68,13 +68,14 @@ namespace SU.Backend.Database.Repositories
                 PersonalNumber = seller.PersonalNumber,
                 CommissionAmount = insuranceGroups.ContainsKey(seller.EmployeeId)
                     ? Commission.CalculateCommission(insuranceGroups[seller.EmployeeId])
-                    : 0, // No sales, no commission
+                    : "0.00 SEK", // No sales, no commission, formatted as string with "SEK"
                 StartDate = startDate,
                 EndDate = endDate
             }).ToList();
 
             return commissions;
         }
+
 
 
         public async Task<List<Insurance>> GetAllInsurances()
