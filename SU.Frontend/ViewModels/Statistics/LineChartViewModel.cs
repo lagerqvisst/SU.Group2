@@ -1,79 +1,95 @@
-﻿using LiveChartsCore;
-using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore.SkiaSharpView.WPF;
+﻿using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore;
 using SU.Backend.Helper;
 using SU.Backend.Models.Enums.Insurance;
 using SU.Backend.Services.Interfaces;
 using SU.Frontend.Helper;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Windows;
 
-namespace SU.Frontend.ViewModels.Statistics
+public class LineChartViewModel : ObservableObject
 {
-    public class LineChartViewModel : ObservableObject
+    private readonly IStatisticsService _statisticsService;
+    private readonly IDataExportService _dataExportService;
+
+    public ICommand ExportLineChartCommand { get; }
+
+    public ObservableCollection<ISeries> Series { get; set; }
+    public Axis[] XAxes { get; set; }
+    public Axis[] YAxes { get; set; }
+
+    public List<InsuranceType> insuranceTypes = EnumService.InsuranceType();
+
+    public LineChartViewModel(IStatisticsService statisticsService, IDataExportService dataExportService)
     {
-        private readonly IStatisticsService _statisticsService;
-        public ObservableCollection<ISeries> Series { get; set; }
-        public Axis[] XAxes { get; set; }
-        public Axis[] YAxes { get; set; }
+        _statisticsService = statisticsService;
+        _dataExportService = dataExportService;
+        Series = new ObservableCollection<ISeries>();
 
-        public List<InsuranceType> insuranceTypes = EnumService.InsuranceType();
+        ExportLineChartCommand = new RelayCommand(async () => await ExportLineChartDataAsync());
+        OnInitalized();
+    }
 
-        public LineChartViewModel(IStatisticsService statisticsService)
+    private async Task OnInitalized()
+    {
+        await LoadDataAsync(2024);
+    }
+
+    private async Task LoadDataAsync(int year)
+    {
+        var (success, message, statistics) = await _statisticsService.GetActiveSellerStatistics(year, insuranceTypes);
+
+        if (!success) return;
+
+        foreach (var seller in statistics)
         {
-            _statisticsService = statisticsService;
-            Series = new ObservableCollection<ISeries>();
+            var monthlySales = seller.MonthlySales.Select(ms => ms.TotalSales).ToArray();
 
-            OnInitalized();
-        }
-
-        private async Task OnInitalized()
-        {
-            await LoadDataAsync(2024);
-        }
-
-        private async Task LoadDataAsync(int year)
-        {
-            var (success, message, statistics) = await _statisticsService.GetActiveSellerStatistics(year, insuranceTypes);
-
-            if (!success) return;
-
-            // Skapa en linje för varje säljare baserat på deras månatliga försäljning
-            foreach (var seller in statistics)
+            Series.Add(new LineSeries<int>
             {
-                var monthlySales = seller.MonthlySales.Select(ms => ms.TotalSales).ToArray();
+                Values = monthlySales,
+                Name = seller.SellerName,
+            });
+        }
 
-                Series.Add(new LineSeries<int>
-                {
-                    Values = monthlySales,
-                    Name = seller.SellerName, // Detta visas i legenden
-                });
-
-
-
+        XAxes = new[]
+        {
+            new Axis
+            {
+                Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }
             }
+        };
 
-            XAxes = new[]
+        YAxes = new[]
+        {
+            new Axis
             {
-                new Axis
-                {
-                    Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }
-                }
-            };
+                Labeler = value => value.ToString("N0")
+            }
+        };
 
-            YAxes = new[]
+        OnPropertyChanged(nameof(Series));
+        OnPropertyChanged(nameof(XAxes));
+        OnPropertyChanged(nameof(YAxes));
+    }
+
+    private async Task ExportLineChartDataAsync()
+    {
+        var year = 2024;
+        var (success, message, statistics) = await _statisticsService.GetActiveSellerStatistics(year, insuranceTypes);
+
+        if (success && statistics != null)
+        {
+            var exportResult = await _dataExportService.ExportLineChartStatisticsToExcel(statistics);
+            if (!exportResult.success)
             {
-                new Axis
-                {
-                    Labeler = value => value.ToString("N0") // Anpassa etiketten för Y-axeln
-                }
-            };
-
-            OnPropertyChanged(nameof(Series));
-            OnPropertyChanged(nameof(XAxes));
-            OnPropertyChanged(nameof(YAxes));
+                MessageBox.Show(exportResult.message, "Error exporting to Excel", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                MessageBox.Show(exportResult.message, "Export Successful", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
         }
     }
-}

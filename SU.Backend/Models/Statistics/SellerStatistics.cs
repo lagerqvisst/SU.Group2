@@ -21,6 +21,24 @@ namespace SU.Backend.Models.Statistics
 
         // Optional: Store the year for context
         public int Year { get; set; }
+
+        public static List<double> CalculateMovingAverage(int[] values, int period)
+        {
+            var movingAverage = new List<double>();
+            for (int i = 0; i < values.Length; i++)
+            {
+                if (i < period - 1)
+                {
+                    movingAverage.Add(double.NaN);
+                }
+                else
+                {
+                    var avg = values.Skip(i - (period - 1)).Take(period).Average();
+                    movingAverage.Add(avg);
+                }
+            }
+            return movingAverage;
+        }
     }
 
 }

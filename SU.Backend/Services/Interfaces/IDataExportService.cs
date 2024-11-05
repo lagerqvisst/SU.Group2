@@ -19,6 +19,8 @@ namespace SU.Backend.Services.Interfaces
         Task<(bool success, string message)> ExportInvoicesToExcel(List<InvoiceEntry> invoices);
         Task<(bool success, string message)> ExportSellerStatisticsToExcel(List<SellerStatistics> sellerStatistics, bool isPrivateInsurance);
         Task<(bool success, string message)> ExportProspects(List<Prospect> prospects);
+        Task<(bool success, string message)> ExportBarChartStatisticsToExcel(SellerStatistics statistics);
+        Task<(bool success, string message)> ExportLineChartStatisticsToExcel(List<SellerStatistics> statistics);
 
     }
 }

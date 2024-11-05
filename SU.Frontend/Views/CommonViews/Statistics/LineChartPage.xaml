@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
+      xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
       xmlns:local="clr-namespace:SU.Frontend.Views.CommonViews.Statistics"
       xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
       mc:Ignorable="d" 
@@ -14,7 +15,24 @@
         <helper:ViewModelLocator x:Key="Locator" />
     </Page.Resources>
 
-    <Grid DataContext="{Binding LineChartViewModel, Source={StaticResource Locator}}">
-        <lvc:CartesianChart Series="{Binding Series}" XAxes="{Binding XAxes}" YAxes="{Binding YAxes}" LegendPosition="Top" />
+    <Grid DataContext="{Binding LineChartViewModel, Source={StaticResource Locator}}" Margin="10">
+
+        <!-- Grid layout definition -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- För Export-knapp -->
+            <RowDefinition Height="*"/>
+            <!-- För linjediagram -->
+        </Grid.RowDefinitions>
+
+        <!-- Export-knapp -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10" HorizontalAlignment="Left">
+            <controls:DownloadButton Command="{Binding ExportLineChartCommand}" 
+                HorizontalAlignment="Right" Height="40" />
+        </StackPanel>
+
+        <!-- Linjediagram -->
+        <lvc:CartesianChart Grid.Row="1" Series="{Binding Series}" XAxes="{Binding XAxes}" YAxes="{Binding YAxes}" 
+                            LegendPosition="Top" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,20,0,0"/>
     </Grid>
 </Page>
