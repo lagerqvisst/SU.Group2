@@ -1,195 +1,199 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows;
 using SU.Backend.Controllers;
 using SU.Backend.Models.Customers;
 using SU.Frontend.Helper;
 
-namespace SU.Frontend.ViewModels.CommonViewModels.Customers
+namespace SU.Frontend.ViewModels.CommonViewModels.Customers;
+
+public class NewCompanyCustomerViewModel : ObservableObject
 {
-    public class NewCompanyCustomerViewModel : ObservableObject
+    // Controller for the company customer
+    private readonly CompanyCustomerController _companyCustomerController;
+
+    // Button content
+    private string _buttonContent = "Register";
+
+    private string _companyAddress;
+
+    private string _companyEmailAddress;
+
+    private string _companyLandlineNumber;
+
+    private string _companyName;
+
+    private string _companyPhoneNumber;
+
+    private string _contactPerson;
+
+    private string _contactPersonPhoneNumber;
+
+    // Loading state
+    private bool _isLoading;
+
+    // Properties bound to the XAML form fields
+    private string _organizationNumber;
+
+    // Constructor
+    public NewCompanyCustomerViewModel(CompanyCustomerController companyCustomerController)
     {
-        // Controller for the company customer
-        private readonly CompanyCustomerController _companyCustomerController;
+        _companyCustomerController = companyCustomerController;
+        RegisterCompanyCustomerCommand =
+            new RelayCommand(async () => await RegisterCompanyCustomer(), CanRegisterCompanyCustomer);
+    }
 
-        // Properties bound to the XAML form fields
-        private string _organizationNumber;
-        public string OrganizationNumber
+    public string OrganizationNumber
+    {
+        get => _organizationNumber;
+        set
         {
-            get => _organizationNumber;
-            set
-            {
-                _organizationNumber = value;
-                OnPropertyChanged();
-            }
+            _organizationNumber = value;
+            OnPropertyChanged();
         }
+    }
 
-        private string _companyName;
-        public string CompanyName
+    public string CompanyName
+    {
+        get => _companyName;
+        set
         {
-            get => _companyName;
-            set
-            {
-                _companyName = value;
-                OnPropertyChanged();
-            }
+            _companyName = value;
+            OnPropertyChanged();
         }
+    }
 
-        private string _contactPerson;
-        public string ContactPerson
+    public string ContactPerson
+    {
+        get => _contactPerson;
+        set
         {
-            get => _contactPerson;
-            set
-            {
-                _contactPerson = value;
-                OnPropertyChanged();
-            }
+            _contactPerson = value;
+            OnPropertyChanged();
         }
+    }
 
-        private string _contactPersonPhoneNumber;
-        public string ContactPersonPhoneNumber
+    public string ContactPersonPhoneNumber
+    {
+        get => _contactPersonPhoneNumber;
+        set
         {
-            get => _contactPersonPhoneNumber;
-            set
-            {
-                _contactPersonPhoneNumber = value;
-                OnPropertyChanged();
-            }
+            _contactPersonPhoneNumber = value;
+            OnPropertyChanged();
         }
+    }
 
-        private string _companyAddress;
-        public string CompanyAddress
+    public string CompanyAddress
+    {
+        get => _companyAddress;
+        set
         {
-            get => _companyAddress;
-            set
-            {
-                _companyAddress = value;
-                OnPropertyChanged();
-            }
+            _companyAddress = value;
+            OnPropertyChanged();
         }
+    }
 
-        private string _companyPhoneNumber;
-        public string CompanyPhoneNumber
+    public string CompanyPhoneNumber
+    {
+        get => _companyPhoneNumber;
+        set
         {
-            get => _companyPhoneNumber;
-            set
-            {
-                _companyPhoneNumber = value;
-                OnPropertyChanged();
-            }
+            _companyPhoneNumber = value;
+            OnPropertyChanged();
         }
+    }
 
-        private string _companyLandlineNumber;
-        public string CompanyLandlineNumber
+    public string CompanyLandlineNumber
+    {
+        get => _companyLandlineNumber;
+        set
         {
-            get => _companyLandlineNumber;
-            set
-            {
-                _companyLandlineNumber = value;
-                OnPropertyChanged();
-            }
+            _companyLandlineNumber = value;
+            OnPropertyChanged();
         }
+    }
 
-        private string _companyEmailAddress;
-        public string CompanyEmailAddress
+    public string CompanyEmailAddress
+    {
+        get => _companyEmailAddress;
+        set
         {
-            get => _companyEmailAddress;
-            set
-            {
-                _companyEmailAddress = value;
-                OnPropertyChanged();
-            }
+            _companyEmailAddress = value;
+            OnPropertyChanged();
         }
+    }
 
-        // Loading state
-        private bool _isLoading;
-        public bool IsLoading
+    public bool IsLoading
+    {
+        get => _isLoading;
+        set
         {
-            get => _isLoading;
-            set
-            {
-                _isLoading = value;
-                OnPropertyChanged();
-                ButtonContent = _isLoading ? "Loading..." : "Register";
-            }
+            _isLoading = value;
+            OnPropertyChanged();
+            ButtonContent = _isLoading ? "Loading..." : "Register";
         }
+    }
 
-        // Button content
-        private string _buttonContent = "Register";
-        public string ButtonContent
+    public string ButtonContent
+    {
+        get => _buttonContent;
+        set
         {
-            get => _buttonContent;
-            set
-            {
-                _buttonContent = value;
-                OnPropertyChanged();
-            }
+            _buttonContent = value;
+            OnPropertyChanged();
         }
+    }
 
-        // ICommand for the registration button
-        public RelayCommand RegisterCompanyCustomerCommand { get; }
+    // ICommand for the registration button
+    public RelayCommand RegisterCompanyCustomerCommand { get; }
 
-        // Constructor
-        public NewCompanyCustomerViewModel(CompanyCustomerController companyCustomerController)
+    // Validate that all fields are filled in
+    private bool CanRegisterCompanyCustomer()
+    {
+        return !string.IsNullOrWhiteSpace(OrganizationNumber)
+               && !string.IsNullOrWhiteSpace(CompanyName)
+               && !string.IsNullOrWhiteSpace(ContactPerson)
+               && !string.IsNullOrWhiteSpace(ContactPersonPhoneNumber)
+               && !string.IsNullOrWhiteSpace(CompanyAddress)
+               && !string.IsNullOrWhiteSpace(CompanyPhoneNumber)
+               && !string.IsNullOrWhiteSpace(CompanyLandlineNumber)
+               && !string.IsNullOrWhiteSpace(CompanyEmailAddress);
+    }
+
+    // Registration logic using the controller
+    private async Task RegisterCompanyCustomer()
+    {
+        IsLoading = true; // Start loading
+        try
         {
-            _companyCustomerController = companyCustomerController;
-            RegisterCompanyCustomerCommand = new RelayCommand(async () => await RegisterCompanyCustomer(), CanRegisterCompanyCustomer);
+            var newCustomer = new CompanyCustomer
+            {
+                OrganizationNumber = OrganizationNumber,
+                CompanyName = CompanyName,
+                ContactPerson = ContactPerson,
+                ContactPersonPhonenumber = ContactPersonPhoneNumber,
+                CompanyAdress = CompanyAddress,
+                CompanyPhoneNumber = CompanyPhoneNumber,
+                CompanyLandlineNumber = CompanyLandlineNumber,
+                CompanyEmailAdress = CompanyEmailAddress
+            };
+
+            // Simulate a small delay to show the loading effect
+            await Task.Delay(100);
+
+            var result = await _companyCustomerController.CreateCompanyCustomer(newCustomer);
+
+            if (result.success)
+                MessageBox.Show(result.message, "Registration Successful", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            else
+                MessageBox.Show(result.message, "Registration Failed", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-
-        // Validate that all fields are filled in
-        private bool CanRegisterCompanyCustomer()
+        catch (Exception ex)
         {
-            return !string.IsNullOrWhiteSpace(OrganizationNumber)
-                && !string.IsNullOrWhiteSpace(CompanyName)
-                && !string.IsNullOrWhiteSpace(ContactPerson)
-                && !string.IsNullOrWhiteSpace(ContactPersonPhoneNumber)
-                && !string.IsNullOrWhiteSpace(CompanyAddress)
-                && !string.IsNullOrWhiteSpace(CompanyPhoneNumber)
-                && !string.IsNullOrWhiteSpace(CompanyLandlineNumber)
-                && !string.IsNullOrWhiteSpace(CompanyEmailAddress);
+            MessageBox.Show($"An unexpected error occurred: {ex.Message}");
         }
-
-        // Registration logic using the controller
-        private async Task RegisterCompanyCustomer()
+        finally
         {
-            IsLoading = true; // Start loading
-            try
-            {
-                var newCustomer = new CompanyCustomer
-                {
-                    OrganizationNumber = OrganizationNumber,
-                    CompanyName = CompanyName,
-                    ContactPerson = ContactPerson,
-                    ContactPersonPhonenumber = ContactPersonPhoneNumber,
-                    CompanyAdress = CompanyAddress,
-                    CompanyPhoneNumber = CompanyPhoneNumber,
-                    CompanyLandlineNumber = CompanyLandlineNumber,
-                    CompanyEmailAdress = CompanyEmailAddress
-                };
-
-                // Simulate a small delay to show the loading effect
-                await Task.Delay(100);
-
-                var result = await _companyCustomerController.CreateCompanyCustomer(newCustomer);
-
-                if (result.success)
-                {
-                    MessageBox.Show(result.message, "Registration Successful", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                else
-                {
-                    MessageBox.Show(result.message, "Registration Failed", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
-            }
-            finally
-            {
-                IsLoading = false; // Stop loading
-            }
+            IsLoading = false; // Stop loading
         }
     }
 }

@@ -1,40 +1,38 @@
-﻿using SU.Backend.Models.Enums.Insurance;
+﻿using System.Windows.Input;
 using SU.Frontend.Helper;
 using SU.Frontend.Helper.Navigation;
-using System.Windows.Input;
 
-namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated
+namespace SU.Frontend.ViewModels.CommonViewModels.InsurancesRelated;
+
+public class RegisterNewInsuranceViewModel : ObservableObject
 {
-    public class RegisterNewInsuranceViewModel : ObservableObject
+    // Service
+    private readonly INavigationService _navigationService;
+
+    public RegisterNewInsuranceViewModel(INavigationService navigationService)
     {
-        // Service
-        private readonly INavigationService _navigationService;
+        _navigationService = navigationService;
 
-        // ICommand for Private Insurance Button
-        public ICommand ToNewPrivateInsuranceCommand { get; }
+        // Assign commands
+        ToNewPrivateInsuranceCommand = new RelayCommand(NavigateToPrivateInsurance);
+        ToNewCompanyInsuranceCommand = new RelayCommand(NavigateToCompanyInsurance);
+    }
 
-        // ICommand for Company Insurance Button
-        public ICommand ToNewCompanyInsuranceCommand { get; }
+    // ICommand for Private Insurance Button
+    public ICommand ToNewPrivateInsuranceCommand { get; }
 
-        public RegisterNewInsuranceViewModel(INavigationService navigationService)
-        {
-            _navigationService = navigationService;
+    // ICommand for Company Insurance Button
+    public ICommand ToNewCompanyInsuranceCommand { get; }
 
-            // Assign commands
-            ToNewPrivateInsuranceCommand = new RelayCommand(NavigateToPrivateInsurance);
-            ToNewCompanyInsuranceCommand = new RelayCommand(NavigateToCompanyInsurance);
-        }
+    // Navigation logic for Private Insurance
+    private void NavigateToPrivateInsurance()
+    {
+        _navigationService.NavigateToNewPrivateInsurance();
+    }
 
-        // Navigation logic for Private Insurance
-        private void NavigateToPrivateInsurance()
-        {
-            _navigationService.NavigateToNewPrivateInsurance();
-        }
-
-        // Navigation logic for Company Insurance
-        private void NavigateToCompanyInsurance()
-        {
-            _navigationService.NavigateToNewCompanyInsurance();
-        }
+    // Navigation logic for Company Insurance
+    private void NavigateToCompanyInsurance()
+    {
+        _navigationService.NavigateToNewCompanyInsurance();
     }
 }

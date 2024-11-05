@@ -1,202 +1,35 @@
-﻿using SU.Backend.Controllers;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Input;
+using SU.Backend.Controllers;
 using SU.Backend.Models.Enums.Insurance;
 using SU.Backend.Models.Insurances.Coverage;
-using SU.Frontend.Helper.Navigation;
 using SU.Frontend.Helper;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-using System.Windows;
 using SU.Frontend.Helper.DI_Objects.InsuranceObjects;
 using SU.Frontend.Helper.DI_Objects.User;
+using SU.Frontend.Helper.Navigation;
 
 public class CompanyInsuranceTypeViewModel : ObservableObject
 {
-    // Services
-    private readonly INavigationService _navigationService;
-    private readonly IPolicyHolderService _policyHolderService;
-    private readonly ILoggedInUserService _loggedInSeller;
+    private readonly InsuranceCreateController _insuranceCreateController;
 
     // Controllers for handling insurance creation and listing
     private readonly InsuranceListingController _insuranceListingController;
-    private readonly InsuranceCreateController _insuranceCreateController;
 
-    // Lists
-    public List<InsuranceType> CompanyInsuranceTypes { get; set; }
-    public List<PaymentPlan> PaymentPlans { get; set; }
+    private readonly ILoggedInUserService _loggedInSeller;
 
-    // ObservableCollections
-    public ObservableCollection<LiabilityCoverageOption> LiabilityCoverageOptions { get; private set; } = new ObservableCollection<LiabilityCoverageOption>();
-    public ObservableCollection<VehicleInsuranceOption> VehicleInsuranceOptions { get; private set; } = new ObservableCollection<VehicleInsuranceOption>();
-    public ObservableCollection<RiskZone> RiskZones { get; private set; } = new ObservableCollection<RiskZone>();
+    // Services
+    private readonly IPolicyHolderService _policyHolderService;
 
     private InsuranceType _selectedInsuranceType;
-    public InsuranceType SelectedInsuranceType
-    {
-        get => _selectedInsuranceType;
-        set
-        {
-            _selectedInsuranceType = value;
-            OnPropertyChanged();
-            _ = LoadCoverageOptionsAsync();
-        }
-    }
 
     private PaymentPlan _selectedPaymentPlan;
-    public PaymentPlan SelectedPaymentPlan
-    {
-        get => _selectedPaymentPlan;
-        set
-        {
-            _selectedPaymentPlan = value;
-            OnPropertyChanged();
-        }
-    }
-
-    #region Properties
-    private string _note;
-    public string Note
-    {
-        get => _note;
-        set
-        {
-            _note = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private DateTime? _startDate;
-    public DateTime? StartDate
-    {
-        get => _startDate;
-        set
-        {
-            _startDate = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private DateTime? _endDate;
-    public DateTime? EndDate
-    {
-        get => _endDate;
-        set
-        {
-            _endDate = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private RiskZone _selectedRiskZone;
-    public RiskZone SelectedRiskZone
-    {
-        get => _selectedRiskZone;
-        set
-        {
-            _selectedRiskZone = value;
-            OnPropertyChanged();
-        }
-    }
-
-    // Properties for Property and Inventory Coverage
-    private string _propertyAddress;
-    public string PropertyAddress
-    {
-        get => _propertyAddress;
-        set
-        {
-            _propertyAddress = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private decimal _propertyValue;
-    public decimal PropertyValue
-    {
-        get => _propertyValue;
-        set
-        {
-            _propertyValue = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private decimal _inventoryValue;
-    public decimal InventoryValue
-    {
-        get => _inventoryValue;
-        set
-        {
-            _inventoryValue = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private bool _isLiabilityCoverageVisible;
-    public bool IsLiabilityCoverageVisible
-    {
-        get => _isLiabilityCoverageVisible;
-        set
-        {
-            _isLiabilityCoverageVisible = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private bool _isVehicleInsuranceVisible;
-    public bool IsVehicleInsuranceVisible
-    {
-        get => _isVehicleInsuranceVisible;
-        set
-        {
-            _isVehicleInsuranceVisible = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private bool _isPropertyCoverageVisible;
-    public bool IsPropertyCoverageVisible
-    {
-        get => _isPropertyCoverageVisible;
-        set
-        {
-            _isPropertyCoverageVisible = value;
-            OnPropertyChanged();
-        }
-    }
-
-    // Properties for Liability Coverage
-    private LiabilityCoverageOption _selectedLiabilityCoverageOption;
-    public LiabilityCoverageOption SelectedLiabilityCoverageOption
-    {
-        get => _selectedLiabilityCoverageOption;
-        set
-        {
-            _selectedLiabilityCoverageOption = value;
-            OnPropertyChanged();
-        }
-    }
-
-    // Properties for Vehicle Insurance Option
-    private VehicleInsuranceOption _selectedVehicleCoverageOption;
-    public VehicleInsuranceOption SelectedVehicleCoverageOption
-    {
-        get => _selectedVehicleCoverageOption;
-        set
-        {
-            _selectedVehicleCoverageOption = value;
-            OnPropertyChanged();
-        }
-    }
-
-    #endregion Properties
-
-    // Command for creating insurance
-    public ICommand CreateInsuranceCommand { get; }
 
     // Constructor
-    public CompanyInsuranceTypeViewModel(INavigationService navigationService, ILoggedInUserService loggedInUserService, IPolicyHolderService policyHolderService,InsuranceCreateController insuranceCreateController, InsuranceListingController insuranceListingController)
+    public CompanyInsuranceTypeViewModel(ILoggedInUserService loggedInUserService,
+        IPolicyHolderService policyHolderService, InsuranceCreateController insuranceCreateController,
+        InsuranceListingController insuranceListingController)
     {
-        _navigationService = navigationService;
         _policyHolderService = policyHolderService;
         _loggedInSeller = loggedInUserService;
         _insuranceCreateController = insuranceCreateController;
@@ -213,12 +46,45 @@ public class CompanyInsuranceTypeViewModel : ObservableObject
         CreateInsuranceCommand = new RelayCommand(CreateInsurance, CanCreateInsurance);
     }
 
+    // Lists
+    public List<InsuranceType> CompanyInsuranceTypes { get; set; }
+    public List<PaymentPlan> PaymentPlans { get; set; }
+
+    // ObservableCollections
+    public ObservableCollection<LiabilityCoverageOption> LiabilityCoverageOptions { get; } = new();
+    public ObservableCollection<VehicleInsuranceOption> VehicleInsuranceOptions { get; } = new();
+    public ObservableCollection<RiskZone> RiskZones { get; } = new();
+
+    public InsuranceType SelectedInsuranceType
+    {
+        get => _selectedInsuranceType;
+        set
+        {
+            _selectedInsuranceType = value;
+            OnPropertyChanged();
+            _ = LoadCoverageOptionsAsync();
+        }
+    }
+
+    public PaymentPlan SelectedPaymentPlan
+    {
+        get => _selectedPaymentPlan;
+        set
+        {
+            _selectedPaymentPlan = value;
+            OnPropertyChanged();
+        }
+    }
+
+    // Command for creating insurance
+    public ICommand CreateInsuranceCommand { get; }
+
     // Method to check if the insurance type is a company insurance type
     private bool IsCompanyInsuranceType(InsuranceType type)
     {
         return type == InsuranceType.VehicleInsurance
-            || type == InsuranceType.LiabilityInsurance
-            || type == InsuranceType.PropertyAndInventoryInsurance;
+               || type == InsuranceType.LiabilityInsurance
+               || type == InsuranceType.PropertyAndInventoryInsurance;
     }
 
     // Method to load coverage options based on the selected insurance type
@@ -279,7 +145,8 @@ public class CompanyInsuranceTypeViewModel : ObservableObject
             };
 
             // Call CreatePropertyInventoryInsurance in the controller
-            var result = await _insuranceCreateController.CreatePropertyInventoryInsurance(companyCustomer, propertyCoverage, seller, note, paymentPlan);
+            var result = await _insuranceCreateController.CreatePropertyInventoryInsurance(companyCustomer,
+                propertyCoverage, seller, note, paymentPlan);
             ShowMessage(result);
         }
         else if (insuranceType == InsuranceType.LiabilityInsurance)
@@ -292,7 +159,8 @@ public class CompanyInsuranceTypeViewModel : ObservableObject
             };
 
             // Call CreateLiabilityInsurance in the controller
-            var result = await _insuranceCreateController.CreateLiabilityInsurance(companyCustomer, liabilityCoverage, seller, note, paymentPlan);
+            var result = await _insuranceCreateController.CreateLiabilityInsurance(companyCustomer, liabilityCoverage,
+                seller, note, paymentPlan);
             ShowMessage(result);
         }
         else if (insuranceType == InsuranceType.VehicleInsurance)
@@ -303,11 +171,11 @@ public class CompanyInsuranceTypeViewModel : ObservableObject
             {
                 VehicleInsuranceOption = SelectedVehicleCoverageOption,
                 RiskZone = SelectedRiskZone
-
             };
 
             // Call CreateVehicleInsurance in the controller
-            var result = await _insuranceCreateController.CreateVehicleInsurance(companyCustomer, vehicleCoverage, SelectedRiskZone, seller, note, paymentPlan);
+            var result = await _insuranceCreateController.CreateVehicleInsurance(companyCustomer, vehicleCoverage,
+                SelectedRiskZone, seller, note, paymentPlan);
             ShowMessage(result);
         }
     }
@@ -315,7 +183,8 @@ public class CompanyInsuranceTypeViewModel : ObservableObject
     // Method to show a message box with the result of the insurance creation
     private void ShowMessage((bool success, string message) result)
     {
-        MessageBox.Show(result.message, result.success ? "Success" : "Error", MessageBoxButton.OK, MessageBoxImage.Information);
+        MessageBox.Show(result.message, result.success ? "Success" : "Error", MessageBoxButton.OK,
+            MessageBoxImage.Information);
     }
 
     // Method to check if the insurance can be created
@@ -323,4 +192,155 @@ public class CompanyInsuranceTypeViewModel : ObservableObject
     {
         return SelectedInsuranceType != null && SelectedPaymentPlan != null && StartDate.HasValue && EndDate.HasValue;
     }
+
+    #region Properties
+
+    private string _note;
+
+    public string Note
+    {
+        get => _note;
+        set
+        {
+            _note = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private DateTime? _startDate;
+
+    public DateTime? StartDate
+    {
+        get => _startDate;
+        set
+        {
+            _startDate = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private DateTime? _endDate;
+
+    public DateTime? EndDate
+    {
+        get => _endDate;
+        set
+        {
+            _endDate = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private RiskZone _selectedRiskZone;
+
+    public RiskZone SelectedRiskZone
+    {
+        get => _selectedRiskZone;
+        set
+        {
+            _selectedRiskZone = value;
+            OnPropertyChanged();
+        }
+    }
+
+    // Properties for Property and Inventory Coverage
+    private string _propertyAddress;
+
+    public string PropertyAddress
+    {
+        get => _propertyAddress;
+        set
+        {
+            _propertyAddress = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private decimal _propertyValue;
+
+    public decimal PropertyValue
+    {
+        get => _propertyValue;
+        set
+        {
+            _propertyValue = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private decimal _inventoryValue;
+
+    public decimal InventoryValue
+    {
+        get => _inventoryValue;
+        set
+        {
+            _inventoryValue = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _isLiabilityCoverageVisible;
+
+    public bool IsLiabilityCoverageVisible
+    {
+        get => _isLiabilityCoverageVisible;
+        set
+        {
+            _isLiabilityCoverageVisible = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _isVehicleInsuranceVisible;
+
+    public bool IsVehicleInsuranceVisible
+    {
+        get => _isVehicleInsuranceVisible;
+        set
+        {
+            _isVehicleInsuranceVisible = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _isPropertyCoverageVisible;
+
+    public bool IsPropertyCoverageVisible
+    {
+        get => _isPropertyCoverageVisible;
+        set
+        {
+            _isPropertyCoverageVisible = value;
+            OnPropertyChanged();
+        }
+    }
+
+    // Properties for Liability Coverage
+    private LiabilityCoverageOption _selectedLiabilityCoverageOption;
+
+    public LiabilityCoverageOption SelectedLiabilityCoverageOption
+    {
+        get => _selectedLiabilityCoverageOption;
+        set
+        {
+            _selectedLiabilityCoverageOption = value;
+            OnPropertyChanged();
+        }
+    }
+
+    // Properties for Vehicle Insurance Option
+    private VehicleInsuranceOption _selectedVehicleCoverageOption;
+
+    public VehicleInsuranceOption SelectedVehicleCoverageOption
+    {
+        get => _selectedVehicleCoverageOption;
+        set
+        {
+            _selectedVehicleCoverageOption = value;
+            OnPropertyChanged();
+        }
+    }
+
+    #endregion Properties
 }

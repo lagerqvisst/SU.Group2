@@ -1,32 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
-namespace SU.Frontend.Views.CommonViews.NewCustomer
+namespace SU.Frontend.Views.CommonViews.NewCustomer;
+
+/// <summary>
+///     Interaction logic for NewPrivateCustomerView.xaml
+/// </summary>
+public partial class NewPrivateCustomerView : Window
 {
-    /// <summary>
-    /// Interaction logic for NewPrivateCustomerView.xaml
-    /// </summary>
-    public partial class NewPrivateCustomerView : Window
+    public NewPrivateCustomerView()
     {
-        public NewPrivateCustomerView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
     }
 }

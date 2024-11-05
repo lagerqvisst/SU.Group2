@@ -1,19 +1,11 @@
-﻿using SU.Backend.Models.Enums.Insurance;
-using SU.Backend.Models.Insurances.Coverage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SU.Backend.Models.Insurances.Coverage;
 
-namespace SU.Backend.Database.Interfaces
+namespace SU.Backend.Database.Interfaces;
+
+/// <summary>
+///     This interface is responsible for defining the methods that the PrivateCoveragesRepository class must implement.
+/// </summary>
+public interface IPrivateCoveragesRepository
 {
-    /// <summary>
-    /// This interface is responsible for defining the methods that the PrivateCoveragesRepository class must implement.
-    /// </summary>
-    public interface IPrivateCoveragesRepository
-    {
-        Task<List<PrivateCoverage>> GetAllPrivateCoverages();
-
-    }
+    Task<List<PrivateCoverage>> GetAllPrivateCoverages();
 }

@@ -2,59 +2,54 @@
 using SU.Backend.Models.Employees;
 using SU.Frontend.Helper;
 using SU.Frontend.Helper.DI_Objects.User;
-using System.Linq;
 
-namespace SU.Frontend.ViewModels.UserControlViewModels
+namespace SU.Frontend.ViewModels.UserControlViewModels;
+
+public class UserInfoDockViewModel : ObservableObject
 {
-    public class UserInfoDockViewModel : ObservableObject
+    private readonly ILoggedInUserService _loggedInUserService;
+    private Employee _loggedInEmployee;
+
+    public UserInfoDockViewModel(ILoggedInUserService loggedInUserService)
     {
-        private readonly ILoggedInUserService _loggedInUserService;
-        private Employee _loggedInEmployee;
+        _loggedInUserService = loggedInUserService;
+        LoggedInEmployee = _loggedInUserService.LoggedInEmployee ?? new Employee();
+    }
 
-        public UserInfoDockViewModel(ILoggedInUserService loggedInUserService)
+    public Employee LoggedInEmployee
+    {
+        get => _loggedInEmployee;
+        set
         {
-            _loggedInUserService = loggedInUserService;
-            LoggedInEmployee = _loggedInUserService.LoggedInEmployee ?? new Employee();
+            _loggedInEmployee = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(SignedInUserName));
+            OnPropertyChanged(nameof(SignedInUserId));
+            OnPropertyChanged(nameof(SignedInUserRole));
         }
+    }
 
-        public Employee LoggedInEmployee
+    public string SignedInUserName =>
+        _loggedInEmployee != null
+            ? $"User: {_loggedInEmployee.FirstName} {_loggedInEmployee.LastName}"
+            : "User logged in: Unknown";
+
+    public string SignedInUserId =>
+        _loggedInEmployee != null
+            ? $"ID: {_loggedInEmployee.EmployeeId}"
+            : "User ID: Unknown";
+
+    public string SignedInUserRole
+    {
+        get
         {
-            get => _loggedInEmployee;
-            set
+            if (_loggedInEmployee?.RoleAssignments != null && _loggedInEmployee.RoleAssignments.Any())
             {
-                _loggedInEmployee = value;
-                OnPropertyChanged(nameof(LoggedInEmployee));
-                OnPropertyChanged(nameof(SignedInUserName));
-                OnPropertyChanged(nameof(SignedInUserId));
-                OnPropertyChanged(nameof(SignedInUserRole));
+                var role = EmployeeHelper.GetLowestPercentageRole(_loggedInEmployee.RoleAssignments.ToList());
+                return role != null ? $"Role: {role}" : "User role: None";
             }
-        }
 
-        public string SignedInUserName
-        {
-            get => _loggedInEmployee != null
-                ? $"User: {_loggedInEmployee.FirstName} {_loggedInEmployee.LastName}"
-                : "User logged in: Unknown";
-        }
-
-        public string SignedInUserId
-        {
-            get => _loggedInEmployee != null
-                ? $"ID: {_loggedInEmployee.EmployeeId}"
-                : "User ID: Unknown";
-        }
-
-        public string SignedInUserRole
-        {
-            get
-            {
-                if (_loggedInEmployee?.RoleAssignments != null && _loggedInEmployee.RoleAssignments.Any())
-                {
-                    var role = EmployeeHelper.GetLowestPercentageRole(_loggedInEmployee.RoleAssignments.ToList());
-                    return role != null ? $"Role: {role}" : "User role: None";
-                }
-                return "User role: None";
-            }
+            return "User role: None";
         }
     }
 }

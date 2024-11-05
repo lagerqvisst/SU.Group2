@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace SU.Frontend.Helper.Authentication;
 
-namespace SU.Frontend.Helper.Authentication
+public interface IAuthenticationService
 {
-    public interface IAuthenticationService
-    {
-        void Logout();
-    }
+    void Logout();
 }

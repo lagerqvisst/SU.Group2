@@ -2,9 +2,6 @@
 using SU.Backend.Models.Employees;
 using SU.Frontend.Helper;
 using SU.Frontend.Helper.DI_Objects.User;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
 
 public class SignedInUserViewModel : ObservableObject
 {
@@ -22,16 +19,10 @@ public class SignedInUserViewModel : ObservableObject
     }
 
     // Returns the logged-in user's name as a formatted string
-    public string SignedInUserName
-    {
-        get => $"User logged in: {_loggedInEmployee.FirstName} {_loggedInEmployee.LastName}";
-    }
+    public string SignedInUserName => $"User logged in: {_loggedInEmployee.FirstName} {_loggedInEmployee.LastName}";
 
     // Returns the logged-in user's ID as a formatted string
-    public string SignedInUserId
-    {
-        get => $"User ID: {_loggedInEmployee.EmployeeId}";
-    }
+    public string SignedInUserId => $"User ID: {_loggedInEmployee.EmployeeId}";
 
     // Returns the logged-in user's highest percentage role via method, or 'None' if no role is assigned
     public string SignedInUserRole
@@ -43,4 +34,3 @@ public class SignedInUserViewModel : ObservableObject
         }
     }
 }
-

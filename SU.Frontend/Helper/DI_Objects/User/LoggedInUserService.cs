@@ -1,15 +1,8 @@
 ﻿using SU.Backend.Models.Employees;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SU.Frontend.Helper.DI_Objects.User
+namespace SU.Frontend.Helper.DI_Objects.User;
+
+public class LoggedInUserService : ILoggedInUserService
 {
-    public class LoggedInUserService : ILoggedInUserService
-    {
-        public Employee LoggedInEmployee { get; set; }
-
-    }
+    public Employee LoggedInEmployee { get; set; }
 }

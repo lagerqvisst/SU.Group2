@@ -3,48 +3,48 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SU.Frontend.Views.CommonViews"
         xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
         xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         mc:Ignorable="d"
-        Title="ShowCustomersView"  SizeToContent="WidthAndHeight">
+        Title="ShowCustomersView" SizeToContent="WidthAndHeight">
 
     <Window.Resources>
         <helper:ViewModelLocator x:Key="Locator" />
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Window.Resources>
 
     <Grid DataContext="{Binding ShowCustomerViewModel, Source={StaticResource Locator}}">
         <!-- Title - Client Information -->
-        <TextBlock Text="Client Information" 
-                   FontSize="25" 
-                   FontWeight="Bold" 
-                   Grid.Row="0" 
-                   Margin="20,37,562,358"/>
+        <TextBlock Text="Client Information"
+                   FontSize="25"
+                   FontWeight="Bold"
+                   Grid.Row="0"
+                   Margin="20,37,562,358" />
 
         <!-- Left Panel - Client List with Border -->
-        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,141,0,0" Height="231">
+        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="10,141,0,0" Height="231">
             <StackPanel Width="200" Margin="10">
 
-                <TextBlock Text="Private Customers" 
+                <TextBlock Text="Private Customers"
                            FontWeight="DemiBold"
                            Margin="0,10,10,20"
-                           FontSize="18"/>
-                
-                <!-- ComboBox for Private Customers -->
-                <ComboBox Margin="0,0,0,10" 
-                          ItemsSource="{Binding PrivateCustomers}" 
-                          DisplayMemberPath="FirstName"
-                          SelectedItem="{Binding SelectedPrivateCustomer}"/>
+                           FontSize="18" />
 
-                <TextBlock Text="Company Customers" 
+                <!-- ComboBox for Private Customers -->
+                <ComboBox Margin="0,0,0,10"
+                          ItemsSource="{Binding PrivateCustomers}"
+                          DisplayMemberPath="FirstName"
+                          SelectedItem="{Binding SelectedPrivateCustomer}" />
+
+                <TextBlock Text="Company Customers"
                            FontWeight="DemiBold"
                            Margin="0,0,10,20"
-                           FontSize="18"/>
+                           FontSize="18" />
 
                 <!-- ComboBox for Company Customers -->
-                <ComboBox Margin="0,0,0,10" 
-                          ItemsSource="{Binding CompanyCustomers}" 
+                <ComboBox Margin="0,0,0,10"
+                          ItemsSource="{Binding CompanyCustomers}"
                           DisplayMemberPath="CompanyName"
                           SelectedItem="{Binding SelectedCompanyCustomer}" />
             </StackPanel>
@@ -52,184 +52,185 @@
 
         <!-- Details Panel for Private Customer with Border -->
         <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" Margin="251,140,235,185" Height="350">
-                <StackPanel Visibility="{Binding IsPrivateCustomerVisible, Converter={StaticResource BooleanToVisibilityConverter}}" 
-                            Orientation="Vertical" 
-                            Height="290"
-                            Width="382"
-                            >
+            <StackPanel
+                Visibility="{Binding IsPrivateCustomerVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                Orientation="Vertical"
+                Height="290"
+                Width="382">
 
-                    <TextBlock Text="Private Customer Details"
-                               FontWeight="DemiBold" 
-                               FontSize="18"
-                               Margin="10,-7,10,20"/>
-                    
-                    <!-- Private Customer ID-->
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,5,0,5">
-                        <TextBlock Text="Private Customer ID"
-                                   FontSize="15"
-                                   Margin="0,0,30,0"/>
-                    <TextBlock Text="{Binding SelectedPrivateCustomer.PrivateCustomerId}"/>
-                    </StackPanel>
-                    
-                    <!-- Personal Number-->
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,5,0,5">
-                        <TextBlock Text="Personal Number"
+                <TextBlock Text="Private Customer Details"
+                           FontWeight="DemiBold"
+                           FontSize="18"
+                           Margin="10,-7,10,20" />
+
+                <!-- Private Customer ID-->
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,5,0,5">
+                    <TextBlock Text="Private Customer ID"
                                FontSize="15"
-                               Margin="0,0,47,0"/>
-                        <TextBlock Text="{Binding SelectedPrivateCustomer.PersonalNumber}"/>
-                    </StackPanel>
+                               Margin="0,0,30,0" />
+                    <TextBlock Text="{Binding SelectedPrivateCustomer.PrivateCustomerId}" />
+                </StackPanel>
 
-                    <!-- First Name-->
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,5,0,5">
-                        <TextBlock Text="First Name" 
+                <!-- Personal Number-->
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,5,0,5">
+                    <TextBlock Text="Personal Number"
                                FontSize="15"
-                               Margin="0,0,90,0"/>
-                        <TextBlock Text="{Binding SelectedPrivateCustomer.FirstName}"/>
-                    </StackPanel>
+                               Margin="0,0,47,0" />
+                    <TextBlock Text="{Binding SelectedPrivateCustomer.PersonalNumber}" />
+                </StackPanel>
 
-                    <!-- Last Name-->
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,5,0,5">
-                        <TextBlock Text="Last Name"
-                                   FontSize="15"
-                                   Margin="0,0,91,0"/>
-                        <TextBlock Text="{Binding SelectedPrivateCustomer.LastName}"/>
-                    </StackPanel>
-
-                    <!-- Email-->
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,5,0,5">
-                        <TextBlock Text="Email" 
-                                   FontSize="15"
-                                   Margin="0,0,125,0"/>
-                        <TextBlock Text="{Binding SelectedPrivateCustomer.Email}"/>
-                    </StackPanel>
-
-                    <!-- Phone Number-->
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,5,0,5">
-                        <TextBlock Text="Phone Mumber" 
-                                   FontSize="15"
-                                   Margin="0,0,60,0"/>
-                    <TextBlock Text="{Binding SelectedPrivateCustomer.PhoneNumber}"/>
-                    </StackPanel>
-
-                    <!-- Address-->
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,5,0,5">
-                        <TextBlock Text="Address" 
+                <!-- First Name-->
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,5,0,5">
+                    <TextBlock Text="First Name"
                                FontSize="15"
-                               Margin="0,0,107,0"/>
-                        <TextBlock Text="{Binding SelectedPrivateCustomer.Address}"/>
-                    </StackPanel>
+                               Margin="0,0,90,0" />
+                    <TextBlock Text="{Binding SelectedPrivateCustomer.FirstName}" />
+                </StackPanel>
 
-                 </StackPanel>
+                <!-- Last Name-->
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,5,0,5">
+                    <TextBlock Text="Last Name"
+                               FontSize="15"
+                               Margin="0,0,91,0" />
+                    <TextBlock Text="{Binding SelectedPrivateCustomer.LastName}" />
+                </StackPanel>
+
+                <!-- Email-->
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,5,0,5">
+                    <TextBlock Text="Email"
+                               FontSize="15"
+                               Margin="0,0,125,0" />
+                    <TextBlock Text="{Binding SelectedPrivateCustomer.Email}" />
+                </StackPanel>
+
+                <!-- Phone Number-->
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,5,0,5">
+                    <TextBlock Text="Phone Mumber"
+                               FontSize="15"
+                               Margin="0,0,60,0" />
+                    <TextBlock Text="{Binding SelectedPrivateCustomer.PhoneNumber}" />
+                </StackPanel>
+
+                <!-- Address-->
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,5,0,5">
+                    <TextBlock Text="Address"
+                               FontSize="15"
+                               Margin="0,0,107,0" />
+                    <TextBlock Text="{Binding SelectedPrivateCustomer.Address}" />
+                </StackPanel>
+
+            </StackPanel>
         </Border>
 
         <!-- Details Panel for Company Customer with Border -->
-        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" Margin="251,140,235,185" Height="350" >
-                <StackPanel Visibility="{Binding IsCompanyCustomerVisible, Converter={StaticResource BooleanToVisibilityConverter}}" 
-                            Orientation="Vertical"
-                            Height="350" 
-                            Width="382">
-                    
-                    <TextBlock Text="Company Customer Details" 
-                               FontWeight="DemiBold" 
-                               FontSize="18"
-                               Margin="10,20,10,20" />
+        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" Margin="251,140,235,185" Height="350">
+            <StackPanel
+                Visibility="{Binding IsCompanyCustomerVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                Orientation="Vertical"
+                Height="350"
+                Width="382">
 
-                    <!-- Company Customer ID-->
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,5,0,5">
-                        <TextBlock Text="Company Customer ID"
-                                   FontSize="15"
-                                   Margin="0,0,49,0"/>
-                        <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyCustomerId}"/>
-                    </StackPanel>
+                <TextBlock Text="Company Customer Details"
+                           FontWeight="DemiBold"
+                           FontSize="18"
+                           Margin="10,20,10,20" />
 
-                    <!-- Organization Number-->
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,5,0,5">
-                        <TextBlock Text="Organization Number"
+                <!-- Company Customer ID-->
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,5,0,5">
+                    <TextBlock Text="Company Customer ID"
                                FontSize="15"
-                               Margin="0,0,55,0"/>
-                        <TextBlock Text="{Binding SelectedCompanyCustomer.OrganizationNumber}"/>
-                    </StackPanel>
-
-                    <!-- Company Name-->
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,5,0,5">
-                        <TextBlock Text="Company Name"
-                                   FontSize="15"
-                                   Margin="0,0,92,0"/>
-                        <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyName}"/>
-                    </StackPanel>
-
-                    <!-- Contact Person-->
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,5,0,5">
-                        <TextBlock Text="Contact Person" 
-                               FontSize="15"
-                               Margin="0,0,99,0"/>
-                        <TextBlock Text="{Binding SelectedCompanyCustomer.ContactPerson}"/>
-                    </StackPanel>
-
-                    <!-- Contact Person Phone Number-->
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,5,0,5">
-                        <TextBlock Text="Contact Person Phone Nr"
-                                   FontSize="15"
-                                   Margin="0,0,32,0"/>
-                        <TextBlock Text="{Binding SelectedCompanyCustomer.ContactPersonPhonenumber}"/>
-                    </StackPanel>
-
-                    <!-- Company Address-->
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,5,0,5">
-                        <TextBlock Text="Company Address" 
-                                   FontSize="15"
-                                   Margin="0,0,78,0"/>
-                        <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyAdress}"/>
-                    </StackPanel>
-
-                    <!-- Company Phone Number-->
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,5,0,5">
-                        <TextBlock Text="Company Phone Nr"
-                                   FontSize="15"
-                                    Margin="0,0,69,0"/>
-                        <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyPhoneNumber}"/>
-                    </StackPanel>
-
-                    <!-- Company Landline Numer-->
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,5,0,5">
-                        <TextBlock Text="Company Landline Nr" 
-                                   FontSize="15"
-                                   Margin="0,0,55,0"/>
-                        <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyLandlineNumber}"/>
-                    </StackPanel>
-
-                    <!-- Company Email-->
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,5,0,5">
-                        <TextBlock Text="Company Email" 
-                                   FontSize="15"
-                                   Margin="0,0,95,0"/>
-                        <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyEmailAdress}"/>
-                    </StackPanel>
-                
+                               Margin="0,0,49,0" />
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyCustomerId}" />
                 </StackPanel>
+
+                <!-- Organization Number-->
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,5,0,5">
+                    <TextBlock Text="Organization Number"
+                               FontSize="15"
+                               Margin="0,0,55,0" />
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.OrganizationNumber}" />
+                </StackPanel>
+
+                <!-- Company Name-->
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,5,0,5">
+                    <TextBlock Text="Company Name"
+                               FontSize="15"
+                               Margin="0,0,92,0" />
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyName}" />
+                </StackPanel>
+
+                <!-- Contact Person-->
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,5,0,5">
+                    <TextBlock Text="Contact Person"
+                               FontSize="15"
+                               Margin="0,0,99,0" />
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.ContactPerson}" />
+                </StackPanel>
+
+                <!-- Contact Person Phone Number-->
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,5,0,5">
+                    <TextBlock Text="Contact Person Phone Nr"
+                               FontSize="15"
+                               Margin="0,0,32,0" />
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.ContactPersonPhonenumber}" />
+                </StackPanel>
+
+                <!-- Company Address-->
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,5,0,5">
+                    <TextBlock Text="Company Address"
+                               FontSize="15"
+                               Margin="0,0,78,0" />
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyAdress}" />
+                </StackPanel>
+
+                <!-- Company Phone Number-->
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,5,0,5">
+                    <TextBlock Text="Company Phone Nr"
+                               FontSize="15"
+                               Margin="0,0,69,0" />
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyPhoneNumber}" />
+                </StackPanel>
+
+                <!-- Company Landline Numer-->
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,5,0,5">
+                    <TextBlock Text="Company Landline Nr"
+                               FontSize="15"
+                               Margin="0,0,55,0" />
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyLandlineNumber}" />
+                </StackPanel>
+
+                <!-- Company Email-->
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,5,0,5">
+                    <TextBlock Text="Company Email"
+                               FontSize="15"
+                               Margin="0,0,95,0" />
+                    <TextBlock Text="{Binding SelectedCompanyCustomer.CompanyEmailAdress}" />
+                </StackPanel>
+
+            </StackPanel>
         </Border>
 
 
         <!-- Additional Controls (Logout and User Information) -->
-        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0"/>
-        <controls:ReturnButton HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,120,10,0"/>
-        <controls:LogoutButtonControl HorizontalAlignment="Right" Margin="0,546,10,10"/>
+        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" />
+        <controls:ReturnButton HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,120,10,0" />
+        <controls:LogoutButtonControl HorizontalAlignment="Right" Margin="0,546,10,10" />
 
     </Grid>
 </Window>

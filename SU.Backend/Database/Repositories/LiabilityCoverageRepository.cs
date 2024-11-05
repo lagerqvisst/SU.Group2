@@ -1,26 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SU.Backend.Database.Interfaces;
 using SU.Backend.Models.Insurances.Coverage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SU.Backend.Database.Repositories
+namespace SU.Backend.Database.Repositories;
+
+/// <summary>
+///     This class is responsible for implementing the methods defined in the ILiabilityCoverageRepository interface.
+/// </summary>
+public class LiabilityCoverageRepository : Repository<LiabilityCoverage>, ILiabilityCoverageRepository
 {
-    /// <summary>
-    /// This class is responsible for implementing the methods defined in the ILiabilityCoverageRepository interface.
-    /// </summary>
-    public class LiabilityCoverageRepository : Repository<LiabilityCoverage>, ILiabilityCoverageRepository
+    public LiabilityCoverageRepository(Context context) : base(context)
     {
-        public LiabilityCoverageRepository(Context context) : base(context)
-        {
-        }
+    }
 
-        public async Task<List<LiabilityCoverage>> GetLiabilityCoverage()
-        {
-            return await _context.LiabilityCoverages.ToListAsync();
-        }
+    public async Task<List<LiabilityCoverage>> GetLiabilityCoverage()
+    {
+        return await _context.LiabilityCoverages.ToListAsync();
     }
 }

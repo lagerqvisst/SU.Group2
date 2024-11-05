@@ -1,35 +1,28 @@
-﻿using SU.Frontend.Helper.DI_Objects.User;
-using SU.Frontend.Helper.Navigation;
+﻿using System.Windows.Input;
 using SU.Frontend.Helper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+using SU.Frontend.Helper.Navigation;
 
-namespace SU.Frontend.ViewModels.UserControlViewModels
+namespace SU.Frontend.ViewModels.UserControlViewModels;
+
+public class ReturnButtonViewModel
 {
-    public class ReturnButtonViewModel
+    // Constructor
+    public ReturnButtonViewModel(INavigationService navigationService)
     {
-        // Command
-        public ICommand ReturnCommand { get; }
+        _navigationService = navigationService;
 
-        // Service
-        public INavigationService _navigationService { get; }
+        ReturnCommand = new RelayCommand(ReturnToPrevious);
+    }
 
-        // Constructor
-        public ReturnButtonViewModel(INavigationService navigationService)
-        {
-            _navigationService = navigationService;
+    // Command
+    public ICommand ReturnCommand { get; }
 
-            ReturnCommand = new RelayCommand(ReturnToPrevious);
-        }
+    // Service
+    public INavigationService _navigationService { get; }
 
-        // Method to return to the previous view
-        public void ReturnToPrevious()
-        {
-            _navigationService.ReturnToPrevious();
-        }
+    // Method to return to the previous view
+    public void ReturnToPrevious()
+    {
+        _navigationService.ReturnToPrevious();
     }
 }

@@ -1,142 +1,136 @@
 ﻿using SU.Backend.Database.Interfaces;
 using SU.Backend.Models.Employees;
 using SU.Backend.Models.Enums;
-using System;
-using System.Threading.Tasks;
 
-namespace SU.Backend.Helper
+namespace SU.Backend.Helper;
+
+/// <summary>
+///     This static class contains helper methods for generating info easier for the Employee attributes
+/// </summary>
+public static class EmployeeHelper
 {
-    /// <summary>
-    /// This static class contains helper methods for generating info easier for the Employee attributes
-    /// </summary>
-    public static class EmployeeHelper
+    private static readonly Random random = new();
+
+    public static async Task<string> GenerateUniqueFourDigitCode(IEmployeeRepository employeeRepository)
     {
-        private static readonly Random random = new Random();
+        string agentNumber;
+        bool isUnique;
 
-        public static async Task<string> GenerateUniqueFourDigitCode(IEmployeeRepository employeeRepository)
+        do
         {
-            string agentNumber;
-            bool isUnique;
+            agentNumber = GenerateFourDigitCode();
+            isUnique = await employeeRepository.IsAgentNumberUnique(agentNumber);
+        } while (!isUnique);
 
-            do
-            {
-                agentNumber = GenerateFourDigitCode();
-                isUnique = await employeeRepository.IsAgentNumberUnique(agentNumber);
-            }
-            while (!isUnique);
+        return agentNumber;
+    }
 
-            return agentNumber;
-        }
+    public static string GenerateFourDigitCode()
+    {
+        var code = random.Next(1000, 10000);
+        return code.ToString("D4");
+    }
 
-        public static string GenerateFourDigitCode()
+    public static int GetSalaryForEmployeeType(EmployeeType type)
+    {
+        return type switch
         {
-            int code = random.Next(1000, 10000);
-            return code.ToString("D4");
-        }
+            EmployeeType.OutsideSales => (int)Salary.Seller,
+            EmployeeType.InsideSales => (int)Salary.Seller,
+            EmployeeType.SalesAssistant => (int)Salary.SalesAssistant,
+            EmployeeType.SalesManager => (int)Salary.SalesManager,
+            EmployeeType.FinancialAssistant => (int)Salary.FinancialAssistant,
+            EmployeeType.CEO => (int)Salary.CEO,
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        };
+    }
 
-        public static int GetSalaryForEmployeeType(EmployeeType type)
+    public static string GenerateEmployeeUsername(string firstName, string lastName)
+    {
+        //make user name from first 2 letters of first name and last name
+
+        var username = firstName.Substring(0, 2) + lastName.Substring(0, 2);
+
+        return username.ToLower();
+    }
+
+    public static string GenerateEmployeeEmail(string firstName, string lastName)
+    {
+        return firstName.ToLower() + "." + lastName.ToLower() + "@toppinsurance.se";
+    }
+
+    public static string GenerateEmployeePassword(string firstName, string lastName)
+    {
+        // Ta de första två bokstäverna från förnamn och efternamn
+        var part1 = firstName.Substring(0, Math.Min(2, firstName.Length)).ToLower();
+        var part2 = lastName.Substring(0, Math.Min(2, lastName.Length)).ToLower();
+
+        // Generera ett slumpmässigt fyrsiffrigt nummer
+        var randomNumber = random.Next(1000, 9999).ToString();
+
+        // Kombinera förnamnsdel, efternamnsdel och slumpmässigt nummer
+        var password = $"{part1}{part2}{randomNumber}";
+
+        // Lägg till en stor bokstav från efternamnet
+        password += char.ToUpper(lastName[0]);
+
+        return password;
+    }
+
+    public static string GenerateLastFourDigits(bool isMale)
+    {
+        var random = new Random();
+        // De första tre siffrorna kan vara vilka som helst
+        var firstThreeDigits = random.Next(100, 999);
+
+        // Om personen är man ska den sista siffran vara udda, annars jämn för kvinnor
+        var lastDigit = isMale ? GenerateOddDigit(random) : GenerateEvenDigit(random);
+
+        return $"{firstThreeDigits}{lastDigit}";
+    }
+
+    private static int GenerateOddDigit(Random random)
+    {
+        int digit;
+        do
         {
-            return type switch
-            {
-                EmployeeType.OutsideSales => (int)Salary.Seller,
-                EmployeeType.InsideSales => (int)Salary.Seller,
-                EmployeeType.SalesAssistant => (int)Salary.SalesAssistant,
-                EmployeeType.SalesManager => (int)Salary.SalesManager,
-                EmployeeType.FinancialAssistant => (int)Salary.FinancialAssistant,
-                EmployeeType.CEO => (int)Salary.CEO,
-                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
-            };
-        }
+            digit = random.Next(0, 10);
+        } while (digit % 2 == 0);
 
-        public static string GenerateEmployeeUsername(Name name)
+        return digit;
+    }
+
+    private static int GenerateEvenDigit(Random random)
+    {
+        int digit;
+        do
         {
-            //make user name from first 2 letters of first name and last name
+            digit = random.Next(0, 10);
+        } while (digit % 2 != 0);
 
-            string username = name.First.Substring(0, 2) + name.Last.Substring(0,2);
+        return digit;
+    }
 
-            return username.ToLower();
+    public static EmployeeType GetLowestPercentageRole(List<EmployeeRoleAssignment> roleAssignments)
+    {
+        return roleAssignments
+            .OrderBy(ra => ra.Percentage)
+            .Select(ra => ra.Role)
+            .FirstOrDefault();
+    }
 
-        }
+    public static void UpdateEmployeeRole(Employee employee, EmployeeType newRole)
+    {
+        if (employee != null && (employee.RoleAssignments == null || !employee.RoleAssignments.Any()))
+            return;
 
-        public static string GenerateEmployeeEmail(string firstName, string lastName)
+        employee.RoleAssignments.Clear();
+
+
+        employee.RoleAssignments.Add(new EmployeeRoleAssignment
         {
-            return firstName.ToLower() + "." + lastName.ToLower() + "@toppinsurance.se";
-        }
-
-        public static string GenerateEmployeePassword(string firstName, string lastName)
-        {
-            // Ta de första två bokstäverna från förnamn och efternamn
-            string part1 = firstName.Substring(0, Math.Min(2, firstName.Length)).ToLower();
-            string part2 = lastName.Substring(0, Math.Min(2, lastName.Length)).ToLower();
-
-            // Generera ett slumpmässigt fyrsiffrigt nummer
-            string randomNumber = random.Next(1000, 9999).ToString();
-
-            // Kombinera förnamnsdel, efternamnsdel och slumpmässigt nummer
-            string password = $"{part1}{part2}{randomNumber}";
-
-            // Lägg till en stor bokstav från efternamnet
-            password += char.ToUpper(lastName[0]);
-
-            return password;
-        }
-
-        public static string GenerateLastFourDigits(bool isMale)
-        {
-            Random random = new Random();
-            // De första tre siffrorna kan vara vilka som helst
-            int firstThreeDigits = random.Next(100, 999);
-
-            // Om personen är man ska den sista siffran vara udda, annars jämn för kvinnor
-            int lastDigit = isMale ? GenerateOddDigit(random) : GenerateEvenDigit(random);
-
-            return $"{firstThreeDigits}{lastDigit}";
-        }
-
-        private static int GenerateOddDigit(Random random)
-        {
-            int digit;
-            do
-            {
-                digit = random.Next(0, 10);
-            } while (digit % 2 == 0);
-            return digit;
-        }
-
-        private static int GenerateEvenDigit(Random random)
-        {
-            int digit;
-            do
-            {
-                digit = random.Next(0, 10);
-            } while (digit % 2 != 0);
-            return digit;
-        }
-
-        public static EmployeeType GetLowestPercentageRole(List<EmployeeRoleAssignment> roleAssignments)
-        {
-            return roleAssignments
-                .OrderBy(ra => ra.Percentage)
-                .Select(ra => ra.Role)
-                .FirstOrDefault();
-        }
-
-        public static void UpdateEmployeeRole(Employee employee, EmployeeType newRole)
-        {
-            if (employee == null || employee.RoleAssignments == null || !employee.RoleAssignments.Any())
-                return;
-
-            employee.RoleAssignments.Clear();
-
-
-            employee.RoleAssignments.Add(new EmployeeRoleAssignment
-            {
-                Role = newRole,
-                Percentage = 100
-            });
-        }
-
-        
-
+            Role = newRole,
+            Percentage = 100
+        });
     }
 }

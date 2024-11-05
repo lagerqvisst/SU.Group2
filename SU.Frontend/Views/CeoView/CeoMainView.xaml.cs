@@ -1,32 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
-namespace SU.Frontend.Views.CeoView
+namespace SU.Frontend.Views.CeoView;
+
+/// <summary>
+///     Interaction logic for CeoMainView.xaml
+/// </summary>
+public partial class CeoMainView : Window
 {
-    /// <summary>
-    /// Interaction logic for CeoMainView.xaml
-    /// </summary>
-    public partial class CeoMainView : Window
+    public CeoMainView()
     {
-        public CeoMainView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        private void SignedInUserUserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
+    private void SignedInUserUserControl_Loaded(object sender, RoutedEventArgs e)
+    {
     }
 }

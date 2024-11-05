@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SU.Frontend.Views.CommonViews"
         xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
         xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         mc:Ignorable="d"
@@ -14,25 +13,26 @@
 
     <Grid DataContext="{Binding EditDeleteInsuranceViewModel, Source={StaticResource Locator}}">
         <!-- View Title -->
-        <TextBlock Text="Edit Or Delete Insurance" 
-                   FontSize="25" 
-                   FontWeight="Bold" 
-                   Grid.Row="0" 
+        <TextBlock Text="Edit Or Delete Insurance"
+                   FontSize="25"
+                   FontWeight="Bold"
+                   Grid.Row="0"
                    Margin="20,37,645,497" />
-        
+
         <!-- Left Panel - Client List with Border -->
-        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,141,0,0" Height="231">
+        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="10,141,0,0" Height="231">
             <StackPanel Width="200" Margin="10">
-                <TextBlock Text="Insurances Listed By ID" 
-                    FontWeight="DemiBold" 
-                    Margin="0,10,10,20"
-                    FontSize="18"/>
+                <TextBlock Text="Insurances Listed By ID"
+                           FontWeight="DemiBold"
+                           Margin="0,10,10,20"
+                           FontSize="18" />
 
                 <!-- ComboBox for Private Customers -->
-                <ComboBox Margin="0,0,0,10" 
-                          ItemsSource="{Binding Insurances}" 
+                <ComboBox Margin="0,0,0,10"
+                          ItemsSource="{Binding Insurances}"
                           DisplayMemberPath="InsuranceId"
-                          SelectedItem="{Binding SelectedInsurance}"/>
+                          SelectedItem="{Binding SelectedInsurance}" />
             </StackPanel>
         </Border>
 
@@ -41,31 +41,31 @@
             <ScrollViewer VerticalScrollBarVisibility="Visible" CanContentScroll="True" Margin="0,1,0,1">
 
                 <!-- Kommenterat ut det av attributen som inte funkade med bindings, blir att de skriver ut SU.Map.Blabla -->
-                <StackPanel Orientation="Vertical" 
-                            Height="207" 
+                <StackPanel Orientation="Vertical"
+                            Height="207"
                             Width="382">
-                    
+
                     <TextBlock Text="Insurance Details"
-                               FontWeight="DemiBold" 
-                               FontSize="18" 
-                               Margin="0,0,10,20"/>
+                               FontWeight="DemiBold"
+                               FontSize="18"
+                               Margin="0,0,10,20" />
 
                     <!-- Insurance ID-->
-                    <StackPanel Orientation="Horizontal" 
+                    <StackPanel Orientation="Horizontal"
                                 Margin="0,0,0,5">
                         <TextBlock Text="Insurance ID"
                                    FontSize="15"
-                                   Margin="0,0,53,0"/>
-                        <TextBlock Text="{Binding SelectedInsurance.InsuranceId}"/>
+                                   Margin="0,0,53,0" />
+                        <TextBlock Text="{Binding SelectedInsurance.InsuranceId}" />
                     </StackPanel>
 
                     <!-- Insurance type-->
-                    <StackPanel Orientation="Horizontal" 
+                    <StackPanel Orientation="Horizontal"
                                 Margin="0,0,0,5">
                         <TextBlock Text="Insurance yTpe"
                                    FontSize="15"
-                                   Margin="0,0,37,0"/>
-                        <TextBlock Text="{Binding SelectedInsurance.InsuranceType}"/>
+                                   Margin="0,0,37,0" />
+                        <TextBlock Text="{Binding SelectedInsurance.InsuranceType}" />
                     </StackPanel>
 
                     <!-- Insurance Category-->
@@ -73,8 +73,8 @@
                                 Margin="0,0,0,5">
                         <TextBlock Text="Insurance Category"
                                    FontSize="15"
-                                   Margin="0,0,8,0"/>
-                        <TextBlock Text="{Binding SelectedInsurance.InsuranceCategory}"/>
+                                   Margin="0,0,8,0" />
+                        <TextBlock Text="{Binding SelectedInsurance.InsuranceCategory}" />
                     </StackPanel>
 
                     <!-- Insurance Category-->
@@ -82,11 +82,11 @@
                                 Margin="0,0,0,0">
                         <TextBlock Text="Insurance Status"
                                    FontSize="15"
-                                   Margin="0,0,29,0"/>
+                                   Margin="0,0,29,0" />
                         <ComboBox Margin="0,0,0,5"
                                   Width="245"
-                                  ItemsSource="{Binding InsuranceStatusOptions}" 
-                                  SelectedItem="{Binding SelectedInsuranceStatus, Mode=TwoWay}"/>
+                                  ItemsSource="{Binding InsuranceStatusOptions}"
+                                  SelectedItem="{Binding SelectedInsuranceStatus, Mode=TwoWay}" />
                     </StackPanel>
 
                     <!-- Seller-->
@@ -94,12 +94,12 @@
                                 Margin="0,0,0,0">
                         <TextBlock Text="Seller"
                                    FontSize="15"
-                                   Margin="0,0,100,0"/>
+                                   Margin="0,0,100,0" />
                         <ComboBox Margin="0,0,0,5"
-                                  ItemsSource="{Binding Sellers}" 
+                                  ItemsSource="{Binding Sellers}"
                                   DisplayMemberPath="FirstName"
                                   Width="245"
-                                  SelectedItem="{Binding SelectedSeller, Mode=TwoWay}"/>
+                                  SelectedItem="{Binding SelectedSeller, Mode=TwoWay}" />
                     </StackPanel>
 
                     <!-- Premium-->
@@ -107,8 +107,8 @@
                                 Margin="0,0,0,5">
                         <TextBlock Text="Premium"
                                    FontSize="15"
-                                   Margin="0,0,77,0"/>
-                        <TextBlock Text="{Binding SelectedInsurance.Premium}"/>
+                                   Margin="0,0,77,0" />
+                        <TextBlock Text="{Binding SelectedInsurance.Premium}" />
                     </StackPanel>
 
                     <!-- Payment Plan-->
@@ -116,11 +116,11 @@
                                 Margin="0,0,0,5">
                         <TextBlock Text="Payment Plan"
                                    FontSize="15"
-                                   Margin="0,0,47,0"/>
+                                   Margin="0,0,47,0" />
                         <ComboBox Margin="0,0,0,10"
-                                  Width="245" 
-                                  ItemsSource="{Binding PaymentPlans}" 
-                                  SelectedItem="{Binding SelectedPaymentPlan, Mode=TwoWay}"/>
+                                  Width="245"
+                                  ItemsSource="{Binding PaymentPlans}"
+                                  SelectedItem="{Binding SelectedPaymentPlan, Mode=TwoWay}" />
                     </StackPanel>
 
                     <!-- Note-->
@@ -128,12 +128,12 @@
                                 Margin="0,0,0,5">
                         <TextBlock Text="Note"
                                    FontSize="15"
-                                   Margin="0,0,101,0"/>
-                        <TextBox Text="{Binding SelectedInsurance.Note, Mode=TwoWay}" 
+                                   Margin="0,0,101,0" />
+                        <TextBox Text="{Binding SelectedInsurance.Note, Mode=TwoWay}"
                                  Width="245"
-                                 Height="100" 
-                                 TextWrapping="Wrap" 
-                                 AcceptsReturn="True"/>
+                                 Height="100"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True" />
                     </StackPanel>
 
                     <!-- Starts Date-->
@@ -141,17 +141,17 @@
                                 Margin="0,0,0,5">
                         <TextBlock Text="Start Date"
                                    FontSize="15"
-                                   Margin="0,0,68,0"/>
-                        <DatePicker SelectedDate="{Binding SelectedInsurance.StartDate, Mode=TwoWay}"/>
+                                   Margin="0,0,68,0" />
+                        <DatePicker SelectedDate="{Binding SelectedInsurance.StartDate, Mode=TwoWay}" />
                     </StackPanel>
 
                     <!-- End Date-->
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,0,0,5">
-                        <TextBlock Text="End Date" 
+                        <TextBlock Text="End Date"
                                    FontSize="15"
-                                    Margin="0,0,74,0"/>
-                        <DatePicker SelectedDate="{Binding SelectedInsurance.EndDate, Mode=TwoWay}"/>
+                                   Margin="0,0,74,0" />
+                        <DatePicker SelectedDate="{Binding SelectedInsurance.EndDate, Mode=TwoWay}" />
                     </StackPanel>
                 </StackPanel>
 
@@ -160,24 +160,24 @@
 
         <!-- save and delete changes -->
         <Button Style="{StaticResource ConfirmationButtonStyle}"
-                Content="Save Changes" 
+                Content="Save Changes"
                 Command="{Binding SaveInsuranceCommand}"
-                Height="41" 
-                Margin="251,401,529,120" 
-               HorizontalAlignment="Center"/>
+                Height="41"
+                Margin="251,401,529,120"
+                HorizontalAlignment="Center" />
 
         <Button Style="{StaticResource ConfirmationButtonStyle}"
-               Content="Delete Insurance" 
-                Background="IndianRed" 
-                Command="{Binding DeleteInsuranceCommand}" 
-                Height="41" 
+                Content="Delete Insurance"
+                Background="IndianRed"
+                Command="{Binding DeleteInsuranceCommand}"
+                Height="41"
                 Margin="545,401,235,120"
-                HorizontalAlignment="Center"/>
+                HorizontalAlignment="Center" />
 
         <!-- Additional Controls (Logout and User Information) -->
-        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0"/>
-        <controls:ReturnButton HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,120,10,0"/>
-        <controls:LogoutButtonControl HorizontalAlignment="Right" Margin="0,546,10,10"/>
+        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" />
+        <controls:ReturnButton HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,120,10,0" />
+        <controls:LogoutButtonControl HorizontalAlignment="Right" Margin="0,546,10,10" />
 
     </Grid>
 </Window>

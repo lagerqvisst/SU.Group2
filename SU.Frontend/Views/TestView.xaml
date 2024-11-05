@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SU.Frontend.Views"
         xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
         mc:Ignorable="d"
         Title="TestView" Height="450" Width="900">
@@ -14,12 +13,12 @@
 
             <TextBlock FontSize="24" FontWeight="Bold" HorizontalAlignment="Center">
                 <TextBlock.Inlines>
-                    <Run Text="TEST" Foreground="Green"/>
-                    <Run Text="VIEW" Foreground="Black"/>
+                    <Run Text="TEST" Foreground="Green" />
+                    <Run Text="VIEW" Foreground="Black" />
                 </TextBlock.Inlines>
             </TextBlock>
             <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,10,10,10" />
-            <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" />
 
         </Grid>
     </DockPanel>

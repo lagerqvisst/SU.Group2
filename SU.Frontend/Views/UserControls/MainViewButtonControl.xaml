@@ -4,11 +4,12 @@
              xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper">
 
     <UserControl.Resources>
-        <helper:ViewModelLocator x:Key="Locator"/>
+        <helper:ViewModelLocator x:Key="Locator" />
     </UserControl.Resources>
 
     <Grid DataContext="{Binding MainViewButtonViewModel, Source={StaticResource Locator}}">
-        <Button Style="{StaticResource MainButtonStyle}" Content="Main view" Command="{Binding ReturnToMainViewCommand}" Width="100" Height="30" Background="Green" />
+        <Button Style="{StaticResource MainButtonStyle}" Content="Main view"
+                Command="{Binding ReturnToMainViewCommand}" Width="100" Height="30" Background="Green" />
     </Grid>
-    
+
 </UserControl>
