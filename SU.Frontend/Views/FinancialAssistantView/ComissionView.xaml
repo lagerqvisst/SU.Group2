@@ -14,87 +14,89 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="0*"/>
+            <RowDefinition />
+            <RowDefinition Height="0*" />
         </Grid.RowDefinitions>
 
         <!-- Header TextBlock (Outside Border) -->
-        <TextBlock Text="Commission Report" 
-                   FontSize="25" 
+        <TextBlock Text="Commission Report"
+                   FontSize="25"
                    FontWeight="Bold"
-                   HorizontalAlignment="Left" 
-                   Margin="20,37,0,17" Width="362"/>
+                   HorizontalAlignment="Left"
+                   Margin="20,37,0,17" Width="362" />
 
         <!-- Commission report panel inside green border -->
-        <Border CornerRadius="3" 
-                BorderBrush="Green" 
-                BorderThickness="2" 
-                Margin="20,120,0,0" 
-                Width="789" 
-                Height="460" 
-                HorizontalAlignment="Left" 
+        <Border CornerRadius="3"
+                BorderBrush="Green"
+                BorderThickness="2"
+                Margin="20,120,0,0"
+                Width="789"
+                Height="460"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Top">
 
             <Grid DataContext="{Binding CommissionViewModel, Source={StaticResource Locator}}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <!-- Date Range and Month Selection -->
                 <StackPanel Orientation="Horizontal" Margin="20,20,20,10" Grid.Row="1">
-                    <TextBlock Text="Select Month" 
+                    <TextBlock Text="Select Month"
                                FontSize="15"
-                               VerticalAlignment="Center"/>
+                               VerticalAlignment="Center" />
                     <ComboBox ItemsSource="{Binding Months}"
                               SelectedItem="{Binding SelectedMonth, Mode=TwoWay}"
                               DisplayMemberPath="MonthName"
                               Margin="5,5"
-                              Width="150"/>
-                    <TextBlock Text="Start Date" 
+                              Width="150" />
+                    <TextBlock Text="Start Date"
                                FontSize="15"
                                VerticalAlignment="Center"
-                               Margin="10,0,0,0"/>
-                    <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay}" 
+                               Margin="10,0,0,0" />
+                    <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay}"
                                 Margin="5,5"
-                                Width="101"/>
+                                Width="101" />
                     <TextBlock Text="End Date"
                                FontSize="15"
-                               VerticalAlignment="Center" 
-                               Margin="10,0,0,0"/>
-                    <DatePicker SelectedDate="{Binding EndDate, Mode=TwoWay}" 
+                               VerticalAlignment="Center"
+                               Margin="10,0,0,0" />
+                    <DatePicker SelectedDate="{Binding EndDate, Mode=TwoWay}"
                                 Margin="5,5"
-                                Width="101"/>
-                    <Button Style="{StaticResource ConfirmationButtonStyle}" 
-                            Content="Generate Report" 
-                            Command="{Binding GenerateCommissionCommand}" 
+                                Width="101" />
+                    <Button Style="{StaticResource ConfirmationButtonStyle}"
+                            Content="Generate Report"
+                            Command="{Binding GenerateCommissionCommand}"
                             Margin="10,0"
                             Width="120"
-                            Height="25"/>
+                            Height="25" />
                 </StackPanel>
 
                 <!-- DataGrid to Display Commissions -->
                 <DataGrid BorderThickness="2"
                           BorderBrush="Green"
-                          ItemsSource="{Binding Commissions}" 
-                          AutoGenerateColumns="True" 
-                          Grid.Row="2" 
+                          ItemsSource="{Binding Commissions}"
+                          AutoGenerateColumns="True"
+                          Grid.Row="2"
                           Margin="20,0,20,20"
 
-                          HorizontalAlignment="Left"/>
-                <controls:DownloadButton Command="{Binding ExportComissionExcel}" 
-                                         HorizontalAlignment="Center" 
-                                         VerticalAlignment="Bottom" 
+                          HorizontalAlignment="Left" />
+                <controls:DownloadButton Command="{Binding ExportComissionExcel}"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Bottom"
                                          Margin="10"
-                                         Grid.Row="3"/>
+                                         Grid.Row="3" />
             </Grid>
         </Border>
 
         <!-- Main View, Logout Button and SignedInUserUserControl -->
-        <controls:ReturnButton HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,120,10,0"/>
-        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,20" Height="30" Width="100"/>
-        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Height="97" Width="214"/>
+        <controls:ReturnButton HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,120,10,0" />
+        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,20"
+                                      Height="30" Width="100" />
+        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0"
+                                          Height="97" Width="214" />
     </Grid>
 </Window>

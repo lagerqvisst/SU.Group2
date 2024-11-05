@@ -1,20 +1,11 @@
-﻿using SU.Backend.Models.Enums.Insurance;
-using SU.Backend.Models.Enums.Insurance.Addons;
-using SU.Backend.Models.Insurances;
-using SU.Backend.Models.Insurances.Coverage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SU.Backend.Models.Insurances;
 
-namespace SU.Backend.Database.Interfaces
+namespace SU.Backend.Database.Interfaces;
+
+/// <summary>
+///     This interface is responsible for defining the methods that the InsuranceAddonRepository class must implement.
+/// </summary>
+public interface IInsuranceAddonRepository
 {
-    /// <summary>
-    /// This interface is responsible for defining the methods that the InsuranceAddonRepository class must implement.
-    /// </summary>
-    public interface IInsuranceAddonRepository
-    {
-        Task<List<InsuranceAddon>> GetAllInsuranceAddons();
-    }
+    Task<List<InsuranceAddon>> GetAllInsuranceAddons();
 }

@@ -1,134 +1,123 @@
 ﻿using Microsoft.Extensions.Logging;
 using SU.Backend.Database;
-using SU.Backend.Helper;
 using SU.Backend.Models.Customers;
-using SU.Backend.Models.Employees;
 using SU.Backend.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SU.Backend.Services
+namespace SU.Backend.Services;
+
+/// <summary>
+///     This class is responsible for handling all the business logic for the PrivateCustomer model.
+/// </summary>
+public class PrivateCustomerService : IPrivateCustomerService
 {
-    /// <summary>
-    /// This class is responsible for handling all the business logic for the PrivateCustomer model.
-    /// </summary>
-    public class PrivateCustomerService : IPrivateCustomerService
+    private readonly UnitOfWork _unitOfWork;
+    private readonly ILogger<PrivateCustomerService> _logger;
+
+    public PrivateCustomerService(UnitOfWork unitOfWork, ILogger<PrivateCustomerService> logger)
     {
-        private ILogger<PrivateCustomerService> _logger; 
-        
-        private readonly UnitOfWork _unitOfWork; 
+        _logger = logger;
+        _unitOfWork = unitOfWork;
+    }
 
-        public PrivateCustomerService(UnitOfWork unitOfWork, ILogger<PrivateCustomerService> logger)
+    // method to update a private customer 
+    public async Task<(bool success, string message)> UpdatePrivateCustomer(PrivateCustomer privateCustomer)
+    {
+        _logger.LogInformation("Updating private customer...");
+
+        try
         {
-            _logger = logger;
-            _unitOfWork = unitOfWork;
+            _logger.LogInformation("Attempting to update a private customer...");
+
+            await _unitOfWork.PrivateCustomers.UpdateAsync(privateCustomer);
+            await _unitOfWork.SaveChangesAsync();
+
+            _logger.LogInformation("Private customer has been successfully updated.");
+
+            return (true, "The private customer has been updated on the database.");
         }
-        // method to update a private customer 
-        public async Task<(bool success, string message)> UpdatePrivateCustomer(PrivateCustomer privateCustomer)
+        catch (Exception e)
         {
-            _logger.LogInformation("Updating private customer...");
-
-            try
-            {
-                _logger.LogInformation("Attempting to update a private customer...");
-
-                await _unitOfWork.PrivateCustomers.UpdateAsync(privateCustomer);
-                await _unitOfWork.SaveChangesAsync();
-
-                _logger.LogInformation("Private customer has been successfully updated.");
-
-                return (true, "The private customer has been updated on the database.");
-            }
-            catch (Exception e)
-            {
-                _logger.LogWarning(e.ToString());
-                return (false, $"An error has occurred while updating the private customer: {e.Message.ToString()}");
-            }
+            _logger.LogWarning(e.ToString());
+            return (false, $"An error has occurred while updating the private customer: {e.Message}");
         }
+    }
 
-        //method to delete an existing private customer
-        public async Task<(bool success, string message)> DeletePrivateCustomer(PrivateCustomer privateCustomer)
+    //method to delete an existing private customer
+    public async Task<(bool success, string message)> DeletePrivateCustomer(PrivateCustomer privateCustomer)
+    {
+        _logger.LogInformation("Deleting private customer...");
+
+        try
         {
-            _logger.LogInformation("Deleting private customer...");
+            _logger.LogInformation("Attempting to delete a private customer...");
 
-            try
-            {
-                _logger.LogInformation("Attempting to delete a private customer...");
+            await _unitOfWork.PrivateCustomers.RemoveAsync(privateCustomer);
+            await _unitOfWork.SaveChangesAsync();
 
-                await _unitOfWork.PrivateCustomers.RemoveAsync(privateCustomer);
-                await _unitOfWork.SaveChangesAsync();
+            _logger.LogInformation("Private customer was successfully deleted.");
 
-                _logger.LogInformation("Private customer was successfully deleted.");
-
-                return (true, "Private customer was deleted the database.");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning(ex.ToString());
-                return (false, $"An error occurred while deleting the private customer: {ex.Message.ToString()}");
-
-            }
+            return (true, "Private customer was deleted the database.");
         }
-        
-        // method to create a new private customer
-        public async Task<(bool success, string message)> CreateNewPrivateCustomer(PrivateCustomer privateCustomer)
+        catch (Exception ex)
         {
-            _logger.LogInformation("Creating new Private Customer...");
-
-            try
-            {
-                _logger.LogInformation("Attemptig to save to database...");
-                await _unitOfWork.PrivateCustomers.AddAsync(privateCustomer);
-                await _unitOfWork.SaveChangesAsync();
-
-                _logger.LogInformation("New private customer has been succesfully added to the database");
-
-                return (true, "The new private customer was succesfully added to the system.");
-            }
-            catch (Exception e)
-            {
-                _logger.LogWarning(e.ToString());
-                return (false, $"There was an error saving the new user: {e.Message.ToString()}");
-            }
-
+            _logger.LogWarning(ex.ToString());
+            return (false, $"An error occurred while deleting the private customer: {ex.Message}");
         }
+    }
 
-        // method to get a private customer by id
-        public async Task<(bool success, string message, PrivateCustomer customer)> GetPrivateCustomerById(PrivateCustomer privateCustomer)
+    // method to create a new private customer
+    public async Task<(bool success, string message)> CreateNewPrivateCustomer(PrivateCustomer privateCustomer)
+    {
+        _logger.LogInformation("Creating new Private Customer...");
+
+        try
         {
-            try
-            {
-                var customer = await _unitOfWork.PrivateCustomers.GetPrivateCustomerById(privateCustomer);
-                return (true, "Successfully retrieved customer", customer);
-            }
-            catch (Exception ex)
-            {
-                return (false, "An error occurred: " + ex.Message, null);
-            }
+            _logger.LogInformation("Attemptig to save to database...");
+            await _unitOfWork.PrivateCustomers.AddAsync(privateCustomer);
+            await _unitOfWork.SaveChangesAsync();
+
+            _logger.LogInformation("New private customer has been succesfully added to the database");
+
+            return (true, "The new private customer was succesfully added to the system.");
         }
-
-        // method to get all private customers
-        public async Task<(bool success, string message, List<PrivateCustomer> privateCustomers)> GetAllPrivateCustomers()
+        catch (Exception e)
         {
-            _logger.LogInformation("Controller activated to get all private customers...");
+            _logger.LogWarning(e.ToString());
+            return (false, $"There was an error saving the new user: {e.Message}");
+        }
+    }
 
-            try
-            {
-                var privatecustomers =  await _unitOfWork.PrivateCustomers.GetAllPrivateCustomers();
-                _logger.LogInformation("Private customers found: {PrivateCustomersCount}", privatecustomers.Count);
+    // method to get a private customer by id
+    public async Task<(bool success, string message, PrivateCustomer customer)> GetPrivateCustomerById(
+        PrivateCustomer privateCustomer)
+    {
+        try
+        {
+            var customer = await _unitOfWork.PrivateCustomers.GetPrivateCustomerById(privateCustomer);
+            return (true, "Successfully retrieved customer", customer);
+        }
+        catch (Exception ex)
+        {
+            return (false, "An error occurred: " + ex.Message, null);
+        }
+    }
 
-                return (true, "Private customers found.", privatecustomers);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred while fetching private customers.");
-                return (false, "An error occurred while fetching the private customers.", new List<PrivateCustomer>());
-            }
+    // method to get all private customers
+    public async Task<(bool success, string message, List<PrivateCustomer> privateCustomers)> GetAllPrivateCustomers()
+    {
+        _logger.LogInformation("Controller activated to get all private customers...");
+
+        try
+        {
+            var privatecustomers = await _unitOfWork.PrivateCustomers.GetAllPrivateCustomers();
+            _logger.LogInformation("Private customers found: {PrivateCustomersCount}", privatecustomers.Count);
+
+            return (true, "Private customers found.", privatecustomers);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while fetching private customers.");
+            return (false, "An error occurred while fetching the private customers.", new List<PrivateCustomer>());
         }
     }
 }
-

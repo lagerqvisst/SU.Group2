@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SU.Frontend.Views.SalesAssistantView"
         xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
         xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         mc:Ignorable="d"
@@ -15,25 +14,26 @@
 
     <Grid DataContext="{Binding EditDeleteSellerViewModel, Source={StaticResource Locator}}">
         <!-- View Title -->
-        <TextBlock Text="Edit Or Delete Seller" 
-            FontSize="25" 
-            FontWeight="Bold" Grid.Row="0" 
-            Grid.ColumnSpan="2" 
-            Margin="20,37,0,223" />
+        <TextBlock Text="Edit Or Delete Seller"
+                   FontSize="25"
+                   FontWeight="Bold" Grid.Row="0"
+                   Grid.ColumnSpan="2"
+                   Margin="20,37,0,223" />
 
         <!-- Sellers list by id Panel -->
-        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,141,0,0" Height="231">
+        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="10,141,0,0" Height="231">
             <StackPanel Width="200" Margin="10">
-                <TextBlock Text="Sellers Listed By ID" 
-                           FontWeight="DemiBold" 
+                <TextBlock Text="Sellers Listed By ID"
+                           FontWeight="DemiBold"
                            Margin="0,10,10,20"
-                           FontSize="18"/>
+                           FontSize="18" />
 
                 <!-- ComboBox for Sellers -->
-                <ComboBox Margin="0,0,0,10" 
-                          ItemsSource="{Binding Sellers}" 
+                <ComboBox Margin="0,0,0,10"
+                          ItemsSource="{Binding Sellers}"
                           DisplayMemberPath="EmployeeId"
-                          SelectedItem="{Binding SelectedSeller}"/>
+                          SelectedItem="{Binding SelectedSeller}" />
             </StackPanel>
         </Border>
 
@@ -42,113 +42,113 @@
             <ScrollViewer VerticalScrollBarVisibility="Visible" CanContentScroll="True" Margin="0,1,0,1">
 
                 <StackPanel Orientation="Vertical" Margin="10" Height="207" Width="382">
-                    <TextBlock Text="Seller Details" 
-                               FontWeight="DemiBold" 
-                               FontSize="18" 
-                               Margin="0,10,10,20"/>
+                    <TextBlock Text="Seller Details"
+                               FontWeight="DemiBold"
+                               FontSize="18"
+                               Margin="0,10,10,20" />
                     <!-- Seller type -->
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                        <TextBlock Text="Seller type" 
+                        <TextBlock Text="Seller type"
                                    FontSize="15"
-                                   Margin="0,0,60,0"/>
-                        <ComboBox Margin="0,0,0,0" 
-                                  ItemsSource="{Binding SellerRoles}" 
-                                  SelectedItem="{Binding SelectedSellerType, Mode=TwoWay}" 
-                                  Width="250"/>
+                                   Margin="0,0,60,0" />
+                        <ComboBox Margin="0,0,0,0"
+                                  ItemsSource="{Binding SellerRoles}"
+                                  SelectedItem="{Binding SelectedSellerType, Mode=TwoWay}"
+                                  Width="250" />
                     </StackPanel>
                     <!-- Employee Id -->
                     <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                        <TextBlock Text="Employee ID" 
+                        <TextBlock Text="Employee ID"
                                    FontSize="15"
-                                   Margin="0,0,46,0"/>
-                        <TextBox Text="{Binding SelectedSeller.EmployeeId}"/>
+                                   Margin="0,0,46,0" />
+                        <TextBox Text="{Binding SelectedSeller.EmployeeId}" />
                     </StackPanel>
                     <!-- Personal number -->
                     <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                        <TextBlock Text="Personal Nr" 
+                        <TextBlock Text="Personal Nr"
                                    FontSize="15"
-                                   Margin="0,0,53,0"/>
-                        <TextBox Text="{Binding SelectedSeller.PersonalNumber}"/>
+                                   Margin="0,0,53,0" />
+                        <TextBox Text="{Binding SelectedSeller.PersonalNumber}" />
                     </StackPanel>
                     <!-- First name -->
                     <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                        <TextBlock Text="First Name" 
+                        <TextBlock Text="First Name"
                                    FontSize="15"
-                                   Margin="0,0,58,0"/>
-                        <TextBox Text="{Binding SelectedSeller.FirstName}"/>
+                                   Margin="0,0,58,0" />
+                        <TextBox Text="{Binding SelectedSeller.FirstName}" />
                     </StackPanel>
                     <!-- Last name -->
                     <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                        <TextBlock Text="Last Name" 
+                        <TextBlock Text="Last Name"
                                    FontSize="15"
-                                   Margin="0,0,60,0"/>
-                        <TextBox Text="{Binding SelectedSeller.LastName}"/>
+                                   Margin="0,0,60,0" />
+                        <TextBox Text="{Binding SelectedSeller.LastName}" />
                     </StackPanel>
                     <!-- user name -->
                     <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                        <TextBlock Text="User Name" 
+                        <TextBlock Text="User Name"
                                    FontSize="15"
-                                   Margin="0,0,57,0"/>
-                        <TextBox Text="{Binding SelectedSeller.UserName}"/>
+                                   Margin="0,0,57,0" />
+                        <TextBox Text="{Binding SelectedSeller.UserName}" />
                     </StackPanel>
                     <!-- Password -->
                     <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                        <TextBlock Text="Password" 
+                        <TextBlock Text="Password"
                                    FontSize="15"
-                                   Margin="0,0,68,0"/>
-                        <TextBox Text="{Binding SelectedSeller.Password}"/>
+                                   Margin="0,0,68,0" />
+                        <TextBox Text="{Binding SelectedSeller.Password}" />
                     </StackPanel>
                     <!-- email -->
                     <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                        <TextBlock Text="Email" 
+                        <TextBlock Text="Email"
                                    FontSize="15"
-                                   Margin="0,0,95,0"/>
-                        <TextBox Text="{Binding SelectedSeller.Email}"/>
+                                   Margin="0,0,95,0" />
+                        <TextBox Text="{Binding SelectedSeller.Email}" />
                     </StackPanel>
                     <!-- Agent number -->
                     <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                        <TextBlock Text="Agent Nr" 
+                        <TextBlock Text="Agent Nr"
                                    FontSize="15"
-                                   Margin="0,0,70,0"/>
-                        <TextBlock Text="{Binding SelectedSeller.AgentNumber}"/>
+                                   Margin="0,0,70,0" />
+                        <TextBlock Text="{Binding SelectedSeller.AgentNumber}" />
                     </StackPanel>
                     <!-- Manager id -->
                     <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                        <TextBlock Text="Manager Id" 
+                        <TextBlock Text="Manager Id"
                                    FontSize="15"
-                                   Margin="0,0,54,0"/>
-                        <TextBlock Text="{Binding SelectedSeller.ManagerId}"/>
+                                   Margin="0,0,54,0" />
+                        <TextBlock Text="{Binding SelectedSeller.ManagerId}" />
                     </StackPanel>
                     <!-- Base salary -->
                     <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                        <TextBlock Text="Base Salary" 
+                        <TextBlock Text="Base Salary"
                                    FontSize="15"
-                                   Margin="0,0,56,0"/>
-                        <TextBox Text="{Binding SelectedSeller.BaseSalary}"/>
+                                   Margin="0,0,56,0" />
+                        <TextBox Text="{Binding SelectedSeller.BaseSalary}" />
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>
         </Border>
 
         <!-- save and delete changes -->
-        <Button Style="{StaticResource ConfirmationButtonStyle}" 
-                Content="Save Changes" 
-                Command="{Binding SaveSellerCommand}"  
-                Height="41" 
-                Margin="251,401,529,143" 
-                HorizontalAlignment="Center"/>
-        <Button Style="{StaticResource ConfirmationButtonStyle}" 
-                Content="Delete" 
-                Background="IndianRed" 
-                Command="{Binding DeleteSellerCommand}" 
-                Height="41" 
-                Margin="545,401,235,143" 
-                HorizontalAlignment="Center"/>
+        <Button Style="{StaticResource ConfirmationButtonStyle}"
+                Content="Save Changes"
+                Command="{Binding SaveSellerCommand}"
+                Height="41"
+                Margin="251,401,529,143"
+                HorizontalAlignment="Center" />
+        <Button Style="{StaticResource ConfirmationButtonStyle}"
+                Content="Delete"
+                Background="IndianRed"
+                Command="{Binding DeleteSellerCommand}"
+                Height="41"
+                Margin="545,401,235,143"
+                HorizontalAlignment="Center" />
 
         <!-- Additional Controls (Logout and User Information) -->
-        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0"/>
-        <controls:ReturnButton HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,120,10,0"/>
-        <controls:LogoutButtonControl HorizontalAlignment="Right" Margin="0,546,10,10"/>
+        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" />
+        <controls:ReturnButton HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,120,10,0" />
+        <controls:LogoutButtonControl HorizontalAlignment="Right" Margin="0,546,10,10" />
 
     </Grid>
 </Window>

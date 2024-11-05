@@ -3,90 +3,91 @@ using SU.Backend.Database;
 using SU.Backend.Models.Enums.Insurance;
 using SU.Backend.Models.Insurances.Coverage;
 using SU.Backend.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SU.Backend.Services
+namespace SU.Backend.Services;
+
+/// <summary>
+///     This class is responsible for handling the business logic for private coverages.
+/// </summary>
+public class PrivateCoverageService : IPrivateCoverageService
 {
-    /// <summary>
-    /// This class is responsible for handling the business logic for private coverages.
-    /// </summary>
-    public class PrivateCoverageService : IPrivateCoverageService
+    private readonly ILogger<PrivateCoverageService> _logger;
+    private readonly UnitOfWork _unitOfWork;
+
+    public PrivateCoverageService(UnitOfWork unitOfWork, ILogger<PrivateCoverageService> logger)
     {
-        private readonly UnitOfWork _unitOfWork;
-        private readonly ILogger<PrivateCoverageService> _logger;
+        _unitOfWork = unitOfWork;
+        _logger = logger;
+    }
 
-        public PrivateCoverageService(UnitOfWork unitOfWork, ILogger<PrivateCoverageService> logger)
+    // Method to get all private coverage options
+    public async Task<(bool success, string message, List<PrivateCoverageOption> privateCoverageOptions)>
+        GetAllPrivateCoverageOptions()
+    {
+        _logger.LogInformation("Controller activated to get all private coverage options...");
+
+        try
         {
-            _unitOfWork = unitOfWork;
-            _logger = logger;
+            var coverageOptions = _unitOfWork.PrivateCoverageOptions.GetAllPrivateCoverageOptions();
+            _logger.LogInformation("Private coverage options found: {CoverageOptionsCount}",
+                coverageOptions.Result.Count);
+
+            return (true, "Private coverage options found.", coverageOptions.Result);
         }
-
-        // Method to get all private coverage options
-        public async Task<(bool success, string message, List<PrivateCoverageOption> privateCoverageOptions)> GetAllPrivateCoverageOptions()
+        catch (Exception ex)
         {
-            _logger.LogInformation("Controller activated to get all private coverage options...");
-
-            try
-            {
-                var coverageOptions = _unitOfWork.PrivateCoverageOptions.GetAllPrivateCoverageOptions();
-                _logger.LogInformation("Private coverage options found: {CoverageOptionsCount}", coverageOptions.Result.Count);
-
-                return (true, "Private coverage options found.", coverageOptions.Result);
-            }
-            catch (Exception ex) 
-            {
-                _logger.LogError(ex, "Error occurred while fetching private coverage options.");
-                return (false, "An error occurred while fetching the private coverage options.", new List<PrivateCoverageOption>());
-            }
+            _logger.LogError(ex, "Error occurred while fetching private coverage options.");
+            return (false, "An error occurred while fetching the private coverage options.",
+                new List<PrivateCoverageOption>());
         }
+    }
 
-        // Method to get all private coverages
-        public Task<(bool success, string message, List<PrivateCoverage> privateCoverages)> GetAllPrivateCoverages()
+    // Method to get all private coverages
+    public Task<(bool success, string message, List<PrivateCoverage> privateCoverages)> GetAllPrivateCoverages()
+    {
+        _logger.LogInformation("Controller activated to get all private coverages...");
+
+        try
         {
-            _logger.LogInformation("Controller activated to get all private coverages...");
+            var privatecoverages = _unitOfWork.PrivateCoverages.GetAllPrivateCoverages();
+            _logger.LogInformation("Private coverages found: {CoveragesCount}", privatecoverages.Result.Count);
 
-            try
-            {
-                var privatecoverages = _unitOfWork.PrivateCoverages.GetAllPrivateCoverages();
-                _logger.LogInformation("Private coverages found: {CoveragesCount}", privatecoverages.Result.Count);
-
-                return Task.FromResult((true, "Private coverages found.", privatecoverages.Result));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred while fetching private coverages.");
-                return Task.FromResult((false, "An error occurred while fetching the private coverages.", new List<PrivateCoverage>()));
-            }
+            return Task.FromResult((true, "Private coverages found.", privatecoverages.Result));
         }
-
-        // Method to get a specific private coverage option
-        public async Task<(bool success, PrivateCoverageOption? coverageOption, string message)> GetPrivateCoverageOptionAsync(decimal coverageAmount, InsuranceType insuranceType)
+        catch (Exception ex)
         {
-            try
-            {
-                var currentYear = DateTime.Now.Year;
-                var coverageOption = await _unitOfWork.PrivateCoverageOptions
-                    .GetSpecificPrivateCoverageOption(coverageAmount, new DateTime(currentYear, 1, 1), insuranceType);
+            _logger.LogError(ex, "Error occurred while fetching private coverages.");
+            return Task.FromResult((false, "An error occurred while fetching the private coverages.",
+                new List<PrivateCoverage>()));
+        }
+    }
 
-                if (coverageOption == null)
-                {
-                    _logger.LogWarning("No private coverage option found for amount: {CoverageAmount} and insurance type: {InsuranceType}", coverageAmount, insuranceType);
-                    return (false, null, "No private coverage option found for the input.");
-                }
+    // Method to get a specific private coverage option
+    public async Task<(bool success, PrivateCoverageOption? coverageOption, string message)>
+        GetPrivateCoverageOptionAsync(decimal coverageAmount, InsuranceType insuranceType)
+    {
+        try
+        {
+            var currentYear = DateTime.Now.Year;
+            var coverageOption = await _unitOfWork.PrivateCoverageOptions
+                .GetSpecificPrivateCoverageOption(coverageAmount, new DateTime(currentYear, 1, 1), insuranceType);
 
-                _logger.LogInformation("Private coverage option found: {CoverageOptionId}", coverageOption.PrivateCoverageOptionId);
-                return (true, coverageOption, "Private coverage option found.");
-            }
-            catch (Exception ex)
+            if (coverageOption == null)
             {
-                _logger.LogError(ex, "Error occurred while fetching private coverage option.");
-                return (false, null, "An error occurred while fetching the private coverage option.");
+                _logger.LogWarning(
+                    "No private coverage option found for amount: {CoverageAmount} and insurance type: {InsuranceType}",
+                    coverageAmount, insuranceType);
+                return (false, null, "No private coverage option found for the input.");
             }
+
+            _logger.LogInformation("Private coverage option found: {CoverageOptionId}",
+                coverageOption.PrivateCoverageOptionId);
+            return (true, coverageOption, "Private coverage option found.");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while fetching private coverage option.");
+            return (false, null, "An error occurred while fetching the private coverage option.");
         }
     }
 }
-

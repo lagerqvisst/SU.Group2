@@ -1,39 +1,31 @@
-﻿using SU.Frontend.Helper.Authentication;
+﻿using System.Windows.Input;
 using SU.Frontend.Helper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using SU.Frontend.Helper.Navigation;
-using SU.Backend.Models.Employees;
 using SU.Frontend.Helper.DI_Objects.User;
+using SU.Frontend.Helper.Navigation;
 
-namespace SU.Frontend.ViewModels.UserControlViewModels
+namespace SU.Frontend.ViewModels.UserControlViewModels;
+
+public class MainViewButtonViewModel
 {
-    public class MainViewButtonViewModel
+    // Constructor
+    public MainViewButtonViewModel(INavigationService navigationService, ILoggedInUserService loggedInUserService)
     {
-        // Command
-        public ICommand ReturnToMainViewCommand { get; }
+        _loggedInUserService = loggedInUserService;
+        _navigationService = navigationService;
 
-        // Services
-        public ILoggedInUserService _loggedInUserService { get; }
-        public INavigationService _navigationService { get; }
+        ReturnToMainViewCommand = new RelayCommand(ReturnToMainView);
+    }
 
-        // Constructor
-        public MainViewButtonViewModel(INavigationService navigationService, ILoggedInUserService loggedInUserService)
-        {
-            _loggedInUserService = loggedInUserService;
-            _navigationService = navigationService;
+    // Command
+    public ICommand ReturnToMainViewCommand { get; }
 
-            ReturnToMainViewCommand = new RelayCommand(ReturnToMainView);
-        }
+    // Services
+    public ILoggedInUserService _loggedInUserService { get; }
+    public INavigationService _navigationService { get; }
 
-        // Method to return to the main view
-        public void ReturnToMainView()
-        {
-            _navigationService.ReturnToMain(_loggedInUserService.LoggedInEmployee);
-        }
+    // Method to return to the main view
+    public void ReturnToMainView()
+    {
+        _navigationService.ReturnToMain(_loggedInUserService.LoggedInEmployee);
     }
 }

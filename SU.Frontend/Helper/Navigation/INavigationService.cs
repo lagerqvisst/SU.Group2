@@ -1,52 +1,45 @@
 ﻿using SU.Backend.Models.Employees;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SU.Frontend.Helper.Navigation
+namespace SU.Frontend.Helper.Navigation;
+
+public interface INavigationService
 {
-    public interface INavigationService
-    {
-        void NavigateTo(string viewName, string folderName, object parameter = null);
-        void NavigateToMainViewBasedOnRole(Employee employee);
+    void NavigateTo(string viewName, string folderName, object parameter = null);
+    void NavigateToMainViewBasedOnRole(Employee employee);
 
-        void CloseAllExcept(string viewName);
+    void CloseAllExcept(string viewName);
 
-        void ReturnToMain(Employee employee);
+    void ReturnToMain(Employee employee);
 
-        void ReturnToPrevious();
+    void ReturnToPrevious();
 
-        void NavigateToMonthlyStatistics();
+    void NavigateToMonthlyStatistics();
 
-        void NavigateToTrends();
+    void NavigateToTrends();
 
-        void NavigateToShowInsurances();
+    void NavigateToShowInsurances();
 
-        void NavigateToShowCustomers();
+    void NavigateToShowCustomers();
 
-        void NavigateToEditDeleteCustomer();
+    void NavigateToEditDeleteCustomer();
 
-        void NavigateToEditDeleteInsurance();
+    void NavigateToEditDeleteInsurance();
 
-        void NavigateToRegisterNewCustomer();
+    void NavigateToRegisterNewCustomer();
 
-        void NavigateToRegisterNewInsurance();
+    void NavigateToRegisterNewInsurance();
 
-        void NavigateToShowCustomerProspects();
+    void NavigateToShowCustomerProspects();
 
-        void NavigateToNewPrivateCustomer();
+    void NavigateToNewPrivateCustomer();
 
-        void NavigateToNewCompanyCustomer();
+    void NavigateToNewCompanyCustomer();
 
-        void NavigateToNewPrivateInsurance();
+    void NavigateToNewPrivateInsurance();
 
-        void NavigateToNewCompanyInsurance();
+    void NavigateToNewCompanyInsurance();
 
-        void NavigateToNewOutsideSeller();
+    void NavigateToNewOutsideSeller();
 
-        void NavigateToNewInsideSeller();
-
-    }
+    void NavigateToNewInsideSeller();
 }

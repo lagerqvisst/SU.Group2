@@ -1,62 +1,40 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using SU.Backend.Controllers;
 using SU.Backend.Models.Statistics;
 using SU.Frontend.Helper;
 
-namespace SU.Frontend.ViewModels.Statistics
+namespace SU.Frontend.ViewModels.Statistics;
+
+public class MonthlyStatisticsViewModel : ObservableObject
 {
-    public class MonthlyStatisticsViewModel : ObservableObject
+    private readonly StatisticsController _statisticsController;
+
+    public MonthlyStatisticsViewModel(StatisticsController statisticsController)
     {
-        private readonly StatisticsController _statisticsController;
+        _statisticsController = statisticsController;
+        InsuranceStatistics = new ObservableCollection<InsuranceStatistics>();
 
-        // Lista över försäkringsstatistik
-        public ObservableCollection<InsuranceStatistics> InsuranceStatistics { get; set; }
+        // Ladda statistiken när ViewModel initieras
+        LoadInsuranceStatistics();
+    }
 
-        public MonthlyStatisticsViewModel(StatisticsController statisticsController)
+    // Lista över försäkringsstatistik
+    public ObservableCollection<InsuranceStatistics> InsuranceStatistics { get; set; }
+
+    private async void LoadInsuranceStatistics()
+    {
+        // Kalla på din metod som returnerar (List<InsuranceStatistics>, string message)
+        var result = await _statisticsController.GetMonthlyInsuranceStats();
+
+        if (result.Item1 != null && result.Item1.Any())
         {
-            _statisticsController = statisticsController;
-            InsuranceStatistics = new ObservableCollection<InsuranceStatistics>();
-
-            // Ladda statistiken när ViewModel initieras
-            LoadInsuranceStatistics();
+            InsuranceStatistics.Clear();
+            foreach (var stat in result.Item1) InsuranceStatistics.Add(stat);
         }
-
-        private async void LoadInsuranceStatistics()
+        else
         {
-            // Kalla på din metod som returnerar (List<InsuranceStatistics>, string message)
-            var result = await _statisticsController.GetMonthlyInsuranceStats();
-
-            if (result.Item1 != null && result.Item1.Any())
-            {
-                InsuranceStatistics.Clear();
-                foreach (var stat in result.Item1)
-                {
-                    InsuranceStatistics.Add(stat);
-                }
-            }
-            else
-            {
-                // Hantera meddelandet när ingen statistik finns
-                Console.WriteLine(result.message ?? "Fel vid hämtning av försäkringsstatistik.");
-            }
+            // Hantera meddelandet när ingen statistik finns
+            Console.WriteLine(result.message ?? "Fel vid hämtning av försäkringsstatistik.");
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -3,96 +3,106 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SU.Frontend.Views.CommonViews.NewInsurance"
         xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
         mc:Ignorable="d"
         Title="Company Insurance Options" Height="630" Width="900">
 
     <Window.Resources>
-        <helper:ViewModelLocator x:Key="Locator"/>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <helper:ViewModelLocator x:Key="Locator" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="0*"/>
+            <RowDefinition />
+            <RowDefinition Height="0*" />
         </Grid.RowDefinitions>
         <!-- Header TextBlock (Outside Border) -->
-        <TextBlock Text="Company Insurance Options" 
-                   FontSize="25" 
+        <TextBlock Text="Company Insurance Options"
+                   FontSize="25"
                    FontWeight="Bold"
-                   HorizontalAlignment="Left" 
-                   Margin="20,37,0,17" Width="362"/>
+                   HorizontalAlignment="Left"
+                   Margin="20,37,0,17" Width="362" />
 
-        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" Margin="15,120,0,0" Width="750" Height="460" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" Margin="15,120,0,0" Width="750" Height="460"
+                HorizontalAlignment="Left" VerticalAlignment="Top">
             <Grid DataContext="{Binding CompanyInsuranceTypeViewModel, Source={StaticResource Locator}}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto" MinHeight="454.95"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" MinHeight="454.95" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.5*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1.5*" />
+                    <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
 
                 <!-- Insurance Type, Payment Plan, and Note -->
-                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left" Width="350" Margin="20,20,0,20">
+                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left" Width="350"
+                            Margin="20,20,0,20">
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                        <TextBlock Text="Insurance Type" 
+                        <TextBlock Text="Insurance Type"
                                    FontSize="15"
                                    HorizontalAlignment="Left"
-                                   VerticalAlignment="Center" 
-                                   Margin="0,0,10,0"/>
-                        <ComboBox Width="200" 
-                                  ItemsSource="{Binding CompanyInsuranceTypes}" 
-                                  SelectedItem="{Binding SelectedInsuranceType}"/>
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,10,0" />
+                        <ComboBox Width="200"
+                                  ItemsSource="{Binding CompanyInsuranceTypes}"
+                                  SelectedItem="{Binding SelectedInsuranceType}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Payment Plan" 
-                                   FontSize="15" 
-                                   VerticalAlignment="Center" 
-                                   Margin="0,0,19,0"/>
-                        <ComboBox Width="200" 
-                                  ItemsSource="{Binding PaymentPlans}" 
-                                  SelectedItem="{Binding SelectedPaymentPlan}"/>
+                        <TextBlock Text="Payment Plan"
+                                   FontSize="15"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,19,0" />
+                        <ComboBox Width="200"
+                                  ItemsSource="{Binding PaymentPlans}"
+                                  SelectedItem="{Binding SelectedPaymentPlan}" />
                     </StackPanel>
-                    <TextBlock Text="Notes" 
-                               FontSize="15" 
-                               Margin="0,10,0,0"/>
-                    <TextBox Width="309" 
-                             Height="60" 
+                    <TextBlock Text="Notes"
+                               FontSize="15"
+                               Margin="0,10,0,0" />
+                    <TextBox Width="309"
+                             Height="60"
                              HorizontalAlignment="Left"
                              TextWrapping="Wrap"
-                             AcceptsReturn="True" 
-                             Text="{Binding Note}" 
-                             VerticalScrollBarVisibility="Auto"/>
+                             AcceptsReturn="True"
+                             Text="{Binding Note}"
+                             VerticalScrollBarVisibility="Auto" />
                 </StackPanel>
 
                 <!-- Start Date and End Date -->
-                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="0,10,0,37" Width="200">
-                    <TextBlock Text="Start Date" FontSize="15" Margin="0,10,0,5"/>
-                    <DatePicker SelectedDate="{Binding StartDate}" Width="200" Margin="0,0,0,10"/>
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left"
+                            Margin="0,10,0,37" Width="200">
+                    <TextBlock Text="Start Date" FontSize="15" Margin="0,10,0,5" />
+                    <DatePicker SelectedDate="{Binding StartDate}" Width="200" Margin="0,0,0,10" />
 
-                    <TextBlock Text="End Date" FontSize="15" Margin="0,10,0,5"/>
-                    <DatePicker SelectedDate="{Binding EndDate}" Width="200" Margin="0,0,0,10"/>
+                    <TextBlock Text="End Date" FontSize="15" Margin="0,10,0,5" />
+                    <DatePicker SelectedDate="{Binding EndDate}" Width="200" Margin="0,0,0,10" />
                 </StackPanel>
 
                 <!-- Coverage Options (using ScrollViewers for better control) -->
-                <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Vertical" Margin="20,0,298,0" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Vertical" Margin="20,0,298,0" Grid.ColumnSpan="2"
+                            Grid.RowSpan="2">
                     <!-- Liability Coverage Options -->
-                    <StackPanel Visibility="{Binding IsLiabilityCoverageVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,10,0,0" Width="427">
-                        <TextBlock Text="Liability Coverage Options" FontSize="15" FontWeight="Bold" Margin="0,0,0,5" HorizontalAlignment="Left"/>
+                    <StackPanel
+                        Visibility="{Binding IsLiabilityCoverageVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Margin="0,10,0,0" Width="427">
+                        <TextBlock Text="Liability Coverage Options" FontSize="15" FontWeight="Bold" Margin="0,0,0,5"
+                                   HorizontalAlignment="Left" />
                         <ScrollViewer Height="150" HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <ListView ItemsSource="{Binding LiabilityCoverageOptions}" SelectedItem="{Binding SelectedLiabilityCoverageOption}" Width="310">
+                            <ListView ItemsSource="{Binding LiabilityCoverageOptions}"
+                                      SelectedItem="{Binding SelectedLiabilityCoverageOption}" Width="310">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Deductible" DisplayMemberBinding="{Binding Deductible}" Width="100"/>
-                                        <GridViewColumn Header="Option Amount" DisplayMemberBinding="{Binding OptionAmount}" Width="100"/>
-                                        <GridViewColumn Header="Monthly Premium" DisplayMemberBinding="{Binding MonthlyPremium}" Width="100"/>
+                                        <GridViewColumn Header="Deductible" DisplayMemberBinding="{Binding Deductible}"
+                                                        Width="100" />
+                                        <GridViewColumn Header="Option Amount"
+                                                        DisplayMemberBinding="{Binding OptionAmount}" Width="100" />
+                                        <GridViewColumn Header="Monthly Premium"
+                                                        DisplayMemberBinding="{Binding MonthlyPremium}" Width="100" />
                                     </GridView>
                                 </ListView.View>
                             </ListView>
@@ -100,15 +110,22 @@
                     </StackPanel>
 
                     <!-- Vehicle Insurance Options -->
-                    <StackPanel Visibility="{Binding IsVehicleInsuranceVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,10,0,0">
-                        <TextBlock Text="Vehicle Insurance Options" FontSize="15" FontWeight="Bold" Margin="0,0,0,5" HorizontalAlignment="Left"/>
+                    <StackPanel
+                        Visibility="{Binding IsVehicleInsuranceVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Margin="0,10,0,0">
+                        <TextBlock Text="Vehicle Insurance Options" FontSize="15" FontWeight="Bold" Margin="0,0,0,5"
+                                   HorizontalAlignment="Left" />
                         <ScrollViewer Height="150" HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <ListView ItemsSource="{Binding VehicleInsuranceOptions}" SelectedItem="{Binding SelectedVehicleCoverageOption}" Width="360">
+                            <ListView ItemsSource="{Binding VehicleInsuranceOptions}"
+                                      SelectedItem="{Binding SelectedVehicleCoverageOption}" Width="360">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Deductible" DisplayMemberBinding="{Binding Deductible}" Width="100"/>
-                                        <GridViewColumn Header="Option Description" DisplayMemberBinding="{Binding OptionDescription}" Width="150"/>
-                                        <GridViewColumn Header="Option Cost" DisplayMemberBinding="{Binding OptionCost}" Width="100"/>
+                                        <GridViewColumn Header="Deductible" DisplayMemberBinding="{Binding Deductible}"
+                                                        Width="100" />
+                                        <GridViewColumn Header="Option Description"
+                                                        DisplayMemberBinding="{Binding OptionDescription}" Width="150" />
+                                        <GridViewColumn Header="Option Cost"
+                                                        DisplayMemberBinding="{Binding OptionCost}" Width="100" />
                                     </GridView>
                                 </ListView.View>
                             </ListView>
@@ -116,42 +133,57 @@
                     </StackPanel>
 
                     <!-- Property and Inventory Coverage Options -->
-                    <StackPanel Visibility="{Binding IsPropertyCoverageVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,10,0,0">
-                        <TextBlock Text="Property and Inventory Coverage" FontSize="15" FontWeight="Bold" Margin="0,0,0,0"/>
+                    <StackPanel
+                        Visibility="{Binding IsPropertyCoverageVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Margin="0,10,0,0">
+                        <TextBlock Text="Property and Inventory Coverage" FontSize="15" FontWeight="Bold"
+                                   Margin="0,0,0,0" />
                         <Grid Margin="0,5,0,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="150" />
                                 <!-- Etikettens kolumn -->
-                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition Width="250" />
                                 <!-- Inmatningsfältets kolumn -->
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <TextBlock Text="Property Address" FontSize="15" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,5"/>
-                            <TextBox Style="{StaticResource FillInBoxesStyle}" Text="{Binding PropertyAddress}" Grid.Row="0" Grid.Column="1" Width="200" Margin="0,5"/>
+                            <TextBlock Text="Property Address" FontSize="15" Grid.Row="0" Grid.Column="0"
+                                       VerticalAlignment="Center" Margin="0,5" />
+                            <TextBox Style="{StaticResource FillInBoxesStyle}" Text="{Binding PropertyAddress}"
+                                     Grid.Row="0" Grid.Column="1" Width="200" Margin="0,5" />
 
-                            <TextBlock Text="Property Value" FontSize="15" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,5"/>
-                            <TextBox Style="{StaticResource FillInBoxesStyle}" Text="{Binding PropertyValue}" Grid.Row="1" Grid.Column="1" Width="200" Margin="0,5"/>
+                            <TextBlock Text="Property Value" FontSize="15" Grid.Row="1" Grid.Column="0"
+                                       VerticalAlignment="Center" Margin="0,5" />
+                            <TextBox Style="{StaticResource FillInBoxesStyle}" Text="{Binding PropertyValue}"
+                                     Grid.Row="1" Grid.Column="1" Width="200" Margin="0,5" />
 
-                            <TextBlock Text="Inventory Value" FontSize="15" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,5"/>
-                            <TextBox Style="{StaticResource FillInBoxesStyle}" Text="{Binding InventoryValue}" Grid.Row="2" Grid.Column="1" Width="200" Margin="0,5"/>
+                            <TextBlock Text="Inventory Value" FontSize="15" Grid.Row="2" Grid.Column="0"
+                                       VerticalAlignment="Center" Margin="0,5" />
+                            <TextBox Style="{StaticResource FillInBoxesStyle}" Text="{Binding InventoryValue}"
+                                     Grid.Row="2" Grid.Column="1" Width="200" Margin="0,5" />
                         </Grid>
                     </StackPanel>
                 </StackPanel>
 
                 <!-- Risk Zone ListView for VehicleInsurance aligned with Vehicle Insurance Options -->
-                <StackPanel Grid.Row="3" Grid.Column="1" Visibility="{Binding IsVehicleInsuranceVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="20,10,0,270">
-                    <TextBlock Text="Risk Zones" FontSize="15" FontWeight="Bold" Margin="0,0,0,5" HorizontalAlignment="Left"/>
+                <StackPanel Grid.Row="3" Grid.Column="1"
+                            Visibility="{Binding IsVehicleInsuranceVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            Margin="20,10,0,270">
+                    <TextBlock Text="Risk Zones" FontSize="15" FontWeight="Bold" Margin="0,0,0,5"
+                               HorizontalAlignment="Left" />
                     <ScrollViewer Height="150" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <ListView ItemsSource="{Binding RiskZones}" SelectedItem="{Binding SelectedRiskZone}" Width="200">
+                        <ListView ItemsSource="{Binding RiskZones}" SelectedItem="{Binding SelectedRiskZone}"
+                                  Width="200">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="Risk Zone Level" DisplayMemberBinding="{Binding RiskZoneLevel}" Width="100"/>
-                                    <GridViewColumn Header="Zone Factor" DisplayMemberBinding="{Binding ZoneFactor}" Width="100"/>
+                                    <GridViewColumn Header="Risk Zone Level"
+                                                    DisplayMemberBinding="{Binding RiskZoneLevel}" Width="100" />
+                                    <GridViewColumn Header="Zone Factor" DisplayMemberBinding="{Binding ZoneFactor}"
+                                                    Width="100" />
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -159,27 +191,27 @@
                 </StackPanel>
 
 
-
                 <!-- Create Insurance Button -->
-                <Button Style="{StaticResource ConfirmationButtonStyle}" 
-                        Content="Register Insurance" 
-                        Command="{Binding CreateInsuranceCommand}" 
-                        HorizontalAlignment="Right" 
-                        Width="150" 
-                        Height="40" 
-                        Grid.Row="3" 
-                        Grid.Column="1" 
-                        Margin="0,199,10,210"/>
+                <Button Style="{StaticResource ConfirmationButtonStyle}"
+                        Content="Register Insurance"
+                        Command="{Binding CreateInsuranceCommand}"
+                        HorizontalAlignment="Right"
+                        Height="40"
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Margin="0,199,10,210" />
             </Grid>
         </Border>
 
         <!-- Main View, Logout Button and SignedInUserUserControl -->
         <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,120,10,0">
-            <controls:ReturnButton Margin="0,0,0,10"/>
-            <controls:MainViewButtonControl Margin="0"/>
+            <controls:ReturnButton Margin="0,0,0,10" />
+            <controls:MainViewButtonControl Margin="0" />
         </StackPanel>
-        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,7" Height="30" Width="100"/>
-        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Height="97" Width="214"/>
+        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,7"
+                                      Height="30" Width="100" />
+        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0"
+                                          Height="97" Width="214" />
 
     </Grid>
 </Window>

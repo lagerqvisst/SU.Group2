@@ -5,90 +5,92 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
-        xmlns:local="clr-namespace:SU.Frontend.Views.SalesAssistantView"
         mc:Ignorable="d"
         Title="Register New Seller View" SizeToContent="WidthAndHeight">
 
     <Window.Resources>
-        <helper:ViewModelLocator x:Key="Locator"/>
+        <helper:ViewModelLocator x:Key="Locator" />
     </Window.Resources>
 
     <Grid DataContext="{Binding RegisterNewSellerViewModel, Source={StaticResource Locator}}">
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="Auto" MinHeight="0"/>
+            <RowDefinition />
+            <RowDefinition Height="Auto" MinHeight="0" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="229*"/>
-            <ColumnDefinition Width="248*"/>
-            <ColumnDefinition Width="323*"/>
+            <ColumnDefinition Width="229*" />
+            <ColumnDefinition Width="248*" />
+            <ColumnDefinition Width="323*" />
         </Grid.ColumnDefinitions>
 
         <!-- View Title -->
-        <TextBlock Text="Register New Seller" 
-                   FontSize="25" 
-                   FontWeight="Bold" Grid.Row="0" 
-                   Grid.ColumnSpan="2" 
+        <TextBlock Text="Register New Seller"
+                   FontSize="25"
+                   FontWeight="Bold" Grid.Row="0"
+                   Grid.ColumnSpan="2"
                    Margin="20,37,0,223" />
 
         <!-- Seller Information Panel -->
-        <Border BorderBrush="Green" BorderThickness="2" Grid.ColumnSpan="2" CornerRadius="3" Margin="15,120,20,237" Width="410">
+        <Border BorderBrush="Green" BorderThickness="2" Grid.ColumnSpan="2" CornerRadius="3" Margin="15,120,20,237"
+                Width="410">
             <StackPanel Orientation="Vertical" Margin="10">
-                <TextBlock Text="Seller Information" FontSize="18" FontWeight="DemiBold" Margin="0,10,10,20"/>
+                <TextBlock Text="Seller Information" FontSize="18" FontWeight="DemiBold" Margin="0,10,10,20" />
 
                 <!-- Seller Type -->
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                    <TextBlock Text="Seller Type" 
+                    <TextBlock Text="Seller Type"
                                FontSize="15"
-                               Margin="0,0,50,0"/>
-                    <ComboBox Width="239" 
-                              ItemsSource="{Binding SellerRoles}" 
-                              SelectedItem="{Binding SelectedRole, Mode=TwoWay}"/>
+                               Margin="0,0,50,0" />
+                    <ComboBox Width="239"
+                              ItemsSource="{Binding SellerRoles}"
+                              SelectedItem="{Binding SelectedRole, Mode=TwoWay}" />
                 </StackPanel>
 
                 <!-- Personal Number -->
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                    <TextBlock Text="Personal Nr" 
+                    <TextBlock Text="Personal Nr"
                                FontSize="15"
-                               Margin="0,0,45,0"/>
-                    <TextBox Style="{StaticResource ResourceKey=FillInBoxesStyle}" 
-                             Text="{Binding PersonalNumber, Mode=TwoWay}" 
-                             Width="239"/>
+                               Margin="0,0,45,0" />
+                    <TextBox Style="{StaticResource ResourceKey=FillInBoxesStyle}"
+                             Text="{Binding PersonalNumber, Mode=TwoWay}"
+                             Width="239" />
                 </StackPanel>
 
                 <!-- First Name -->
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                    <TextBlock Text="First Name" 
+                    <TextBlock Text="First Name"
                                FontSize="15"
-                               Margin="0,0,50,0"/>
-                    <TextBox Style="{StaticResource FillInBoxesStyle}" 
-                             Text="{Binding FirstName, Mode=TwoWay}" 
-                             Width="239"/>
+                               Margin="0,0,50,0" />
+                    <TextBox Style="{StaticResource FillInBoxesStyle}"
+                             Text="{Binding FirstName, Mode=TwoWay}"
+                             Width="239" />
                 </StackPanel>
 
                 <!-- Last Name -->
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                    <TextBlock Text="Last Name" 
+                    <TextBlock Text="Last Name"
                                FontSize="15"
-                               Margin="0,0,52,0"/>
-                    <TextBox Style="{StaticResource FillInBoxesStyle}" 
-                             Text="{Binding LastName, Mode=TwoWay}" 
-                             Width="239"/>
+                               Margin="0,0,52,0" />
+                    <TextBox Style="{StaticResource FillInBoxesStyle}"
+                             Text="{Binding LastName, Mode=TwoWay}"
+                             Width="239" />
                 </StackPanel>
 
                 <!-- Save Button -->
-                <Button Style="{StaticResource ConfirmationButtonStyle}" 
-                        Content="Register Seller" 
-                        Command="{Binding SaveSellerCommand}" 
-                        HorizontalAlignment="Center" 
-                        Margin="0,20,0,0"/>
+                <Button Style="{StaticResource ConfirmationButtonStyle}"
+                        Content="Register Seller"
+                        Command="{Binding SaveSellerCommand}"
+                        HorizontalAlignment="Center"
+                        Margin="0,20,0,0" />
             </StackPanel>
         </Border>
 
         <!-- Additional Controls (Logout and User Information) -->
-        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Grid.Column="2" Height="97" Width="214"/>
-        <controls:ReturnButton HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,120,10,0"/>
-        <controls:LogoutButtonControl  VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10" Grid.Column="2" Height="30" Width="100"/>
+        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0"
+                                          Grid.Column="2" Height="97" Width="214" />
+        <controls:ReturnButton HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,120,10,0" />
+        <controls:LogoutButtonControl VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10"
+                                      Grid.Column="2" Height="30" Width="100" />
 
     </Grid>
 </Window>

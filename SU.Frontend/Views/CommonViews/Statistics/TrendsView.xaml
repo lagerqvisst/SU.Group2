@@ -23,20 +23,20 @@
         <!-- TabControl för att hantera de tre olika sidorna -->
         <TabControl Grid.Row="0">
             <TabItem Header="Line Diagram">
-                <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/LineChartPage.xaml"/>
+                <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/LineChartPage.xaml" />
             </TabItem>
             <TabItem Header="Table">
-                <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/TablePage.xaml"/>
+                <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/TablePage.xaml" />
             </TabItem>
             <TabItem Header="Bar Chart">
-                <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/BarChartPage.xaml"/>
+                <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/BarChartPage.xaml" />
             </TabItem>
         </TabControl>
 
         <!-- Horisontell StackPanel för knapparna längst ned -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <controls:ReturnButton Margin="5" Padding="5"/>
-            <controls:LogoutButtonControl Margin="5" Padding="5"/>
+            <controls:ReturnButton Margin="5" Padding="5" />
+            <controls:LogoutButtonControl Margin="5" Padding="5" />
         </StackPanel>
     </Grid>
 </Window>

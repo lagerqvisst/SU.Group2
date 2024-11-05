@@ -3,35 +3,35 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SU.Frontend.Views.CommonViews.NewInsurance"
         xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
         mc:Ignorable="d"
         Title="Private Insurance Options" Height="780" Width="890">
 
     <Window.Resources>
-        <helper:ViewModelLocator x:Key="Locator"/>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <helper:ViewModelLocator x:Key="Locator" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Window.Resources>
 
     <Grid>
         <!-- Header TextBlock (Outside Border) -->
-        <TextBlock Text="Private Insurance Options" 
-                   FontSize="25" 
+        <TextBlock Text="Private Insurance Options"
+                   FontSize="25"
                    FontWeight="Bold"
-                   HorizontalAlignment="Left" 
-                   Margin="20,37,0,0" Width="302"/>
+                   HorizontalAlignment="Left"
+                   Margin="20,37,0,0" Width="302" />
 
-        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" Margin="15,120,0,0" Width="750" Height="620" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Border CornerRadius="3" BorderBrush="Green" BorderThickness="2" Margin="15,120,0,0" Width="750" Height="620"
+                HorizontalAlignment="Left" VerticalAlignment="Top">
             <Grid DataContext="{Binding PrivateInsuranceTypeViewModel, Source={StaticResource Locator}}">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="140*" />
@@ -39,124 +39,141 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Insurance Type, Payment Plan, and Note -->
-                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left" Margin="20,20,0,20" Width="350">
+                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left"
+                            Margin="20,20,0,20" Width="350">
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                        <TextBlock Text="Insurance Type" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,10,0" FontSize="15"/>
-                        <ComboBox Width="200" ItemsSource="{Binding PrivateInsuranceTypes}" 
-                              SelectedItem="{Binding SelectedInsuranceType}"/>
+                        <TextBlock Text="Insurance Type" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   Margin="0,0,10,0" FontSize="15" />
+                        <ComboBox Width="200" ItemsSource="{Binding PrivateInsuranceTypes}"
+                                  SelectedItem="{Binding SelectedInsuranceType}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Payment Plan" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,19,0" FontSize="15"/>
-                        <ComboBox Width="200" ItemsSource="{Binding PaymentPlans}" 
-                              SelectedItem="{Binding SelectedPaymentPlan}"/>
+                        <TextBlock Text="Payment Plan" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   Margin="0,0,19,0" FontSize="15" />
+                        <ComboBox Width="200" ItemsSource="{Binding PaymentPlans}"
+                                  SelectedItem="{Binding SelectedPaymentPlan}" />
                     </StackPanel>
-                    <TextBlock Text="Notes" FontSize="15" Margin="0,10,0,0"/>
-                    <TextBox Width="309" 
+                    <TextBlock Text="Notes" FontSize="15" Margin="0,10,0,0" />
+                    <TextBox Width="309"
                              Height="60"
                              HorizontalAlignment="Left"
-                             TextWrapping="Wrap" 
-                             AcceptsReturn="True" 
-                             Text="{Binding Note}" 
-                             VerticalScrollBarVisibility="Auto"/>
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"
+                             Text="{Binding Note}"
+                             VerticalScrollBarVisibility="Auto" />
                 </StackPanel>
 
                 <!-- Start Date and End Date -->
-                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="0,10,0,0" Width="200">
-                    <TextBlock Text="Start Date" FontSize="15" Margin="0,10,0,5"/>
-                    <DatePicker SelectedDate="{Binding StartDate}" Width="200" Margin="0,0,0,10"/>
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left"
+                            Margin="0,10,0,0" Width="200">
+                    <TextBlock Text="Start Date" FontSize="15" Margin="0,10,0,5" />
+                    <DatePicker SelectedDate="{Binding StartDate}" Width="200" Margin="0,0,0,10" />
 
-                    <TextBlock Text="End Date" FontSize="15" Margin="0,10,0,5"/>
-                    <DatePicker SelectedDate="{Binding EndDate}" Width="200" Margin="0,0,0,10"/>
+                    <TextBlock Text="End Date" FontSize="15" Margin="0,10,0,5" />
+                    <DatePicker SelectedDate="{Binding EndDate}" Width="200" Margin="0,0,0,10" />
                 </StackPanel>
 
                 <!-- Checkbox for Insured Person Same as Policy Holder and related fields -->
-                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="0,10,0,20" Width="300">
-                    <CheckBox Content="Insured Person same as Policy Holder" 
-                              IsChecked="{Binding IsInsuredPersonSameAsPolicyHolder}" 
+                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left"
+                            Margin="0,10,0,20" Width="300">
+                    <CheckBox Content="Insured Person same as Policy Holder"
+                              IsChecked="{Binding IsInsuredPersonSameAsPolicyHolder}"
                               FontSize="15"
-                              VerticalAlignment="Center" Margin="0,10,0,30"/>
-                    <StackPanel Orientation="Vertical" 
+                              VerticalAlignment="Center" Margin="0,10,0,30" />
+                    <StackPanel Orientation="Vertical"
                                 HorizontalAlignment="Left"
                                 Visibility="{Binding IsInsuredPersonFieldsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <TextBlock Text="Insured Person Name" 
+                        <TextBlock Text="Insured Person Name"
                                    Width="211"
                                    Margin="0,0,20,0"
-                                   FontSize="15"/>
-                        <TextBox Width="200" 
+                                   FontSize="15" />
+                        <TextBox Width="200"
                                  Height="20"
-                                 Text="{Binding InsuredPersonName}" 
-                                 Margin="0,0,30,10"/>
+                                 Text="{Binding InsuredPersonName}"
+                                 Margin="0,0,30,10" />
 
-                        <TextBlock Text="Insured Person Personal Number" 
-                                   Width="230" 
-                                   FontSize="15"/>
-                        <TextBox Width="200" 
+                        <TextBlock Text="Insured Person Personal Number"
+                                   Width="230"
+                                   FontSize="15" />
+                        <TextBox Width="200"
                                  Height="20"
-                                 Text="{Binding InsuredPersonPersonalNumber}" 
-                                 Margin="0,0,30,10"/>
+                                 Text="{Binding InsuredPersonPersonalNumber}"
+                                 Margin="0,0,30,10" />
                     </StackPanel>
                 </StackPanel>
 
                 <!-- Coverage Options ListView -->
-                <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Margin="20,169,0,10" Grid.RowSpan="2" Width="350">
-                    <TextBlock Text="{Binding DisplayYearText}" FontSize="10" Margin="0,0,0,10" TextAlignment="Left"/>
-                    <ListView Height="136" 
-                          ItemsSource="{Binding AvailableCoverageOptions}" 
-                          SelectedItem="{Binding SelectedCoverageOption}" 
-                          IsEnabled="{Binding IsCoverageOptionsEnabled}"
-                          MaxWidth="312" MinWidth="250" HorizontalAlignment="Left" Width="309">
+                <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Margin="20,169,0,10"
+                            Grid.RowSpan="2" Width="350">
+                    <TextBlock Text="{Binding DisplayYearText}" FontSize="10" Margin="0,0,0,10" TextAlignment="Left" />
+                    <ListView Height="136"
+                              ItemsSource="{Binding AvailableCoverageOptions}"
+                              SelectedItem="{Binding SelectedCoverageOption}"
+                              IsEnabled="{Binding IsCoverageOptionsEnabled}"
+                              MaxWidth="312" MinWidth="250" HorizontalAlignment="Left" Width="309">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Coverage Amount" DisplayMemberBinding="{Binding CoverageAmount}" Width="150"/>
-                                <GridViewColumn Header="Monthly Premium" DisplayMemberBinding="{Binding MonthlyPremium}" Width="100"/>
+                                <GridViewColumn Header="Coverage Amount"
+                                                DisplayMemberBinding="{Binding CoverageAmount}" Width="150" />
+                                <GridViewColumn Header="Monthly Premium"
+                                                DisplayMemberBinding="{Binding MonthlyPremium}" Width="100" />
                             </GridView>
                         </ListView.View>
                     </ListView>
                 </StackPanel>
 
                 <!-- Expander for Addons Section on the right -->
-                <Expander Visibility="{Binding IsAddonVisible, Converter={StaticResource BooleanToVisibilityConverter}}" 
-                          Header="Insurance Addon Options" 
-                          FontSize="15"
-                          Width="434"
-                          Grid.Row="4"
-                          ExpandDirection="Down" 
-                          VerticalAlignment="Top" 
-                          HorizontalAlignment="Center" Height="233" Grid.RowSpan="2">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="0,0,0,17">
+                <Expander
+                    Visibility="{Binding IsAddonVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Header="Insurance Addon Options"
+                    FontSize="15"
+                    Width="434"
+                    Grid.Row="4"
+                    ExpandDirection="Down"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Center" Height="233" Grid.RowSpan="2">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                  Margin="0,0,0,17">
                         <Grid Margin="0,10,0,-14">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Text="Sickness Accident" FontSize="15" Grid.Row="0" Grid.Column="0" TextAlignment="Left" HorizontalAlignment="Left" Margin="0,0,0,5" Grid.ColumnSpan="3"/>
-                            <ListView Grid.Row="1" Grid.Column="0" 
-                              ItemsSource="{Binding SicknessAccidentAddons}" 
-                              SelectedItem="{Binding SelectedSicknessAccidentAddon}"
-                              HorizontalAlignment="Left" Margin="0,0,0,10" Grid.ColumnSpan="2">
+                            <TextBlock Text="Sickness Accident" FontSize="15" Grid.Row="0" Grid.Column="0"
+                                       TextAlignment="Left" HorizontalAlignment="Left" Margin="0,0,0,5"
+                                       Grid.ColumnSpan="3" />
+                            <ListView Grid.Row="1" Grid.Column="0"
+                                      ItemsSource="{Binding SicknessAccidentAddons}"
+                                      SelectedItem="{Binding SelectedSicknessAccidentAddon}"
+                                      HorizontalAlignment="Left" Margin="0,0,0,10" Grid.ColumnSpan="2">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Coverage" DisplayMemberBinding="{Binding CoverageAmount}" Width="80"/>
-                                        <GridViewColumn Header="Extra Premium" DisplayMemberBinding="{Binding BaseExtraPremium}" Width="100"/>
+                                        <GridViewColumn Header="Coverage"
+                                                        DisplayMemberBinding="{Binding CoverageAmount}" Width="80" />
+                                        <GridViewColumn Header="Extra Premium"
+                                                        DisplayMemberBinding="{Binding BaseExtraPremium}" Width="100" />
                                     </GridView>
                                 </ListView.View>
                             </ListView>
 
-                            <TextBlock Text="Long Term Sickness" FontSize="15" Grid.Row="0" Grid.Column="2" TextAlignment="Left" HorizontalAlignment="Left" Margin="0,0,0,5"/>
-                            <ListView Grid.Row="1" Grid.Column="2"  
-                              ItemsSource="{Binding LongTermSicknessAddons}" 
-                              SelectedItem="{Binding SelectedLongTermSicknessAddon}"
-                              HorizontalAlignment="Left" Margin="10,0,0,10">
+                            <TextBlock Text="Long Term Sickness" FontSize="15" Grid.Row="0" Grid.Column="2"
+                                       TextAlignment="Left" HorizontalAlignment="Left" Margin="0,0,0,5" />
+                            <ListView Grid.Row="1" Grid.Column="2"
+                                      ItemsSource="{Binding LongTermSicknessAddons}"
+                                      SelectedItem="{Binding SelectedLongTermSicknessAddon}"
+                                      HorizontalAlignment="Left" Margin="10,0,0,10">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Coverage" DisplayMemberBinding="{Binding CoverageAmount}" Width="80"/>
-                                        <GridViewColumn Header="Extra Premium" DisplayMemberBinding="{Binding BaseExtraPremium}" Width="100"/>
+                                        <GridViewColumn Header="Coverage"
+                                                        DisplayMemberBinding="{Binding CoverageAmount}" Width="80" />
+                                        <GridViewColumn Header="Extra Premium"
+                                                        DisplayMemberBinding="{Binding BaseExtraPremium}" Width="100" />
                                     </GridView>
                                 </ListView.View>
                             </ListView>
@@ -166,26 +183,27 @@
 
                 <!-- Create Insurance Button -->
                 <Button Style="{StaticResource ConfirmationButtonStyle}"
-                        Content="Register Insurance" 
-                        Command="{Binding CreateInsuranceCommand}" 
-                        HorizontalAlignment="Right" 
-                        VerticalAlignment="Bottom" 
-                        Width="150" 
-                        Height="40" 
-                        Grid.Row="5" 
-                        Grid.Column="1" 
-                        Margin="10,160,20,0"/>
+                        Content="Register Insurance"
+                        Command="{Binding CreateInsuranceCommand}"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Height="40"
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        Margin="10,160,20,0" />
 
             </Grid>
         </Border>
 
         <!-- Main View, Logout Button and SignedInUserUserControl -->
         <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,120,10,0">
-            <controls:ReturnButton Margin="0,0,0,10"/>
-            <controls:MainViewButtonControl Margin="0"/>
+            <controls:ReturnButton Margin="0,0,0,10" />
+            <controls:MainViewButtonControl Margin="0" />
         </StackPanel>
-        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Height="30" Width="100"/>
-        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Height="97" Width="214"/>
+        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10"
+                                      Height="30" Width="100" />
+        <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0"
+                                          Height="97" Width="214" />
 
     </Grid>
 </Window>

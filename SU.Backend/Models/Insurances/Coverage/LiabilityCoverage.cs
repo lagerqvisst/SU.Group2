@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace SU.Backend.Models.Insurances.Coverage;
 
-namespace SU.Backend.Models.Insurances.Coverage
+/// <summary>
+///     This class represents the liability coverage for an insurance.
+///     It has an instance of LiabilityCoverageOption which represents the different options for liability coverage.
+/// </summary>
+public class LiabilityCoverage
 {
-    /// <summary>
-    /// This class represents the liability coverage for an insurance.
-    /// It has an instance of LiabilityCoverageOption which represents the different options for liability coverage.
-    /// </summary>
-    public class LiabilityCoverage 
-    {
-        public int LiabilityCoverageId { get; set; } // PK
-        public int InsuranceCoverageId { get; set; } // FK to InsuranceCoverage
-        public int LiabilityCoverageOptionId { get; set; } // FK to LiabilityCoverageOption
-        public InsuranceCoverage InsuranceCoverage { get; set; } // Navigation to InsuranceCoverage
+    public int LiabilityCoverageId { get; set; } // PK
+    public int InsuranceCoverageId { get; set; } // FK to InsuranceCoverage
+    public int LiabilityCoverageOptionId { get; set; } // FK to LiabilityCoverageOption
+    public InsuranceCoverage InsuranceCoverage { get; set; } // Navigation to InsuranceCoverage
 
-        public LiabilityCoverageOption LiabilityCoverageOption { get; set; } // Navigation to LiabilityCoverageOption
-
-    }
+    public LiabilityCoverageOption LiabilityCoverageOption { get; set; } // Navigation to LiabilityCoverageOption
 }

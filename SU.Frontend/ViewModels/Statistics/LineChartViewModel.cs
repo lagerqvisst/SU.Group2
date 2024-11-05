@@ -1,23 +1,16 @@
-﻿using LiveChartsCore.SkiaSharpView;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Input;
 using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using SU.Backend.Controllers;
 using SU.Backend.Helper;
 using SU.Backend.Models.Enums.Insurance;
-using SU.Backend.Services.Interfaces;
 using SU.Frontend.Helper;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-using System.Windows;
-using SU.Backend.Controllers;
 
 public class LineChartViewModel : ObservableObject
 {
     private readonly StatisticsController _statisticsController;
-
-    public ICommand ExportLineChartCommand { get; }
-
-    public ObservableCollection<ISeries> Series { get; set; }
-    public Axis[] XAxes { get; set; }
-    public Axis[] YAxes { get; set; }
 
     public List<InsuranceType> insuranceTypes = EnumService.InsuranceType();
 
@@ -30,6 +23,12 @@ public class LineChartViewModel : ObservableObject
         OnInitalized();
     }
 
+    public ICommand ExportLineChartCommand { get; }
+
+    public ObservableCollection<ISeries> Series { get; set; }
+    public Axis[] XAxes { get; set; }
+    public Axis[] YAxes { get; set; }
+
     private async Task OnInitalized()
     {
         await LoadDataAsync(2024);
@@ -38,7 +37,8 @@ public class LineChartViewModel : ObservableObject
     private async Task LoadDataAsync(int year)
     {
         //var (success, message, statistics) = await _statisticsService.GetActiveSellerStatistics(year, insuranceTypes);
-        var (success, message, statistics) = await _statisticsController.GetActiveSellerStatistics(year, insuranceTypes);
+        var (success, message, statistics) =
+            await _statisticsController.GetActiveSellerStatistics(year, insuranceTypes);
 
         if (!success) return;
 
@@ -49,7 +49,7 @@ public class LineChartViewModel : ObservableObject
             Series.Add(new LineSeries<int>
             {
                 Values = monthlySales,
-                Name = seller.SellerName,
+                Name = seller.SellerName
             });
         }
 
@@ -77,19 +77,18 @@ public class LineChartViewModel : ObservableObject
     private async Task ExportLineChartDataAsync()
     {
         var year = 2024;
-        var (success, message, statistics) = await _statisticsController.GetActiveSellerStatistics(year, insuranceTypes);
+        var (success, message, statistics) =
+            await _statisticsController.GetActiveSellerStatistics(year, insuranceTypes);
 
         if (success && statistics != null)
         {
             var exportResult = await _statisticsController.ExportLineChart(statistics);
             if (!exportResult.success)
-            {
-                MessageBox.Show(exportResult.message, "Error exporting to Excel", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+                MessageBox.Show(exportResult.message, "Error exporting to Excel", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             else
-            {
-                MessageBox.Show(exportResult.message, "Export Successful", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-        }
+                MessageBox.Show(exportResult.message, "Export Successful", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
         }
     }
+}

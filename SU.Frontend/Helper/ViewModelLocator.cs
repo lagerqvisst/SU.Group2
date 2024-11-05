@@ -11,7 +11,6 @@ using SU.Frontend.ViewModels.SellerViewModels;
 using SU.Frontend.ViewModels.Statistics;
 using SU.Frontend.ViewModels.UserControlViewModels;
 
-
 namespace SU.Frontend.Helper
 {
     namespace SU.Frontend.Helper
@@ -31,7 +30,7 @@ namespace SU.Frontend.Helper
             public SignedInUserViewModel SignedInUserViewModel =>
                 App.AppHost?.Services.GetService<SignedInUserViewModel>();
 
-           public CeoMainViewModel CeoMainViewModel =>
+            public CeoMainViewModel CeoMainViewModel =>
                 App.AppHost?.Services.GetService<CeoMainViewModel>();
 
             public FinancialAssistantMainViewModel FinancialAssistantMainViewModel =>
@@ -40,7 +39,7 @@ namespace SU.Frontend.Helper
             public SalesManagerMainViewModel SalesManagerMainViewModel =>
                 App.AppHost?.Services.GetService<SalesManagerMainViewModel>();
 
-            public SellerMainViewModel SellerMainViewModel => 
+            public SellerMainViewModel SellerMainViewModel =>
                 App.AppHost?.Services.GetService<SellerMainViewModel>();
 
             public SalesAssistantMainViewModel SalesAssistantMainViewModel =>
@@ -79,14 +78,14 @@ namespace SU.Frontend.Helper
             public ShowInsuranceViewModel ShowInsuranceViewModel =>
                 App.AppHost?.Services.GetService<ShowInsuranceViewModel>();
 
-           public EditDeleteCustomerViewModel EditDeleteCustomerViewModel =>
+            public EditDeleteCustomerViewModel EditDeleteCustomerViewModel =>
                 App.AppHost?.Services.GetService<EditDeleteCustomerViewModel>();
 
             public EditDeleteSellerViewModel EditDeleteSellerViewModel =>
                 App.AppHost?.Services.GetService<EditDeleteSellerViewModel>();
 
             public EditDeleteInsuranceViewModel EditDeleteInsuranceViewModel =>
-              App.AppHost?.Services.GetService<EditDeleteInsuranceViewModel>();
+                App.AppHost?.Services.GetService<EditDeleteInsuranceViewModel>();
 
             public MonthlyStatisticsViewModel MonthlyStatisticsViewModel =>
                 App.AppHost?.Services.GetService<MonthlyStatisticsViewModel>();
@@ -99,7 +98,7 @@ namespace SU.Frontend.Helper
 
             public DownloadButtonViewModel DownloadButtonViewModel =>
                 App.AppHost?.Services.GetService<DownloadButtonViewModel>();
-          
+
             public ShowCustomerProspectViewModel ShowCustomerProspectViewModel =>
                 App.AppHost?.Services.GetService<ShowCustomerProspectViewModel>();
 
@@ -120,8 +119,6 @@ namespace SU.Frontend.Helper
 
             public UserInfoDockViewModel UserInfoDockViewModel =>
                 App.AppHost?.Services.GetService<UserInfoDockViewModel>();
-
         }
     }
-
 }

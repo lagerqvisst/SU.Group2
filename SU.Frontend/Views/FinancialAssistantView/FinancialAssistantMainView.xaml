@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SU.Frontend.Views.FinancialAssistantView"
         xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
         xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         mc:Ignorable="d"
@@ -16,62 +15,64 @@
     <!-- Grid with columns and rows -->
     <Grid DataContext="{Binding FinancialAssistantMainViewModel, Source={StaticResource Locator}}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="127*"/>
+            <ColumnDefinition Width="100*" />
+            <ColumnDefinition Width="100*" />
+            <ColumnDefinition Width="127*" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <!-- View Title -->
         <TextBlock FontSize="25"
-                   Text="Financial Assistant Main View" 
+                   Text="Financial Assistant Main View"
                    FontWeight="Bold"
-                   HorizontalAlignment="Left" 
-                   Margin="20,37,0,15" 
-                   Grid.ColumnSpan="2" 
-                   Width="368"/>
+                   HorizontalAlignment="Left"
+                   Margin="20,37,0,15"
+                   Grid.ColumnSpan="2"
+                   Width="368" />
 
         <!-- Functionalities available for Financia Assistant -->
-        <Button Style="{StaticResource OptionsButtonStyle}" 
-                Content="Comission Report" Command="{Binding ToRegisterProvision}" 
-                Margin="25,25,210,24" 
-                Grid.Row="1" 
-                Grid.ColumnSpan="2"/>
-        <Button Style="{StaticResource OptionsButtonStyle}" 
-                Content="Invoices" 
-                Command="{Binding ToRegisterBillingInfo}"
-                Margin="75,25,239,24" 
-                Grid.Row="1" 
-                Grid.Column="1" Grid.ColumnSpan="2"/>
-        <Button Style="{StaticResource OptionsButtonStyle}" 
-                Content="Show/Search Customer" 
-                Command="{Binding ToShowCustomers}"
-                Grid.Row="2" 
-                Margin="25,25,210,25" 
-                Grid.ColumnSpan="2"/>
-        <Button Style="{StaticResource OptionsButtonStyle}" 
-                Content="Show/Search Insurance" 
-                Command="{Binding ToShowInsurances}"
-                Grid.Column="1" 
-                Grid.Row="2" 
-                Margin="75,25,239,25" 
+        <Button Style="{StaticResource OptionsButtonStyle}"
+                Content="Comission Report" Command="{Binding ToRegisterProvision}"
+                Margin="25,25,210,24"
+                Grid.Row="1"
                 Grid.ColumnSpan="2" />
-        <Button Style="{StaticResource OptionsButtonStyle}" 
-                Content="Monthly Statistics" 
+        <Button Style="{StaticResource OptionsButtonStyle}"
+                Content="Invoices"
+                Command="{Binding ToRegisterBillingInfo}"
+                Margin="75,25,239,24"
+                Grid.Row="1"
+                Grid.Column="1" Grid.ColumnSpan="2" />
+        <Button Style="{StaticResource OptionsButtonStyle}"
+                Content="Show/Search Customer"
+                Command="{Binding ToShowCustomers}"
+                Grid.Row="2"
+                Margin="25,25,210,25"
+                Grid.ColumnSpan="2" />
+        <Button Style="{StaticResource OptionsButtonStyle}"
+                Content="Show/Search Insurance"
+                Command="{Binding ToShowInsurances}"
+                Grid.Column="1"
+                Grid.Row="2"
+                Margin="75,25,239,25"
+                Grid.ColumnSpan="2" />
+        <Button Style="{StaticResource OptionsButtonStyle}"
+                Content="Monthly Statistics"
                 Command="{Binding ToShowSellingStat}"
-                Grid.Row="3" 
-                Grid.ColumnSpan="2" 
+                Grid.Row="3"
+                Grid.ColumnSpan="2"
                 Margin="156,18,49,30" />
 
         <!-- Logout Button and SignedInUserUserControl -->
-        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Grid.Column="3" Grid.Row="3" Height="30" Width="100"/>
-        <controls:SignedInUserUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Height="105" Width="280" Margin="21,10,0,0" Grid.Column="2" Grid.RowSpan="2"/>
+        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10"
+                                      Grid.Column="3" Grid.Row="3" Height="30" Width="100" />
+        <controls:SignedInUserUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Height="105" Width="280"
+                                          Margin="21,10,0,0" Grid.Column="2" Grid.RowSpan="2" />
 
     </Grid>
 </Window>
