@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SU.Frontend.Views.CeoView"
-        xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls" 
+        xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
         xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         mc:Ignorable="d"
         Title="Ceo Main View" Height="450" Width="800">
@@ -13,63 +12,60 @@
         <helper:ViewModelLocator x:Key="Locator" />
     </Window.Resources>
 
-    <!-- DockPanel layout -->
-    <DockPanel DataContext="{Binding CeoMainViewModel, Source={StaticResource Locator}}">
+    <!-- Grid layout -->
+    <Grid DataContext="{Binding CeoMainViewModel, Source={StaticResource Locator}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="127*"/>
+        </Grid.ColumnDefinitions>
 
-        <!-- UserInfoDock at the bottom -->
-        <controls:UserInfoDock DockPanel.Dock="Bottom" Height="50" Margin="0,0,0,10"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-        <!-- Main content placed in a Grid -->
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <!-- View Title -->
+        <TextBlock FontSize="25"
+                   Text="CEO Main View" 
+                   FontWeight="Bold"
+                   HorizontalAlignment="Left" 
+                   Margin="20,37,0,15" 
+                   Grid.ColumnSpan="2"/>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+        <!-- Functionalities available for CEO -->
+        <Button Style="{StaticResource OptionsButtonStyle}" 
+                Content="Show/Search Customers" 
+                Command="{Binding ToShowCustomers}" 
+                Margin="25" 
+                Grid.Row="1" 
+                Grid.Column="0"/>
+        <Button Style="{StaticResource OptionsButtonStyle}" 
+                Content="Show/Search Insurances" 
+                Command="{Binding ToShowInsurances}" 
+                Margin="25" 
+                Grid.Row="2" 
+                Grid.Column="0"/>
+        <Button Style="{StaticResource OptionsButtonStyle}" 
+                Content="Monthly Statistics" 
+                Command="{Binding ToMonthlyStatistics}" 
+                Margin="25" 
+                Grid.Row="1" 
+                Grid.Column="1"/>
+        <Button Style="{StaticResource OptionsButtonStyle}" 
+                Content="Trends and Graphs" 
+                Command="{Binding ToTrends}" 
+                Margin="25" 
+                Grid.Row="2" 
+                Grid.Column="1"/>
 
-            <!-- View Title -->
-            <TextBlock FontSize="25"
-                       Text="CEO Main View" 
-                       FontWeight="Bold"
-                       HorizontalAlignment="Left" 
-                       Margin="20,37,0,15" 
-                       Grid.ColumnSpan="2" 
-                       Width="322"/>
+        <!-- Logout Button -->
+        <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Grid.Column="2" Grid.Row="4" Height="30" Width="100"/>
 
-            <!-- Functionalities available for Sales Assistant -->
-            <Button Style="{StaticResource OptionsButtonStyle}" 
-                    Content="Show/Search Customers" 
-                    Command="{Binding ToShowCustomers}" 
-                    Margin="25,25,25,25" Grid.Row="1" 
-                    Grid.Column="0"/>
-            <Button Style="{StaticResource OptionsButtonStyle}" 
-                    Content="Show/Search Insurances" 
-                    Command="{Binding ToShowInsurances}" 
-                    Margin="25,25,25,25" 
-                    Grid.Row="2" 
-                    Grid.Column="0"/>
-            <Button Style="{StaticResource OptionsButtonStyle}" 
-                    Content="Monthly Statistics" 
-                    Command="{Binding ToMonthlyStatistics}" 
-                    Margin="25,25,25,25" 
-                    Grid.Row="1" 
-                    Grid.Column="1"/>
-            <Button Style="{StaticResource OptionsButtonStyle}" 
-                    Content="Trends and Graphs" 
-                    Command="{Binding ToTrends}" 
-                    Margin="25,25,25,25" 
-                    Grid.Row="2" 
-                    Grid.Column="1"/>
-
-            <!-- Logout Button -->
-            <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,20,20" Grid.Column="2" Grid.Row="3" Height="30" Width="100"/>
-        </Grid>
-    </DockPanel>
+        <!-- SignedInUserUserControl -->
+        <controls:SignedInUserUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Height="105" Width="280" Margin="21,10,0,0" Grid.Column="2" Grid.RowSpan="2"/>
+    </Grid>
 </Window>
