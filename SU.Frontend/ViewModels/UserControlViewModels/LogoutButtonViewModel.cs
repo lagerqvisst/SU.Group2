@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows;
 
 namespace SU.Frontend.ViewModels.UserControlViewModels
 {
@@ -14,10 +15,31 @@ namespace SU.Frontend.ViewModels.UserControlViewModels
         // Command
         public ICommand LogoutCommand { get; }
 
+        private readonly IAuthenticationService _authenticationService;
+
         // Constructor
         public LogoutButtonViewModel(IAuthenticationService authenticationService)
         {
-            LogoutCommand = new RelayCommand(authenticationService.Logout);
+            _authenticationService = authenticationService;
+            LogoutCommand = new RelayCommand(ConfirmAndLogout);
+        }
+
+        // Method to prompt user for confirmation before logging out
+        private void ConfirmAndLogout()
+        {
+            // Show a confirmation dialog
+            MessageBoxResult result = MessageBox.Show(
+                "Are you sure you want to log out?",
+                "Confirm Logout",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question
+            );
+
+            // If user confirms, perform logout
+            if (result == MessageBoxResult.Yes)
+            {
+                _authenticationService.Logout();
+            }
         }
     }
 }
