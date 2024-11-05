@@ -80,9 +80,9 @@ public class EditDeleteSellerViewModel : ObservableObject
             var result = await _employeeController.UpdateEmployee(SelectedSeller);
 
             if (result.success)
-                MessageBox.Show($"{result.message}, MessageBoxButton.OK");
+                MessageBox.Show($"{result.message}");
             else
-                MessageBox.Show($"{result.message}, MessageBoxButton.OK");
+                MessageBox.Show($"{result.message}");
         }
     }
 
