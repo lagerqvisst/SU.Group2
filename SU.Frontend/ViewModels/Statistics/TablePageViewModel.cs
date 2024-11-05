@@ -12,12 +12,12 @@ using System.Windows;
 
 namespace SU.Frontend.ViewModels.Statistics
 {
+    using SU.Backend.Controllers;
     using System.Windows.Input;
 
     public class TablePageViewModel : ObservableObject
     {
-        private readonly IStatisticsService _statisticsService;
-        private readonly IDataExportService _dataExportService;
+        private readonly StatisticsController _statisticsController;
 
         public ObservableCollection<SellerStatistics> PrivateInsuranceStatistics { get; set; }
         public ObservableCollection<SellerStatistics> CompanyInsuranceStatistics { get; set; }
@@ -43,10 +43,9 @@ namespace SU.Frontend.ViewModels.Statistics
         // Command for exporting statistics
         public ICommand ExportSellerStatisticsCommand { get; }
 
-        public TablePageViewModel(IStatisticsService statisticsService, IDataExportService dataExportService)
+        public TablePageViewModel(StatisticsController statisticsController)
         {
-            _statisticsService = statisticsService;
-            _dataExportService = dataExportService;
+            _statisticsController = statisticsController;
             PrivateInsuranceStatistics = new ObservableCollection<SellerStatistics>();
             CompanyInsuranceStatistics = new ObservableCollection<SellerStatistics>();
 
@@ -82,7 +81,7 @@ namespace SU.Frontend.ViewModels.Statistics
                 InsuranceType.LiabilityInsurance
             };
 
-            var (successPrivate, messagePrivate, privateStatistics) = await _statisticsService.GetSellerStatistics(year, privateInsuranceTypes);
+            var (successPrivate, messagePrivate, privateStatistics) = await _statisticsController.GetSellerStatistics(year, privateInsuranceTypes);
             if (successPrivate)
             {
                 PrivateInsuranceStatistics.Clear();
@@ -96,7 +95,7 @@ namespace SU.Frontend.ViewModels.Statistics
                 MessageBox.Show(messagePrivate, "Error fetching statistics", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            var (successCompany, messageCompany, companyStatistics) = await _statisticsService.GetSellerStatistics(year, companyInsuranceTypes);
+            var (successCompany, messageCompany, companyStatistics) = await _statisticsController.GetSellerStatistics(year, companyInsuranceTypes);
             if (successCompany)
             {
                 CompanyInsuranceStatistics.Clear();
@@ -118,7 +117,7 @@ namespace SU.Frontend.ViewModels.Statistics
             var statistics = isPrivateInsurance ? PrivateInsuranceStatistics.ToList() : CompanyInsuranceStatistics.ToList();
 
             // Call export service
-            var (success, message) = await _dataExportService.ExportSellerStatisticsToExcel(statistics, isPrivateInsurance);
+            var (success, message) = await _statisticsController.ExportTable(statistics, isPrivateInsurance);
             if (!success)
             {
                 MessageBox.Show(message, "Error exporting to Excel", MessageBoxButton.OK, MessageBoxImage.Error);

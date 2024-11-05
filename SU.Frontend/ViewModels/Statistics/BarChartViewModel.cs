@@ -18,8 +18,7 @@ namespace SU.Frontend.ViewModels.Statistics
 {
     public class BarChartViewModel : ObservableObject
     {
-        private readonly IStatisticsService _statisticsService;
-        private readonly IDataExportService _dataExportServcice;
+        private readonly StatisticsController _statisticsController;
         private readonly EmployeeController _employeeController;
 
         public ICommand ExportBarChart { get; }
@@ -44,14 +43,13 @@ namespace SU.Frontend.ViewModels.Statistics
             }
         }
 
-        public BarChartViewModel(IStatisticsService statisticsService,  EmployeeController employeeController, IDataExportService dataExportServcice)
+        public BarChartViewModel(EmployeeController employeeController, StatisticsController statisticsController)
         {
-            _statisticsService = statisticsService;
+            _statisticsController = statisticsController;
             _employeeController = employeeController;
             Series = new ObservableCollection<ISeries>();
 
             OnInitialized();
-            _dataExportServcice = dataExportServcice;
 
             ExportBarChart = new RelayCommand(async () => await ExportDataAsync(), CanExportData);
         }
@@ -64,7 +62,8 @@ namespace SU.Frontend.ViewModels.Statistics
         private async Task LoadDataAsync(int year, Employee seller)
         {
             // Hämta försäljningsstatistik för den valda säljaren och året
-            var (success, message, statistics) = await _statisticsService.GetSellerStatisticsBySeller(year, seller);
+            var (success, message, statistics) = await _statisticsController.SellerStatisticsBySeller(year, seller);
+
 
             if (!success || statistics == null || statistics.MonthlySales == null) return;
 
@@ -153,11 +152,11 @@ namespace SU.Frontend.ViewModels.Statistics
             }
 
             var year = 2024;
-            var (success, message, statistics) = await _statisticsService.GetSellerStatisticsBySeller(year, _selectedSeller);
+            var (success, message, statistics) = await _statisticsController.SellerStatisticsBySeller(year, _selectedSeller);
 
             if (success && statistics != null)
             {
-                var exportResult = await _dataExportServcice.ExportBarChartStatisticsToExcel(statistics);
+                var exportResult = await _statisticsController.ExportBarChart(statistics);
                 if (!exportResult.success)
                 {
                     MessageBox.Show(exportResult.message, "Error exporting to Excel", MessageBoxButton.OK, MessageBoxImage.Error);
