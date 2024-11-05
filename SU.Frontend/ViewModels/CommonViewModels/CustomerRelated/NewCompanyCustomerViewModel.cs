@@ -17,8 +17,6 @@ public class NewCompanyCustomerViewModel : ObservableObject
 
     private string _companyEmailAddress;
 
-    private string _companyLandlineNumber;
-
     private string _companyName;
 
     private string _companyPhoneNumber;
@@ -101,15 +99,7 @@ public class NewCompanyCustomerViewModel : ObservableObject
         }
     }
 
-    public string CompanyLandlineNumber
-    {
-        get => _companyLandlineNumber;
-        set
-        {
-            _companyLandlineNumber = value;
-            OnPropertyChanged();
-        }
-    }
+
 
     public string CompanyEmailAddress
     {
@@ -153,8 +143,6 @@ public class NewCompanyCustomerViewModel : ObservableObject
                && !string.IsNullOrWhiteSpace(ContactPerson)
                && !string.IsNullOrWhiteSpace(ContactPersonPhoneNumber)
                && !string.IsNullOrWhiteSpace(CompanyAddress)
-               && !string.IsNullOrWhiteSpace(CompanyPhoneNumber)
-               && !string.IsNullOrWhiteSpace(CompanyLandlineNumber)
                && !string.IsNullOrWhiteSpace(CompanyEmailAddress);
     }
 
@@ -172,7 +160,6 @@ public class NewCompanyCustomerViewModel : ObservableObject
                 ContactPersonPhonenumber = ContactPersonPhoneNumber,
                 CompanyAdress = CompanyAddress,
                 CompanyPhoneNumber = CompanyPhoneNumber,
-                CompanyLandlineNumber = CompanyLandlineNumber,
                 CompanyEmailAdress = CompanyEmailAddress
             };
 
