@@ -23,10 +23,7 @@ namespace SU.Backend.Services
             _logger = logger;
         }
 
-        public Task<(bool success, string message)> ExportBarChartStatisticsToExcel(SellerStatistics statistics)
-        {
-            throw new NotImplementedException();
-        }
+
 
         // Method to export a list of commissions to an Excel file.
         // Method to export a list of commissions to an Excel file.
@@ -158,10 +155,7 @@ namespace SU.Backend.Services
             }
         }
 
-        public Task<(bool success, string message)> ExportLineChartStatisticsToExcel(List<SellerStatistics> statistics)
-        {
-            throw new NotImplementedException();
-        }
+
 
         public async Task<(bool success, string message)> ExportProspects(List<Prospect> prospects)
         {
@@ -389,8 +383,146 @@ namespace SU.Backend.Services
     }
 }
 
+        public async Task<(bool success, string message)> ExportBarChartStatisticsToExcel(SellerStatistics statistics)
+        {
+            try
+            {
+                if (statistics == null || statistics.MonthlySales == null || !statistics.MonthlySales.Any())
+                {
+                    _logger.LogInformation("No data to export");
+                    return (false, "No data to export");
+                }
 
+                _logger.LogInformation("Exporting bar chart statistics to Excel...");
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
+                using (var package = new ExcelPackage())
+                {
+                    var worksheet = package.Workbook.Worksheets.Add("Bar Chart Statistics");
+
+                    // Add seller information
+                    worksheet.Cells[1, 1].Value = "Seller Name:";
+                    worksheet.Cells[1, 2].Value = statistics.SellerName;
+                    worksheet.Cells[2, 1].Value = "Agent Number:";
+                    worksheet.Cells[2, 2].Value = statistics.AgentNumber;
+
+                    // Add headers for the data
+                    worksheet.Cells[4, 1].Value = "Month";
+                    worksheet.Cells[4, 2].Value = "Total Sales";
+                    worksheet.Cells[4, 3].Value = "3M Moving Average";
+
+                    // Fill in the data
+                    var months = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+                    var monthlySales = statistics.MonthlySales.Select(ms => ms.TotalSales).ToArray();
+                    var trendLine = SellerStatistics.CalculateMovingAverage(monthlySales, 3);
+
+                    for (int i = 0; i < statistics.MonthlySales.Count; i++)
+                    {
+                        worksheet.Cells[i + 5, 1].Value = months[i];
+                        worksheet.Cells[i + 5, 2].Value = statistics.MonthlySales[i].TotalSales;
+                        worksheet.Cells[i + 5, 3].Value = trendLine[i]; // Include moving average
+                    }
+
+                    // Create a bar chart
+                    var barChart = worksheet.Drawings.AddChart("SalesChart", OfficeOpenXml.Drawing.Chart.eChartType.ColumnClustered);
+                    barChart.Title.Text = "Monthly Sales";
+                    barChart.SetPosition(1, 0, 4, 0);
+                    barChart.SetSize(800, 400);
+
+                    // Set chart data series for sales
+                    var series = barChart.Series.Add(worksheet.Cells[5, 2, 16, 2], worksheet.Cells[5, 1, 16, 1]);
+                    series.Header = "Total Sales";
+
+                    // Create a line chart for moving average
+                    var lineChart = barChart.PlotArea.ChartTypes.Add(OfficeOpenXml.Drawing.Chart.eChartType.Line);
+                    var trendSeries = lineChart.Series.Add(worksheet.Cells[5, 3, 16, 3], worksheet.Cells[5, 1, 16, 1]);
+                    trendSeries.Header = "3M Moving Average";
+
+                    // Format the chart
+                    barChart.YAxis.Title.Text = "Sales Amount";
+                    barChart.XAxis.Title.Text = "Month";
+
+                    // Save the Excel file
+                    var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                    var fileName = $"BarChartStatistics_{statistics.SellerName}_{timestamp}.xlsx";
+                    var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+                    var file = new FileInfo(filePath);
+                    await package.SaveAsAsync(file);
+
+                    _logger.LogInformation("Excel file created successfully");
+
+                    return (true, $"Excel file '{fileName}' has been created successfully!\n\nYou can find the file here:\n{filePath}");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error exporting bar chart statistics to Excel");
+                return (false, "Error exporting bar chart statistics to Excel");
+            }
+        }
+
+        public async Task<(bool success, string message)> ExportLineChartStatisticsToExcel(List<SellerStatistics> statistics)
+        {
+            try
+            {
+                if (statistics == null || !statistics.Any())
+                {
+                    _logger.LogInformation("No data to export");
+                    return (false, "No data to export");
+                }
+
+                _logger.LogInformation("Exporting line chart statistics to Excel...");
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+                using (var package = new ExcelPackage())
+                {
+                    var worksheet = package.Workbook.Worksheets.Add("Line Chart Statistics");
+
+                    // Add headers
+                    worksheet.Cells[1, 1].Value = "Seller Name";
+                    worksheet.Cells[1, 2].Value = "Month";
+                    worksheet.Cells[1, 3].Value = "Total Sales";
+
+                    int row = 2;
+                    foreach (var seller in statistics)
+                    {
+                        for (int month = 0; month < seller.MonthlySales.Count; month++)
+                        {
+                            worksheet.Cells[row, 1].Value = seller.SellerName;
+                            worksheet.Cells[row, 2].Value = new CultureInfo("en-US").DateTimeFormat.GetMonthName(month + 1);
+                            worksheet.Cells[row, 3].Value = seller.MonthlySales[month].TotalSales;
+                            row++;
+                        }
+                    }
+
+                    // Create a line chart
+                    var lineChart = worksheet.Drawings.AddChart("SalesLineChart", OfficeOpenXml.Drawing.Chart.eChartType.Line);
+                    lineChart.Title.Text = "Monthly Sales by Seller";
+                    lineChart.SetPosition(1, 0, 5, 0);
+                    lineChart.SetSize(800, 400);
+
+                    // Set chart data series
+                    var series = lineChart.Series.Add(worksheet.Cells[2, 3, row - 1, 3], worksheet.Cells[2, 2, row - 1, 2]);
+                    series.Header = "Total Sales";
+
+                    // Save the Excel file
+                    var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                    var fileName = $"LineChartStatistics_{timestamp}.xlsx";
+                    var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+                    var file = new FileInfo(filePath);
+                    await package.SaveAsAsync(file);
+
+                    _logger.LogInformation("Excel file created successfully");
+
+                    return (true, $"Excel file '{fileName}' has been created successfully!\n\nYou can find the file here:\n{filePath}");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error exporting line chart statistics to Excel");
+                return (false, "Error exporting line chart statistics to Excel");
+            }
+        }
 
 
     }
