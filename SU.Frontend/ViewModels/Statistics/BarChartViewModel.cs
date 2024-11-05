@@ -3,19 +3,26 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.WPF;
 using SU.Backend.Controllers;
 using SU.Backend.Models.Employees;
+using SU.Backend.Models.Statistics;
+using SU.Backend.Services;
 using SU.Backend.Services.Interfaces;
 using SU.Frontend.Helper;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace SU.Frontend.ViewModels.Statistics
 {
     public class BarChartViewModel : ObservableObject
     {
         private readonly IStatisticsService _statisticsService;
+        private readonly IDataExportService _dataExportServcice;
         private readonly EmployeeController _employeeController;
+
+        public ICommand ExportBarChart { get; }
 
         public ObservableCollection<ISeries> Series { get; set; }
         public Axis[] XAxes { get; set; }
@@ -37,13 +44,16 @@ namespace SU.Frontend.ViewModels.Statistics
             }
         }
 
-        public BarChartViewModel(IStatisticsService statisticsService, EmployeeController employeeController)
+        public BarChartViewModel(IStatisticsService statisticsService,  EmployeeController employeeController, IDataExportService dataExportServcice)
         {
             _statisticsService = statisticsService;
             _employeeController = employeeController;
             Series = new ObservableCollection<ISeries>();
 
             OnInitialized();
+            _dataExportServcice = dataExportServcice;
+
+            ExportBarChart = new RelayCommand(async () => await ExportDataAsync(), CanExportData);
         }
 
         private async Task OnInitialized()
@@ -62,7 +72,7 @@ namespace SU.Frontend.ViewModels.Statistics
             var monthlySales = statistics.MonthlySales.Select(ms => ms.TotalSales).ToArray();
 
             // Beräkna 3-månaders glidande medelvärde för trendlinje
-            var trendLine = CalculateMovingAverage(monthlySales, 3);
+            var trendLine = SellerStatistics.CalculateMovingAverage(monthlySales, 3);
 
             Series.Clear();
 
@@ -120,22 +130,44 @@ namespace SU.Frontend.ViewModels.Statistics
             }
         }
 
-        private static List<double> CalculateMovingAverage(int[] values, int period)
+        private bool CanExportData()
         {
-            var movingAverage = new List<double>();
-            for (int i = 0; i < values.Length; i++)
+            if(_selectedSeller == null)
             {
-                if (i < period - 1)
+                return false;
+            }
+            else
+            {
+                return true;
+
+            }
+        }
+
+        private async Task ExportDataAsync()
+        {
+            if (_selectedSeller == null)
+            {
+                // Show a message if no seller is selected
+                Console.WriteLine("Please select a seller before exporting data.");
+                return;
+            }
+
+            var year = 2024;
+            var (success, message, statistics) = await _statisticsService.GetSellerStatisticsBySeller(year, _selectedSeller);
+
+            if (success && statistics != null)
+            {
+                var exportResult = await _dataExportServcice.ExportBarChartStatisticsToExcel(statistics);
+                if (!exportResult.success)
                 {
-                    movingAverage.Add(double.NaN);
+                    MessageBox.Show(exportResult.message, "Error exporting to Excel", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
-                    var avg = values.Skip(i - (period - 1)).Take(period).Average();
-                    movingAverage.Add(avg);
+                    MessageBox.Show(exportResult.message, "Export Successful", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
-            return movingAverage;
+
         }
     }
 }

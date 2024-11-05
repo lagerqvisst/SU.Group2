@@ -19,13 +19,15 @@ namespace SU.Backend.Controllers
     {
         // Services
         IStatisticsService _statisticsService;
+        IDataExportService _dataExportService;
         ILogger<StatisticsController> _logger;
 
         // Constructor
-        public StatisticsController(IStatisticsService statisticsService, ILogger<StatisticsController> logger)
+        public StatisticsController(IStatisticsService statisticsService,  ILogger<StatisticsController> logger, IDataExportService dataExportService)
         {
             _statisticsService = statisticsService;
             _logger = logger;
+            _dataExportService = dataExportService;
         }
 
         // Controller for GetSellerStatistics method
@@ -65,5 +67,6 @@ namespace SU.Backend.Controllers
             }
             return (result.statistics, result.message);
         }
+
     }
 }

@@ -34,7 +34,7 @@ namespace SU.Frontend.ViewModels
 
             _userName = string.Empty;
             _password = string.Empty;
-            ButtonContent = "Logga in";
+            ButtonContent = "Sign in";
             _employeeController = employeeController;
         }
 
@@ -72,7 +72,7 @@ namespace SU.Frontend.ViewModels
                 _isLoading = value;
                 OnPropertyChanged();
                 // Update ButtonContent based on loading state
-                ButtonContent = _isLoading ? "Laddar..." : "Logga in";
+                ButtonContent = _isLoading ? "Loading..." : "Sign in";
             }
         }
 
