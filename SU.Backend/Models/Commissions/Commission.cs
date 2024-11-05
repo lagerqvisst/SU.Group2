@@ -14,19 +14,24 @@ namespace SU.Backend.Models.Comissions
     {
         public string AgentNumber { get; set; }
         public string SellerName { get; set; }
-        public double CommissionAmount { get; set; }
+        public string CommissionAmount { get; set; }
         public string PersonalNumber { get; set; }
         public DateTime StartDate { get; set; } // Defines the search range for commissions
         public DateTime EndDate { get; set; }
 
 
-        //This is based on the business rules that the commission is 12% of the premium acording to provided business documentation
-        //Method is used in repository class when aggregating the commissions
-        public static double CalculateCommission(decimal premium)
+        // Method to calculate commission and return it as a formatted string with "SEK"
+        public static string CalculateCommission(decimal premium)
         {
-            return (double)(premium * 0.12m); // Multiply by 0.12m to keep precision and then cast to double
+            var commission = premium * 0.12m;
+            var roundedCommission = Math.Round(commission, MidpointRounding.AwayFromZero); // Round to nearest whole number
+            return $"{roundedCommission:N0} SEK"; // Format with no decimal places and append "SEK"
         }
+
     }
+
+
+
 
 
 

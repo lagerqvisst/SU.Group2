@@ -24,6 +24,7 @@ namespace SU.Backend.Services
         }
 
         // Method to export a list of commissions to an Excel file.
+        // Method to export a list of commissions to an Excel file.
         public async Task<(bool success, string message)> ExportCommissionsToExcel(List<Commission> commissions)
         {
             try
@@ -115,7 +116,7 @@ namespace SU.Backend.Services
                         string personalOrOrgNumber = type == "Privat" ? invoice.PersonalNumber : invoice.OrganizationNumber;
                         string contactPerson = type == "Företag" ? invoice.ContactPerson : "";
                         string address = invoice.Address ?? "";
-                        decimal premium = invoice.Premium;
+                        string premium = invoice.Premium;
 
                         worksheet.Cells[i + 2, 1].Value = type;
                         worksheet.Cells[i + 2, 2].Value = customerOrCompanyName;

@@ -51,7 +51,8 @@ namespace SU.Backend.Services
                         var invoiceEntry = InvoiceHelper.CreateInvoiceEntry(policyHolder);
 
                         // Summera premierna för alla försäkringar i gruppen
-                        invoiceEntry.Premium = g.Sum(i => i.Premium);
+                        var totalPremium = g.Sum(i => i.Premium);
+                        invoiceEntry.Premium = $"{totalPremium:N0} SEK"; // Format with "SEK" and no decimals
 
                         return invoiceEntry;
                     })
@@ -71,6 +72,7 @@ namespace SU.Backend.Services
                 return (false, "An error occurred during invoice data generation.", new List<InvoiceEntry>());
             }
         }
+
 
 
 
