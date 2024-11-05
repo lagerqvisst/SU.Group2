@@ -31,7 +31,7 @@ namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
             ToShowCustomers = new RelayCommand(() => _navigationService.NavigateToShowCustomers());
             ToRegisterBillingInfo = new RelayCommand(() => NavigateToInvoices());
             ToRegisterProvision = new RelayCommand(() => NavigateToShowProvision());
-            ToShowSellingStat = new RelayCommand(() => NavigateToShowSellingStat());
+            ToShowSellingStat = new RelayCommand(() => _navigationService.NavigateToMonthlyStatistics());
         }
 
         // Navigation logic
@@ -43,11 +43,6 @@ namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
         public void NavigateToShowProvision()
         {
             _navigationService.NavigateTo("ComissionView", "FinancialAssistantView");
-        }
-
-        public void NavigateToShowSellingStat()
-        {
-            _navigationService.NavigateTo("ShowSellingStatsView", "FinancialAssistantView");
         }
     }
 }

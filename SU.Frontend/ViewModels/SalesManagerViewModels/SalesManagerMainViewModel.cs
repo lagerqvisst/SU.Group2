@@ -13,6 +13,7 @@ namespace SU.Frontend.ViewModels.SalesManagerViewModels
     {
         // Commands
         public ICommand ToCreateExportStatistics { get; set; }
+        public ICommand ToMonthlyStats { get; set; }
         public ICommand ToShowInsurances { get; set; }
         public ICommand ToShowCustomers { get; set; }
         public ICommand ToShowCustomerProspects { get; set; }
@@ -26,6 +27,7 @@ namespace SU.Frontend.ViewModels.SalesManagerViewModels
             _navigationService = navigationService;
             //Shared views are navigated through the navigation service
             ToCreateExportStatistics = new RelayCommand(() => _navigationService.NavigateToTrends());
+            ToMonthlyStats = new RelayCommand(() => _navigationService.NavigateToMonthlyStatistics());
             ToShowInsurances = new RelayCommand(() => _navigationService.NavigateToShowInsurances());
             ToShowCustomers = new RelayCommand(() => _navigationService.NavigateToShowCustomers());
             ToShowCustomerProspects = new RelayCommand(() => _navigationService.NavigateToShowCustomerProspects());

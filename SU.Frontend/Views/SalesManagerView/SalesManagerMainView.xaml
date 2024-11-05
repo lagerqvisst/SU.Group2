@@ -49,20 +49,27 @@
                 Content="Show/Search Insurances" 
                 Command="{Binding ToShowInsurances}" 
                 Margin="10,28,10,28" 
-                Grid.Row="2" 
-                Grid.Column="0" RenderTransformOrigin="1.594,-1.542"/>
+                Grid.Row="1" 
+                Grid.Column="1" RenderTransformOrigin="1.594,-1.542"/>
         <Button Style="{StaticResource OptionsButtonStyle}" 
                 Content="Trends and Graphs" 
                 Command="{Binding ToCreateExportStatistics}"
                 Margin="10,28,10,28" 
-                Grid.Row="1" 
+                Grid.Row="3" 
                 Grid.Column="1"/>
         <Button Style="{StaticResource OptionsButtonStyle}" 
                 Content="Show Customer Prospects" 
                 Command="{Binding ToShowCustomerProspects}" 
                 Margin="10,28,10,28" 
                 Grid.Row="2" 
-                Grid.Column="1"/>
+                Grid.Column="0"/>
+        
+        <Button Style="{StaticResource OptionsButtonStyle}" 
+                Content="Monthly Statistics" 
+                Command="{Binding ToShowCustomerProspects}" 
+                Margin="10,28,10,28" 
+                Grid.Row="3" 
+                Grid.Column="0"/>
 
         <!-- Logout Button and SignedInUserUserControl -->
         <controls:LogoutButtonControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Grid.Column="3" Grid.Row="3" Height="30" Width="100"/>
