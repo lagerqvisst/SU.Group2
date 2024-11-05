@@ -202,15 +202,6 @@
                     <TextBox Text="{Binding SelectedCompanyCustomer.CompanyPhoneNumber, Mode=TwoWay}" />
                 </StackPanel>
 
-                <!-- Company Landline Numer-->
-                <StackPanel Orientation="Horizontal"
-                            Margin="0,5,0,5">
-                    <TextBlock Text="Company Landline Nr"
-                               FontSize="15"
-                               Margin="0,0,55,0" />
-                    <TextBox Text="{Binding SelectedCompanyCustomer.CompanyLandlineNumber, Mode=TwoWay}" />
-                </StackPanel>
-
                 <!-- Company Email-->
                 <StackPanel Orientation="Horizontal"
                             Margin="0,5,0,5">

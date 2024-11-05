@@ -18,8 +18,6 @@ public class CompanyCustomer
 
     public string CompanyPhoneNumber { get; set; }
 
-    public string CompanyLandlineNumber { get; set; }
-
     public string CompanyEmailAdress { get; set; }
 
     // Navigation property
