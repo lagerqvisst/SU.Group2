@@ -23,6 +23,11 @@ namespace SU.Backend.Services
             _logger = logger;
         }
 
+        public Task<(bool success, string message)> ExportBarChartStatisticsToExcel(SellerStatistics statistics)
+        {
+            throw new NotImplementedException();
+        }
+
         // Method to export a list of commissions to an Excel file.
         // Method to export a list of commissions to an Excel file.
         public async Task<(bool success, string message)> ExportCommissionsToExcel(List<Commission> commissions)
@@ -105,6 +110,7 @@ namespace SU.Backend.Services
                     worksheet.Cells[1, 4].Value = "Contact Person";  // Endast för företag
                     worksheet.Cells[1, 5].Value = "Address";
                     worksheet.Cells[1, 6].Value = "Premium";
+                    worksheet.Cells[1, 7].Value = "Insurance(s)";
 
                     // Fyll på med data
                     for (int i = 0; i < invoices.Count; i++)
@@ -117,6 +123,7 @@ namespace SU.Backend.Services
                         string contactPerson = type == "Företag" ? invoice.ContactPerson : "";
                         string address = invoice.Address ?? "";
                         string premium = invoice.Premium;
+                        string insurances = invoice.Insurances;
 
                         worksheet.Cells[i + 2, 1].Value = type;
                         worksheet.Cells[i + 2, 2].Value = customerOrCompanyName;
@@ -124,6 +131,7 @@ namespace SU.Backend.Services
                         worksheet.Cells[i + 2, 4].Value = contactPerson;
                         worksheet.Cells[i + 2, 5].Value = address;
                         worksheet.Cells[i + 2, 6].Value = premium;
+                        worksheet.Cells[i + 2, 7].Value = insurances;
                     }
 
                     // Formatera kolumner för snyggare utseende
@@ -150,6 +158,10 @@ namespace SU.Backend.Services
             }
         }
 
+        public Task<(bool success, string message)> ExportLineChartStatisticsToExcel(List<SellerStatistics> statistics)
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task<(bool success, string message)> ExportProspects(List<Prospect> prospects)
         {
@@ -265,259 +277,117 @@ namespace SU.Backend.Services
 
 
         public async Task<(bool success, string message)> ExportSellerStatisticsToExcel(List<SellerStatistics> sellerStatistics, bool isPrivateInsurance)
+{
+    try
+    {
+        if (sellerStatistics == null || !sellerStatistics.Any())
         {
-            try
-            {
-                if (sellerStatistics == null || !sellerStatistics.Any())
-                {
-                    _logger.LogInformation("No seller statistics to export");
-                    return (false, "No seller statistics to export");
-                }
-
-                _logger.LogInformation("Exporting seller statistics to Excel");
-                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-
-                using (var package = new ExcelPackage())
-                {
-                    var worksheet = package.Workbook.Worksheets.Add("Seller Statistics");
-
-                    // Header for Year (no merging)
-                    worksheet.Cells[1, 1].Value = DateTime.Now.Year.ToString();
-
-                    // Column Headers
-                    worksheet.Cells[2, 1].Value = "Seller/Insurance";
-                    worksheet.Cells[2, 2].Value = "Agent Number";
-
-                    var categories = isPrivateInsurance ? new[] { "Child", "Adult", "Life" } : new[] { "Property", "Vehicle", "Liability" };
-
-                    // Setting up headers for each month without merging
-                    int startColumn = 3;
-                    for (int month = 0; month < 12; month++)
-                    {
-                        var monthName = new CultureInfo("en-US").DateTimeFormat.GetMonthName(month + 1);
-                        worksheet.Cells[1, startColumn].Value = monthName;
-
-                        // Set category headers under each month
-                        for (int i = 0; i < categories.Length; i++)
-                        {
-                            worksheet.Cells[2, startColumn + i].Value = categories[i];
-                        }
-                        worksheet.Cells[2, startColumn + categories.Length].Value = "Total"; // Monthly Total
-                        startColumn += categories.Length + 1; // Move to the next month's start column
-                    }
-
-                    // Yearly Summary Columns
-                    worksheet.Cells[1, startColumn].Value = "Whole Year";
-                    worksheet.Cells[2, startColumn].Value = "Total";
-                    worksheet.Cells[2, startColumn + 1].Value = "Avg/Month";
-
-                    // Fill data rows
-                    int row = 3;
-                    foreach (var sellerStat in sellerStatistics)
-                    {
-                        worksheet.Cells[row, 1].Value = sellerStat.SellerName;
-                        worksheet.Cells[row, 2].Value = sellerStat.AgentNumber;
-
-                        startColumn = 3;
-                        foreach (var monthlyData in sellerStat.MonthlySales)
-                        {
-                            if (isPrivateInsurance)
-                            {
-                                worksheet.Cells[row, startColumn].Value = monthlyData.ChildInsuranceSales;
-                                worksheet.Cells[row, startColumn + 1].Value = monthlyData.AdultInsuranceSales;
-                                worksheet.Cells[row, startColumn + 2].Value = monthlyData.LifeInsuranceSales;
-                                worksheet.Cells[row, startColumn + 3].Value = monthlyData.TotalSales;
-                            }
-                            else
-                            {
-                                worksheet.Cells[row, startColumn].Value = monthlyData.PropertyInsuranceSales;
-                                worksheet.Cells[row, startColumn + 1].Value = monthlyData.VehicleInsuranceSales;
-                                worksheet.Cells[row, startColumn + 2].Value = monthlyData.LiabilityInsuranceSales;
-                                worksheet.Cells[row, startColumn + 3].Value = monthlyData.TotalSales;
-                            }
-                            startColumn += categories.Length + 1;
-                        }
-
-                        // Yearly totals
-                        worksheet.Cells[row, startColumn].Value = sellerStat.TotalYearlySales;
-                        worksheet.Cells[row, startColumn + 1].Value = sellerStat.AverageMonthlySales;
-
-                        row++;
-                    }
-
-                    // Formatting
-                    worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
-                    worksheet.Cells.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                    worksheet.Cells.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
-                    worksheet.Cells[1, 1, 2, startColumn + 1].Style.Font.Bold = true;
-                    worksheet.Cells[1, 1, 2, startColumn + 1].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-                    worksheet.Cells[1, 1, 2, startColumn + 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
-
-                    // Apply thick bottom border to row 2
-                    var headerRowRange = worksheet.Cells[2, 1, 2, startColumn + 1];
-                    headerRowRange.Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thick;
-
-                    // Saving the file
-                    var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-                    var fileType = isPrivateInsurance ? "PrivateSellerStats" : "CompanySellerStats";
-                    var fileName = $"{fileType}_{timestamp}.xlsx";
-                    var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
-                    var file = new FileInfo(filePath);
-                    await package.SaveAsAsync(file);
-
-                    _logger.LogInformation("Excel file created successfully");
-
-                    return (true, $"Excel file '{fileName}' has been created successfully!\n\nYou can find the file here:\n{filePath}");
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error exporting seller statistics to Excel");
-                return (false, "Error exporting seller statistics to Excel");
-            }
+            _logger.LogInformation("No seller statistics to export");
+            return (false, "No seller statistics to export");
         }
 
-        public async Task<(bool success, string message)> ExportBarChartStatisticsToExcel(SellerStatistics statistics)
+        _logger.LogInformation("Exporting seller statistics to Excel");
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+        using (var package = new ExcelPackage())
         {
-            try
+            var worksheet = package.Workbook.Worksheets.Add("Seller Statistics");
+
+            // Header for Year (no merging)
+            worksheet.Cells[1, 1].Value = DateTime.Now.Year.ToString();
+
+            // Column Headers
+            worksheet.Cells[2, 1].Value = "Seller/Insurance";
+            worksheet.Cells[2, 2].Value = "Agent Number";
+
+            var categories = isPrivateInsurance ? new[] { "Child", "Adult", "Life" } : new[] { "Property", "Vehicle", "Liability" };
+
+            // Setting up headers for each month without merging
+            int startColumn = 3;
+            for (int month = 0; month < 12; month++)
             {
-                if (statistics == null || statistics.MonthlySales == null || !statistics.MonthlySales.Any())
+                var monthName = new CultureInfo("en-US").DateTimeFormat.GetMonthName(month + 1);
+                worksheet.Cells[1, startColumn].Value = monthName;
+
+                // Set category headers under each month
+                for (int i = 0; i < categories.Length; i++)
                 {
-                    _logger.LogInformation("No data to export");
-                    return (false, "No data to export");
+                    worksheet.Cells[2, startColumn + i].Value = categories[i];
                 }
+                worksheet.Cells[2, startColumn + categories.Length].Value = "Total"; // Monthly Total
+                startColumn += categories.Length + 1; // Move to the next month's start column
+            }
 
-                _logger.LogInformation("Exporting bar chart statistics to Excel");
-                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            // Yearly Summary Columns
+            worksheet.Cells[1, startColumn].Value = "Whole Year";
+            worksheet.Cells[2, startColumn].Value = "Total";
+            worksheet.Cells[2, startColumn + 1].Value = "Avg/Month";
 
-                using (var package = new ExcelPackage())
+            // Fill data rows
+            int row = 3;
+            foreach (var sellerStat in sellerStatistics)
+            {
+                worksheet.Cells[row, 1].Value = sellerStat.SellerName;
+                worksheet.Cells[row, 2].Value = sellerStat.AgentNumber;
+
+                startColumn = 3;
+                foreach (var monthlyData in sellerStat.MonthlySales)
                 {
-                    var worksheet = package.Workbook.Worksheets.Add("Bar Chart Statistics");
-
-                    // Add seller information
-                    worksheet.Cells[1, 1].Value = "Seller Name:";
-                    worksheet.Cells[1, 2].Value = statistics.SellerName;
-                    worksheet.Cells[2, 1].Value = "Agent Number:";
-                    worksheet.Cells[2, 2].Value = statistics.AgentNumber;
-
-                    // Add headers for the data
-                    worksheet.Cells[4, 1].Value = "Month";
-                    worksheet.Cells[4, 2].Value = "Total Sales";
-                    worksheet.Cells[4, 3].Value = "3M Moving Average";
-
-                    // Fill in the data
-                    var months = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
-                    var monthlySales = statistics.MonthlySales.Select(ms => ms.TotalSales).ToArray();
-                    var trendLine = SellerStatistics.CalculateMovingAverage(monthlySales, 3);
-
-                    for (int i = 0; i < statistics.MonthlySales.Count; i++)
+                    if (isPrivateInsurance)
                     {
-                        worksheet.Cells[i + 5, 1].Value = months[i];
-                        worksheet.Cells[i + 5, 2].Value = statistics.MonthlySales[i].TotalSales;
-                        worksheet.Cells[i + 5, 3].Value = trendLine[i]; // Include moving average
+                        worksheet.Cells[row, startColumn].Value = monthlyData.ChildInsuranceSales;
+                        worksheet.Cells[row, startColumn + 1].Value = monthlyData.AdultInsuranceSales;
+                        worksheet.Cells[row, startColumn + 2].Value = monthlyData.LifeInsuranceSales;
+                        worksheet.Cells[row, startColumn + 3].Value = monthlyData.TotalSales;
                     }
-
-                    // Create a bar chart
-                    var barChart = worksheet.Drawings.AddChart("SalesChart", OfficeOpenXml.Drawing.Chart.eChartType.ColumnClustered);
-                    barChart.Title.Text = "Monthly Sales";
-                    barChart.SetPosition(1, 0, 4, 0);
-                    barChart.SetSize(800, 400);
-
-                    // Set chart data series for sales
-                    var series = barChart.Series.Add(worksheet.Cells[5, 2, 16, 2], worksheet.Cells[5, 1, 16, 1]);
-                    series.Header = "Total Sales";
-
-                    // Create a line chart for moving average
-                    var lineChart = barChart.PlotArea.ChartTypes.Add(OfficeOpenXml.Drawing.Chart.eChartType.Line);
-                    var trendSeries = lineChart.Series.Add(worksheet.Cells[5, 3, 16, 3], worksheet.Cells[5, 1, 16, 1]);
-                    trendSeries.Header = "3M Moving Average";
-
-                    // Format the chart
-                    barChart.YAxis.Title.Text = "Sales Amount";
-                    barChart.XAxis.Title.Text = "Month";
-
-                    // Save the Excel file
-                    var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-                    var fileName = $"BarChartStatistics_{statistics.SellerName}_{timestamp}.xlsx";
-                    var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
-                    var file = new FileInfo(filePath);
-                    await package.SaveAsAsync(file);
-
-                    _logger.LogInformation("Excel file created successfully");
-
-                    return (true, $"Excel file '{fileName}' has been created successfully!\n\nYou can find the file here:\n{filePath}");
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error exporting bar chart statistics to Excel");
-                return (false, "Error exporting bar chart statistics to Excel");
-            }
-        }
-
-        public async Task<(bool success, string message)> ExportLineChartStatisticsToExcel(List<SellerStatistics> statistics)
-        {
-            try
-            {
-                if (statistics == null || !statistics.Any())
-                {
-                    _logger.LogInformation("No data to export");
-                    return (false, "No data to export");
-                }
-
-                _logger.LogInformation("Exporting line chart statistics to Excel");
-                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-
-                using (var package = new ExcelPackage())
-                {
-                    var worksheet = package.Workbook.Worksheets.Add("Line Chart Statistics");
-
-                    // Add headers
-                    worksheet.Cells[1, 1].Value = "Seller Name";
-                    worksheet.Cells[1, 2].Value = "Month";
-                    worksheet.Cells[1, 3].Value = "Total Sales";
-
-                    int row = 2;
-                    foreach (var seller in statistics)
+                    else
                     {
-                        for (int month = 0; month < seller.MonthlySales.Count; month++)
-                        {
-                            worksheet.Cells[row, 1].Value = seller.SellerName;
-                            worksheet.Cells[row, 2].Value = new CultureInfo("en-US").DateTimeFormat.GetMonthName(month + 1);
-                            worksheet.Cells[row, 3].Value = seller.MonthlySales[month].TotalSales;
-                            row++;
-                        }
+                        worksheet.Cells[row, startColumn].Value = monthlyData.PropertyInsuranceSales;
+                        worksheet.Cells[row, startColumn + 1].Value = monthlyData.VehicleInsuranceSales;
+                        worksheet.Cells[row, startColumn + 2].Value = monthlyData.LiabilityInsuranceSales;
+                        worksheet.Cells[row, startColumn + 3].Value = monthlyData.TotalSales;
                     }
-
-                    // Create a line chart
-                    var lineChart = worksheet.Drawings.AddChart("SalesLineChart", OfficeOpenXml.Drawing.Chart.eChartType.Line);
-                    lineChart.Title.Text = "Monthly Sales by Seller";
-                    lineChart.SetPosition(1, 0, 5, 0);
-                    lineChart.SetSize(800, 400);
-
-                    // Set chart data series
-                    var series = lineChart.Series.Add(worksheet.Cells[2, 3, row - 1, 3], worksheet.Cells[2, 2, row - 1, 2]);
-                    series.Header = "Total Sales";
-
-                    // Save the Excel file
-                    var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-                    var fileName = $"LineChartStatistics_{timestamp}.xlsx";
-                    var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
-                    var file = new FileInfo(filePath);
-                    await package.SaveAsAsync(file);
-
-                    _logger.LogInformation("Excel file created successfully");
-
-                    return (true, $"Excel file '{fileName}' has been created successfully!\n\nYou can find the file here:\n{filePath}");
+                    startColumn += categories.Length + 1;
                 }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error exporting line chart statistics to Excel");
-                return (false, "Error exporting line chart statistics to Excel");
-            }
-        }
 
+                // Yearly totals
+                worksheet.Cells[row, startColumn].Value = sellerStat.TotalYearlySales;
+                worksheet.Cells[row, startColumn + 1].Value = sellerStat.AverageMonthlySales;
+
+                row++;
+            }
+
+            // Formatting
+            worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+            worksheet.Cells.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            worksheet.Cells.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+            worksheet.Cells[1, 1, 2, startColumn + 1].Style.Font.Bold = true;
+            worksheet.Cells[1, 1, 2, startColumn + 1].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+            worksheet.Cells[1, 1, 2, startColumn + 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+
+            // Apply thick bottom border to row 2
+            var headerRowRange = worksheet.Cells[2, 1, 2, startColumn + 1];
+            headerRowRange.Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thick;
+
+            // Saving the file
+            var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            var fileType = isPrivateInsurance ? "PrivateSellerStats" : "CompanySellerStats";
+            var fileName = $"{fileType}_{timestamp}.xlsx";
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+            var file = new FileInfo(filePath);
+            await package.SaveAsAsync(file);
+
+            _logger.LogInformation("Excel file created successfully");
+
+            return (true, $"Excel file '{fileName}' has been created successfully!\n\nYou can find the file here:\n{filePath}");
+        }
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "Error exporting seller statistics to Excel");
+        return (false, "Error exporting seller statistics to Excel");
+    }
+}
 
 
 
