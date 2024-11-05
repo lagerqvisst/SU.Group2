@@ -46,30 +46,36 @@ namespace SU.Backend.Database.Repositories
         //TODO: Include left join for sellers who did not sell any insurances
         public async Task<List<Commission>> GetSellerCommissions(DateTime startDate, DateTime endDate)
         {
-            // Get active insurances within the specified date range
-            var insurances = await GetActiveInsurancesInDateRange(startDate, endDate);
+            // Fetch all sellers
+            var sellers = await _context.Employees.Where(a => a.AgentNumber != null).ToListAsync();
 
-            if (insurances == null || !insurances.Any())
+            // Fetch active insurances within the specified date range
+            var insurances = await _context.Insurances
+                .Where(ins => ins.StartDate <= endDate && ins.EndDate >= startDate)
+                .Include(ins => ins.Seller)
+                .ToListAsync();
+
+            // Group insurances by sellerId
+            var insuranceGroups = insurances
+                .GroupBy(ins => ins.SellerId)
+                .ToDictionary(g => g.Key, g => g.Sum(ins => ins.Premium));
+
+            // Left join sellers with insurance groups
+            var commissions = sellers.Select(seller => new Commission
             {
-                return new List<Commission>();
-            }
-
-            // Group by seller and calculate commissions
-            var commissions = insurances
-                .GroupBy(ins => ins.Seller)
-                .Select(group => new Commission
-                {
-                    AgentNumber = group.Key.AgentNumber,
-                    SellerName = group.Key.FirstName + " " + group.Key.LastName,
-                    PersonalNumber = group.Key.PersonalNumber,
-                    CommissionAmount = Commission.CalculateCommission(group.Sum(ins => ins.Premium)),
-                    StartDate = startDate,
-                    EndDate = endDate
-                })
-                .ToList();
+                AgentNumber = seller.AgentNumber,
+                SellerName = $"{seller.FirstName} {seller.LastName}",
+                PersonalNumber = seller.PersonalNumber,
+                CommissionAmount = insuranceGroups.ContainsKey(seller.EmployeeId)
+                    ? Commission.CalculateCommission(insuranceGroups[seller.EmployeeId])
+                    : 0, // No sales, no commission
+                StartDate = startDate,
+                EndDate = endDate
+            }).ToList();
 
             return commissions;
         }
+
 
         public async Task<List<Insurance>> GetAllInsurances()
         {

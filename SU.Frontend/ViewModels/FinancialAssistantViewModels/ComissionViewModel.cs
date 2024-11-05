@@ -1,5 +1,6 @@
 ﻿using SU.Backend.Controllers;
 using SU.Backend.Models.Comissions;
+using SU.Backend.Models.Commissions;
 using SU.Frontend.Helper;
 using System;
 using System.Collections.ObjectModel;
@@ -14,6 +15,30 @@ namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
         // ObservableCollections for commissions
         private ObservableCollection<Commission> _commissions;
 
+        private ObservableCollection<Month> _months;
+        public ObservableCollection<Month> Months
+        {
+            get => _months;
+            set
+            {
+                _months = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Month _selectedMonth;
+        public Month SelectedMonth
+        {
+            get => _selectedMonth;
+            set
+            {
+                _selectedMonth = value;
+                OnPropertyChanged();
+                UpdateDateRange();
+            }
+        }
+
+
         //Controller 
         private readonly ComissionController _commissionController;
 
@@ -25,6 +50,25 @@ namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
         public CommissionViewModel(ComissionController commissionController)
         {
             _commissionController = commissionController;
+
+            Months = new ObservableCollection<Month>
+            {
+                new Month { MonthName = "January", MonthNumber = 1 },
+                new Month { MonthName = "February", MonthNumber = 2 },
+                new Month { MonthName = "March", MonthNumber = 3 },
+                new Month { MonthName = "April", MonthNumber = 4 },
+                new Month { MonthName = "May", MonthNumber = 5 },
+                new Month { MonthName = "June", MonthNumber = 6 },
+                new Month { MonthName = "July", MonthNumber = 7 },
+                new Month { MonthName = "August", MonthNumber = 8 },
+                new Month { MonthName = "September", MonthNumber = 9 },
+                new Month { MonthName = "October", MonthNumber = 10 },
+                new Month { MonthName = "November", MonthNumber = 11 },
+                new Month { MonthName = "December", MonthNumber = 12 }
+            };
+
+            SelectedMonth = Months.FirstOrDefault(m => m.MonthNumber == DateTime.Now.Month);
+
             StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             EndDate = DateTime.Now;
             Commissions = new ObservableCollection<Commission>();
@@ -106,6 +150,16 @@ namespace SU.Frontend.ViewModels.FinancialAssistantViewModels
                 {
                     Commissions.Add(commission);
                 }
+            }
+        }
+
+        private void UpdateDateRange()
+        {
+            if (SelectedMonth != null)
+            {
+                int year = DateTime.Now.Year;
+                StartDate = new DateTime(year, SelectedMonth.MonthNumber, 1);
+                EndDate = StartDate.AddMonths(1).AddDays(-1);
             }
         }
     }
