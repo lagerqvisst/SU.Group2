@@ -30,6 +30,8 @@ namespace SU.Backend.Database.Repositories
         {
             return _context.PrivateCustomers
                 .Where(x => x.InsurancePolicyHolders.Count == 1)
+                .Include(i => i.InsurancePolicyHolders)
+                    .ThenInclude(p => p.Insurance)
                 .ToList();
         }
 
@@ -38,6 +40,7 @@ namespace SU.Backend.Database.Repositories
             return  _context.PrivateCustomers
                 .Include(c => c.InsurancePolicyHolders)
                     .ThenInclude(p => p.Insurance)
+                    .ThenInclude(s => s.Seller)
                 .ToList();
         }
 

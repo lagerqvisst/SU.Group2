@@ -34,10 +34,10 @@ namespace SU.Backend.Controllers
         }
 
         // Controller for IdentifyNewProspects method
-        public async Task<(List<Prospect>, string message)> IdentifyNewProspects()
+        public async Task<(List<Prospect> prospects, string message)> IdentifyNewProspects()
         {
             _logger.LogInformation("Identifying new prospects...");
-            var result = await _prospectService.IdentifyProspects();
+            var result = await _prospectService.GenerateProspectData();
             if (result.success)
             {
                 _logger.LogInformation("Prospects identified successfully");
@@ -49,55 +49,7 @@ namespace SU.Backend.Controllers
             return (result.prospects, result.message);
         }
 
-        // Controller for AssignSellerToSpecificProspect method
-        public async Task<(bool success, string message)> AssignSellerToSpecificProspect(Employee employee, Prospect prospect)
-        {
-            _logger.LogInformation($"Assigning seller {employee.FirstName} {employee.LastName} to prospect {prospect.ProspectId}");
-            var result = await _prospectService.AssignSellerToSpecificProspect(employee, prospect);
-            if (result.success)
-            {
-                _logger.LogInformation($"Seller assigned to prospect successfully");
-            }
-            else
-            {
-                _logger.LogWarning($"Failed to assign seller to prospect: {result.message}");
-            }
-            return (result.success, result.message);
-        }
-
-        // Controller for GetAllCurrentProspects method
-        public async Task<(List<Prospect> prospects, string message)> GetAllCurrentProspects()
-        {
-            _logger.LogInformation("Getting all current prospects...");
-            var result = await _prospectService.GetAllCurrentProspects();
-            if (result.success)
-            {
-                _logger.LogInformation("Prospects retrieved successfully");
-            }
-            else
-            {
-                _logger.LogWarning($"Failed to retrieve prospects: {result.message}");
-            }
-            return (result.prospects, result.message);
-        }
-
-        // Controller for UpdateProspect method
-        public async Task<(bool success, string message)> UpdateProspect(Prospect prospect)
-        {
-            _logger.LogInformation("Prospect object updated via GUI");
-            var result = await _prospectService.UpdateProspect(prospect);
-
-            if (result.success)
-            {
-                _logger.LogInformation($"{result.message}");
-                return (result.success, result.message);
-            }
-            else
-            {
-                _logger.LogWarning($"{result.message}");
-                return (result.success, result.message);
-            }
-        }
+     
 
         // Controller for ExportProspectsToExcel method
         public async Task<(bool success, string message)> ExportProspectsToExcel(List<Prospect> prospects)
