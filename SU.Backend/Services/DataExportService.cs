@@ -387,7 +387,7 @@ namespace SU.Backend.Services
                     return (false, "No data to export");
                 }
 
-                _logger.LogInformation("Exporting bar chart statistics to Excel");
+                _logger.LogInformation("Exporting bar chart statistics to Excel...");
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
                 using (var package = new ExcelPackage())
@@ -465,7 +465,7 @@ namespace SU.Backend.Services
                     return (false, "No data to export");
                 }
 
-                _logger.LogInformation("Exporting line chart statistics to Excel");
+                _logger.LogInformation("Exporting line chart statistics to Excel...");
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
                 using (var package = new ExcelPackage())
