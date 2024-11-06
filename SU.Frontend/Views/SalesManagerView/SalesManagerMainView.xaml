@@ -65,7 +65,7 @@
 
         <Button Style="{StaticResource OptionsButtonStyle}"
                 Content="Monthly Statistics"
-                Command="{Binding ToShowCustomerProspects}"
+                Command="{Binding ToMonthlyStats}"
                 Margin="10,28,10,28"
                 Grid.Row="3"
                 Grid.Column="0" />

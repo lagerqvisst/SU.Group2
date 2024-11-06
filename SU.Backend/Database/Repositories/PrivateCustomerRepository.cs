@@ -27,6 +27,7 @@ public class PrivateCustomerRepository : Repository<PrivateCustomer>, IPrivateCu
             .Where(x => x.InsurancePolicyHolders.Count == 1)
             .Include(i => i.InsurancePolicyHolders)
             .ThenInclude(p => p.Insurance)
+            .ThenInclude(s => s.Seller)
             .ToList();
     }
 
