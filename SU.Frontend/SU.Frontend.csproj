@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>insurance.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +14,10 @@
     <EmbeddedResource Remove="Helper\Locator\**" />
     <None Remove="Helper\Locator\**" />
     <Page Remove="Helper\Locator\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="insurance.ico" />
   </ItemGroup>
 
   <ItemGroup>
