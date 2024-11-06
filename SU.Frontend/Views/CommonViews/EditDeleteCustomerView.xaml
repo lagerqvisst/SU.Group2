@@ -32,7 +32,7 @@
                 <!-- ComboBox for Private Customers -->
                 <ComboBox Margin="0,0,0,10"
                           ItemsSource="{Binding PrivateCustomers}"
-                          DisplayMemberPath="FirstName"
+                          DisplayMemberPath="PrivateCustomerId"
                           SelectedItem="{Binding SelectedPrivateCustomer}" />
 
                 <TextBlock Text="Company Customers"
