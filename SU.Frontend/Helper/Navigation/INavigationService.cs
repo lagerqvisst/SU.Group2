@@ -7,8 +7,7 @@ public interface INavigationService
     void NavigateTo(string viewName, string folderName, object parameter = null);
     void NavigateToMainViewBasedOnRole(Employee employee);
 
-    void CloseAllExcept(string viewName);
-
+    void CloseAllExcept(string viewName, bool minimizeLoginWindow = true);
     void ReturnToMain(Employee employee);
 
     void ReturnToPrevious();

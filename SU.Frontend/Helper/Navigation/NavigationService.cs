@@ -15,12 +15,36 @@ public class NavigationService : INavigationService
     }
 
     // Method to close all windows except the one with the specified view name
-    public void CloseAllExcept(string viewName)
+    public void CloseAllExcept(string viewName, bool minimizeLoginWindow = true)
     {
         foreach (var window in Application.Current.Windows.OfType<Window>())
+        {
             if (window.GetType().Name != viewName)
-                window.Close();
+            {
+                if (window.GetType().Name == "LoginWindow")
+                {
+                    if (minimizeLoginWindow)
+                    {
+                        // Minimera login-fönstret istället för att stänga det
+                        window.WindowState = WindowState.Normal;
+                    }
+                    else
+                    {
+                        // Stäng login-fönstret vid utloggning
+                        window.WindowState = WindowState.Minimized;
+                    }
+                }
+                else
+                {
+                    // Stäng andra fönster
+                    window.Close();
+                }
+            }
+        }
     }
+
+
+
 
     // Method to navigate to the main view based on the employee's role
     public void NavigateToMainViewBasedOnRole(Employee employee)
@@ -130,7 +154,7 @@ public class NavigationService : INavigationService
             if (currentWindow != null)
             {
                 var windowName = currentWindow.GetType().Name; // Use the window type name instead of Title
-                CloseAllExcept(windowName);
+                CloseAllExcept(windowName, true);
 
                 // Log or show current window name
                 Console.WriteLine($"Current window: {windowName}");
@@ -150,6 +174,7 @@ public class NavigationService : INavigationService
     }
 
     #region Navigation Methods
+
 
     public void NavigateToMonthlyStatistics()
     {

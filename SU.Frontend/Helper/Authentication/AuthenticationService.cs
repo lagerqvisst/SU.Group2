@@ -23,7 +23,8 @@ public class AuthenticationService : IAuthenticationService
         // Set loggedInEmployee to null
         _loggedInUserService.LoggedInEmployee = null;
 
-        // Shut down all windows except LoginWindow so new user can log in
-        _navigationService.CloseAllExcept("LoginWindow");
+        // Stäng alla fönster utom login-fönstret vid utloggning
+        _navigationService.CloseAllExcept("LoginWindow", minimizeLoginWindow: false);
     }
+
 }
