@@ -22,6 +22,48 @@ public class ShowCustomerViewModel : ObservableObject
     // Chosen customers
     private PrivateCustomer _selectedPrivateCustomer;
 
+    private string _privateCustomerSearchText;
+    private string _companyCustomerSearchText;
+
+
+    public IEnumerable<PrivateCustomer> FilteredPrivateCustomers =>
+        PrivateCustomers.Where(c => string.IsNullOrEmpty(PrivateCustomerSearchText) ||
+                                    c.FirstName.Contains(PrivateCustomerSearchText, StringComparison.OrdinalIgnoreCase) ||
+                                    c.PersonalNumber.Contains(PrivateCustomerSearchText, StringComparison.OrdinalIgnoreCase));
+
+    public IEnumerable<CompanyCustomer> FilteredCompanyCustomers =>
+        CompanyCustomers.Where(c => string.IsNullOrEmpty(CompanyCustomerSearchText) ||
+                                    c.CompanyName.Contains(CompanyCustomerSearchText, StringComparison.OrdinalIgnoreCase) ||
+                                    c.OrganizationNumber.Contains(CompanyCustomerSearchText, StringComparison.OrdinalIgnoreCase));
+
+    public string PrivateCustomerSearchText
+    {
+        get => _privateCustomerSearchText;
+        set
+        {
+            _privateCustomerSearchText = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(FilteredPrivateCustomers));
+
+            // Sätt första objektet som förvalt om det finns några resultat
+            SelectedPrivateCustomer = FilteredPrivateCustomers.FirstOrDefault();
+        }
+    }
+
+    public string CompanyCustomerSearchText
+    {
+        get => _companyCustomerSearchText;
+        set
+        {
+            _companyCustomerSearchText = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(FilteredCompanyCustomers));
+
+            // Sätt första objektet som förvalt om det finns några resultat
+            SelectedCompanyCustomer = FilteredCompanyCustomers.FirstOrDefault();
+        }
+    }
+
     // Constructor
     public ShowCustomerViewModel(PrivateCustomerController privateCustomerController,
         CompanyCustomerController companyCustomerController)
