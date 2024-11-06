@@ -44,6 +44,11 @@ public class CompanyInsuranceTypeViewModel : ObservableObject
         SelectedPaymentPlan = PaymentPlan.Monthly;
 
         CreateInsuranceCommand = new RelayCommand(CreateInsurance, CanCreateInsurance);
+
+        // Sätt standardvärden för start- och slutdatum
+        StartDate = DateTime.Now;
+        EndDate = StartDate.Value.AddYears(1);
+
     }
 
     // Lists
