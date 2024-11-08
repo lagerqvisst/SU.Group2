@@ -10,10 +10,12 @@ namespace SU.Frontend.ViewModels.Statistics;
 
 public class TablePageViewModel : ObservableObject
 {
+    // Controller
     private readonly StatisticsController _statisticsController;
 
     private InsuranceCategory _selectedInsuranceCategory;
 
+    // Constructor
     public TablePageViewModel(StatisticsController statisticsController)
     {
         _statisticsController = statisticsController;
@@ -47,6 +49,7 @@ public class TablePageViewModel : ObservableObject
         }
     }
 
+    // Boolean properties to determine visibility of the data grid
     public bool IsPrivateInsuranceVisible => SelectedInsuranceCategory == InsuranceCategory.Private;
     public bool IsCompanyInsuranceVisible => SelectedInsuranceCategory == InsuranceCategory.Company;
 
@@ -58,6 +61,7 @@ public class TablePageViewModel : ObservableObject
         await LoadStatistics();
     }
 
+    // Method to load statistics
     private async Task LoadStatistics()
     {
         var year = DateTime.Now.Year;
