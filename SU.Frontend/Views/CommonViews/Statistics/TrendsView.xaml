@@ -6,37 +6,46 @@
         xmlns:helper="clr-namespace:SU.Frontend.Helper.SU.Frontend.Helper"
         xmlns:controls="clr-namespace:SU.Frontend.Views.UserControls"
         mc:Ignorable="d"
-        Title="TrendsView" Height="450" Width="800">
+        Title="Trends View" Height="550" Width="900">
 
     <Window.Resources>
         <helper:ViewModelLocator x:Key="Locator" />
     </Window.Resources>
+    <Grid>
+        <!-- View Title -->
+        <TextBlock Text="Trends and Graphs"
+            FontSize="25"
+            FontWeight="Bold" Grid.Row="0"
+            Margin="20,37,300,300" />
 
-    <Grid DataContext="{Binding TrendsViewModel, Source={StaticResource Locator}}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <!-- För TabControl -->
-            <RowDefinition Height="Auto" />
-            <!-- För Return- och Logout-knapparna -->
-        </Grid.RowDefinitions>
+        <Grid DataContext="{Binding TrendsViewModel, Source={StaticResource Locator}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <!-- För TabControl -->
+                <RowDefinition Height="Auto" />
+                <!-- För Return- och Logout-knapparna -->
+            </Grid.RowDefinitions>
 
-        <!-- TabControl för att hantera de tre olika sidorna -->
-        <TabControl Grid.Row="0">
-            <TabItem Header="Line Diagram">
-                <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/LineChartPage.xaml" />
-            </TabItem>
-            <TabItem Header="Table">
-                <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/TablePage.xaml" />
-            </TabItem>
-            <TabItem Header="Bar Chart">
-                <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/BarChartPage.xaml" />
-            </TabItem>
-        </TabControl>
+            <Border BorderBrush="Green" BorderThickness="2" Margin="20,120,120,32">
+                <!-- TabControl för att hantera de tre olika sidorna -->
+                <TabControl Grid.Row="0">
+                    <TabItem Header="Line Diagram">
+                        <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/LineChartPage.xaml" />
+                    </TabItem>
+                    <TabItem Header="Table">
+                        <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/TablePage.xaml" />
+                    </TabItem>
+                    <TabItem Header="Bar Chart">
+                        <Frame Source="/SU.Frontend;component/Views/CommonViews/Statistics/BarChartPage.xaml" />
+                    </TabItem>
+                </TabControl>
+            </Border>
 
-        <!-- Horisontell StackPanel för knapparna längst ned -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <controls:ReturnButton Margin="5" Padding="5" />
-            <controls:LogoutButtonControl Margin="5" Padding="5" />
-        </StackPanel>
+            <!-- Additional Controls (Logout and User Information) -->
+            <controls:SignedInUserUserControl HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" />
+            <controls:ReturnButton VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,120,10,0" />
+            <controls:LogoutButtonControl HorizontalAlignment="Right" Margin="0,424,10,-25" />
+
+        </Grid>
     </Grid>
 </Window>
