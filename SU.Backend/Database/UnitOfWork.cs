@@ -32,6 +32,7 @@ public class UnitOfWork : IDisposable
         PropertyAndInventoryCoverages = new PropertyAndInventoryCoverageRepository(_context);
     }
 
+    #region Repositories
     public EmployeeRepository Employees { get; }
     public PrivateCustomerRepository PrivateCustomers { get; }
     public CompanyCustomerRepository CompanyCustomers { get; }
@@ -48,6 +49,7 @@ public class UnitOfWork : IDisposable
     public VehicleInsuranceCoverageRepository VehicleInsuranceCoverages { get; }
     public LiabilityCoverageRepository LiabilityCoverages { get; }
     public PropertyAndInventoryCoverageRepository PropertyAndInventoryCoverages { get; }
+    #endregion Repositories
 
     public void Dispose()
     {

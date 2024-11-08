@@ -37,21 +37,21 @@ public class PremiumCalculator
     {
         decimal extraPremiumRate;
 
-        // Justera påslagsräntan baserat på typ av tillägg
+        // Adjust the extra premium rate based on the type of addon
         switch (addonType)
         {
             case AddonType.SicknessAccident:
-                extraPremiumRate = 0.0003m; // Ränta för SicknessAccident
+                extraPremiumRate = 0.0003m; // Rate for SicknessAccident
                 break;
             case AddonType.LongTermSickness:
-                extraPremiumRate = 0.0005m; // Ränta för LongTermSickness
+                extraPremiumRate = 0.0005m; // Rate for LongTermSickness
                 break;
             default:
-                extraPremiumRate = 0.0003m; // Standardrate om inget annat
+                extraPremiumRate = 0.0003m; // Standard rate for other addons
                 break;
         }
 
-        // Beräkna den extra premien baserat på belopp och typ
+        // Calculate the extra premium based on the coverage amount and the extra premium rate
         return coverageAmount * extraPremiumRate;
     }
 
@@ -65,14 +65,14 @@ public class PremiumCalculator
         return propertyValue * premiumRate;
     }
 
-    // Statisk metod för att beräkna inventariepremien
+    // Static method to calculate the inventory premium
     public static decimal CalculateInventoryPremium(decimal inventoryValue)
     {
         const decimal premiumRate = 0.002m; // 0.2% rate
         return inventoryValue * premiumRate;
     }
 
-    // Statisk metod för att summera den totala premien
+    // Static method to calculate the total premium
     public static decimal CalculateTotalPropertyAndInventoryPremium(decimal propertyPremium, decimal inventoryPremium)
     {
         return propertyPremium + inventoryPremium;

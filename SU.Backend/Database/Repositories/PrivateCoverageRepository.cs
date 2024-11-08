@@ -12,6 +12,7 @@ public class PrivateCoverageRepository : Repository<PrivateCoverage>
     {
     }
 
+    //This method is used to get all private coverages
     public async Task<List<PrivateCoverage>> GetAllPrivateCoverages()
     {
         return await _context.PrivateCoverages.ToListAsync();

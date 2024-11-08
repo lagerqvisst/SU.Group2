@@ -31,6 +31,7 @@ public class CompanyCustomerRepository : Repository<CompanyCustomer>, ICompanyCu
         return await _context.CompanyCustomers.FirstOrDefaultAsync(x => x.CompanyCustomerId == id);
     }
 
+    //Used for getting all company customers.
     public async Task<List<CompanyCustomer>> GetAllCompanyCustomers()
     {
         return _context.CompanyCustomers
@@ -39,7 +40,7 @@ public class CompanyCustomerRepository : Repository<CompanyCustomer>, ICompanyCu
             .ToList();
     }
 
-
+    //Used for creating a new company customer.
     public async Task<List<CompanyCustomer>> CreateCompanyCustomers(CompanyCustomer CompanyCustomer)
     {
         await _context.CompanyCustomers.AddAsync(CompanyCustomer);

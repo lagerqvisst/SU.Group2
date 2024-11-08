@@ -14,6 +14,6 @@ public class PrivateCoverageOption
     public DateTime StartDate { get; set; }
     public InsuranceType InsuranceType { get; set; }
 
-    // Navigational property till många PrivateCoverages
+    // Navigational property to many PrivateCoverages
     public ICollection<PrivateCoverage> PrivateCoverages { get; set; } = new List<PrivateCoverage>();
 }

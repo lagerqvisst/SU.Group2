@@ -13,7 +13,7 @@ public class PrivateCoverage
     public PrivateCoverageOption PrivateCoverageOption { get; set; } // Navigation to PrivateCoverageOption
     public InsuranceCoverage InsuranceCoverage { get; set; } // Navigation to InsuranceCoverage
 
-    // Personinformation direkt i PrivateCoverage
+    // Person information directly in PrivateCoverage
     public string InsuredPersonName { get; set; }
     public string InsuredPersonPersonalNumber { get; set; }
 }

@@ -15,6 +15,7 @@ public class PropertyAndInventoryCoverageRepository : Repository<PropertyAndInve
     {
     }
 
+    // This method is used to get all property and inventory coverages
     public async Task<List<PropertyAndInventoryCoverage>> GetAllPropertyAndInventoryCoverages()
     {
         return await _context.PropertyAndInventoryCoverages.ToListAsync();

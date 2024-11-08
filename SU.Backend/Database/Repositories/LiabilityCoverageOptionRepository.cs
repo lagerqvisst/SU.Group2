@@ -13,6 +13,7 @@ public class LiabilityCoverageOptionRepository : Repository<LiabilityCoverageOpt
     {
     }
 
+    //This method is used to get all liability coverage options
     public async Task<List<LiabilityCoverageOption>> GetLiabilityCoverageOptions()
     {
         return _context.LiabilityCoverageOption.ToList();

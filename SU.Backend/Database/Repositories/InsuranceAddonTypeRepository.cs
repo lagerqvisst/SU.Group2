@@ -13,7 +13,7 @@ public class InsuranceAddonTypeRepository : Repository<InsuranceAddonType>, IIns
     public InsuranceAddonTypeRepository(Context context) : base(context)
     {
     }
-
+    //This method is used to get all insurance addon types
     public async Task<List<InsuranceAddonType>> GetAllInsuranceAddonTypes()
     {
         return _context.InsuranceAddonTypes.ToList();

@@ -13,6 +13,7 @@ public class PrivateCustomerRepository : Repository<PrivateCustomer>, IPrivateCu
     {
     }
 
+    // This method is used to get the private customer by id.
     public async Task<PrivateCustomer> GetPrivateCustomerById(PrivateCustomer privateCustomer)
     {
         return await _context.PrivateCustomers.FirstOrDefaultAsync(x =>
@@ -31,6 +32,7 @@ public class PrivateCustomerRepository : Repository<PrivateCustomer>, IPrivateCu
             .ToList();
     }
 
+    // This method is used to get all private customers.
     public async Task<List<PrivateCustomer>> GetAllPrivateCustomers()
     {
         return _context.PrivateCustomers

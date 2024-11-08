@@ -38,8 +38,8 @@ public class InsuranceRepository : Repository<Insurance>, IIunsuranceRepository
                         i.StartDate <= endDate)
             .ToList();
     }
-
-    //TODO: Include left join for sellers who did not sell any insurances
+    
+    // This method is used to get all insurances that are active within a specific date range
     public async Task<List<Commission>> GetSellerCommissions(DateTime startDate, DateTime endDate)
     {
         // Fetch all sellers
@@ -72,7 +72,7 @@ public class InsuranceRepository : Repository<Insurance>, IIunsuranceRepository
         return commissions;
     }
 
-
+    //This method is used to get all insurances
     public async Task<List<Insurance>> GetAllInsurances()
     {
         return _context.Insurances
@@ -89,6 +89,7 @@ public class InsuranceRepository : Repository<Insurance>, IIunsuranceRepository
             .ToList();
     }
 
+    //This method is used to get all insurances by year
     public async Task<List<Insurance>> GetInsurancesByYear(int year)
     {
         return _context.Insurances
@@ -98,21 +99,7 @@ public class InsuranceRepository : Repository<Insurance>, IIunsuranceRepository
             .ToList();
     }
 
-    //Not sure if this is or will be used anywhere
-    public async Task<Insurance> GetInsuranceById(int id)
-    {
-        return _context.Insurances
-            .Include(i => i.InsurancePolicyHolder)
-            .ThenInclude(p => p.PrivateCustomer)
-            .Include(i => i.InsuranceCoverage)
-            .ThenInclude(ic => ic.PrivateCoverage)
-            .ThenInclude(pc => pc.PrivateCoverageOption)
-            .Include(i => i.InsuranceCoverage)
-            .ThenInclude(ic => ic.PrivateCoverage)
-            .Include(i => i.InsuranceAddons)
-            .FirstOrDefault(i => i.InsuranceId == id);
-    }
-
+    //This method is used to get all insurances for invoicing
     public async Task<List<Insurance>> GetInsurancesForInvoicing(DateTime currentDate)
     {
         return await _context.Insurances

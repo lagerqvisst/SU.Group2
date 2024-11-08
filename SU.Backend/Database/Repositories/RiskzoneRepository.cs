@@ -12,6 +12,7 @@ public class RiskzoneRepository : Repository<RiskZone>, IRiskzoneRepository
     {
     }
 
+    //This method is used to get all risk zones
     public async Task<List<RiskZone>> GetAllRiskZones()
     {
         return _context.Riskzones.ToList();

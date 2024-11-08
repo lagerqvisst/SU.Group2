@@ -44,6 +44,7 @@ public class EmployeeRepository : Repository<Employee>, IEmployeeRepository
             .FirstOrDefault();
     }
 
+    // This method returns all sales employees.
     public async Task<List<Employee>> GetSalesEmployees()
     {
         return _context.Employees
@@ -54,11 +55,13 @@ public class EmployeeRepository : Repository<Employee>, IEmployeeRepository
             .ToList();
     }
 
+    // This method returns all employees.
     public async Task<List<Employee>> GetAllEmployees()
     {
         return _context.Employees.ToList();
     }
 
+    // This method returns the employee with the given id.
     public async Task<Employee> GetEmployeeById(int id)
     {
         return await _context.Employees
@@ -66,11 +69,13 @@ public class EmployeeRepository : Repository<Employee>, IEmployeeRepository
             .FirstOrDefaultAsync(e => e.EmployeeId == id);
     }
 
+    // This method returns all employee role assignments.
     public async Task<List<EmployeeRoleAssignment>> GetAllEmployeeRoleAssignments()
     {
         return await _context.EmployeeRoleAssignments.ToListAsync();
     }
 
+    // This method returns the role of the given employee.
     public async Task<EmployeeType> GetRoleByEmployee(Employee employee)
     {
         return _context.EmployeeRoleAssignments

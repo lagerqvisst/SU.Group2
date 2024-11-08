@@ -12,7 +12,7 @@ public class VehicleInsuranceCoverage
 
 
     // Navigation properties
-    public InsuranceCoverage InsuranceCoverage { get; set; } // Navigation till InsuranceCoverage
-    public VehicleInsuranceOption VehicleInsuranceOption { get; set; } // Navigation till VehicleInsuranceOption
-    public RiskZone RiskZone { get; set; } // Navigation till Riskzone
+    public InsuranceCoverage InsuranceCoverage { get; set; } // Navigation to InsuranceCoverage
+    public VehicleInsuranceOption VehicleInsuranceOption { get; set; } // Navigation to VehicleInsuranceOption
+    public RiskZone RiskZone { get; set; } // Navigation to Riskzone
 }

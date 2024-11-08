@@ -4,7 +4,7 @@ namespace SU.Backend.Models.Insurances.Coverage;
 
 public class PropertyAndInventoryCoverage
 {
-    // Konstruktor för att beräkna premier direkt vid skapandet
+    // Constructor to calculate premiums directly upon creation
     public PropertyAndInventoryCoverage(decimal propertyValue, decimal inventoryValue)
     {
         PropertyValue = propertyValue;
@@ -15,9 +15,9 @@ public class PropertyAndInventoryCoverage
     }
 
     public int PropertyAndInventoryCoverageId { get; set; } // PK
-    public int InsuranceCoverageId { get; set; } // FK till InsuranceCoverage
+    public int InsuranceCoverageId { get; set; } // FK to InsuranceCoverage
 
-    public InsuranceCoverage InsuranceCoverage { get; set; } // Navigation till InsuranceCoverage
+    public InsuranceCoverage InsuranceCoverage { get; set; } // Navigation to InsuranceCoverage
 
     public string PropertyAddress { get; set; } // Fastighetsadress
     public decimal PropertyValue { get; set; } // Värde fastigheter
