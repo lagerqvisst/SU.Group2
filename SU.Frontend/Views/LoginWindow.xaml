@@ -45,17 +45,24 @@
                            Margin="0,0,0,30" />
 
                 <!-- Input fields -->
-                <TextBox Text="{Binding Path=UserName, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="0,0,0,10"
-                         Padding="12"
-                         Width="300"
-                         Height="45" />
+                <StackPanel Orientation="Horizontal" Margin="60,0,0,0">
+                    <TextBlock Text="Username: " FontSize="16" />
+                    <TextBox Text="{Binding Path=UserName, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="13,0,0,10"
+                     Padding="12"
+                     Width="300"
+                     Height="45" />
+                </StackPanel>
 
-                <TextBox Text="{Binding Path=Password, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="0,0,0,20"
-                         Padding="12"
-                         Width="300"
-                         Height="45" />
+                <StackPanel Orientation="Horizontal" Margin="60,0,0,0">
+                    <TextBlock Text="Password: " FontSize="16" />
+                    <TextBox Text="{Binding Path=Password, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="17,0,0,10"
+                     Padding="12"
+                     Width="300"
+                     Height="45" />
+                </StackPanel>
+
 
                 <!-- Signin button -->
                 <Button Content="{Binding ButtonContent}"
