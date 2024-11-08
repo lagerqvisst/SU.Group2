@@ -15,6 +15,7 @@ public class VehicleInsuranceCoverageRepository : Repository<VehicleInsuranceCov
     {
     }
 
+    // This method is used to get all vehicle insurance coverages
     public async Task<List<VehicleInsuranceCoverage>> GetAllVehicleInsuranceCoverages()
     {
         return await _context.VehicleInsuranceCoverages.ToListAsync();

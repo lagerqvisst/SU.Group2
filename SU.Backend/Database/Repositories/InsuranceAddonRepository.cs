@@ -13,6 +13,7 @@ public class InsuranceAddonRepository : Repository<InsuranceAddon>, IInsuranceAd
     {
     }
 
+    // This method returns all insurance addons.
     public async Task<List<InsuranceAddon>> GetAllInsuranceAddons()
     {
         return await _context.InsuranceAddons.ToListAsync();

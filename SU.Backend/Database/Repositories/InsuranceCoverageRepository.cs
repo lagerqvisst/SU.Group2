@@ -13,6 +13,7 @@ public class InsuranceCoverageRepository : Repository<InsuranceCoverage>, IInsur
     {
     }
 
+    //This method is used to get all insurance coverages
     public async Task<List<InsuranceCoverage>> GetAllInsuranceCoverages()
     {
         return await _context.InsuranceCoverages.ToListAsync();

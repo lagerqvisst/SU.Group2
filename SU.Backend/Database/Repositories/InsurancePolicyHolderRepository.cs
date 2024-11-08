@@ -13,18 +13,18 @@ public class InsurancePolicyHolderRepository : Repository<InsurancePolicyHolder>
     public InsurancePolicyHolderRepository(Context context) : base(context)
     {
     }
-
+    //This method is used to get a specific insurance policy holder based on the insurance policy holder id
     public async Task<InsurancePolicyHolder> GetById(InsurancePolicyHolder insurancePolicyHolder)
     {
         return await _context.InsurancePolicyHolders.FindAsync(insurancePolicyHolder);
     }
 
-
+    //This method is used to get all insurance policy holders
     public async Task<List<InsurancePolicyHolder>> GetAllInsurancePolicyHolders()
     {
         return await _context.InsurancePolicyHolders.ToListAsync();
     }
-
+    //This method is used to get all insurance policy holders with insurances
     public async Task<List<InsurancePolicyHolder>> GetAllPolicyHoldersWithInsurances()
     {
         return await _context.InsurancePolicyHolders

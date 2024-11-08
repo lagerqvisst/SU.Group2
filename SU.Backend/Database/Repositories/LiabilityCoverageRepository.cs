@@ -13,6 +13,7 @@ public class LiabilityCoverageRepository : Repository<LiabilityCoverage>, ILiabi
     {
     }
 
+    //This method is used to get all liability coverages
     public async Task<List<LiabilityCoverage>> GetLiabilityCoverage()
     {
         return await _context.LiabilityCoverages.ToListAsync();

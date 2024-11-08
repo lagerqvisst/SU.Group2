@@ -14,11 +14,13 @@ public class PrivateCoverageOptionRepository : Repository<PrivateCoverageOption>
     {
     }
 
+    //This method is used to get all private coverage options
     public async Task<List<PrivateCoverageOption>> GetAllPrivateCoverageOptions()
     {
         return _context.PrivateCoverageOption.ToList();
     }
 
+    //This method is used to get all private coverage options in the current year
     public async Task<List<PrivateCoverageOption>> GetSpecificCoverageInCurrentYear(InsuranceType insurance)
     {
         return await _context.PrivateCoverageOption
