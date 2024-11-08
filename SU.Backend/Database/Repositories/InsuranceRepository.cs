@@ -99,7 +99,7 @@ public class InsuranceRepository : Repository<Insurance>, IIunsuranceRepository
             .ToList();
     }
 
-    //Not sure if this is or will be used anywhere
+    //Not sure if this is or will be used anywhere in the project
     public async Task<Insurance> GetInsuranceById(int id)
     {
         return _context.Insurances

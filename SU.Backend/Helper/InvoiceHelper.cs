@@ -11,17 +11,17 @@ public static class InvoiceHelper
 {
     public static InvoiceEntry CreateInvoiceEntry(InsurancePolicyHolder policyHolder)
     {
-        // Samla alla försäkrings-ID kopplade till denna policyinnehavare
+        // Collect all insurance IDs associated with this policy holder
         var allInsuranceIds = policyHolder.CompanyCustomer != null
             ? policyHolder.CompanyCustomer.InsurancePolicyHolders
                 .Select(p => p.Insurance.InsuranceId.ToString())
             : policyHolder.PrivateCustomer?.InsurancePolicyHolders
                 .Select(p => p.Insurance.InsuranceId.ToString()) ?? new List<string>();
 
-        // Bygg strängen med "ID: " följt av alla ID:n
+        // Build the string with "ID: " followed by all IDs
         var insurancesAsString = $"ID: {string.Join(", ", allInsuranceIds)}";
 
-        // Formatera Premium till sträng med SEK
+        // Format the premium to a string with SEK
         var formattedPremium = $"{policyHolder.Insurance.Premium:N0} SEK";
 
         if (policyHolder.PrivateCustomer != null)
