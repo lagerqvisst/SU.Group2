@@ -99,21 +99,6 @@ public class InsuranceRepository : Repository<Insurance>, IIunsuranceRepository
             .ToList();
     }
 
-    //Not sure if this is or will be used anywhere in the project
-    public async Task<Insurance> GetInsuranceById(int id)
-    {
-        return _context.Insurances
-            .Include(i => i.InsurancePolicyHolder)
-            .ThenInclude(p => p.PrivateCustomer)
-            .Include(i => i.InsuranceCoverage)
-            .ThenInclude(ic => ic.PrivateCoverage)
-            .ThenInclude(pc => pc.PrivateCoverageOption)
-            .Include(i => i.InsuranceCoverage)
-            .ThenInclude(ic => ic.PrivateCoverage)
-            .Include(i => i.InsuranceAddons)
-            .FirstOrDefault(i => i.InsuranceId == id);
-    }
-
     //This method is used to get all insurances for invoicing
     public async Task<List<Insurance>> GetInsurancesForInvoicing(DateTime currentDate)
     {

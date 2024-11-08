@@ -8,10 +8,10 @@ public class InsuranceCoverage
 {
     public int InsuranceCoverageId { get; set; } // PK
 
-    public int InsuranceId { get; set; } // FK till Insurance
+    public int InsuranceId { get; set; } // FK to Insurance
 
     // Navigational properties to specific insurance types
-    public Insurance Insurance { get; set; } // Navigation till Insurance
+    public Insurance Insurance { get; set; } // Navigation to Insurance
     public LiabilityCoverage? LiabilityCoverage { get; set; } // If it is liability insurance
     public PrivateCoverage? PrivateCoverage { get; set; } // If it is private insurance
 
