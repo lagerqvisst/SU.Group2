@@ -12,10 +12,16 @@ namespace SU.Frontend.ViewModels.Statistics;
 
 public class BarChartViewModel : ObservableObject
 {
+    // Controllers
     private readonly EmployeeController _employeeController;
     private readonly StatisticsController _statisticsController;
+
     private Employee _selectedSeller;
 
+    // Command
+    public ICommand ExportBarChart { get; }
+
+    // Constructor
     public BarChartViewModel(EmployeeController employeeController, StatisticsController statisticsController)
     {
         _statisticsController = statisticsController;
@@ -26,8 +32,6 @@ public class BarChartViewModel : ObservableObject
 
         ExportBarChart = new RelayCommand(async () => await ExportDataAsync(), CanExportData);
     }
-
-    public ICommand ExportBarChart { get; }
 
     public ObservableCollection<ISeries> Series { get; set; }
     public Axis[] XAxes { get; set; }
@@ -53,28 +57,28 @@ public class BarChartViewModel : ObservableObject
 
     private async Task LoadDataAsync(int year, Employee seller)
     {
-        // Hämta försäljningsstatistik för den valda säljaren och året
+        // Get sales statistics for the selected seller and year
         var (success, message, statistics) = await _statisticsController.SellerStatisticsBySeller(year, seller);
 
 
         if (!success || statistics == null || statistics.MonthlySales == null) return;
 
-        // Extrahera total försäljning per månad
+        // Extract total sales per month
         var monthlySales = statistics.MonthlySales.Select(ms => ms.TotalSales).ToArray();
 
-        // Beräkna 3-månaders glidande medelvärde för trendlinje
+        // Calculate 3-month moving average for trend line
         var trendLine = SellerStatistics.CalculateMovingAverage(monthlySales, 3);
 
         Series.Clear();
 
-        // Lägg till stapeldiagram för månatlig försäljning
+        // Add column series for monthly sales
         Series.Add(new ColumnSeries<int>
         {
             Values = monthlySales,
             Name = "Monthly Sales"
         });
 
-        // Lägg till linjediagram för trendlinje
+        // Add line series for trend line
         Series.Add(new LineSeries<double>
         {
             Values = trendLine,
@@ -82,7 +86,7 @@ public class BarChartViewModel : ObservableObject
             LineSmoothness = 0.5
         });
 
-        // Sätt upp axlarna
+        // Set up axes
         XAxes = new[]
         {
             new Axis
@@ -104,6 +108,7 @@ public class BarChartViewModel : ObservableObject
         OnPropertyChanged(nameof(YAxes));
     }
 
+    // Method to load all sellers
     private async Task LoadAllSellers()
     {
         var result = await _employeeController.GetAllSellers();
@@ -125,6 +130,7 @@ public class BarChartViewModel : ObservableObject
         return true;
     }
 
+    // Method to export data to Excel
     private async Task ExportDataAsync()
     {
         if (_selectedSeller == null)

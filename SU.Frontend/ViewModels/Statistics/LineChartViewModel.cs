@@ -10,10 +10,12 @@ using SU.Frontend.Helper;
 
 public class LineChartViewModel : ObservableObject
 {
+    // Controller
     private readonly StatisticsController _statisticsController;
 
     public List<InsuranceType> insuranceTypes = EnumService.InsuranceType();
 
+    // Constructor
     public LineChartViewModel(StatisticsController statisticsController)
     {
         _statisticsController = statisticsController;
@@ -23,6 +25,7 @@ public class LineChartViewModel : ObservableObject
         OnInitalized();
     }
 
+    //Command
     public ICommand ExportLineChartCommand { get; }
 
     public ObservableCollection<ISeries> Series { get; set; }
@@ -34,9 +37,9 @@ public class LineChartViewModel : ObservableObject
         await LoadDataAsync(2024);
     }
 
+    // Method to load data for the line chart
     private async Task LoadDataAsync(int year)
     {
-        //var (success, message, statistics) = await _statisticsService.GetActiveSellerStatistics(year, insuranceTypes);
         var (success, message, statistics) =
             await _statisticsController.GetActiveSellerStatistics(year, insuranceTypes);
 
@@ -74,6 +77,7 @@ public class LineChartViewModel : ObservableObject
         OnPropertyChanged(nameof(YAxes));
     }
 
+    // Method to export line chart data to Excel
     private async Task ExportLineChartDataAsync()
     {
         var year = 2024;

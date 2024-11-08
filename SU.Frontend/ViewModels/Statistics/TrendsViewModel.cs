@@ -6,13 +6,16 @@ namespace SU.Frontend.ViewModels.Statistics;
 
 public class TrendsViewModel : ObservableObject
 {
+    // Service
     public INavigationService _navigationService;
 
+    // Constructor
     public TrendsViewModel(INavigationService navigationService)
     {
         _navigationService = navigationService;
         ReturnCommnad = new RelayCommand(() => _navigationService.ReturnToPrevious());
     }
 
+    // Command
     public ICommand ReturnCommnad { get; set; }
 }
